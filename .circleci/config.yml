@@ -7,19 +7,19 @@ jobs:
 
       - run:
           name: Export DOCKER_RUN Command
-          command: echo 'export DOCKER_RUN="docker container run --rm --entrypoint=make -v ${HOME}/project:/code -w /code"' >> $BASH_ENV
+          command: echo 'export DOCKER_RUN="docker container run --rm -v ${HOME}/project:/code -w /code"' >> $BASH_ENV
 
       # Generate ApiClient
       - run:
           name: Generate ApiClient Code
-          command: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest generate-api-client
+          command: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest ash -c 'apk add --update make && make generate-api-client'
 
       # Fetch Dependencies
       - run:
           name: Fetch Depdencies with Composer
-          command: ${DOCKER_RUN} composer:latest deps
+          command: ${DOCKER_RUN} composer:latest ash -c 'apk add --update make && make deps'
 
       # Run Tests
       - run:
           name: Run Tests
-          command: ${DOCKER_RUN} php:7.1-cli test
+          command: ${DOCKER_RUN} php:7.1-cli make test
