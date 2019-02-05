@@ -8,7 +8,7 @@ jobs:
       - checkout
 
       # Generate ApiClient
-      - run: ${DOCKER_RUN} openapitools/openapi-generator-cli generate generate-api-client
+      - run: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest generate-api-client
 
       # Fetch Dependencies
       - run: ${DOCKER_RUN} composer:latest deps
