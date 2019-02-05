@@ -3,7 +3,7 @@ jobs:
   build:
     machine: true
     environment:
-      DOCKER_RUN: docker container run --rm --entrypoint=make -v $(PWD):/code -w /code
+      DOCKER_RUN: docker container run --rm --entrypoint=make -v ~/project:/code -w /code
     steps:
       - checkout
 
