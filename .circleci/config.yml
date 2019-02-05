@@ -2,16 +2,24 @@ version: 2
 jobs:
   build:
     machine: true
-    environment:
-      DOCKER_RUN: docker container run --rm --entrypoint=make -v ~/project:/code -w /code
     steps:
       - checkout
 
+      - run:
+          name: Export DOCKER_RUN Command
+          command: export DOCKER_RUN="docker container run --rm --entrypoint=make -v ${HOME}/project:/code -w /code" >> $BASH_ENV
+
       # Generate ApiClient
-      - run: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest generate-api-client
+      - run:
+          name: Generate ApiClient Code
+          command: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest generate-api-client
 
       # Fetch Dependencies
-      - run: ${DOCKER_RUN} composer:latest deps
+      - run:
+          name: Fetch Depdencies with Composer
+          command: ${DOCKER_RUN} composer:latest deps
 
       # Run Tests
-      - run: ${DOCKER_RUN} php:7.1-cli test
+      - run:
+          name: Run Tests
+          command: ${DOCKER_RUN} php:7.1-cli test
