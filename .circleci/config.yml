@@ -7,7 +7,7 @@ jobs:
 
       - run:
           name: Export DOCKER_RUN Command
-          command: export DOCKER_RUN="docker container run --rm --entrypoint=make -v ${HOME}/project:/code -w /code" >> $BASH_ENV
+          command: echo 'export DOCKER_RUN="docker container run --rm --entrypoint=make -v ${HOME}/project:/code -w /code"' >> $BASH_ENV
 
       # Generate ApiClient
       - run:
