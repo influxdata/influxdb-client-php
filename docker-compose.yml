@@ -1,0 +1,10 @@
+version: "3.6"
+
+services:
+  php:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/code
+    working_dir: /code

@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    environment:
+      DOCKER_RUN: docker container run --rm --entrypoint=make -v $(PWD):/code -w /code
+    steps:
+      - checkout
+
+      # Generate ApiClient
+      - run: ${DOCKER_RUN} openapitools/openapi-generator-cli generate generate-api-client
+
+      # Fetch Dependencies
+      - run: ${DOCKER_RUN} composer:latest deps
+
+      # Run Tests
+      - run: ${DOCKER_RUN} php:7.1-cli test
