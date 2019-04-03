@@ -1,5 +1,3 @@
 bin/
-src/InfluxDB2Generated/
 vendor/
-
 composer.lock
