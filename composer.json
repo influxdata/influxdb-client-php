@@ -4,6 +4,7 @@
   "keywords": [
     "InfluxDB"
   ],
+  "version": "0.0.1-alpha",
   "homepage": "https://www.github.com/influxdata/influxdb-client-php",
   "license": "MIT",
   "require": {
