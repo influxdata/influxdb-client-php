@@ -16,22 +16,27 @@ class ApiClient extends DefaultApi
     {
         $configuration = new Configuration();
 
-        $configuration->setHost(getenv("INFLUXDB_CLIENT_HOST", "localhost"));
+        $influxdbHost = getenv("INFLUXDB_CLIENT_HOST") ?: "localhost:9999";
+        $configuration->setHost($influxdbHost);
 
-        if (array_key_exists("INFLUXDB_CLIENT_USERNAME", $_ENV)) {
-            $configuration->setUsername(getenv("INFLUXDB_CLIENT_USERNAME"));
-            $configuration->setPassword(getenv("INFLUXDB_CLIENT_PASSWORD"));
+        $influxdbUsername = getenv("INFLUXDB_CLIENT_USERNAME") ?: null;
+        $influxdbPassword = getenv("INFLUXDB_CLIENT_PASSWORD") ?: null;
 
-            return new Self($configuration);
-        }
-
-        if (array_key_exists("INFLUXDB_CLIENT_ACCESS_TOKEN", $_ENV)) {
-            $configuration->setAccessToken(getenv("INFLUXDB_CLIENT_ACCESS_TOKEN"));
+        if ($influxdbUsername && $influxdbPassword) {
+            $configuration->setUsername($influxdbUsername);
+            $configuration->setPassword($influxdbPassword);
 
             return new Self($configuration);
         }
 
-        throw new Exception("Not Enough Configuration");
+        $influxdbAccessToken = getenv("INFLUXDB_CLIENT_ACCESS_TOKEN") ?: null;
+        if ($influxdbAccessToken) {
+            $configuration->setAccessToken($influxdbAccessToken);
+
+            return new Self($configuration);
+        }
+
+        throw new \Exception("Not Enough Configuration");
     }
 
     public static function createWithCredentials(string $host, string $username, string $password)

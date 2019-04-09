@@ -20,4 +20,34 @@ class ApiClientSpec extends ObjectBehavior
         $this->shouldHaveType(ApiClient::class);
         $this->getConfig()->shouldEqual($configuration);
     }
+
+    function it_supports_creation_from_environment()
+    {
+        $configuration = new Configuration();
+        $configuration->setHost("my_host:9999");
+        $configuration->setUsername("user");
+        $configuration->setPassword("password");
+
+        putenv("INFLUXDB_CLIENT_HOST=my_host:9999");
+        putenv("INFLUXDB_CLIENT_USERNAME=user");
+        putenv("INFLUXDB_CLIENT_PASSWORD=password");
+
+        $this->beConstructedThrough("createFromEnvironment", []);
+
+        $this->shouldHaveType(ApiClient::class);
+        $this->getConfig()->shouldBeLike($configuration);
+    }
+
+    function it_supports_creation_with_credentials()
+    {
+        $configuration = new Configuration();
+        $configuration->setHost("my_host:9999");
+        $configuration->setUsername("username");
+        $configuration->setPassword("password");
+
+        $this->beConstructedThrough("createWithCredentials", ["my_host:9999", "username", "password"]);
+
+        $this->shouldHaveType(ApiClient::class);
+        $this->getConfig()->shouldBeLike($configuration);
+    }
 }
