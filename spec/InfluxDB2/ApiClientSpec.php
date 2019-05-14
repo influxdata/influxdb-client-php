@@ -3,6 +3,7 @@
 namespace spec\InfluxDB2;
 
 use InfluxDB2\ApiClient;
+use InfluxDB2\WriteClient;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use InfluxDB2Generated\Configuration;
@@ -49,5 +50,17 @@ class ApiClientSpec extends ObjectBehavior
 
         $this->shouldHaveType(ApiClient::class);
         $this->getConfig()->shouldBeLike($configuration);
+    }
+
+    function it_creates_a_write_client()
+    {
+        $configuration = new Configuration();
+        $configuration->setHost("my_host:9999");
+        $configuration->setAccessToken("my_access_token");
+
+        $this->beConstructedWith($configuration);
+
+        $this->getWriteClient()->shouldHaveType(WriteClient::class);
+        $this->getWriteClient()->getConfig()->shouldBeLike($configuration);
     }
 }

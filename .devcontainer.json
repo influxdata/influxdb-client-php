@@ -1,0 +1,13 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"dockerComposeFile": [
+		"docker-compose.yml",
+		"docker-compose.vscode.yml"
+	],
+	"service": "php",
+	"workspaceFolder": "/code",
+	"extensions": [
+		"felixfbecker.php-debug",
+		"felixfbecker.php-intellisense"
+	]
+}

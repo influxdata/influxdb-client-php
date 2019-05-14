@@ -4,12 +4,23 @@ namespace InfluxDB2;
 
 use InfluxDB2Generated\ApiClient\DefaultApi;
 use InfluxDB2Generated\Configuration;
+use InfluxDB2\WriteClient;
 
 class ApiClient extends DefaultApi
 {
+    /** @var \GuzzleHttp\Client */
+    protected $client;
+
+    /** @var WriteClient */
+    protected $writeClient;
+
     public function __construct(Configuration $configuration)
     {
-        parent::__construct(new \GuzzleHttp\Client(), $configuration);
+        $this->client = new \GuzzleHttp\Client();
+
+        parent::__construct($this->client, $configuration);
+
+        $this->writeClient = new WriteClient($this->client, $configuration);
     }
 
     public static function createFromEnvironment()
@@ -48,5 +59,10 @@ class ApiClient extends DefaultApi
         $configuration->setPassword($password);
 
         return new Self($configuration);
+    }
+
+    public function getWriteClient()
+    {
+        return $this->writeClient;
     }
 }
