@@ -27,12 +27,15 @@ Method | HTTP request | Description
 [**dashboardsPost**](DashboardsApi.md#dashboardsPost) | **POST** /dashboards | Create a dashboard
 
 
-# **dashboardsDashboardIDCellsCellIDDelete**
+
+## dashboardsDashboardIDCellsCellIDDelete
+
 > dashboardsDashboardIDCellsCellIDDelete($dashboard_id, $cell_id, $zap_trace_span)
 
 Delete a dashboard cell
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -57,6 +60,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to delte |
@@ -73,17 +77,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDCellsCellIDPatch**
+
+## dashboardsDashboardIDCellsCellIDPatch
+
 > \InfluxDB2Generated\Model\Cell dashboardsDashboardIDCellsCellIDPatch($dashboard_id, $cell_id, $cell_update, $zap_trace_span)
 
 Update the non positional information related to a cell (because updates to a single cells positional data could cause grid conflicts)
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -110,6 +119,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -127,17 +137,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDCellsCellIDViewGet**
+
+## dashboardsDashboardIDCellsCellIDViewGet
+
 > \InfluxDB2Generated\Model\View dashboardsDashboardIDCellsCellIDViewGet($dashboard_id, $cell_id, $zap_trace_span)
 
 Retrieve the view for a cell in a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -163,6 +178,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard |
@@ -179,17 +195,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDCellsCellIDViewPatch**
+
+## dashboardsDashboardIDCellsCellIDViewPatch
+
 > \InfluxDB2Generated\Model\View dashboardsDashboardIDCellsCellIDViewPatch($dashboard_id, $cell_id, $view, $zap_trace_span)
 
 Update the view for a cell
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -216,6 +237,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -233,17 +255,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDCellsPost**
+
+## dashboardsDashboardIDCellsPost
+
 > \InfluxDB2Generated\Model\Cell dashboardsDashboardIDCellsPost($dashboard_id, $create_cell, $zap_trace_span)
 
 Create a dashboard cell
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -269,6 +296,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -285,17 +313,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDCellsPut**
+
+## dashboardsDashboardIDCellsPut
+
 > \InfluxDB2Generated\Model\Dashboard dashboardsDashboardIDCellsPut($dashboard_id, $cell, $zap_trace_span)
 
 Replace a dashboards cells
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -321,6 +354,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -337,17 +371,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDDelete**
+
+## dashboardsDashboardIDDelete
+
 > dashboardsDashboardIDDelete($dashboard_id, $zap_trace_span)
 
 Delete a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -371,6 +410,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -386,17 +426,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDGet**
+
+## dashboardsDashboardIDGet
+
 > \InfluxDB2Generated\Model\Dashboard dashboardsDashboardIDGet($dashboard_id, $zap_trace_span)
 
 Get a single Dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -421,6 +466,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -436,17 +482,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDLabelsGet**
+
+## dashboardsDashboardIDLabelsGet
+
 > \InfluxDB2Generated\Model\LabelsResponse dashboardsDashboardIDLabelsGet($dashboard_id, $zap_trace_span)
 
 list all labels for a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -471,6 +522,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -486,17 +538,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDLabelsLabelIDDelete**
+
+## dashboardsDashboardIDLabelsLabelIDDelete
+
 > dashboardsDashboardIDLabelsLabelIDDelete($dashboard_id, $label_id, $zap_trace_span)
 
 delete a label from a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -521,6 +578,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -537,17 +595,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDLabelsPost**
+
+## dashboardsDashboardIDLabelsPost
+
 > \InfluxDB2Generated\Model\LabelResponse dashboardsDashboardIDLabelsPost($dashboard_id, $label_mapping, $zap_trace_span)
 
 add a label to a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -573,6 +636,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -589,17 +653,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDLogsGet**
+
+## dashboardsDashboardIDLogsGet
+
 > \InfluxDB2Generated\Model\OperationLogs dashboardsDashboardIDLogsGet($dashboard_id, $zap_trace_span, $offset, $limit)
 
 Retrieve operation logs for a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -626,6 +695,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -643,17 +713,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDMembersGet**
+
+## dashboardsDashboardIDMembersGet
+
 > \InfluxDB2Generated\Model\ResourceMembers dashboardsDashboardIDMembersGet($dashboard_id, $zap_trace_span)
 
 List all dashboard members
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -678,6 +753,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -693,17 +769,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDMembersPost**
+
+## dashboardsDashboardIDMembersPost
+
 > \InfluxDB2Generated\Model\ResourceMember dashboardsDashboardIDMembersPost($dashboard_id, $add_resource_member_request_body, $zap_trace_span)
 
 Add dashboard member
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -729,6 +810,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -745,17 +827,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDMembersUserIDDelete**
+
+## dashboardsDashboardIDMembersUserIDDelete
+
 > dashboardsDashboardIDMembersUserIDDelete($user_id, $dashboard_id, $zap_trace_span)
 
 removes a member from an dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -780,6 +867,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **string**| ID of member to remove |
@@ -796,17 +884,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDOwnersGet**
+
+## dashboardsDashboardIDOwnersGet
+
 > \InfluxDB2Generated\Model\ResourceOwners dashboardsDashboardIDOwnersGet($dashboard_id, $zap_trace_span)
 
 List all dashboard owners
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -831,6 +924,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -846,17 +940,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDOwnersPost**
+
+## dashboardsDashboardIDOwnersPost
+
 > \InfluxDB2Generated\Model\ResourceOwner dashboardsDashboardIDOwnersPost($dashboard_id, $add_resource_member_request_body, $zap_trace_span)
 
 Add dashboard owner
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -882,6 +981,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -898,17 +998,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDOwnersUserIDDelete**
+
+## dashboardsDashboardIDOwnersUserIDDelete
+
 > dashboardsDashboardIDOwnersUserIDDelete($user_id, $dashboard_id, $zap_trace_span)
 
 removes an owner from a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -933,6 +1038,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **string**| ID of owner to remove |
@@ -949,17 +1055,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDPatch**
+
+## dashboardsDashboardIDPatch
+
 > \InfluxDB2Generated\Model\Dashboard dashboardsDashboardIDPatch($dashboard_id, $dashboard, $zap_trace_span)
 
 Update a single dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -985,6 +1096,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -1001,17 +1113,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsGet**
+
+## dashboardsGet
+
 > \InfluxDB2Generated\Model\Dashboards dashboardsGet($zap_trace_span, $owner, $sort_by, $id, $org_id, $org)
 
 Get all dashboards
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -1040,6 +1157,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -1059,17 +1177,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsPost**
+
+## dashboardsPost
+
 > \InfluxDB2Generated\Model\Dashboard dashboardsPost($dashboard, $zap_trace_span)
 
 Create a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -1094,6 +1217,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard** | [**\InfluxDB2Generated\Model\Dashboard**](../Model/Dashboard.md)| dashboard to create |
@@ -1109,8 +1233,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

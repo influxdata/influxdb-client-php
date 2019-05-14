@@ -12,12 +12,15 @@ Method | HTTP request | Description
 [**querySuggestionsNameGet**](QueryApi.md#querySuggestionsNameGet) | **GET** /query/suggestions/{name} | 
 
 
-# **queryAnalyzePost**
+
+## queryAnalyzePost
+
 > \InfluxDB2Generated\Model\AnalyzeQueryResponse queryAnalyzePost($zap_trace_span, $content_type, $query)
 
 analyze an influxql or flux query
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -43,6 +46,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -59,12 +63,16 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **queryAstPost**
+
+## queryAstPost
+
 > \InfluxDB2Generated\Model\ASTResponse queryAstPost($zap_trace_span, $content_type, $language_request)
 
 
@@ -72,6 +80,7 @@ No authorization required
 analyzes flux query and generates a query specification.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -97,6 +106,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -113,17 +123,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **queryPost**
+
+## queryPost
+
 > string queryPost($zap_trace_span, $accept, $content_type, $org, $org_id, $query)
 
 query an influx
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -152,6 +167,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -171,12 +187,16 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/vnd.flux
- - **Accept**: text/csv, application/vnd.influx.arrow
+- **Content-Type**: application/json, application/vnd.flux
+- **Accept**: text/csv, application/vnd.influx.arrow
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **querySpecPost**
+
+## querySpecPost
+
 > \InfluxDB2Generated\Model\QuerySpecification querySpecPost($zap_trace_span, $content_type, $language_request)
 
 
@@ -184,6 +204,7 @@ No authorization required
 analyzes flux query and generates a query specification.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -209,6 +230,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -225,17 +247,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **querySuggestionsGet**
+
+## querySuggestionsGet
+
 > \InfluxDB2Generated\Model\FluxSuggestions querySuggestionsGet($zap_trace_span)
 
 
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -259,6 +286,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -273,17 +301,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **querySuggestionsNameGet**
+
+## querySuggestionsNameGet
+
 > \InfluxDB2Generated\Model\FluxSuggestions querySuggestionsNameGet($name, $zap_trace_span)
 
 
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -308,6 +341,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**| name of branching suggestion |
@@ -323,8 +357,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

@@ -9,12 +9,15 @@ Method | HTTP request | Description
 [**orgsOrgIDSecretsPatch**](SecretsApi.md#orgsOrgIDSecretsPatch) | **PATCH** /orgs/{orgID}/secrets | Apply patch to the provided secrets
 
 
-# **orgsOrgIDSecretsDeletePost**
+
+## orgsOrgIDSecretsDeletePost
+
 > orgsOrgIDSecretsDeletePost($org_id, $secret_keys, $zap_trace_span)
 
 delete provided secrets
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -39,6 +42,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **string**| ID of the organization |
@@ -55,17 +59,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **orgsOrgIDSecretsGet**
+
+## orgsOrgIDSecretsGet
+
 > \InfluxDB2Generated\Model\SecretKeys orgsOrgIDSecretsGet($org_id, $zap_trace_span)
 
 List all secret keys for an organization
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -90,6 +99,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **string**| ID of the organization |
@@ -105,17 +115,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **orgsOrgIDSecretsPatch**
+
+## orgsOrgIDSecretsPatch
+
 > orgsOrgIDSecretsPatch($org_id, $request_body, $zap_trace_span)
 
 Apply patch to the provided secrets
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -140,6 +155,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **string**| ID of the organization |
@@ -156,8 +172,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

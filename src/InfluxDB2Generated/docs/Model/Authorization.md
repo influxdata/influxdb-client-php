@@ -1,6 +1,7 @@
-# Authorization
+# # Authorization
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **org_id** | **string** | ID of org that authorization is scoped to. | 
@@ -14,6 +15,6 @@ Name | Type | Description | Notes
 **org** | **string** | Name of the org token is scoped to. | [optional] 
 **links** | [**\InfluxDB2Generated\Model\AuthorizationLinks**](AuthorizationLinks.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

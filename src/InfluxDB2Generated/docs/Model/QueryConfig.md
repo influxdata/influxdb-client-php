@@ -1,6 +1,7 @@
-# QueryConfig
+# # QueryConfig
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] 
@@ -14,6 +15,6 @@ Name | Type | Description | Notes
 **fields** | [**\InfluxDB2Generated\Model\Field[]**](Field.md) |  | 
 **range** | [**\InfluxDB2Generated\Model\QueryConfigRange**](QueryConfigRange.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

@@ -1,6 +1,7 @@
-# Cell
+# # Cell
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] 
@@ -12,6 +13,6 @@ Name | Type | Description | Notes
 **h** | **int** |  | [optional] 
 **view_id** | **string** | The reference to a view from the views API | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

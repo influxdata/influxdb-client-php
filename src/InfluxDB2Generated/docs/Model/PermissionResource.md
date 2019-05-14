@@ -1,6 +1,7 @@
-# PermissionResource
+# # PermissionResource
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **string** |  | 
@@ -9,6 +10,6 @@ Name | Type | Description | Notes
 **org_id** | **string** | if orgID is set that is a permission for all resources owned my that org. if it is not set it is a permission for all resources of that resource type. | [optional] 
 **org** | **string** | optional name of the organization of the organization with orgID. | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

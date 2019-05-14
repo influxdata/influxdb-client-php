@@ -20,12 +20,15 @@ Method | HTTP request | Description
 [**scrapersScraperTargetIDPatch**](ScraperTargetsApi.md#scrapersScraperTargetIDPatch) | **PATCH** /scrapers/{scraperTargetID} | update a scraper target
 
 
-# **scrapersGet**
+
+## scrapersGet
+
 > \InfluxDB2Generated\Model\ScraperTargetResponses scrapersGet()
 
 get all scraper targets
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -47,6 +50,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -59,17 +63,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersPost**
+
+## scrapersPost
+
 > \InfluxDB2Generated\Model\ScraperTargetResponse scrapersPost($scraper_target_request)
 
 create a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -93,6 +102,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_request** | [**\InfluxDB2Generated\Model\ScraperTargetRequest**](../Model/ScraperTargetRequest.md)| scraper target to create |
@@ -107,17 +117,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDDelete**
+
+## scrapersScraperTargetIDDelete
+
 > scrapersScraperTargetIDDelete($scraper_target_id, $zap_trace_span)
 
 delete a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -141,6 +156,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| id of the scraper target |
@@ -156,17 +172,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDLabelsGet**
+
+## scrapersScraperTargetIDLabelsGet
+
 > \InfluxDB2Generated\Model\InlineResponse200 scrapersScraperTargetIDLabelsGet($scraper_target_id, $zap_trace_span)
 
 list all labels for a scraper targets
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -191,6 +212,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -206,17 +228,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDLabelsLabelIDDelete**
+
+## scrapersScraperTargetIDLabelsLabelIDDelete
+
 > scrapersScraperTargetIDLabelsLabelIDDelete($scraper_target_id, $label_id, $zap_trace_span)
 
 delete a label from a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -241,6 +268,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -257,17 +285,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDLabelsLabelIDPatch**
+
+## scrapersScraperTargetIDLabelsLabelIDPatch
+
 > scrapersScraperTargetIDLabelsLabelIDPatch($scraper_target_id, $label_id, $label, $zap_trace_span)
 
 update a label from a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -293,6 +326,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -310,17 +344,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDLabelsPost**
+
+## scrapersScraperTargetIDLabelsPost
+
 > \InfluxDB2Generated\Model\InlineResponse200 scrapersScraperTargetIDLabelsPost($scraper_target_id, $label, $zap_trace_span)
 
 add a label to a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -346,6 +385,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -362,17 +402,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDMembersGet**
+
+## scrapersScraperTargetIDMembersGet
+
 > \InfluxDB2Generated\Model\ResourceMembers scrapersScraperTargetIDMembersGet($scraper_target_id, $zap_trace_span)
 
 List all users with member privileges for a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -397,6 +442,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -412,17 +458,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDMembersPost**
+
+## scrapersScraperTargetIDMembersPost
+
 > \InfluxDB2Generated\Model\ResourceMember scrapersScraperTargetIDMembersPost($scraper_target_id, $add_resource_member_request_body, $zap_trace_span)
 
 Add scraper target member
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -448,6 +499,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -464,17 +516,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDMembersUserIDDelete**
+
+## scrapersScraperTargetIDMembersUserIDDelete
+
 > scrapersScraperTargetIDMembersUserIDDelete($user_id, $scraper_target_id, $zap_trace_span)
 
 removes a member from a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -499,6 +556,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **string**| ID of member to remove |
@@ -515,17 +573,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDOwnersGet**
+
+## scrapersScraperTargetIDOwnersGet
+
 > \InfluxDB2Generated\Model\ResourceOwners scrapersScraperTargetIDOwnersGet($scraper_target_id, $zap_trace_span)
 
 List all owners of a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -550,6 +613,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -565,17 +629,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDOwnersPost**
+
+## scrapersScraperTargetIDOwnersPost
+
 > \InfluxDB2Generated\Model\ResourceOwner scrapersScraperTargetIDOwnersPost($scraper_target_id, $add_resource_member_request_body, $zap_trace_span)
 
 Add scraper target owner
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -601,6 +670,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| ID of the scraper target |
@@ -617,17 +687,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDOwnersUserIDDelete**
+
+## scrapersScraperTargetIDOwnersUserIDDelete
+
 > scrapersScraperTargetIDOwnersUserIDDelete($user_id, $scraper_target_id, $zap_trace_span)
 
 removes an owner from a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -652,6 +727,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **string**| ID of owner to remove |
@@ -668,17 +744,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **scrapersScraperTargetIDPatch**
+
+## scrapersScraperTargetIDPatch
+
 > \InfluxDB2Generated\Model\ScraperTargetResponse scrapersScraperTargetIDPatch($scraper_target_id, $scraper_target_request, $zap_trace_span)
 
 update a scraper target
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -704,6 +785,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scraper_target_id** | **string**| id of the scraper target |
@@ -720,8 +802,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

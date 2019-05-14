@@ -7,12 +7,15 @@ Method | HTTP request | Description
 [**writePost**](WriteApi.md#writePost) | **POST** /write | write time-series data into influxdb
 
 
-# **writePost**
+
+## writePost
+
 > writePost($org, $bucket, $body, $zap_trace_span, $content_encoding, $content_type, $content_length, $accept, $precision)
 
 write time-series data into influxdb
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -43,6 +46,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org** | **string**| specifies the destination organization for writes |
@@ -65,8 +69,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: text/plain
- - **Accept**: application/json
+- **Content-Type**: text/plain
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

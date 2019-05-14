@@ -1,6 +1,7 @@
-# ScraperTargetResponse
+# # ScraperTargetResponse
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **string** | name of scraper target | [optional] 
@@ -13,6 +14,6 @@ Name | Type | Description | Notes
 **bucket** | **string** | name of the bucket | [optional] 
 **links** | [**\InfluxDB2Generated\Model\Links**](Links.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

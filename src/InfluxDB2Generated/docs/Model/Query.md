@@ -1,6 +1,7 @@
-# Query
+# # Query
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **query** | **string** | query script to execute. | 
@@ -11,6 +12,6 @@ Name | Type | Description | Notes
 **cluster** | **string** | required for influxql type queries | [optional] 
 **dialect** | [**\InfluxDB2Generated\Model\Dialect**](Dialect.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

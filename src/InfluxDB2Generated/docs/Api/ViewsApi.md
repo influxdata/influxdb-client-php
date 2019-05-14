@@ -8,12 +8,15 @@ Method | HTTP request | Description
 [**dashboardsDashboardIDCellsCellIDViewPatch**](ViewsApi.md#dashboardsDashboardIDCellsCellIDViewPatch) | **PATCH** /dashboards/{dashboardID}/cells/{cellID}/view | Update the view for a cell
 
 
-# **dashboardsDashboardIDCellsCellIDViewGet**
+
+## dashboardsDashboardIDCellsCellIDViewGet
+
 > \InfluxDB2Generated\Model\View dashboardsDashboardIDCellsCellIDViewGet($dashboard_id, $cell_id, $zap_trace_span)
 
 Retrieve the view for a cell in a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -39,6 +42,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard |
@@ -55,17 +59,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDCellsCellIDViewPatch**
+
+## dashboardsDashboardIDCellsCellIDViewPatch
+
 > \InfluxDB2Generated\Model\View dashboardsDashboardIDCellsCellIDViewPatch($dashboard_id, $cell_id, $view, $zap_trace_span)
 
 Update the view for a cell
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -92,6 +101,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of dashboard to update |
@@ -109,8 +119,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

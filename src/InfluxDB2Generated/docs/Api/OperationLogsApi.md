@@ -10,12 +10,15 @@ Method | HTTP request | Description
 [**usersUserIDLogsGet**](OperationLogsApi.md#usersUserIDLogsGet) | **GET** /users/{userID}/logs | Retrieve operation logs for a user
 
 
-# **bucketsBucketIDLogsGet**
+
+## bucketsBucketIDLogsGet
+
 > \InfluxDB2Generated\Model\OperationLogs bucketsBucketIDLogsGet($bucket_id, $zap_trace_span, $offset, $limit)
 
 Retrieve operation logs for a bucket
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -42,6 +45,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucket_id** | **string**| ID of the bucket |
@@ -59,17 +63,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **dashboardsDashboardIDLogsGet**
+
+## dashboardsDashboardIDLogsGet
+
 > \InfluxDB2Generated\Model\OperationLogs dashboardsDashboardIDLogsGet($dashboard_id, $zap_trace_span, $offset, $limit)
 
 Retrieve operation logs for a dashboard
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -96,6 +105,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dashboard_id** | **string**| ID of the dashboard |
@@ -113,17 +123,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **orgsOrgIDLogsGet**
+
+## orgsOrgIDLogsGet
+
 > \InfluxDB2Generated\Model\OperationLogs orgsOrgIDLogsGet($org_id, $zap_trace_span, $offset, $limit)
 
 Retrieve operation logs for an organization
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -150,6 +165,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **string**| ID of the organization |
@@ -167,17 +183,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **usersUserIDLogsGet**
+
+## usersUserIDLogsGet
+
 > \InfluxDB2Generated\Model\OperationLogs usersUserIDLogsGet($user_id, $zap_trace_span, $offset, $limit)
 
 Retrieve operation logs for a user
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -204,6 +225,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user_id** | **string**| ID of the user |
@@ -221,8 +243,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

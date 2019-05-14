@@ -8,12 +8,15 @@ Method | HTTP request | Description
 [**setupPost**](SetupApi.md#setupPost) | **POST** /setup | post onboarding request, to setup initial user, org and bucket
 
 
-# **setupGet**
+
+## setupGet
+
 > \InfluxDB2Generated\Model\IsOnboarding setupGet($zap_trace_span)
 
 check if database has default user, org, bucket created, returns true if not.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -37,6 +40,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -51,17 +55,22 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 
-# **setupPost**
+
+## setupPost
+
 > \InfluxDB2Generated\Model\OnboardingResponse setupPost($onboarding_request, $zap_trace_span)
 
 post onboarding request, to setup initial user, org and bucket
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -86,6 +95,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **onboarding_request** | [**\InfluxDB2Generated\Model\OnboardingRequest**](../Model/OnboardingRequest.md)| source to create |
@@ -101,8 +111,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

@@ -7,12 +7,15 @@ Method | HTTP request | Description
 [**healthGet**](HealthApi.md#healthGet) | **GET** /health | Get the health of an instance anytime during execution. Allow us to check if the instance is still healthy.
 
 
-# **healthGet**
+
+## healthGet
+
 > \InfluxDB2Generated\Model\Check healthGet($zap_trace_span)
 
 Get the health of an instance anytime during execution. Allow us to check if the instance is still healthy.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -36,6 +39,7 @@ try {
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zap_trace_span** | **string**| OpenTracing span context | [optional]
@@ -50,8 +54,10 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
 

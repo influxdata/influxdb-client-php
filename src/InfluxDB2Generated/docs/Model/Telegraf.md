@@ -1,6 +1,7 @@
-# Telegraf
+# # Telegraf
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **string** |  | [optional] 
@@ -9,9 +10,9 @@ Name | Type | Description | Notes
 **plugins** | [**\InfluxDB2Generated\Model\TelegrafRequestPlugin[]**](TelegrafRequestPlugin.md) |  | [optional] 
 **organization_id** | **string** |  | [optional] 
 **id** | **string** |  | [optional] 
-**links** | **object** |  | [optional] 
+**links** | [**\InfluxDB2Generated\Model\TelegrafAllOfLinks**](TelegrafAllOfLinks.md) |  | [optional] 
 **labels** | [**\InfluxDB2Generated\Model\Label[]**](Label.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

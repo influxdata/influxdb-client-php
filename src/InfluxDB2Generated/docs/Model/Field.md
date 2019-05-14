@@ -1,6 +1,7 @@
-# Field
+# # Field
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **value** | **string** | value is the value of the field.  Meaning of the value is implied by the &#x60;type&#x60; key | [optional] 
@@ -8,6 +9,6 @@ Name | Type | Description | Notes
 **alias** | **string** | Alias overrides the field name in the returned response.  Applies only if type is &#x60;func&#x60; | [optional] 
 **args** | [**\InfluxDB2Generated\Model\Field[]**](Field.md) | Args are the arguments to the function | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

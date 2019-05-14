@@ -1,6 +1,7 @@
-# V1ViewProperties
+# # V1ViewProperties
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **string** |  | [optional] 
@@ -14,6 +15,6 @@ Name | Type | Description | Notes
 **time_format** | **string** | timeFormat describes the display format for time values according to moment.js date formatting | [optional] 
 **decimal_points** | [**\InfluxDB2Generated\Model\V1ViewPropertiesDecimalPoints**](V1ViewPropertiesDecimalPoints.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

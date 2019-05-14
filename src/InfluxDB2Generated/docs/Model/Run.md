@@ -1,6 +1,7 @@
-# Run
+# # Run
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] 
@@ -12,6 +13,6 @@ Name | Type | Description | Notes
 **requested_at** | [**\DateTime**](\DateTime.md) | Time run was manually requested, RFC3339Nano. | [optional] 
 **links** | [**\InfluxDB2Generated\Model\RunLinks**](RunLinks.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

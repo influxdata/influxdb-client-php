@@ -1,6 +1,7 @@
-# OrganizationLinks
+# # OrganizationLinks
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **self** | **string** |  | [optional] 
@@ -11,6 +12,6 @@ Name | Type | Description | Notes
 **tasks** | **string** |  | [optional] 
 **dashboards** | **string** |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

@@ -1,6 +1,7 @@
-# TaskUpdateRequest
+# # TaskUpdateRequest
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **string** | Starting state of the task. &#39;inactive&#39; tasks are not run until they are updated to &#39;active&#39; | [optional] [default to 'active']
@@ -11,6 +12,6 @@ Name | Type | Description | Notes
 **offset** | **string** | Override the &#39;offset&#39; option in the flux script. | [optional] 
 **token** | **string** | Override the existing token associated with the task. | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 
