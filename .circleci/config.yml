@@ -67,7 +67,7 @@ jobs:
     parameters:
       php-image:
         type: string
-        default: &default-php-image "circleci/php:7.4.0"
+        default: &default-php-image "circleci/php:7.3"
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:2.0.0-beta"
@@ -118,18 +118,15 @@ workflows:
     jobs:
       - tests-php:
           name: php-7.3
-          php-image: "circleci/php:7.3.7-stretch"
       - tests-php:
-          name: php-7.4
-      - tests-php:
-          name: php-7.4-nightly
+          name: php-7.3-nightly
           influxdb-image: "influx:nightly"
       - tests-php:
           name: php-7.2
-          php-image: "circleci/php:7.2-buster"
+          php-image: "circleci/php:7.2"
       - tests-php:
           name: php-7.1
-          php-image: "circleci/php:7.1-buster"
+          php-image: "circleci/php:7.1"
       - deploy-preview:
           requires:
             - php-7.3
