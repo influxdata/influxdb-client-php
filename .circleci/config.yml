@@ -67,7 +67,7 @@ jobs:
     parameters:
       php-image:
         type: string
-        default: &default-php-image "circleci/php:7.4.1-buster"
+        default: &default-php-image "circleci/php:7.4.0"
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:2.0.0-beta"
