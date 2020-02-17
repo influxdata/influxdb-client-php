@@ -1,25 +1,178 @@
-version: 2
-jobs:
-  build:
-    machine: true
+#
+# The MIT License
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+
+version: 2.1
+
+commands:
+  influxdb-onboarding:
+    steps:
+      - run:
+          name: "Post onBoarding request to InfluxDB 2"
+          command: ./scripts/influxdb-onboarding.sh
+  prepare:
+    description: "Prepare environment to tests"
     steps:
       - checkout
+      - influxdb-onboarding
+  test:
+    parameters:
+      php-image:
+        type: string
+    steps:
+      - restore_cache:
+          name: Restoring Composer Cache
+          keys:
+              - composer-v1-{{ checksum "composer.lock" }}
+              - composer-v1-
+      - run:
+          name: Install dependencies
+          command: |
+            composer install -n --prefer-dist
+      - run:
+          name: Run tests
+          command: |
+            vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report
+      - save_cache:
+          name: Saving Cache
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+          when: always
+  storing-test-results:
+    steps:
+      - store_test_results:
+          path: build/
+
+jobs:
+  tests-php:
+    parameters:
+      php-image:
+        type: string
+        default: &default-php-image "circleci/php:7.4.1-buster"
+      influxdb-image:
+        type: string
+        default: &default-influxdb-image "influxdb:2.0.0-beta"
+    docker:
+      - image: << parameters.php-image >>
+      - image: &influx-image quay.io/influxdb/<< parameters.influxdb-image >>
+    steps:
+      - prepare
+      - test:
+          php-image: << parameters.php-image >>
+      - storing-test-results
+
+  deploy-preview:
+    parameters:
+      influxdb-image:
+        type: string
+        default: *default-influxdb-image
+    docker:
+      - image: *default-php-image
+      - image: *influx-image
+    steps:
+      - run:
+          name: Early return if this build is from a forked repository
+          command: |
+            if [[ $CIRCLE_PROJECT_USERNAME != "influxdata" ]]; then
+              echo "Nothing to do for forked repositories, so marking this step successful"
+              circleci step halt
+            fi
+      - checkout
+      - run:
+          name: Setup Packagist
+          command: bash .circleci/setup-packagist.sh
+      - run:
+          name: Build a packagist
+          command: |
+            echo TODO build package
+#            gem build influxdb-client.gemspec
 
       - run:
-          name: Export DOCKER_RUN Command
-          command: echo 'export DOCKER_RUN="docker container run --rm -v ${HOME}/project:/code -w /code"' >> $BASH_ENV
+          name: Deploy pre-release into https://rubygems.org
+          command: |
+            echo TODO publish package
+#            gem push influxdb-client-*.pre.$CIRCLE_BUILD_NUM.gem
 
-      # Generate ApiClient
-      - run:
-          name: Generate ApiClient Code
-          command: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest ash -c 'apk add --update make && make generate-api-client'
+workflows:
+  version: 2
+  build:
+    jobs:
+      - tests-php:
+          name: php-7.3
+          php-image: "circleci/php:7.3.7-stretch"
+      - tests-php:
+          name: php-7.4
+      - tests-php:
+          name: php-7.4-nightly
+          influxdb-image: "influx:nightly"
+      - tests-php:
+          name: php-7.2
+          php-image: "circleci/php:7.2-buster"
+      - tests-php:
+          name: php-7.1
+          php-image: "circleci/php:7.1-buster"
+      - deploy-preview:
+          requires:
+            - php-7.3
+            - php-7.4
+            - php-7.4-nightly
+            - php-7.2
+            - php-7.1
+          filters:
+            branches:
+              only: master
 
-      # Fetch Dependencies
-      - run:
-          name: Fetch Depdencies with Composer
-          command: ${DOCKER_RUN} composer:latest ash -c 'apk add --update make && make deps'
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - tests-php
 
-      # Run Tests
-      - run:
-          name: Run Tests
-          command: ${DOCKER_RUN} php:7.1-cli make test
+#jobs:
+#  build:
+#    machine: true
+#    steps:
+#      - checkout
+#
+#      - run:
+#          name: Export DOCKER_RUN Command
+#          command: echo 'export DOCKER_RUN="docker container run --rm -v ${HOME}/project:/code -w /code"' >> $BASH_ENV
+#
+#      # Generate ApiClient
+#      - run:
+#          name: Generate ApiClient Code
+#          command: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest ash -c 'apk add --update make && make generate-api-client'
+#
+#      # Fetch Dependencies
+#      - run:
+#          name: Fetch Depdencies with Composer
+#          command: ${DOCKER_RUN} composer:latest ash -c 'apk add --update make && make deps'
+#
+#      # Run Tests
+#      - run:
+#          name: Run Tests
+#          command: ${DOCKER_RUN} php:7.1-cli make test
