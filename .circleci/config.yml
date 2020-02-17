@@ -130,8 +130,7 @@ workflows:
       - deploy-preview:
           requires:
             - php-7.3
-            - php-7.4
-            - php-7.4-nightly
+            - php-7.3-nightly
             - php-7.2
             - php-7.1
           filters:
