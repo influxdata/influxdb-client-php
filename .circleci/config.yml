@@ -41,7 +41,7 @@ commands:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
-              - composer-v1-{{ checksum "composer.lock" }}
+              - composer-v1-{{ checksum "composer.json" }}
               - composer-v1-
       - run:
           name: Install dependencies
@@ -53,7 +53,7 @@ commands:
             vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report
       - save_cache:
           name: Saving Cache
-          key: composer-v1-{{ checksum "composer.lock" }}
+          key: composer-v1-{{ checksum "composer.json" }}
           paths:
             - vendor
           when: always
@@ -147,28 +147,3 @@ workflows:
                 - master
     jobs:
       - tests-php
-
-#jobs:
-#  build:
-#    machine: true
-#    steps:
-#      - checkout
-#
-#      - run:
-#          name: Export DOCKER_RUN Command
-#          command: echo 'export DOCKER_RUN="docker container run --rm -v ${HOME}/project:/code -w /code"' >> $BASH_ENV
-#
-#      # Generate ApiClient
-#      - run:
-#          name: Generate ApiClient Code
-#          command: ${DOCKER_RUN} openapitools/openapi-generator-cli:latest ash -c 'apk add --update make && make generate-api-client'
-#
-#      # Fetch Dependencies
-#      - run:
-#          name: Fetch Depdencies with Composer
-#          command: ${DOCKER_RUN} composer:latest ash -c 'apk add --update make && make deps'
-#
-#      # Run Tests
-#      - run:
-#          name: Run Tests
-#          command: ${DOCKER_RUN} php:7.1-cli make test
