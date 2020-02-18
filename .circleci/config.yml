@@ -41,6 +41,7 @@ commands:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
+              - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
               - composer-v1-{{ checksum "composer.json" }}
               - composer-v1-
       - run:
@@ -53,7 +54,7 @@ commands:
             vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report
       - save_cache:
           name: Saving Cache
-          key: composer-v1-{{ checksum "composer.json" }}
+          key: composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
           paths:
             - vendor
           when: always
