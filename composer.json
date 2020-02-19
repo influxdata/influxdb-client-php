@@ -16,12 +16,9 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "~2.12",
-    "phpspec/phpspec": "^4.0",
+    "phpspec/phpspec": "^5.0",
     "phpunit/phpunit": "^7.4",
     "squizlabs/php_codesniffer": "~2.6"
-  },
-  "config": {
-    "bin-dir": "bin"
   },
   "autoload": {
     "psr-4": {
@@ -34,5 +31,10 @@
       "InfluxDB2\\": "test/InfluxDB2",
       "InfluxDB2Generated\\": "src/"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit tests",
+    "test-ci": "vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report"
   }
+
 }
