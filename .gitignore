@@ -2,3 +2,5 @@ bin/
 vendor/
 composer.lock
 build/
+.idea/
+coverage.xml
