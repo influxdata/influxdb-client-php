@@ -21,6 +21,5 @@
     </filter>
     <logging>
         <log type="junit" target="build/report.junit.xml"/>
-        <log type="coverage-html" target="build/coverage"/>
     </logging>
 </phpunit>

@@ -51,7 +51,10 @@ commands:
       - run:
           name: Run tests
           command: |
-            vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report
+            vendor/bin/phpunit tests --coverage-clover=coverage.xml
+      - run:
+          name: "Collecting coverage reports"
+          command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
       - save_cache:
           name: Saving Cache
           key: composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
