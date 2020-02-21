@@ -1,0 +1,2 @@
+ignore:
+  - "src/InfluxDB2Generated/**/*"
