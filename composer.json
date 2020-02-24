@@ -22,14 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "InfluxDB2\\": "src/InfluxDB2",
-      "InfluxDB2Generated\\": "src/InfluxDB2Generated/lib/"
+      "InfluxDB2\\": "src/InfluxDB2"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "InfluxDB2\\": "test/InfluxDB2",
-      "InfluxDB2Generated\\": "src/"
+      "InfluxDB2\\": "test/InfluxDB2"
     }
   },
   "scripts": {

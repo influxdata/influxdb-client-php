@@ -2,6 +2,8 @@
 
 namespace InfluxDB2;
 
+use InvalidArgumentException;
+
 class Point
 {
     /** @var string */
@@ -16,13 +18,18 @@ class Point
     public function __construct($measurement, $tags, $fields, $time = null)
     {
         if(is_null($fields)) {
-            throw new \Exception("No fields specified");
+            throw new InvalidArgumentException("No fields specified");
         }
 
         $this->measurement =$measurement;
         $this->tags = $tags;
         $this->fields = $fields;
         $this->time = $time;
+    }
+
+    public static function fromArray(array $data):Point
+    {
+        return new Point($data["name"], $data["tags"], $data["fields"], $data["time"]);
     }
 
     public function getMeasuremnt()

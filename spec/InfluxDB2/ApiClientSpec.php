@@ -2,8 +2,8 @@
 
 namespace spec\InfluxDB2;
 
-use InfluxDB2\ApiClient;
-use InfluxDB2\WriteClient;
+use InfluxDB2\Client;
+use InfluxDB2\WriteApi;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use InfluxDB2Generated\Configuration;
@@ -18,7 +18,7 @@ class ApiClientSpec extends ObjectBehavior
 
         $this->beConstructedWith($configuration);
 
-        $this->shouldHaveType(ApiClient::class);
+        $this->shouldHaveType(Client::class);
         $this->getConfig()->shouldEqual($configuration);
     }
 
@@ -35,7 +35,7 @@ class ApiClientSpec extends ObjectBehavior
 
         $this->beConstructedThrough("createFromEnvironment", []);
 
-        $this->shouldHaveType(ApiClient::class);
+        $this->shouldHaveType(Client::class);
         $this->getConfig()->shouldBeLike($configuration);
     }
 
@@ -48,7 +48,7 @@ class ApiClientSpec extends ObjectBehavior
 
         $this->beConstructedThrough("createWithCredentials", ["my_host:9999", "username", "password"]);
 
-        $this->shouldHaveType(ApiClient::class);
+        $this->shouldHaveType(Client::class);
         $this->getConfig()->shouldBeLike($configuration);
     }
 
@@ -60,7 +60,7 @@ class ApiClientSpec extends ObjectBehavior
 
         $this->beConstructedWith($configuration);
 
-        $this->getWriteClient()->shouldHaveType(WriteClient::class);
+        $this->getWriteClient()->shouldHaveType(WriteApi::class);
         $this->getWriteClient()->getConfig()->shouldBeLike($configuration);
     }
 }

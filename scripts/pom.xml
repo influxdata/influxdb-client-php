@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.influxdata</groupId>
+    <artifactId>influxdb-client-php</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>influxdb-client-php</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>3.3.4</version>
+                <configuration>
+                    <inputSpec>${project.basedir}/swagger.yml</inputSpec>
+                    <generatorName>php</generatorName>
+                    <configOptions>
+                        <moduleName>InfluxDB2</moduleName>
+                        <invokerPackage>InfluxDB2</invokerPackage>
+                        <apiPackage>service</apiPackage>
+                    </configOptions>
+                    <generateModelDocumentation>false</generateModelDocumentation>
+                    <generateApiDocumentation>false</generateApiDocumentation>
+                    <generateApis>true</generateApis>
+                    <generateApiTests>false</generateApiTests>
+                    <generateSupportingFiles>true</generateSupportingFiles>
+                    <generateModelTests>false</generateModelTests>
+
+                    <verbose>false</verbose>
+                    <output>${project.basedir}/../generated</output>
+                    <addCompileSourceRoot>false</addCompileSourceRoot>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

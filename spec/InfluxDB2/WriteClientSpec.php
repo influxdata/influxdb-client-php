@@ -2,7 +2,7 @@
 
 namespace spec\InfluxDB2;
 
-use InfluxDB2\WriteClient;
+use InfluxDB2\WriteApi;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use InfluxDB2Generated\Configuration;
@@ -19,7 +19,7 @@ class WriteClientSpec extends ObjectBehavior
 
         $this->beConstructedWith($client, $configuration);
 
-        $this->shouldHaveType(WriteClient::class);
+        $this->shouldHaveType(WriteApi::class);
         $this->getClient()->shouldEqual($client);
         $this->getConfig()->shouldEqual($configuration);
     }
