@@ -214,4 +214,13 @@ class PointTest extends TestCase
 
         $this->assertEquals('h2o level=2i 123', $point->toLineProtocol());
     }
+
+    public function testWithoutFields()
+    {
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->time(123);
+
+        $this->assertNull($point->toLineProtocol());
+    }
 }
