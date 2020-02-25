@@ -1,6 +1,6 @@
 <?php
 
-namespace InfluxDB2Generated;
+namespace InfluxDB2Test;
 
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
@@ -27,11 +27,6 @@ class WriteApiIntegrationTest extends TestCase
         ]);
 
         $this->writeApi = $this->client->createWriteApi();
-    }
-
-    public function testDummy()
-    {
-        $this->assertTrue(true);
     }
 
     public function testExistsWriteApi()

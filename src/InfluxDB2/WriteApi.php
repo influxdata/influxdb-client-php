@@ -99,7 +99,8 @@ class WriteApi extends DefaultApi
             }
         }
         if ($data instanceof Point) {
-            return $this->generatePayload($data->lineProtocol(), $precision, $bucket, $org);
+            return $this->generatePayload($data->toLineProtocol(), $data->getPrecision() !== null ?
+                $data->getPrecision() : $precision, $bucket, $org);
         }
         if (is_array($data)) {
             return $this->generatePayload(Point::fromArray($data), $precision, $bucket, $org);
