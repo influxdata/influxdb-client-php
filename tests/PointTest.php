@@ -191,7 +191,7 @@ class PointTest extends TestCase
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
-            ->time(102030405060);
+            ->time(102030405060.24);
 
         $this->assertEquals('h2o,location=europe level=2i 102030405060', $point->toLineProtocol());
     }
