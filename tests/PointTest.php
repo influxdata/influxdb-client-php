@@ -223,4 +223,14 @@ class PointTest extends TestCase
 
         $this->assertNull($point->toLineProtocol());
     }
+
+    public function testFromArrayWithoutName()
+    {
+        $pointArray = Point::fromArray(array(
+            'tags' => array('host' => 'aws', 'region' => 'us'),
+            'fields' => array('level' => 5, 'saturation' => '99%'),
+            'time' => 123));
+
+        $this->assertNull($pointArray);
+    }
 }
