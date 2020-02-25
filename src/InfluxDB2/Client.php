@@ -2,12 +2,9 @@
 
 namespace InfluxDB2;
 
-
-use InfluxDB2\Model\WritePrecision;
-
 class Client
 {
-    var $options;
+    public $options;
 
     /**
      * Client constructor.
@@ -28,13 +25,23 @@ class Client
         $this->options = $options;
     }
 
-    public function createWriteApi(WriteOptions $writeOptions = null):WriteApi
+    /**
+     * Write time series data into InfluxDB thought WriteApi.
+     *      $writeOptions = [
+     *          'writeType' => methods of write (WriteType::SYNCHRONOUS - default, WriteType::BATCHING)
+     *          'batchSize' => the number of data point to collect in batch
+     *          'flushInterval' => flush data at least in this interval
+     *      ]
+     * @param array|null $writeOptions Array containing the write parameters (See above)
+     * @return WriteApi
+     */
+    public function createWriteApi(array $writeOptions = null): WriteApi
     {
         return new WriteApi($this->options, $writeOptions);
     }
 
     /**
-     * Close ll connections into InfluxDB
+     * Close all connections into InfluxDB
      */
     public function close()
     {
