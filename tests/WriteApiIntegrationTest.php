@@ -3,6 +3,7 @@
 namespace InfluxDB2Test;
 
 use InfluxDB2\Client;
+use InfluxDB2\Point;
 use InfluxDB2\Model\WritePrecision;
 use PHPUnit\Framework\TestCase;
 
@@ -58,5 +59,50 @@ class WriteApiIntegrationTest extends TestCase
         self::assertNull($response);
     }
 
+    public function testWriteArrayOfPoint()
+    {
+        $point1 = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2)
+            ->time(123);
+        $point2 = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 3)
+            ->time(124);
 
+        $data = array($point1, $point2);
+
+        $response = $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
+        self::assertNull($response);
+    }
+
+    public function testWriteArrayOfArray()
+    {
+        $data1 = [
+            'name' => "h2o",
+            'tags' => [
+                'host' => 'aws', 'region' => 'us'
+            ],
+            'fields' => [
+                'level' => 5, 'saturation' => 99
+            ],
+            'time' => 123
+        ];
+
+        $data2 = [
+            'name' => "h2o",
+            'tags' => [
+                'host' => 'aws', 'region' => 'us'
+            ],
+            'fields' => [
+                'level' => 6, 'saturation' => 98
+            ],
+            'time' => 124
+        ];
+
+        $data = array($data1, $data2);
+
+        $response = $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
+        self::assertNull($response);
+    }
 }

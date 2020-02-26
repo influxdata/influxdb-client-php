@@ -85,7 +85,7 @@ class WriteApi extends DefaultApi
 
     }
 
-    private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null): string
+    private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null): ?string
     {
         if ($data == null || empty($data)) {
             return null;
@@ -102,9 +102,23 @@ class WriteApi extends DefaultApi
             return $this->generatePayload($data->toLineProtocol(), $data->getPrecision() !== null ?
                 $data->getPrecision() : $precision, $bucket, $org);
         }
-        if (is_array($data)) {
-            return $this->generatePayload(Point::fromArray($data), $precision, $bucket, $org);
+        if (is_array($data))
+        {
+            if (array_key_exists('name', $data))
+            {
+                return $this->generatePayload(Point::fromArray($data), $precision, $bucket, $org);
+            }
+
+            $payload = '';
+
+            foreach ($data as $item)
+            {
+                $payload .= $this->generatePayload($item, $precision, $bucket, $org) . "\n";
+            }
+
+            return $payload;
         }
+
         return null;
     }
 
