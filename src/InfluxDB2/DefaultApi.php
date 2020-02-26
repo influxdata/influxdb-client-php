@@ -5,6 +5,7 @@ namespace InfluxDB2;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
 
 class DefaultApi
 {
@@ -18,9 +19,6 @@ class DefaultApi
     public function __construct(array $options)
     {
         $this->options = $options;
-        if (!array_key_exists("debug", $options)) {
-            $this->options["debug"] = false;
-        }
     }
 
     /**
@@ -29,7 +27,7 @@ class DefaultApi
      * @param $queryParams
      * @param $limit
      */
-    public function post($payload, $uriPath, $queryParams, $limit = self::DEFAULT_TIMEOUT)
+    public function post($payload, $uriPath, $queryParams, $limit = self::DEFAULT_TIMEOUT): ResponseInterface
     {
         $http = new Client([
             'base_uri' => $this->options["url"],
@@ -53,6 +51,23 @@ class DefaultApi
             //execute post call
             $response = $http->post($uriPath, $options);
 
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $uriPath
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+            return $response;
+
+
         } catch (RequestException $e) {
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
@@ -62,20 +77,6 @@ class DefaultApi
             );
         }
 
-        $statusCode = $response->getStatusCode();
-
-        if ($statusCode < 200 || $statusCode > 299) {
-            throw new ApiException(
-                sprintf(
-                    '[%d] Error connecting to the API (%s)',
-                    $statusCode,
-                    $uriPath
-                ),
-                $statusCode,
-                $response->getHeaders(),
-                $response->getBody()
-            );
-        }
 
     }
 

@@ -14,7 +14,8 @@ mvn org.openapitools:openapi-generator-maven-plugin:generate
 rm "${SCRIPT_PATH}"/../src/InfluxDB2/API/*
 rm "${SCRIPT_PATH}"/../src/InfluxDB2/Model/*
 
-cp -r "${SCRIPT_PATH}"/../generated/lib/ApiException.php "${SCRIPT_PATH}"/../src/InfluxDB2
+#cp -r "${SCRIPT_PATH}"/../generated/lib/ApiException.php "${SCRIPT_PATH}"/../src/InfluxDB2
+cp -r "${SCRIPT_PATH}"/../generated/lib/ObjectSerializer.php "${SCRIPT_PATH}"/../src/InfluxDB2
 
 #mkdir -p "${SCRIPT_PATH}"/../src/InfluxDB2/API
 #cp -r "${SCRIPT_PATH}"/../generated/lib/API/*.php "${SCRIPT_PATH}"/../src/InfluxDB2/API
@@ -22,5 +23,7 @@ cp -r "${SCRIPT_PATH}"/../generated/lib/ApiException.php "${SCRIPT_PATH}"/../src
 mkdir -p "${SCRIPT_PATH}"/../src/InfluxDB2/Model
 cp -r "${SCRIPT_PATH}"/../generated/lib/Model/WritePrecision.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
 cp -r "${SCRIPT_PATH}"/../generated/lib/Model/Query.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
+cp -r "${SCRIPT_PATH}"/../generated/lib/Model/Dialect.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
+cp -r "${SCRIPT_PATH}"/../generated/lib/Model/ModelInterface.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
 
 rm -rf "${SCRIPT_PATH}"/../generated

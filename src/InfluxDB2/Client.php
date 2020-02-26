@@ -41,6 +41,16 @@ class Client
     }
 
     /**
+     * Get the Query client.
+     *
+     * @return QueryApi
+     */
+    public function createQueryApi(): QueryApi
+    {
+        return new QueryApi($this->options);
+    }
+
+    /**
      * Close all connections into InfluxDB
      */
     public function close()

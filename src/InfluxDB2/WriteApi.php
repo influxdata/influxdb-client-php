@@ -103,7 +103,7 @@ class WriteApi extends DefaultApi
 
         if (WriteType::BATCHING == $this->writeOptions->writeType)
         {
-            print ("TODO Not implemented yet");
+            print ("BATCHING is not implemented yet\n");
         } else {
             $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
         }
@@ -135,7 +135,7 @@ class WriteApi extends DefaultApi
         $this->post($data, "/api/v2/write", $queryParams);
     }
 
-    private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null): ?string
+    private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null)
     {
         if ($data == null || empty($data)) {
             return null;

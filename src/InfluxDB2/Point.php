@@ -41,7 +41,7 @@ class Point
     /**
      * @return WritePrecision
      */
-    public function getPrecision(): ?WritePrecision
+    public function getPrecision(): ?string
     {
         return $this->precision;
     }
