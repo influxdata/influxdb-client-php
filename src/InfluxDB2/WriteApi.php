@@ -2,6 +2,9 @@
 
 namespace InfluxDB2;
 
+
+use InfluxDB2\Model\WritePrecision;
+
 class WriteType
 {
     const SYNCHRONOUS = 1;
@@ -98,7 +101,8 @@ class WriteApi extends DefaultApi
             return;
         }
 
-        if (WriteType::BATCHING == $this->writeOptions->writeType) {
+        if (WriteType::BATCHING == $this->writeOptions->writeType)
+        {
             print ("TODO Not implemented yet");
         } else {
             $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
@@ -118,7 +122,6 @@ class WriteApi extends DefaultApi
      */
     public function writeRaw(string $data, string $precision = null, string $bucket = null, string $org = null)
     {
-
         $precisionParam = $this->getOption("precision", $precision);
         $bucketParam = $this->getOption("bucket", $bucket);
         $orgParam = $this->getOption("org", $org);
@@ -130,7 +133,6 @@ class WriteApi extends DefaultApi
         $queryParams = ["org" => $orgParam, "bucket" => $bucketParam, "precision" => $precisionParam];
 
         $this->post($data, "/api/v2/write", $queryParams);
-
     }
 
     private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null): ?string
@@ -141,8 +143,7 @@ class WriteApi extends DefaultApi
         if (is_string($data)) {
 
             if (WriteType::BATCHING == $this->writeOptions->writeType) {
-                print ("TODO implement batching");
-                return $data;
+                return new BatchItem(new BatchItemKey($bucket, $org, $precision), $data);
             } else {
                 return $data;
             }
@@ -175,5 +176,81 @@ class WriteApi extends DefaultApi
     {
         return isset($precision) ? $precision : $this->options["$optionName"];
     }
+}
 
+/**
+ * Item for batching queue
+ */
+class BatchItem
+{
+    /** @var BatchItemKey */
+    private $key;
+    /** @var string */
+    private $data;
+
+    public function __construct($key, $data)
+    {
+        $this->key = $key;
+        $this->data = $data;
+    }
+
+    /**
+     * @return BatchItemKey
+     */
+    public function getKey(): BatchItemKey
+    {
+        return $this->key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getData(): string
+    {
+        return $this->data;
+    }
+}
+
+/**
+ * Key for batch item
+ */
+class BatchItemKey
+{
+    /** @var string */
+    private $bucket;
+    /** @var string */
+    private $org;
+    /** @var WritePrecision */
+    private $precision;
+
+    public function __construct($bucket, $org, $precision)
+    {
+        $this->bucket = $bucket;
+        $this->org = $org;
+        $this->precision = $precision;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBucket(): string
+    {
+        return $this->bucket;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrg(): string
+    {
+        return $this->org;
+    }
+
+    /**
+     * @return WritePrecision
+     */
+    public function getPrecision(): WritePrecision
+    {
+        return $this->precision;
+    }
 }
