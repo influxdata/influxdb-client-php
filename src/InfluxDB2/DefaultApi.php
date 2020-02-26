@@ -2,7 +2,6 @@
 
 namespace InfluxDB2;
 
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use InvalidArgumentException;
@@ -10,7 +9,7 @@ use InvalidArgumentException;
 class DefaultApi
 {
     const DEFAULT_TIMEOUT = 10;
-    var $options;
+    public $options;
 
     /**
      * DefaultApi constructor.
@@ -19,7 +18,7 @@ class DefaultApi
     public function __construct(array $options)
     {
         $this->options = $options;
-        if (!array_key_exists( "debug", $options)) {
+        if (!array_key_exists("debug", $options)) {
             $this->options["debug"] = false;
         }
     }
@@ -38,16 +37,22 @@ class DefaultApi
         ]);
 
         try {
-            $response = $http->post(
-                $uriPath, [
-                    'headers' => [
-                        'Authorization' => "Token {$this->options['token']}",
-                    ],
-                    'query' => $queryParams,
-                    'body' => $payload,
-                    'debug' => $this->options["debug"]
-                ]
-            );
+            $options = [
+                'headers' => [
+                    'Authorization' => "Token {$this->options['token']}",
+                ],
+                'query' => $queryParams,
+                'body' => $payload,
+            ];
+
+            // enable debug
+            if (array_key_exists("debug", $this->options)) {
+                $options['debug'] = $this->options["debug"];
+            }
+
+            //execute post call
+            $response = $http->post($uriPath, $options);
+
         } catch (RequestException $e) {
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
