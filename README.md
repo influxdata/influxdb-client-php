@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/influxdata/influxdb-client-php.svg?style=svg)](https://circleci.com/gh/influxdata/influxdb-client-php)
 [![codecov](https://codecov.io/gh/influxdata/influxdb-client-php/branch/master/graph/badge.svg)](https://codecov.io/gh/influxdata/influxdb-client-php)
-[![Latest Stable Version](https://poser.pugx.org/influxdb/influxdb-client-php/v/stable)](https://packagist.org/packages/influxdb/influxdb-client-php)
+[![Latest Stable Version](https://poser.pugx.org/influxdata/influxdb-client-php/v/stable)](https://packagist.org/packages/influxdata/influxdb-client-php)
 [![License](https://img.shields.io/github/license/influxdata/influxdb-client-php.svg)](https://github.com/influxdata/influxdb-client-php/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues-raw/influxdata/influxdb-client-php.svg)](https://github.com/influxdata/influxdb-client-php/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/influxdata/influxdb-client-php.svg)](https://github.com/influxdata/influxdb-client-php/pulls)
