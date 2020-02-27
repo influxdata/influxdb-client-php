@@ -48,9 +48,13 @@ $client = new InfluxDB2\Client([
 | bucket | Default destination bucket for writes | String | none |
 | org | Default organization bucket for writes | String | none |
 | precision | Default precision for the unix timestamps within the body line-protocol | String | none |
+
+
+<!--- TODO
 | open_timeout | Number of seconds to wait for the connection to open | Integer | 10 |
 | write_timeout | Number of seconds to wait for one block of data to be written | Integer | 10 |
 | read_timeout | Number of seconds to wait for one block of data to be read | Integer | 10 |
+-->
 
 ### Writing data
 
@@ -68,6 +72,7 @@ $write_api = $client->createWriteApi();
 $write_api->write('h2o,location=west value=33i 15');
 ```
 
+<!--- TODO still in progress
 #### Batching
 
 The writes are processed in batches which are configurable by `WriteOptions`:
@@ -90,6 +95,7 @@ $writeApi = $client->createWriteApi(
 
 $writeApi->write('h2o,location=west value=33i 15');
 ```
+-->
 
 #### Time precision
 
