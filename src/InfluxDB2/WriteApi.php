@@ -46,6 +46,10 @@ class WriteApi extends DefaultApi
 {
     public $writeOptions;
 
+    /** @var Worker */
+    private $worker;
+    public $closed = false;
+
     /**
      * WriteApi constructor.
      * @param $options
@@ -95,7 +99,7 @@ class WriteApi extends DefaultApi
         $this->check("bucket", $bucketParam);
         $this->check("org", $orgParam);
 
-        $payload = $this->generatePayload($data, $bucketParam, $orgParam, $precisionParam);
+        $payload = $this->generatePayload($data, $precisionParam, $bucketParam, $orgParam);
 
         if ($payload == null) {
             return;
@@ -103,7 +107,7 @@ class WriteApi extends DefaultApi
 
         if (WriteType::BATCHING == $this->writeOptions->writeType)
         {
-            print ("BATCHING is not implemented yet\n");
+            $this->worker()->push($payload);
         } else {
             $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
         }
@@ -133,6 +137,23 @@ class WriteApi extends DefaultApi
         $queryParams = ["org" => $orgParam, "bucket" => $bucketParam, "precision" => $precisionParam];
 
         $this->post($data, "/api/v2/write", $queryParams);
+    }
+
+    public function close()
+    {
+        $this->closed = true;
+
+        $this->worker()->flush();
+    }
+
+    private function worker(): Worker
+    {
+        if (!isset($this->worker))
+        {
+            $this->worker = new Worker($this);
+        }
+
+        return $this->worker;
     }
 
     private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null)
@@ -184,30 +205,14 @@ class WriteApi extends DefaultApi
 class BatchItem
 {
     /** @var BatchItemKey */
-    private $key;
+    public $key;
     /** @var string */
-    private $data;
+    public $data;
 
     public function __construct($key, $data)
     {
         $this->key = $key;
         $this->data = $data;
-    }
-
-    /**
-     * @return BatchItemKey
-     */
-    public function getKey(): BatchItemKey
-    {
-        return $this->key;
-    }
-
-    /**
-     * @return string
-     */
-    public function getData(): string
-    {
-        return $this->data;
     }
 }
 
@@ -217,40 +222,16 @@ class BatchItem
 class BatchItemKey
 {
     /** @var string */
-    private $bucket;
+    public $bucket;
     /** @var string */
-    private $org;
+    public $org;
     /** @var WritePrecision */
-    private $precision;
+    public $precision;
 
     public function __construct($bucket, $org, $precision)
     {
         $this->bucket = $bucket;
         $this->org = $org;
         $this->precision = $precision;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBucket(): string
-    {
-        return $this->bucket;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrg(): string
-    {
-        return $this->org;
-    }
-
-    /**
-     * @return WritePrecision
-     */
-    public function getPrecision(): WritePrecision
-    {
-        return $this->precision;
     }
 }

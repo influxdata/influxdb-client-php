@@ -5,6 +5,8 @@ namespace InfluxDB2;
 class Client
 {
     public $options;
+    public $closed = false;
+    private $autoCloseable = array();
 
     /**
      * Client constructor.
@@ -37,7 +39,9 @@ class Client
      */
     public function createWriteApi(array $writeOptions = null): WriteApi
     {
-        return new WriteApi($this->options, $writeOptions);
+        $writeApi = new WriteApi($this->options, $writeOptions);
+        $this->autoCloseable[] = $writeApi;
+        return $writeApi;
     }
 
     /**
@@ -55,6 +59,11 @@ class Client
      */
     public function close()
     {
+        $this->closed = true;
 
+        foreach ($this->autoCloseable as $ac)
+        {
+            $ac->close();
+        }
     }
 }
