@@ -184,7 +184,15 @@ class WriteApi extends DefaultApi
 
             foreach ($data as $item)
             {
-                $payload .= $this->generatePayload($item, $precision, $bucket, $org) . "\n";
+                if (isset($item)) {
+                    $payload .= $this->generatePayload($item, $precision, $bucket, $org) . "\n";
+                }
+            }
+
+            // remove last new line
+            if (isset($payload) && trim($payload) !== '')
+            {
+                $payload = rtrim($payload, "\n");
             }
 
             return $payload;

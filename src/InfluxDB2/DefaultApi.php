@@ -11,6 +11,8 @@ class DefaultApi
 {
     const DEFAULT_TIMEOUT = 10;
     public $options;
+    /** @var Client */
+    public $http;
 
     /**
      * DefaultApi constructor.
@@ -19,6 +21,11 @@ class DefaultApi
     public function __construct(array $options)
     {
         $this->options = $options;
+
+        $this->http = new Client([
+            'base_uri' => $this->options["url"],
+            'timeout' => self::DEFAULT_TIMEOUT
+        ]);
     }
 
     /**
@@ -29,11 +36,6 @@ class DefaultApi
      */
     public function post($payload, $uriPath, $queryParams, $limit = self::DEFAULT_TIMEOUT): ResponseInterface
     {
-        $http = new Client([
-            'base_uri' => $this->options["url"],
-            'timeout' => self::DEFAULT_TIMEOUT
-        ]);
-
         try {
             $options = [
                 'headers' => [
@@ -49,7 +51,7 @@ class DefaultApi
             }
 
             //execute post call
-            $response = $http->post($uriPath, $options);
+            $response = $this->http->post($uriPath, $options);
 
             $statusCode = $response->getStatusCode();
 
