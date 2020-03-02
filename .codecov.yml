@@ -1,2 +1,3 @@
 ignore:
-  - "src/InfluxDB2Generated/**/*"
+  - "src/InfluxDB2/Model/*"
+  - "src/InfluxDB2/Model/**/*"
