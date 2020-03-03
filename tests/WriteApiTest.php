@@ -6,12 +6,12 @@ use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
 use InfluxDB2\Point;
 
+require_once('BasicTest.php');
+
 /**
  * Class WriteApiTest
  * @package InfluxDB2Test
  */
-require_once('BasicTest.php');
-
 class WriteApiTest extends BasicTest
 {
     public function testWriteLineProtocol()
@@ -21,7 +21,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,location=west value=33i 15', $request->getBody());
     }
@@ -38,7 +38,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,location=europe level=2i', $request->getBody());
     }
@@ -56,7 +56,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123', $request->getBody());
     }
@@ -82,7 +82,7 @@ class WriteApiTest extends BasicTest
             . "h2o,location=europe level=2i\n"
             . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
 
-        $this->assertEquals('/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals($expected, strval($request->getBody()));
     }
@@ -94,7 +94,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('Token my-token', implode(' ', $request->getHeaders()['Authorization']));
     }

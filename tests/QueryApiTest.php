@@ -7,6 +7,10 @@ use GuzzleHttp\Psr7\Response;
 
 require_once('BasicTest.php');
 
+/**
+ * Class QueryApiTest
+ * @package InfluxDB2Test
+ */
 class QueryApiTest extends BasicTest
 {
     private const SUCCESS_DATA =
