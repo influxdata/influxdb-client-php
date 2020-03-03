@@ -4,7 +4,14 @@ services:
   php:
     build:
       context: .
-      target: dev
+      dockerfile: Dockerfile
     volumes:
       - .:/code
     working_dir: /code
+    network_mode: host
+
+  influxdb_v2:
+    image: quay.io/influxdb/influxdb:2.0.0-beta
+    ports:
+      - "9999:9999"
+    command: influxd --reporting-disabled

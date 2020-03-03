@@ -191,11 +191,8 @@ $writeApi->write('h2o,location=west value=33i 15');
 ## Local tests
 
 ```shell script
-# start/restart InfluxDB2 on local machine using docker
-./scripts/influxdb-restart.sh
-
 # run unit & integration tests
-composer test
+make test
 ```
 
 ## Contributing

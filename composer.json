@@ -4,7 +4,6 @@
   "keywords": [
     "InfluxDB"
   ],
-  "version": "0.0.1-alpha",
   "homepage": "https://www.github.com/influxdata/influxdb-client-php",
   "license": "MIT",
   "require": {
@@ -32,7 +31,7 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit tests",
-    "test-ci": "vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report"
+    "test-coverage": "vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report"
   }
 
 }

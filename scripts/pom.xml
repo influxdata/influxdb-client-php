@@ -28,7 +28,7 @@
                     <generateModelTests>false</generateModelTests>
 
                     <verbose>false</verbose>
-                    <output>${project.basedir}/../generated</output>
+                    <output>/generated</output>
                     <addCompileSourceRoot>false</addCompileSourceRoot>
                 </configuration>
             </plugin>

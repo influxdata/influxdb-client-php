@@ -4,6 +4,11 @@ namespace InfluxDB2;
 
 class Client
 {
+    /**
+     * Client version updated by: 'make release VERSION=1.5.0'
+     */
+    const VERSION = 'dev';
+
     public $options;
     public $closed = false;
     private $autoCloseable = array();

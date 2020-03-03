@@ -4,3 +4,5 @@ composer.lock
 build/
 .idea/
 coverage.xml
+/scripts/.m2/
+/generated/
