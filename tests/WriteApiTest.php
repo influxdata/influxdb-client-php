@@ -2,8 +2,6 @@
 
 namespace InfluxDB2Test;
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
 use InfluxDB2\Point;

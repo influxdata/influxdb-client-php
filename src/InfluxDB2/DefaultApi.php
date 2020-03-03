@@ -40,6 +40,7 @@ class DefaultApi
             $options = [
                 'headers' => [
                     'Authorization' => "Token {$this->options['token']}",
+                    'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION
                 ],
                 'query' => $queryParams,
                 'body' => $payload,

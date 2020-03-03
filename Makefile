@@ -11,6 +11,7 @@ help:
 	@echo "  generate-sources	to generate API sources from swagger.yml"
 	@echo "  deps           	to installs the project dependencies"
 	@echo "  dshell           	to start Docker Shell for Local Development"
+	@echo "  release           	to release client with version specified by VERSION property . make release VERSION=1.5.0"
 
 # Docker Shell for Local Development
 dshell:
@@ -37,3 +38,15 @@ start-server:
 
 stop-server:
 	@docker-compose stop influxdb_v2
+
+release:
+	$(if $(VERSION),,$(error VERSION is not defined. Pass via "make release VERSION=1.5.0"))
+	@echo Tagging $(VERSION)
+	git checkout master
+	git pull
+	sed -i '' -e "s/VERSION = '.*'/VERSION = '$(VERSION)'/" src/InfluxDB2/Client.php
+	git commit -am "release influxdb-client-php-$(VERSION)"
+	git tag v$(VERSION)
+	sed -i '' -e "s/VERSION = '.*'/VERSION = 'dev'/" src/InfluxDB2/Client.php
+	git commit -am "prepare for next development iteration"
+	git push origin --tags
