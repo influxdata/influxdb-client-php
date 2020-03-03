@@ -84,38 +84,6 @@ jobs:
           php-image: << parameters.php-image >>
       - storing-test-results
 
-  deploy-preview:
-    parameters:
-      influxdb-image:
-        type: string
-        default: *default-influxdb-image
-    docker:
-      - image: *default-php-image
-      - image: *influx-image
-    steps:
-      - run:
-          name: Early return if this build is from a forked repository
-          command: |
-            if [[ $CIRCLE_PROJECT_USERNAME != "influxdata" ]]; then
-              echo "Nothing to do for forked repositories, so marking this step successful"
-              circleci step halt
-            fi
-      - checkout
-      - run:
-          name: Setup Packagist
-          command: bash .circleci/setup-packagist.sh
-      - run:
-          name: Build a packagist
-          command: |
-            echo TODO build package
-#            gem build influxdb-client.gemspec
-
-      - run:
-          name: Deploy pre-release into https://rubygems.org
-          command: |
-            echo TODO publish package
-#            gem push influxdb-client-*.pre.$CIRCLE_BUILD_NUM.gem
-
 workflows:
   version: 2
   build:
@@ -131,15 +99,6 @@ workflows:
       - tests-php:
           name: php-7.1
           php-image: "circleci/php:7.1"
-      - deploy-preview:
-          requires:
-            - php-7.3
-            - php-7.3-nightly
-            - php-7.2
-            - php-7.1
-          filters:
-            branches:
-              only: master
 
   nightly:
     triggers:
