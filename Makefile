@@ -1,29 +1,39 @@
-###
-# Docker Targets
-##
-TARGET=v2.0.0-alpha.4
+.DEFAULT_GOAL := help
+
+help:
+	@echo "Please use \`make <target>' where <target> is one of"
+	@echo "  start-server   	to start the InfluxDB server"
+	@echo "  stop-server    	to stop the InfluxDB server"
+	@echo "  test           	to perform unit tests"
+	@echo "  coverage       	to perform unit tests with code coverage"
+	@echo "  coverage-show  	to show the code coverage report"
+	@echo "  generate-sources	to generate API sources from swagger.yml"
+	@echo "  generate-sources	to generate API sources from swagger.yml"
+	@echo "  deps           	to installs the project dependencies"
+	@echo "  dshell           	to start Docker Shell for Local Development"
 
 # Docker Shell for Local Development
 dshell:
-	@docker-compose run --entrypoint=ash --rm php
+	@docker-compose run --entrypoint=bash --rm php
 
-# This needs hard-coded to a version when the beta drops
-generate-api-client:
-	@rm -rf src/InfluxDB2Generated
-	@docker container run --rm -it -v ${PWD}:/code -w /code openapitools/openapi-generator-cli:latest \
-		generate \
-			-i https://raw.githubusercontent.com/influxdata/influxdb/$(TARGET)/http/swagger.yml \
-			-g php \
-			-o /code/src/InfluxDB2Generated \
-			--api-package ApiClient \
-			--invoker-package InfluxDB2Generated
-
-###
-# Normal Targets
-###
 deps:
 	@composer install
 
-test:
-	@./bin/phpspec run
-	@./bin/phpunit
+generate-sources:
+	@scripts/generate-sources.sh
+
+test: start-server
+	@docker-compose run php composer run test
+
+coverage: start-server
+	@docker-compose run php composer run test-coverage
+
+coverage-show:
+	open build/coverage-report/index.html
+
+start-server:
+	@docker-compose up -d influxdb_v2
+	@scripts/influxdb-onboarding.sh ||:
+
+stop-server:
+	@docker-compose stop influxdb_v2
