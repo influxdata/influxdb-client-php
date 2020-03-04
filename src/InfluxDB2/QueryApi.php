@@ -38,16 +38,43 @@ class QueryApi extends DefaultApi
         return $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT)->getBody()->getContents();
     }
 
+    /**
+     * @param $query
+     * @param $org
+     * @param $dialect
+     * @return FluxTable[]
+     */
+    public function query($query, $org = null)
+    {
+        $response = $this->queryRaw($query, $org);
+        $parser = new FluxCsvParser($response);
+
+        $parser->parse();
+
+        return $parser->tables;
+    }
+
+    /**
+     * @param $query
+     * @param $org
+     * @param $dialect
+     * @return FluxCsvParser generator
+     */
+    public function queryStream($query, $org)
+    {
+        $response = $this->queryRaw($query, $org);
+        return new FluxCsvParser($response, true);
+    }
 
     private function postQuery($query, $org, $dialect): ResponseInterface
     {
         $orgParam = $org ?: $this->options["org"];
         $this->check("org", $orgParam);
 
-        $payload = $this-> generatePayload($query, $dialect);
+        $payload = $this->generatePayload($query, $dialect);
         $queryParams = ["org" => $orgParam];
 
-        return $this->post($payload->__toString(), "/api/v2/query",$queryParams);
+        return $this->post($payload->__toString(), "/api/v2/query", $queryParams);
     }
 
     private function generatePayload($query, $dialect)
@@ -60,9 +87,9 @@ class QueryApi extends DefaultApi
             return $query;
         }
         return new Query([
-            'query'=>$query,
-            'dialect'=>$dialect,
-            'type'=>null
+            'query' => $query,
+            'dialect' => $dialect,
+            'type' => null
         ]);
     }
 

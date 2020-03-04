@@ -1,0 +1,249 @@
+<?php
+
+namespace InfluxDB2;
+
+/**
+ * Class FluxCsvParser us used to construct FluxResult from CSV.
+ * @package InfluxDB2
+ */
+class FluxCsvParser
+{
+    /* @var  $variable FluxTable[] */
+    public $tables;
+
+    private $response;
+    private $stream;
+
+    /* @var  $variable int */
+    private $tableIndex = 0;
+    private $tableId;
+
+    private $startNewTable;
+
+    /* @var $variable FluxTable */
+    private $table;
+
+    private $parsingStateError;
+
+    public $closed;
+
+    /* @var $variable FluxColumn[] */
+    private $fluxColumns;
+
+    /**
+     * FluxCsvParser constructor.
+     * @param $response mixed response to by parsed
+     * @param $stream bool use streaming
+     */
+    public function __construct($response, $stream = false)
+    {
+        $this->response = $response;
+        $this->stream = $stream;
+//        $this->tableIndex = 0;
+        if (!$stream) {
+            $this->tables = [];
+        }
+    }
+
+    function parse()
+    {
+        if (!$this->stream) {
+            $rows = str_getcsv($this->response, "\n");
+            foreach ($rows as $row) {
+                if (empty($row)) {
+                    continue;
+                }
+                $csv = str_getcsv($row);
+
+                //skip empty csv row
+
+                if ($csv[1] == 'error' && $csv[2] == 'reference') {
+                    $this->parsingStateError = true;
+                    continue;
+                }
+
+                # Throw  InfluxException with error response
+                if ($this->parsingStateError) {
+                    $error = $csv[1];
+                    $referenceValue = $csv[2];
+                    throw new FluxQueryError($error, $referenceValue);
+                }
+
+                $result = $this->parseLine($csv);
+
+                if ($this->stream && $result instanceof FluxRecord) {
+//                    TODO
+//                    yield $result;
+                }
+            }
+
+            return $this;
+        }
+    }
+
+    private function parseLine(array $csv)
+    {
+        $token = $csv[0];
+        # start new table
+        if ('#datatype' == $token) {
+            # Return already parsed DataFrame
+            $this->startNewTable = true;
+            $this->table = new FluxTable();
+
+            if (!$this->stream) {
+                $this->tables[$this->tableIndex] = $this->table;
+            }
+
+            $this->tableIndex += 1;
+            $this->tableId = -1;
+        } elseif ($this->table == null) {
+            throw new FluxCsvParserException('Unable to parse CSV response. FluxTable definition was not found.');
+        }
+
+        if ('#datatype' == $token) {
+            $this->addDataTypes($this->table, $csv);
+        } elseif ('#group' == $token) {
+            $this->addGroups($this->table, $csv);
+        } elseif ('#default' == $token) {
+            $this->addDefaultEmptyValues($this->table, $csv);
+        } else {
+            return $this->parseValues($csv);
+        }
+        return null;
+    }
+
+    private function parseRecord(int $tableIndex, FluxTable $table, array $csv)
+    {
+        $record = new FluxRecord($tableIndex);
+        foreach ($table->columns as $fluxColumn) {
+            $columnName = $fluxColumn->label;
+            $strVal = $csv[$fluxColumn->index + 1];
+            $record->values[$columnName] = $this->toValue($strVal, $fluxColumn);
+        }
+        return $record;
+    }
+
+    private function addDataTypes(FluxTable $table, array $data_types)
+    {
+        for ($i = 1; $i < sizeof($data_types); ++$i) {
+            $columnDef = new FluxColumn();
+            $columnDef->index = $i - 1;
+            $columnDef->dataType = $data_types[$i];
+            array_push($table->columns, $columnDef);
+        }
+    }
+
+    private function addGroups(FluxTable $table, $csv)
+    {
+        $i = 1;
+        foreach ($table->columns as &$column) {
+            $column->group = $csv[$i] == 'true';
+            $i++;
+        }
+    }
+
+    private function addDefaultEmptyValues(FluxTable $table, $defaultValues)
+    {
+        $i = 1;
+        foreach ($table->columns as &$column) {
+            $column->defaultValue = $defaultValues[$i];
+            $i++;
+        }
+    }
+
+    private function addColumnNamesAndTags(FluxTable $table, array $csv)
+    {
+        $i = 1;
+        foreach ($table->columns as &$column) {
+            $column->label = $csv[$i];
+            $i++;
+        }
+    }
+
+
+    private function parseValues(array $csv)
+    {
+        # parse column names
+        if ($this->startNewTable) {
+            $this->addColumnNamesAndTags($this->table, $csv);
+            $this->startNewTable = false;
+            return null;
+        }
+
+        $currentId = (int)$csv[2];
+        if ($this->tableId == -1) {
+            $this->tableId = $currentId;
+        }
+
+        if ($this->tableId != $currentId) {
+            # create new table with previous column headers settings
+            $this->fluxColumns = $this->table->columns;
+            $this->table = new FluxTable();
+
+            foreach ($this->fluxColumns as &$column) {
+                array_push($this->table->columns, $column);
+            }
+
+            if (!$this->stream) {
+                $this->tables[$this->tableIndex] = $this->table;
+            }
+
+            $this->tableIndex += 1;
+            $this->tableId = $currentId;
+        }
+
+        $fluxRecord = $this->parseRecord($this->tableIndex - 1, $this->table, $csv);
+
+        if ($this->stream) {
+            return $fluxRecord;
+        } else {
+            $fluxTable = $this->tables[$this->tableIndex - 1];
+            array_push($fluxTable->records, $fluxRecord);
+        }
+    }
+
+    private function toValue($strVal, FluxColumn $column)
+    {
+        if ($strVal == null || $strVal == '') {
+            $defaultValue = $column->defaultValue;
+            if (empty($defaultValue)) {
+                return null;
+            }
+            return $this->toValue($defaultValue, $column);
+        }
+
+        if ('string' == $column->dataType) {
+            return $strVal;
+        }
+
+        if ('boolean' == $column->dataType) {
+            return "true" == $strVal;
+        }
+
+        if ('unsignedLong' == $column->dataType || 'long' == $column->dataType) {
+            return  intval($strVal);
+        }
+
+        if ('double' == $column->dataType) {
+            return (double)$strVal;
+        }
+
+        if ('base64Binary' == $column->dataType) {
+            return base64_decode($strVal);
+        }
+
+        if ('dateTime:RFC3339' == $column->dataType || 'dateTime:RFC3339Nano' == $column->dataType) {
+            ##todo nanoseconds precission, php datetime is only in microseconds precision
+            return $strVal;
+        }
+
+        return $strVal;
+
+    }
+
+}
+
+class FluxQueryError extends \RuntimeException
+{
+
+}
