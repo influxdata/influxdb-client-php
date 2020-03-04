@@ -25,9 +25,11 @@ class DefaultApi
      * @param $payload
      * @param $uriPath
      * @param $queryParams
-     * @param $limit
+     * @param int $limit
+     * @param bool $stream - use streaming
+     * @return ResponseInterface
      */
-    public function post($payload, $uriPath, $queryParams, $limit = self::DEFAULT_TIMEOUT): ResponseInterface
+    public function post($payload, $uriPath, $queryParams, $limit = self::DEFAULT_TIMEOUT,bool $stream = false): ResponseInterface
     {
         $http = new Client([
             'base_uri' => $this->options["url"],
@@ -41,6 +43,7 @@ class DefaultApi
                 ],
                 'query' => $queryParams,
                 'body' => $payload,
+                'stream' => $stream,
             ];
 
             // enable debug

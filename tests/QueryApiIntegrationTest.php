@@ -25,7 +25,7 @@ class QueryApiIntegrationTest extends TestCase
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,
             "org" => "my-org",
-            "debug" => true
+            "debug" => false
         ]);
         $this->writeApi = $this->client->createWriteApi();
         $this->queryApi = $this->client->createQueryApi();
@@ -42,20 +42,62 @@ class QueryApiIntegrationTest extends TestCase
         $now = new DateTime();
         $measurement = 'h2o_query_' . $now->getTimestamp();
 
-        $this->writeApi->write(Point::measurement($measurement)
-            ->addTag('location', 'europe')
-            ->addField('level', 2)
-            ->time($now, WritePrecision::US));
-
-        $query = 'from(bucket: "my-bucket") |> range(start: 0)
-            |> filter(fn: (r) => r._measurement == "'.$measurement.'")';
-
+        $query = $this->prepareData($measurement, $now);
         print $query;
 
         $result = $this->queryApi->queryRaw($query);
 
         $this->assertContains(',result,table,_start,_stop,_time,_value,_field,_measurement,location', $result);
         $this->assertContains($measurement, $result);
+    }
+
+    public function testQueryNoStream()
+    {
+        $now = new DateTime();
+        $measurement = 'h2o_query_' . $now->getTimestamp();
+        $query = $this->prepareData($measurement, $now);
+        print $query;
+
+        $result = $this->queryApi->query($query);
+
+        $this->assertNotNull($result);
+        $this->assertEquals(1, sizeof($result));
+        $records = $result[0]->records;
+        $this->assertEquals(1, sizeof($records));
+        $record = $records[0];
+        $this->assertEquals($measurement, $record->getMeasurement());
+        $this->assertEquals('europe', $record->values['location']);
+        $this->assertEquals(2, $record->getValue());
+        $this->assertEquals(0, $record->table);
+        $this->assertEquals(0, $record->values['table']);
+        $this->assertEquals('level', $record->getField());
+    }
+
+    public function skipQueryStream()
+    {
+        $now = new DateTime();
+        $measurement = 'h2o_query_' . $now->getTimestamp();
+        $query = $this->prepareData($measurement, $now);
+//        TODO
+    }
+
+
+
+    /**
+     * @param string $measurement
+     * @param DateTime $now
+     * @return string
+     */
+    public function prepareData(string $measurement, DateTime $now): string
+    {
+        $this->writeApi->write(Point::measurement($measurement)
+            ->addTag('location', 'europe')
+            ->addField('level', 2)
+            ->time($now, WritePrecision::US));
+
+        $query = 'from(bucket: "my-bucket") |> range(start: 0)
+            |> filter(fn: (r) => r._measurement == "' . $measurement . '")';
+        return $query;
     }
 
 }
