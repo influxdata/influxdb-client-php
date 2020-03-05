@@ -31,4 +31,23 @@ class QueryApiTest extends BasicTest
 
         $this->assertEquals(QueryApiTest::SUCCESS_DATA, $result);
     }
+
+    public function  testQuery()
+    {
+        $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
+
+        $bucket = 'my-bucket';
+        $result = $this->queryApi->query('from(bucket:"' . $bucket
+            . '") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
+
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(4, count($result[0]->records));
+
+        $record = $result[0]->records[0];
+
+        $this->assertEquals('1970-01-01T00:00:10Z', $record->getTime());
+        $this->assertEquals('mem', $record->getMeasurement());
+        $this->assertEquals(10, $record->getValue());
+        $this->assertEquals('free', $record->getField());
+    }
 }
