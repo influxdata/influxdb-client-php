@@ -60,9 +60,9 @@ class QueryApi extends DefaultApi
      * @param $dialect
      * @return FluxCsvParser generator
      */
-    public function queryStream($query, $org)
+    public function queryStream($query, $org = null, $dialect = null): FluxCsvParser
     {
-        $response = $this->queryRaw($query, $org);
+        $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT)->getBody();
         return new FluxCsvParser($response, true);
     }
 

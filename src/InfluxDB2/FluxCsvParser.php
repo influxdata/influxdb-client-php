@@ -39,24 +39,58 @@ class FluxCsvParser
     {
         $this->response = $response;
         $this->stream = $stream;
-//        $this->tableIndex = 0;
+        $this->tableIndex = 0;
         if (!$stream) {
             $this->tables = [];
         }
+
+        $this->closed = false;
     }
 
     function parse()
     {
-        if (!$this->stream) {
+        $rows = str_getcsv($this->response, "\n");
+
+        foreach ($rows as $row) {
+            if (empty($row)) {
+                continue;
+            }
+
+            $csv = str_getcsv($row);
+
+            //skip empty csv row
+            if ($csv[1] == 'error' && $csv[2] == 'reference') {
+                $this->parsingStateError = true;
+                continue;
+            }
+
+            # Throw  InfluxException with error response
+            if ($this->parsingStateError) {
+                $error = $csv[1];
+                $referenceValue = $csv[2];
+                throw new FluxQueryError($error, $referenceValue);
+            }
+
+            $this->parseLine($csv);
+        }
+
+        return $this;
+    }
+
+    public function each()
+    {
+        try {
+            // TODO don't read whole response to memory
             $rows = str_getcsv($this->response, "\n");
+
             foreach ($rows as $row) {
                 if (empty($row)) {
                     continue;
                 }
+
                 $csv = str_getcsv($row);
 
                 //skip empty csv row
-
                 if ($csv[1] == 'error' && $csv[2] == 'reference') {
                     $this->parsingStateError = true;
                     continue;
@@ -71,13 +105,14 @@ class FluxCsvParser
 
                 $result = $this->parseLine($csv);
 
-                if ($this->stream && $result instanceof FluxRecord) {
-//                    TODO
-//                    yield $result;
+                if ($result instanceof FluxRecord) {
+                    yield $result;
                 }
             }
-
-            return $this;
+        }
+        finally
+        {
+            $this->closeConnection();
         }
     }
 
@@ -221,7 +256,7 @@ class FluxCsvParser
         }
 
         if ('unsignedLong' == $column->dataType || 'long' == $column->dataType) {
-            return  intval($strVal);
+            return intval($strVal);
         }
 
         if ('double' == $column->dataType) {
@@ -241,6 +276,11 @@ class FluxCsvParser
 
     }
 
+    private function closeConnection()
+    {
+        # Close CSV Parser
+        $this->closed = true;
+    }
 }
 
 class FluxQueryError extends \RuntimeException

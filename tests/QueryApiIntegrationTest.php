@@ -51,7 +51,7 @@ class QueryApiIntegrationTest extends TestCase
         $this->assertContains($measurement, $result);
     }
 
-    public function testQueryNoStream()
+    public function testQuery()
     {
         $now = new DateTime();
         $measurement = 'h2o_query_' . $now->getTimestamp();
@@ -72,16 +72,6 @@ class QueryApiIntegrationTest extends TestCase
         $this->assertEquals(0, $record->values['table']);
         $this->assertEquals('level', $record->getField());
     }
-
-    public function skipQueryStream()
-    {
-        $now = new DateTime();
-        $measurement = 'h2o_query_' . $now->getTimestamp();
-        $query = $this->prepareData($measurement, $now);
-//        TODO
-    }
-
-
 
     /**
      * @param string $measurement
