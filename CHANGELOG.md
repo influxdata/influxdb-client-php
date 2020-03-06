@@ -1,4 +1,4 @@
-## 1.0.0 [unreleased]
+## 1.0.0 [2020-03-06]
 
 ### Features
 1. [#4](https://github.com/influxdata/influxdb-client-php/issues/4): Use Makefile Targets Instead of scripts dir
