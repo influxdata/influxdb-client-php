@@ -46,7 +46,7 @@ release:
 	git pull
 	sed -i '' -e "s/VERSION = '.*'/VERSION = '$(VERSION)'/" src/InfluxDB2/Client.php
 	git commit -am "release influxdb-client-php-$(VERSION)"
-	git tag v$(VERSION)
+	git tag $(VERSION)
 	sed -i '' -e "s/VERSION = '.*'/VERSION = 'dev'/" src/InfluxDB2/Client.php
 	git commit -am "prepare for next development iteration"
 	git push origin --tags
