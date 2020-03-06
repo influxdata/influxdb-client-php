@@ -13,10 +13,10 @@ use InfluxDB2\WriteApi;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class BasicTest
+ * Parent class for all units tests that uses mocked InfluxDB server
  * @package InfluxDB2Test
  */
-class BasicTest extends TestCase
+abstract class BasicTest extends TestCase
 {
     /** @var Client */
     protected $client;
