@@ -56,6 +56,73 @@ $client = new InfluxDB2\Client([
 | read_timeout | Number of seconds to wait for one block of data to be read | Integer | 10 |
 -->
 
+### Queries
+
+The result retrieved by [QueryApi](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/QueryApi.php) could be formatted as a:
+
+   1. Raw query response
+   2. Flux data structure: [FluxTable](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxTable.php), [FluxColumn](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxColumn.php) and [FluxRecord](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxRecord.php)
+   3. Stream of [FluxRecord](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxRecord.php)
+
+#### Query raw
+
+Synchronously executes the Flux query and return result as unprocessed String
+```php
+$this->client = new Client([
+    "url" => "http://localhost:9999",
+    "token" => "my-token",
+    "bucket" => "my-bucket",
+    "precision" => WritePrecision::NS,
+    "org" => "my-org",
+    "debug" => false
+]);
+
+$this->queryApi = $this->client->createQueryApi();
+
+$result = $this->queryApi->queryRaw(
+            'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
+```
+#### Synchronous query
+Synchronously executes the Flux query and return result as a Array of [FluxTables](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxTable.php)
+```php
+$this->client = new Client([
+    "url" => "http://localhost:9999",
+    "token" => "my-token",
+    "bucket" => "my-bucket",
+    "precision" => WritePrecision::NS,
+    "org" => "my-org",
+    "debug" => false
+]);
+
+$this->queryApi = $this->client->createQueryApi();
+
+$result = $this->queryApi->query(
+            'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
+```
+
+#### Query stream
+Synchronously executes the Flux query and return stream of [FluxRecord](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxRecord.php)
+```php
+$this->client = new Client([
+    "url" => "http://localhost:9999",
+    "token" => "my-token",
+    "bucket" => "my-bucket",
+    "precision" => WritePrecision::NS,
+    "org" => "my-org",
+    "debug" => false
+]);
+
+$this->queryApi = $this->client->createQueryApi();
+
+$parser = $this->queryApi->queryStream(
+            'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
+
+foreach ($parser->each() as $record)
+{
+    ...
+}
+```
+
 ### Writing data
 
 The [WriteApi](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/WriteApi.php) supports 
