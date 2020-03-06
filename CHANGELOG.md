@@ -5,3 +5,4 @@
 2. [#7](https://github.com/influxdata/influxdb-client-php/issues/7): Set User-Agent to influxdb-client-php/VERSION for all requests
 3. [#5](https://github.com/influxdata/influxdb-client-php/issues/5): Added WriteApi
 4. [#8](https://github.com/influxdata/influxdb-client-php/issues/8): Added QueryApi
+5. [#12](https://github.com/influxdata/influxdb-client-php/issues/12): Implemented query stream
