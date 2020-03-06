@@ -47,44 +47,11 @@ class FluxCsvParser
         $this->closed = false;
     }
 
-    function parse()
-    {
-        $rows = str_getcsv($this->response, "\n");
-
-        foreach ($rows as $row) {
-            if (empty($row)) {
-                continue;
-            }
-
-            $csv = str_getcsv($row);
-
-            //skip empty csv row
-            if ($csv[1] == 'error' && $csv[2] == 'reference') {
-                $this->parsingStateError = true;
-                continue;
-            }
-
-            # Throw  InfluxException with error response
-            if ($this->parsingStateError) {
-                $error = $csv[1];
-                $referenceValue = $csv[2];
-                throw new FluxQueryError($error, $referenceValue);
-            }
-
-            $this->parseLine($csv);
-        }
-
-        return $this;
-    }
-
-    public function each()
+    public function parse()
     {
         try {
-            // TODO don't read whole response to memory
-            $rows = str_getcsv($this->response, "\n");
-
-            foreach ($rows as $row) {
-                if (empty($row)) {
+            while ($row = \GuzzleHttp\Psr7\readline($this->response)) {
+                if (!isset($row) || trim($row) === '') {
                     continue;
                 }
 
@@ -280,6 +247,7 @@ class FluxCsvParser
     {
         # Close CSV Parser
         $this->closed = true;
+        $this->response->close();
     }
 }
 

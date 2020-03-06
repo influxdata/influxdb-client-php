@@ -44,12 +44,12 @@ class QueryApi extends DefaultApi
      * @param $dialect
      * @return FluxTable[]
      */
-    public function query($query, $org = null)
+    public function query($query, $org = null, $dialect = null)
     {
-        $response = $this->queryRaw($query, $org);
+        $response = $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT)->getBody();
         $parser = new FluxCsvParser($response);
 
-        $parser->parse();
+        foreach ($parser->parse() as $record);
 
         return $parser->tables;
     }
