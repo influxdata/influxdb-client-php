@@ -48,7 +48,7 @@ class QueryApiStreamTest extends TestCase
 
         $parser = $this->queryApi->queryStream($query);
 
-        foreach ($parser->parse() as $record)
+        foreach ($parser->each() as $record)
         {
             $this->assertNotNull($record);
 
@@ -79,7 +79,7 @@ class QueryApiStreamTest extends TestCase
 
         $this->assertFalse($parser->closed);
 
-        foreach ($parser->parse() as $record)
+        foreach ($parser->each() as $record)
         {
             if ($count >= 5)
             {

@@ -10,7 +10,6 @@ class FluxTableTest extends TestCase
 {
     public function testMultipleValues()
     {
-
         $data = "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,long,long,string\n" .
             "#group,false,false,true,true,true,true,true,true,false,false,false\n" .
             "#default,_result,,,,,,,,,,\n" .

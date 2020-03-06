@@ -2,6 +2,8 @@
 
 namespace InfluxDB2;
 
+use GuzzleHttp\Psr7\Stream;
+
 /**
  * Class FluxCsvParser us used to construct FluxResult from CSV.
  * @package InfluxDB2
@@ -37,7 +39,7 @@ class FluxCsvParser
      */
     public function __construct($response, $stream = false)
     {
-        $this->response = $response;
+        $this->response = is_string($response) ? new Stream($this->stringToStream($response)) : $response;
         $this->stream = $stream;
         $this->tableIndex = 0;
         if (!$stream) {
@@ -47,7 +49,22 @@ class FluxCsvParser
         $this->closed = false;
     }
 
+    private function stringToStream(string $string)
+    {
+        $stream = fopen('php://memory','r+');
+        fwrite($stream, $string);
+        rewind($stream);
+        return $stream;
+    }
+
     public function parse()
+    {
+        foreach ($this->each() as $record);
+
+        return $this;
+    }
+
+    public function each()
     {
         try {
             while ($row = \GuzzleHttp\Psr7\readline($this->response)) {
