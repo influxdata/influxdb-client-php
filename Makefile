@@ -50,3 +50,4 @@ release:
 	sed -i '' -e "s/VERSION = '.*'/VERSION = 'dev'/" src/InfluxDB2/Client.php
 	git commit -am "prepare for next development iteration"
 	git push origin --tags
+	git push origin master
