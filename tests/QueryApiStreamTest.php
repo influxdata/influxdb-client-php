@@ -95,6 +95,13 @@ class QueryApiStreamTest extends TestCase
         $this->assertTrue($parser->closed);
     }
 
+    public function testQueryEmptyData()
+    {
+        $result = $this->queryApi->queryStream(null);
+
+        $this->assertNull($result);
+    }
+
     private function write($values, $measurement)
     {
         for ($ii = 0; $ii < $values; $ii++) {

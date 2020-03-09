@@ -32,7 +32,7 @@ class QueryApiTest extends BasicTest
         $this->assertEquals(QueryApiTest::SUCCESS_DATA, $result);
     }
 
-    public function  testQuery()
+    public function testQuery()
     {
         $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
 
@@ -49,5 +49,19 @@ class QueryApiTest extends BasicTest
         $this->assertEquals('mem', $record->getMeasurement());
         $this->assertEquals(10, $record->getValue());
         $this->assertEquals('free', $record->getField());
+    }
+
+    public function testQueryRawEmptyData()
+    {
+        $result = $this->queryApi->queryRaw('');
+
+        $this->assertNull($result);
+    }
+
+    public function testQueryEmptyData()
+    {
+        $result = $this->queryApi->query(null);
+
+        $this->assertNull($result);
     }
 }
