@@ -84,7 +84,8 @@ class FluxCsvParser
                 if ($this->parsingStateError) {
                     $error = $csv[1];
                     $referenceValue = $csv[2];
-                    throw new FluxQueryError($error, $referenceValue);
+                    throw new FluxQueryError($error,
+                        !isset($referenceValue) || trim($referenceValue) === '' ? 0 : $referenceValue);
                 }
 
                 $result = $this->parseLine($csv);
