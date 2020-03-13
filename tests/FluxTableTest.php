@@ -3,6 +3,8 @@
 namespace InfluxDB2Test;
 
 use InfluxDB2\FluxCsvParser;
+use InfluxDB2\FluxCsvParserException;
+use InfluxDB2\FluxQueryError;
 use InfluxDB2\FluxRecord;
 use PHPUnit\Framework\TestCase;
 
@@ -88,7 +90,6 @@ class FluxTableTest extends TestCase
      */
     public function testMappingUnsignedLong()
     {
-
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,unsignedLong\n" .
             "#group,false,false,false,false,false,false,false,false,false,true\n" .
@@ -106,6 +107,177 @@ class FluxTableTest extends TestCase
         $records = $tables[0]->records;
         $this->assertEquals($expected, $records[0]->values['value']);
         $this->assertNull($records[1]->values['value']);
+    }
+
+    public function testMappingDouble()
+    {
+        $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
+            "dateTime:RFC3339,long,string,string,string,double\n" .
+            "#group,false,false,false,false,false,false,false,false,false,true\n" .
+            "#default,_result,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,12.25\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,\n";
+
+        $fluxCsvParser = new FluxCsvParser($data);
+        $tables = $fluxCsvParser->parse()->tables;
+
+        $records = $tables[0]->records;
+
+        $this->assertEquals(12.25, $records[0]->values['value']);
+        $this->assertNull($records[1]->values['value']);
+    }
+
+    public function testMappingBase64Binary()
+    {
+        $binaryData = 'test value';
+        $encodedData = base64_encode($binaryData);
+
+        $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
+            "dateTime:RFC3339,long,string,string,string,base64Binary\n" .
+            "#group,false,false,false,false,false,false,false,false,false,true\n" .
+            "#default,_result,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
+            ',,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,' . $encodedData . "\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,\n";
+
+        $fluxCsvParser = new FluxCsvParser($data);
+        $tables = $fluxCsvParser->parse()->tables;
+
+        $records = $tables[0]->records;
+
+        $this->assertEquals($binaryData, $records[0]->values['value']);
+        $this->assertNull($records[1]->values['value']);
+    }
+
+    public function testMappingDuration()
+    {
+        $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339' .
+            ",dateTime:RFC3339,long,string,string,string,duration\n" .
+            "#group,false,false,false,false,false,false,false,false,false,true\n" .
+            "#default,_result,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,125\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,\n";
+
+        $fluxCsvParser = new FluxCsvParser($data);
+        $tables = $fluxCsvParser->parse()->tables;
+
+        $records = $tables[0]->records;
+
+        $this->assertEquals(125, $records[0]->values['value']);
+        $this->assertNull($records[1]->values['value']);
+    }
+
+    public function testGroupKey()
+    {
+        $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
+            "dateTime:RFC3339,long,string,string,string,duration\n" .
+            "#group,false,false,false,false,true,false,false,false,false,true\n" .
+            "#default,_result,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,125\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,\n";
+
+        $fluxCsvParser = new FluxCsvParser($data);
+        $tables = $fluxCsvParser->parse()->tables;
+
+        $this->assertEquals(10, count($tables[0]->columns));
+        $this->assertEquals(2, count($tables[0]->getGroupKey()));
+    }
+
+    public function testUnknownTypeAsString()
+    {
+        $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
+            "dateTime:RFC3339,long,string,string,string,unknown\n" .
+            "#group,false,false,false,false,false,false,false,false,false,true\n" .
+            "#default,_result,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,12.25\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,\n";
+
+        $fluxCsvParser = new FluxCsvParser($data);
+        $tables = $fluxCsvParser->parse()->tables;
+
+        $records = $tables[0]->records;
+
+        $this->assertEquals('12.25', $records[0]->values['value']);
+        $this->assertNull($records[1]->values['value']);
+    }
+
+    public function testError()
+    {
+        $data = "#datatype,string,string\n" .
+            "#group,true,true\n" .
+            "#default,,\n" .
+            ",error,reference\n" .
+            ',failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time,897';
+
+        $fluxCsvParser = new FluxCsvParser($data);
+
+        try {
+            $fluxCsvParser->parse();
+            $this->fail();
+        }
+        catch (FluxQueryError $e)
+        {
+            $this->assertEquals('failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
+                $e->getMessage());
+            $this->assertEquals(897, $e->getCode());
+        }
+        catch (\Exception $e)
+        {
+            $this->fail();
+        }
+    }
+
+    public function testErrorWithoutReference()
+    {
+        $data = "#datatype,string,string\n" .
+            "#group,true,true\n" .
+            "#default,,\n" .
+            ",error,reference\n" .
+            ',failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time,';
+
+        $fluxCsvParser = new FluxCsvParser($data);
+
+        try {
+            $fluxCsvParser->parse();
+            $this->fail();
+        }
+        catch (FluxQueryError $e)
+        {
+            $this->assertEquals('failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
+                $e->getMessage());
+            $this->assertEquals(0, $e->getCode());
+        }
+        catch (\Exception $e)
+        {
+            $this->fail();
+        }
+    }
+
+    public function testWithoutTableReference()
+    {
+        $data = ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,12.25\n" .
+            ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,\n";
+
+        $fluxCsvParser = new FluxCsvParser($data);
+
+        try {
+            $fluxCsvParser->parse();
+            $this->fail();
+        }
+        catch (FluxCsvParserException $e)
+        {
+            $this->assertEquals('Unable to parse CSV response. FluxTable definition was not found.',
+                $e->getMessage());
+        }
+        catch (\Exception $e)
+        {
+            $this->fail();
+        }
     }
 
     private function assertColumns(array $columnHeaders, array $values)
@@ -159,7 +331,6 @@ class FluxTableTest extends TestCase
 
     private function assertRecord(FluxRecord $fluxRecord, array $values, $size = 0, $value = null)
     {
-
         foreach ($values as $key => $val) {
             $this->assertEquals($values[$key], $fluxRecord->values[$key]);
         }

@@ -89,8 +89,19 @@ class DefaultApi
 
     function check($key, $value)
     {
-        if ($value == null) {
-            throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$this->options}");
+        if ((!isset($value) || trim($value) === '')) {
+            $options = implode(', ', array_map(
+                function ($v, $k) {
+                    if(is_array($v)){
+                        return $k.'[]='.implode('&'.$k.'[]=', $v);
+                    }else{
+                        return $k.'='.$v;
+                    }
+                },
+                $this->options,
+                array_keys($this->options)
+            ));
+            throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$options}");
         }
     }
 }
