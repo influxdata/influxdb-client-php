@@ -1,4 +1,4 @@
-## 1.1.0 [unreleased]
+## 1.1.0 [2020-03-13]
 
 ### Bugs
 1. [#13](https://github.com/influxdata/influxdb-client-php/pull/13): Fixed throwing of InvalidArgumentException some option is empty
