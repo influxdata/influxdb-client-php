@@ -2,6 +2,8 @@
 
 namespace InfluxDB2;
 
+use InfluxDB2\Model\HealthCheck;
+
 class Client
 {
     /**
@@ -57,6 +59,16 @@ class Client
     public function createQueryApi(): QueryApi
     {
         return new QueryApi($this->options);
+    }
+
+    /**
+     * Get the health of an instance.
+     *
+     * @return HealthCheck
+     */
+    public function health(): HealthCheck
+    {
+        return (new HealthApi($this->options))->health();
     }
 
     /**
