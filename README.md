@@ -256,6 +256,12 @@ $writeApi->write($dataArray);
 $writeApi->write('h2o,location=west value=33i 15');
 ```
 
+## Advanced Usage
+
+### Check the server status 
+
+Server availability can be checked using the `$client->health();` method. That is equivalent of the [influx ping](https://v2.docs.influxdata.com/v2.0/reference/cli/influx/ping/).
+
 ## Local tests
 
 ```shell script

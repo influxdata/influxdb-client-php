@@ -30,5 +30,6 @@ cp -r "${SCRIPT_PATH}"/../generated/lib/Model/WritePrecision.php "${SCRIPT_PATH}
 cp -r "${SCRIPT_PATH}"/../generated/lib/Model/Query.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
 cp -r "${SCRIPT_PATH}"/../generated/lib/Model/Dialect.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
 cp -r "${SCRIPT_PATH}"/../generated/lib/Model/ModelInterface.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
+cp -r "${SCRIPT_PATH}"/../generated/lib/Model/HealthCheck.php "${SCRIPT_PATH}"/../src/InfluxDB2/Model
 
 rm -rf "${SCRIPT_PATH}"/../generated

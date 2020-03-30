@@ -32,11 +32,21 @@ class DefaultApi
      * @param $payload
      * @param $uriPath
      * @param $queryParams
-     * @param int $limit
+     * @param int $timeout - Float describing the timeout of the request in seconds. Use 0 to wait indefinitely (the default behavior).
      * @param bool $stream - use streaming
      * @return ResponseInterface
      */
-    public function post($payload, $uriPath, $queryParams, $limit = self::DEFAULT_TIMEOUT,bool $stream = false): ResponseInterface
+    public function post($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): ResponseInterface
+    {
+        return $this->request($payload, $uriPath, $queryParams, 'POST', $timeout, $stream);
+    }
+
+    public function get($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT): ResponseInterface
+    {
+        return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout, false);
+    }
+
+    private function request($payload, $uriPath, $queryParams, $method, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): ResponseInterface
     {
         try {
             $options = [
@@ -48,6 +58,7 @@ class DefaultApi
                 'query' => $queryParams,
                 'body' => $payload,
                 'stream' => $stream,
+                'timout' => $timeout
             ];
 
             // enable debug
@@ -56,7 +67,7 @@ class DefaultApi
             }
 
             //execute post call
-            $response = $this->http->post($uriPath, $options);
+            $response = $this->http->request($method, $uriPath, $options);
 
             $statusCode = $response->getStatusCode();
 
@@ -74,7 +85,6 @@ class DefaultApi
             }
             return $response;
 
-
         } catch (RequestException $e) {
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
@@ -83,8 +93,6 @@ class DefaultApi
                 $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
             );
         }
-
-
     }
 
     function check($key, $value)
