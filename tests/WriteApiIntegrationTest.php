@@ -3,10 +3,9 @@
 namespace InfluxDB2Test;
 
 use InfluxDB2\Client;
-use InfluxDB2\Point;
 use InfluxDB2\Model\WritePrecision;
+use InfluxDB2\Point;
 use InfluxDB2\WriteApi;
-use InfluxDB2\WriteOptions;
 use InfluxDB2\WriteType;
 use PHPUnit\Framework\TestCase;
 
@@ -71,8 +70,6 @@ class WriteApiIntegrationTest extends TestCase
             'tags' => ['host' => 'server_nl', 'region' => 'us'],
             'fields' => ['internal' => 5, 'external' => 6],
             'time' => microtime(true)];
-
-        //            ['name' => 'gpu', 'fields' => ['value' => 0.9999]];
 
         $writeApi->write($data,WritePrecision::MS);
 
