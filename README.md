@@ -240,7 +240,7 @@ $writeApi = $client->createWriteApi();
 $point=InfluxDB2\Point::measurement("h2o")
     ->addTag("location", "europe")
     ->addField("level",2)
-    ->time(microtime());
+    ->time(microtime(true));
 
 $writeApi->write($point);
 
@@ -248,7 +248,7 @@ $writeApi->write($point);
 $dataArray = ['name' => 'cpu', 
     'tags' => ['host' => 'server_nl', 'region' => 'us'],
     'fields' => ['internal' => 5, 'external' => 6],
-    'time' => microtime()];
+    'time' => microtime(true)];
 
 $writeApi->write($dataArray);
 
