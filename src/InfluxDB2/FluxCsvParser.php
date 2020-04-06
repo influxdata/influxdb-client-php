@@ -3,6 +3,7 @@
 namespace InfluxDB2;
 
 use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
 /**
@@ -68,7 +69,7 @@ class FluxCsvParser
     public function each()
     {
         try {
-            while ($row = \GuzzleHttp\Psr7\readline($this->response)) {
+            while ($row = $this->readline($this->response)) {
                 if (!isset($row) || trim($row) === '') {
                     continue;
                 }
@@ -262,6 +263,31 @@ class FluxCsvParser
 
         return $strVal;
 
+    }
+
+    private function readline(StreamInterface $stream)
+    {
+        $buffer = null;
+
+        while (null !== ($byte = $stream->read(1))) {
+
+            if ($byte === "") {
+                break;
+            }
+
+            if ($buffer == null) {
+                $buffer .= '';
+            }
+
+            $buffer .= $byte;
+
+            // Break when a new line is found
+            if ($byte === "\n") {
+                break;
+            }
+        }
+
+        return $buffer;
     }
 
     private function closeConnection()
