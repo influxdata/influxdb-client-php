@@ -3,6 +3,9 @@
 ### Features
 1. [#14](https://github.com/influxdata/influxdb-client-php/pull/14): Checks the health of a running InfluxDB instance by querying the /health
 
+### Bugs
+1. [#19](https://github.com/influxdata/influxdb-client-php/pull/19): Fixed parsing QueryResponse on Windows
+
 ## 1.1.0 [2020-03-13]
 
 ### Bugs
