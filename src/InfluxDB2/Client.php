@@ -41,11 +41,12 @@ class Client
      *          'batchSize' => the number of data point to collect in batch
      *      ]
      * @param array|null $writeOptions Array containing the write parameters (See above)
+     * @param array|null $pointSettings
      * @return WriteApi
      */
-    public function createWriteApi(array $writeOptions = null): WriteApi
+    public function createWriteApi(array $writeOptions = null, array $pointSettings = null): WriteApi
     {
-        $writeApi = new WriteApi($this->options, $writeOptions);
+        $writeApi = new WriteApi($this->options, $writeOptions, $pointSettings);
         $this->autoCloseable[] = $writeApi;
         return $writeApi;
     }

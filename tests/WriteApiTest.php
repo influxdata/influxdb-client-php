@@ -14,6 +14,16 @@ require_once('BasicTest.php');
  */
 class WriteApiTest extends BasicTest
 {
+    private const ID_TAG = "132-987-655";
+    private const CUSTOMER_TAG = "California Miner";
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        putenv("data_center=LA");
+    }
+
     public function testWriteLineProtocol()
     {
         $this->mockHandler->append(new Response(204));
@@ -129,6 +139,103 @@ class WriteApiTest extends BasicTest
         {
             $this->fail();
         }
+    }
+
+    public function testWritePointWithDefaultTags()
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->pointSettings->addDefaultTag('id', WriteApiTest::ID_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('customer', WriteApiTest::CUSTOMER_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('data_center', '${env.data_center}');
+
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+        $this->writeApi->write($point);
+
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri()));
+        $this->assertEquals('h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i',
+            strval($request->getBody()));
+    }
+
+    public function testWriteArrayWithDefaultTags()
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->pointSettings->addDefaultTag('id', WriteApiTest::ID_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('customer', WriteApiTest::CUSTOMER_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('data_center', '${env.data_center}');
+
+        $array = array('name' => 'h2o',
+            'tags' => array('host' => 'aws', 'region' => 'us'),
+            'fields' => array('level' => 5, 'saturation' => '99%'),
+            'time' => 123);
+
+        $this->writeApi->write($array);
+
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri()));
+        $this->assertEquals('h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation="99%" 123',
+            strval($request->getBody()));
+    }
+
+    public function testWriteCollectionWithDefaultTags()
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->pointSettings->addDefaultTag('id', WriteApiTest::ID_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('customer', WriteApiTest::CUSTOMER_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('data_center', '${env.data_center}');
+
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+        $array = array('name' => 'h2o',
+            'tags' => array('host' => 'aws', 'region' => 'us'),
+            'fields' => array('level' => 5, 'saturation' => '99%'),
+            'time' => 123);
+
+        $this->writeApi->write(array('h2o,location=west value=33i 15', null, $point, $array));
+
+        $request = $this->mockHandler->getLastRequest();
+
+        $expected = "h2o,location=west value=33i 15\n"
+            . "h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i\n"
+            . "h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation=\"99%\" 123";
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri()));
+        $this->assertEquals($expected, strval($request->getBody()));
+    }
+
+    public function testWriteArrayWithoutTagsWithDefaultTags()
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->pointSettings->addDefaultTag('id', WriteApiTest::ID_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('customer', WriteApiTest::CUSTOMER_TAG);
+        $this->writeApi->pointSettings->addDefaultTag('data_center', '${env.data_center}');
+
+        $array = array('name' => 'h2o',
+            'fields' => array('level' => 5, 'saturation' => '99%'),
+            'time' => 123);
+
+        $this->writeApi->write($array);
+
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri()));
+        $this->assertEquals('h2o,customer=California\ Miner,data_center=LA,id=132-987-655 level=5i,saturation="99%" 123',
+            strval($request->getBody()));
     }
 
     public function testRetryCount()

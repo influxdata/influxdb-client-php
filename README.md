@@ -265,6 +265,38 @@ $writeApi->write($dataArray);
 $writeApi->write('h2o,location=west value=33i 15');
 ```
 
+#### Default Tags
+
+Sometimes is useful to store same information in every measurement e.g. `hostname`, `location`, `customer`. 
+The client is able to use static value, app settings or env variable as a tag value.
+
+The expressions:
+- `California Miner` - static value
+- `${env.hostname}` - environment property
+
+##### Via API
+
+```php
+$this->client = new Client([
+    "url" => "http://localhost:9999",
+    "token" => "my-token",
+    "bucket" => "my-bucket",
+    "precision" => WritePrecision::NS,
+    "org" => "my-org"
+]);
+
+$writeApi = $this->client->createWriteApi(null, array('id' => '132-987-655',
+    'hostname' => '${env.Hostname}'));
+    
+$writeApi->pointSettings->addDefaultTag('customer', 'California Miner');
+
+$point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+$this->writeApi->write($point);
+```
+
 ## Advanced Usage
 
 ### Check the server status 
