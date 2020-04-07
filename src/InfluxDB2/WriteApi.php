@@ -24,7 +24,7 @@ class PointSettings
         $this->defaultTags[$key] = $this->getValue($value);
     }
 
-    private function getValue(string $value): string
+    public static function getValue(string $value): string
     {
         if (substr( $value, 0, 6 ) === '${env.')
         {
@@ -130,7 +130,7 @@ class WriteApi extends DefaultApi
             {
                 foreach (array_keys($defaultTags) as $key)
                 {
-                    $data['tags'][$key] = $defaultTags[$key];
+                    $data['tags'][$key] = PointSettings::getValue($defaultTags[$key]);
                 }
             }
             else
@@ -145,7 +145,7 @@ class WriteApi extends DefaultApi
         {
             foreach (array_keys($defaultTags) as $key)
             {
-                $data->addTag($key, $defaultTags[$key]);
+                $data->addTag($key, PointSettings::getValue($defaultTags[$key]));
             }
         }
     }
