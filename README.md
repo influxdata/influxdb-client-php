@@ -282,11 +282,11 @@ $this->client = new Client([
     "token" => "my-token",
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
-    "org" => "my-org"
+    "org" => "my-org",
+    "tags" => array('id' => '132-987-655')
 ]);
 
-$writeApi = $this->client->createWriteApi(null, array('id' => '132-987-655',
-    'hostname' => '${env.Hostname}'));
+$writeApi = $this->client->createWriteApi(null, array('hostname' => '${env.Hostname}'));
     
 $writeApi->pointSettings->addDefaultTag('customer', 'California Miner');
 

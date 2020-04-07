@@ -24,7 +24,8 @@ class Client
      *          "bucket" => "my-bucket",
      *          "precision" => WritePrecision::NS,
      *          "org" => "my-org",
-     *          "debug" => false
+     *          "debug" => false,
+     *          "tags" => array('id' => '1234')
      *          ]);
      *
      * @param array $options

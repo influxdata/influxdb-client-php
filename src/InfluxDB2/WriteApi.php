@@ -64,6 +64,14 @@ class WriteApi extends DefaultApi
         parent::__construct($options);
         $this->writeOptions = new WriteOptions($writeOptions) ?: new WriteOptions();
         $this->pointSettings = new PointSettings($pointSettings) ?: new PointSettings();
+
+        if (array_key_exists('tags', $options))
+        {
+            foreach (array_keys($options['tags']) as $key)
+            {
+                $this->pointSettings->addDefaultTag($key, $options['tags'][$key]);
+            }
+        }
     }
 
     /**

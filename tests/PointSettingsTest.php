@@ -22,14 +22,14 @@ class PointSettingsTest extends TestCase
             "token" => "my-token",
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,
-            "org" => "my-org"
+            "org" => "my-org",
+            "tags" => array('id' => PointSettingsTest::ID_TAG)
         ]);
     }
 
     public function testPointSettings()
     {
-        $writeApi = $this->client->createWriteApi(null, array('id' => PointSettingsTest::ID_TAG,
-            'customer' => PointSettingsTest::CUSTOMER_TAG));
+        $writeApi = $this->client->createWriteApi(null, array('customer' => PointSettingsTest::CUSTOMER_TAG));
 
         $defaultTags = $writeApi->pointSettings->getDefaultTags();
 
@@ -43,7 +43,6 @@ class PointSettingsTest extends TestCase
 
         $writeApi = $this->client->createWriteApi();
 
-        $writeApi->pointSettings->addDefaultTag('id', PointSettingsTest::ID_TAG);
         $writeApi->pointSettings->addDefaultTag('customer', PointSettingsTest::CUSTOMER_TAG);
         $writeApi->pointSettings->addDefaultTag('data_center', '${env.data_center}');
 
