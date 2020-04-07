@@ -3,13 +3,15 @@
 namespace InfluxDB2Test;
 
 use InfluxDB2\Client;
-use InfluxDB2\Point;
 use InfluxDB2\Model\WritePrecision;
+use InfluxDB2\Point;
 use InfluxDB2\WriteApi;
-use InfluxDB2\WriteOptions;
 use InfluxDB2\WriteType;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group integration
+ */
 class WriteApiIntegrationTest extends TestCase
 {
     /** @var Client */
