@@ -3,6 +3,8 @@
 namespace InfluxDB2;
 
 use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 /**
  * Class FluxCsvParser us used to construct FluxResult from CSV.
@@ -59,7 +61,7 @@ class FluxCsvParser
 
     public function parse()
     {
-        foreach ($this->each() as $record);
+        iterator_to_array($this->each());
 
         return $this;
     }
@@ -67,7 +69,7 @@ class FluxCsvParser
     public function each()
     {
         try {
-            while ($row = \GuzzleHttp\Psr7\readline($this->response)) {
+            while ($row = $this->readline($this->response)) {
                 if (!isset($row) || trim($row) === '') {
                     continue;
                 }
@@ -220,6 +222,8 @@ class FluxCsvParser
             $fluxTable = $this->tables[$this->tableIndex - 1];
             array_push($fluxTable->records, $fluxRecord);
         }
+
+        return null;
     }
 
     private function toValue($strVal, FluxColumn $column)
@@ -261,6 +265,31 @@ class FluxCsvParser
 
     }
 
+    private function readline(StreamInterface $stream)
+    {
+        $buffer = null;
+
+        while (null !== ($byte = $stream->read(1))) {
+
+            if ($byte === "") {
+                break;
+            }
+
+            if ($buffer == null) {
+                $buffer .= '';
+            }
+
+            $buffer .= $byte;
+
+            // Break when a new line is found
+            if ($byte === "\n") {
+                break;
+            }
+        }
+
+        return $buffer;
+    }
+
     private function closeConnection()
     {
         # Close CSV Parser
@@ -269,7 +298,7 @@ class FluxCsvParser
     }
 }
 
-class FluxQueryError extends \RuntimeException
+class FluxQueryError extends RuntimeException
 {
 
 }

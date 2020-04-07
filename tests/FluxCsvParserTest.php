@@ -8,7 +8,7 @@ use InfluxDB2\FluxQueryError;
 use InfluxDB2\FluxRecord;
 use PHPUnit\Framework\TestCase;
 
-class FluxTableTest extends TestCase
+class FluxCsvParserTest extends TestCase
 {
     public function testMultipleValues()
     {
@@ -279,6 +279,53 @@ class FluxTableTest extends TestCase
             $this->fail();
         }
     }
+
+    public function testParserErrorUndefinedOffset()
+    {
+        $data = "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string\n" .
+            "#group,false,false,true,true,false,false,true,true,true,true,true\n" .
+            "#default,_result,,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,channel,device_eui,sensor_eui\n" .
+            ",,0,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:17:43.775791768Z,23.4,value,4097,1,2CF7F1201470029C,vs\n" .
+            ",,0,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:27:45.894980937Z,22.5,value,4097,1,2CF7F1201470029C,vs\n" .
+            ",,0,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:37:50.278735828Z,21.4,value,4097,1,2CF7F1201470029C,vs\n" .
+            ",,0,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:47:51.766261407Z,20.3,value,4097,1,2CF7F1201470029C,vs\n" .
+            ",,0,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:57:57.475875729Z,18.9,value,4097,1,2CF7F1201470029C,vs\n" .
+            ",,0,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T16:07:59.413550698Z,17.8,value,4097,1,2CF7F1201470029C,vs\n" .
+            "\n" .
+            "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string\n" .
+            "#group,false,false,true,true,false,false,true,true,true,true,true\n" .
+            "#default,_result,,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,channel,device_eui,sensor_eui\n" .
+            ",,1,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:43:49.398558429Z,12.3,value,4102,1,2CF7F12014700247,vs\n" .
+
+            "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string\n" .
+            "#group,false,false,true,true,false,false,true,true,true,true,true\n" .
+            "#default,_result,,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,channel,device_eui,sensor_eui\n" .
+            ",,2,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:17:43.772929338Z,43.1,value,4098,1,2CF7F1201470029C,vs\n" .
+            ",,2,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:27:45.897608471Z,49,value,4098,1,2CF7F1201470029C,vs\n" .
+            ",,2,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:37:50.27543528Z,48.2,value,4098,1,2CF7F1201470029C,vs\n" .
+            ",,2,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:47:51.769665096Z,44.7,value,4098,1,2CF7F1201470029C,vs\n" .
+            ",,2,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:57:57.47339818Z,48.5,value,4098,1,2CF7F1201470029C,vs\n" .
+            ",,2,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T16:07:59.40946618Z,52.3,value,4098,1,2CF7F1201470029C,vs\n" .
+            "\n" .
+            "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string\n" .
+            "#group,false,false,true,true,false,false,true,true,true,true,true\n" .
+            "#default,_result,,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_time,_value,_field,_measurement,channel,device_eui,sensor_eui\n" .
+            ",,3,2020-03-27T15:17:00.64917903Z,2020-03-27T16:17:00.64917903Z,2020-03-27T15:43:49.39609423Z,30.7,value,4103,1,2CF7F12014700247,vs\n";
+
+        $parser = new FluxCsvParser($data);
+        $tables = $parser->parse()->tables;
+
+        $this->assertEquals(4, sizeof($tables));
+        $this->assertEquals(6, sizeof($tables[0]->records));
+        $this->assertEquals(1, sizeof($tables[1]->records));
+        $this->assertEquals(6, sizeof($tables[2]->records));
+        $this->assertEquals(1, sizeof($tables[3]->records));
+    }
+
 
     private function assertColumns(array $columnHeaders, array $values)
     {

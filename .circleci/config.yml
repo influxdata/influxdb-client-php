@@ -83,6 +83,25 @@ jobs:
       - test:
           php-image: << parameters.php-image >>
       - storing-test-results
+  tests-windows:
+    machine:
+      image: "windows-server-2019-vs2019:stable"
+      resource_class: windows.medium
+      shell: bash
+    environment:
+      DOCKER_NET_DRIVER: nat
+      INFLUXDB_VERSION: 1.7
+    steps:
+      - checkout
+      - run: choco install php --version=7.3.15 --params '"/ThreadSafe /InstallDir:c:\tools\php"'
+      - run: cp ~/project/.circleci/php.ini /c/tools/php/
+      - run: /c/tools/php/php.exe -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - run: /c/tools/php/php.exe composer-setup.php
+      - run: /c/tools/php/php.exe composer.phar install
+      - run: |
+          export PATH=/c/tools/php/:$PATH
+          ./vendor/bin/phpunit --exclude-group "integration" --log-junit build/junit.xml
+      - storing-test-results
 
 workflows:
   version: 2
@@ -99,6 +118,8 @@ workflows:
       - tests-php:
           name: php-7.1
           php-image: "circleci/php:7.1"
+      - tests-windows:
+          name: php-windows
 
   nightly:
     triggers:

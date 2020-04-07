@@ -8,6 +8,9 @@ use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group integration
+ */
 class QueryApiIntegrationTest extends TestCase
 {
     private $client;

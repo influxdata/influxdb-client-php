@@ -28,7 +28,7 @@ class QueryApi extends DefaultApi
 
     /**
      *
-     * @param $query  query the flux query to execute. The data could be represent by string, Query
+     * @param string $query query the flux query to execute. The data could be represent by string, Query
      * @param null $org specifies the source organization
      * @param null $dialect csv dialect
      * @return string
@@ -55,14 +55,12 @@ class QueryApi extends DefaultApi
     {
         $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
-        if ($response == null)
-        {
+        if ($response == null) {
             return null;
         }
 
         $parser = new FluxCsvParser($response->getBody());
-
-        foreach ($parser->parse() as $record);
+        $parser->parse();
 
         return $parser->tables;
     }

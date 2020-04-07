@@ -9,6 +9,9 @@ use InfluxDB2\WriteApi;
 use InfluxDB2\WriteType;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group integration
+ */
 class WriteApiIntegrationTest extends TestCase
 {
     /** @var Client */

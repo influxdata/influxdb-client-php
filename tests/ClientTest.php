@@ -6,6 +6,9 @@ use InfluxDB2\Client;
 
 require_once('BasicTest.php');
 
+/**
+ * @group integration
+ */
 class ClientTest extends BasicTest
 {
     public function test_health()
