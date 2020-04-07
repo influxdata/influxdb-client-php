@@ -23,7 +23,7 @@ class PointSettingsTest extends TestCase
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,
             "org" => "my-org",
-            "tags" => array('id' => PointSettingsTest::ID_TAG)
+            "tags" => ['id' => PointSettingsTest::ID_TAG]
         ]);
     }
 

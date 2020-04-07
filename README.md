@@ -283,7 +283,7 @@ $this->client = new Client([
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
     "org" => "my-org",
-    "tags" => array('id' => '132-987-655')
+    "tags" => ['id' => '132-987-655']
 ]);
 
 $writeApi = $this->client->createWriteApi(null, array('hostname' => '${env.Hostname}'));

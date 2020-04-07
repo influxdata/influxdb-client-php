@@ -25,7 +25,7 @@ class Client
      *          "precision" => WritePrecision::NS,
      *          "org" => "my-org",
      *          "debug" => false,
-     *          "tags" => array('id' => '1234')
+     *          "tags" => ['id' => '1234']
      *          ]);
      *
      * @param array $options
