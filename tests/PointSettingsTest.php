@@ -29,7 +29,7 @@ class PointSettingsTest extends TestCase
 
     public function testPointSettings()
     {
-        $writeApi = $this->client->createWriteApi(null, array('customer' => PointSettingsTest::CUSTOMER_TAG));
+        $writeApi = $this->client->createWriteApi(null, ['customer' => PointSettingsTest::CUSTOMER_TAG]);
 
         $defaultTags = $writeApi->pointSettings->getDefaultTags();
 

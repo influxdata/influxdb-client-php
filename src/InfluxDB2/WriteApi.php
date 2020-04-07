@@ -14,7 +14,7 @@ class PointSettings
 
         if (!empty($defaultTags)) {
             foreach (array_keys($defaultTags) as $key) {
-                $this->addDefaultTag($key, $defaultTags[$key]);
+                $this->defaultTags[$key] = $defaultTags[$key];
             }
         }
     }
