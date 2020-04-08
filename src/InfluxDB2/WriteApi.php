@@ -10,13 +10,7 @@ class PointSettings
 
     public function __construct(array $defaultTags = null)
     {
-        $this->defaultTags = array();
-
-        if (!empty($defaultTags)) {
-            foreach (array_keys($defaultTags) as $key) {
-                $this->defaultTags[$key] = $defaultTags[$key];
-            }
-        }
+        $this->defaultTags = $defaultTags;
     }
 
     public function addDefaultTag(string $key, string $value)
