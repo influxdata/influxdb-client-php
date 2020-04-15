@@ -11,7 +11,7 @@
 
 This repository contains the reference PHP client for the InfluxDB 2.0.
 
-#### Note: Use this client library with InfluxDB 2.x and InfluxDB 1.8+. For connecting to InfluxDB 1.7 or earlier instances, use the [influxdb-php](https://github.com/influxdata/influxdb-php) client library.
+#### Note: Use this client library with InfluxDB 2.x and InfluxDB 1.8+ ([see details](#influxdb-18-api-compatibility)). For connecting to InfluxDB 1.7 or earlier instances, use the [influxdb-php](https://github.com/influxdata/influxdb-php) client library.
 
 #### Disclaimer: This library is a work in progress and should not be considered production ready yet.
 
@@ -262,6 +262,20 @@ $writeApi->write('h2o,location=west value=33i 15');
 ### Check the server status 
 
 Server availability can be checked using the `$client->health();` method. That is equivalent of the [influx ping](https://v2.docs.influxdata.com/v2.0/reference/cli/influx/ping/).
+
+### InfluxDB 1.8 API compatibility
+
+InfluxDB 1.8.0 introduced forward compatibility APIs for InfluxDB 2.0. This allow you to easily move from InfluxDB 1.x to InfluxDB 2.0 Cloud or open source.
+
+The following forward compatible APIs are available:
+
+| API | Endpoint | Description |
+|:----------|:----------|:----------|
+| [QueryApi.php](src/InfluxDB2/QueryApi.php) | [/api/v2/query](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-query-http-endpoint) | Query data in InfluxDB 1.8.0+ using the InfluxDB 2.0 API and [Flux](https://docs.influxdata.com/flux/latest/) |
+| [WriteApi.php](src/InfluxDB2/WriteApi.php) | [/api/v2/write](https://docs.influxdata.com/influxdb/v1.8/tools/api/#api-v2-write-http-endpoint) | Write data to InfluxDB 1.8.0+ using the InfluxDB 2.0 API _(compatible with InfluxDB 2.0 client libraries)_ |
+| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/v1.8/tools/api/#health-http-endpoint) | Check the health of your InfluxDB instance |    
+
+For detail info see [InfluxDB 1.8 example](examples/InfluxDB_18_Example.php).
 
 ## Local tests
 
