@@ -1,3 +1,5 @@
+## 1.3.0 [unreleased]
+
 ## 1.2.0 [2020-04-17]
 
 ### Features
@@ -6,7 +8,6 @@
 ### Documentation
 
 1. [#22](https://github.com/influxdata/influxdb-client-php/pull/22): Clarify how to use a client with InfluxDB 1.8
-
 
 ### Bug Fixes
 1. [#19](https://github.com/influxdata/influxdb-client-php/pull/19): Fixed parsing QueryResponse on Windows
