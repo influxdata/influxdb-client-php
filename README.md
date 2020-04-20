@@ -141,7 +141,6 @@ $write_api = $client->createWriteApi();
 $write_api->write('h2o,location=west value=33i 15');
 ```
 
-<!--- TODO still in progress
 #### Batching
 
 The writes are processed in batches which are configurable by `WriteOptions`:
@@ -153,18 +152,25 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | **flushInterval** | the number of milliseconds before the batch is written | 1000 |
 
 ```php
-$client = new InfluxDB2\Client(["url" => "http://localhost:9999", "token" => "my-token",
+use InfluxDB2\Client;
+use InfluxDB2\WriteType as WriteType;
+
+$client = new Client(["url" => "http://localhost:9999", "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
     "precision" => InfluxDB2\Model\WritePrecision::NS
 ]);
 
 $writeApi = $client->createWriteApi(
-    ["writeType"=>InfluxDB2\WriteType::BATCHING, 'batchSize'=>1000, "flushInterval" =>1000]);
+    ["writeType" => WriteType::BATCHING, 'batchSize' => 1000, "flushInterval" => 1000]);
 
-$writeApi->write('h2o,location=west value=33i 15');
+foreach (range(1, 10000) as $number) {
+    $writeApi->write("mem,host=aws_europe,type=batch value=1i $number");
+}
+
+// flush remaining data
+$writeApi->close();
 ```
--->
 
 #### Time precision
 
