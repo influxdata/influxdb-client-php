@@ -1,5 +1,9 @@
 ## 1.3.0 [unreleased]
 
+### Documentation
+
+1. [#24](https://github.com/influxdata/influxdb-client-php/pull/24): Improved documentation about batching
+
 ## 1.2.0 [2020-04-17]
 
 ### Features
