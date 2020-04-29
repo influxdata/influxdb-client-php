@@ -1,5 +1,9 @@
 ## 1.3.0 [unreleased]
 
+### Bug Fixes
+
+1. [#25](https://github.com/influxdata/influxdb-client-php/pull/25): Fixes a typo in timeout Guzzle option
+
 ### Documentation
 
 1. [#24](https://github.com/influxdata/influxdb-client-php/pull/24): Improved documentation about batching
