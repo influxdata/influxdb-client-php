@@ -58,7 +58,7 @@ class DefaultApi
                 'query' => $queryParams,
                 'body' => $payload,
                 'stream' => $stream,
-                'timout' => $timeout
+                'timeout' => $timeout
             ];
 
             // enable debug
