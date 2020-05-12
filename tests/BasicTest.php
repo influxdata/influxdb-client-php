@@ -31,11 +31,12 @@ abstract class BasicTest extends TestCase
 
     /**
      * @before
+     * @param $url
      */
-    public function setUp()
+    public function setUp($url = "http://localhost:9999")
     {
         $this->client = new Client([
-            "url" => "http://localhost:9999",
+            "url" => $url,
             "token" => "my-token",
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,

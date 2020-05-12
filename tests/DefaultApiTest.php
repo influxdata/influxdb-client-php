@@ -3,8 +3,8 @@
 namespace InfluxDB2Test;
 
 use GuzzleHttp\Psr7\Response;
-use InvalidArgumentException;
 use InfluxDB2\ApiException;
+use InvalidArgumentException;
 
 require_once('BasicTest.php');
 
@@ -19,6 +19,26 @@ class DefaultApiTest extends BasicTest
 
         $this->assertStringStartsWith('influxdb-client-php/',
             strval($request->getHeader("User-Agent")[0]));
+    }
+
+    public function testTrailingSlashInUrl()
+    {
+        $this->mockHandler->append(new Response(204));
+        $this->writeApi->write('h2o,location=west value=33i 15');
+
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
+
+        $this->tearDown();
+        $this->setUp("http://localhost:9999/");
+
+        $this->mockHandler->append(new Response(204));
+        $this->writeApi->write('h2o,location=west value=33i 15');
+
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
     }
 
     public function testContentType()
