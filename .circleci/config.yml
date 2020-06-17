@@ -88,9 +88,6 @@ jobs:
       image: "windows-server-2019-vs2019:stable"
       resource_class: windows.medium
       shell: bash
-    environment:
-      DOCKER_NET_DRIVER: nat
-      INFLUXDB_VERSION: 1.7
     steps:
       - checkout
       - run: choco install php --version=7.3.15 --params '"/ThreadSafe /InstallDir:c:\tools\php"'
