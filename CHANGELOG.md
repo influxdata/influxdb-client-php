@@ -1,5 +1,8 @@
 ## 1.4.0 [unreleased]
 
+### API
+1. [#27](https://github.com/influxdata/influxdb-client-php/pull/27): Updated swagger to latest version
+
 ## 1.3.0 [2020-05-15]
 
 ### Bug Fixes
