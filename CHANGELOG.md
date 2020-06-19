@@ -1,4 +1,4 @@
-## 1.4.0 [unreleased]
+## 1.4.0 [2020-06-19]
 
 ### API
 1. [#27](https://github.com/influxdata/influxdb-client-php/pull/27): Updated swagger to latest version
