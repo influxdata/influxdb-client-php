@@ -105,6 +105,9 @@ workflows:
   build:
     jobs:
       - tests-php:
+          name: php-7.4
+          php-image: "circleci/php:7.4"
+      - tests-php:
           name: php-7.3
       - tests-php:
           name: php-7.3-nightly

@@ -23,9 +23,9 @@ class WriteOptions
     public function __construct(array $writeOptions = null)
     {
         //initialize with default values
-        $this->writeType =  $writeOptions["writeType"] ?: WriteType::SYNCHRONOUS;
-        $this->batchSize = $writeOptions["batchSize"] ?:  self::DEFAULT_BATCH_SIZE;
-        $this->flushInterval = $writeOptions["flushInterval"] ?:  self::DEFAULT_FLUSH_INTERVAL;
+        $this->writeType =  $writeOptions["writeType"] ?? WriteType::SYNCHRONOUS;
+        $this->batchSize = $writeOptions["batchSize"] ??  self::DEFAULT_BATCH_SIZE;
+        $this->flushInterval = $writeOptions["flushInterval"] ??  self::DEFAULT_FLUSH_INTERVAL;
     }
 }
 
