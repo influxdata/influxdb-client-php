@@ -262,7 +262,9 @@ class Point
 
     private function escapeKey($key)
     {
-        $escapeKeys = array(' ' => '\\ ', ',' => '\\,', '=' => '\\=', "\\" => '\\\\');
+        $escapeKeys = array(' ' => '\\ ', ',' => '\\,', '=' => '\\=', "\\" => '\\\\',
+            "\n" => '\\n', "\r" => '\\r', "\t" => '\\t');
+        
         return strtr($key, $escapeKeys);
     }
 

@@ -57,6 +57,18 @@ class PointTest extends TestCase
         $this->assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
     }
 
+    public function testTagEscapingKeyAndValue()
+    {
+        $point =  Point::measurement("h\n2\ro\t_data")
+                ->addTag("new\nline", "new\nline")
+                ->addTag("carriage\rreturn", "carriage\nreturn")
+                ->addTag("t\tab", "t\tab")
+                ->addField("level", 2);
+
+        $this->assertEquals("h\\n2\\ro\\t_data,carriage\\rreturn=carriage\\nreturn,new\\nline=new\\nline,t\\tab=t\\tab level=2i",
+            $point->toLineProtocol());
+    }
+
     public function testOverrideTagAndField()
     {
         $point = Point::measurement('h2o')

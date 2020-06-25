@@ -3,6 +3,9 @@
 ### Features
 1. [#29](https://github.com/influxdata/influxdb-client-php/issues/29): Prevent invalid array access when no write options are passed to the WriteApi.
 
+### Bug Fixes
+1. [#27](https://github.com/influxdata/influxdb-client-php/pull/27): Fixed serialization of `\n`, `\r` and `\t` to Line Protocol 
+
 ## 1.4.0 [2020-06-19]
 
 ### API
