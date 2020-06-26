@@ -69,6 +69,15 @@ class PointTest extends TestCase
             $point->toLineProtocol());
     }
 
+    public function testEqualSignEscaping() {
+
+        $point =  Point::measurement("h=2o")
+                ->addTag("l=ocation", "e=urope")
+                ->addField("l=evel", 2);
+
+        $this->assertEquals("h=2o,l\\=ocation=e\\=urope l\\=evel=2i", $point->toLineProtocol());
+    }
+
     public function testOverrideTagAndField()
     {
         $point = Point::measurement('h2o')

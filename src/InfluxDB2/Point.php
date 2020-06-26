@@ -117,7 +117,7 @@ class Point
      */
     public function toLineProtocol()
     {
-        $measurement = $this->escapeKey($this->name);
+        $measurement = $this->escapeKey($this->name, false);
 
         $lineProtocol = $measurement;
 
@@ -260,11 +260,15 @@ class Point
         return ' ' . $time;
     }
 
-    private function escapeKey($key)
+    private function escapeKey($key, $escapeEqual = true)
     {
-        $escapeKeys = array(' ' => '\\ ', ',' => '\\,', '=' => '\\=', "\\" => '\\\\',
+        $escapeKeys = array(' ' => '\\ ', ',' => '\\,', "\\" => '\\\\',
             "\n" => '\\n', "\r" => '\\r', "\t" => '\\t');
-        
+
+        if ($escapeEqual) {
+            $escapeKeys['='] = '\\=';
+        }
+
         return strtr($key, $escapeKeys);
     }
 
