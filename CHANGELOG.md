@@ -1,4 +1,4 @@
-## 1.5.0 [unreleased]
+## 1.5.0 [2020-07-17]
 
 ### Features
 1. [#29](https://github.com/influxdata/influxdb-client-php/issues/29): Prevent invalid array access when no write options are passed to the WriteApi.
