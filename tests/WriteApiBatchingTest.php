@@ -6,6 +6,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use InfluxDB2\ApiException;
 use InfluxDB2\WriteType;
 use Webmozart\Assert\Assert;
 
@@ -121,5 +122,66 @@ class WriteApiBatchingTest extends BasicTest
         $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2\n"
             . 'h2o_feet,location=coyote_creek level\\ water_level=3.0 3', $request->getBody());
+    }
+
+    public function testRetryIntervalByConfig()
+    {
+        $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
+            . 'The Retry-After header describes when to try the write again."}';
+
+        $this->mockHandler->append(new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'],
+            $errorBody), new Response(204));
+
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
+
+        $this->assertEquals(2, count($this->container));
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri()));
+        $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
+            . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
+    }
+
+    public function testRetryIntervalByHeader()
+    {
+        $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
+            . 'The Retry-After header describes when to try the write again."}';
+
+        $this->mockHandler->append(new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable',
+            'Retry-After' => '3'],
+            $errorBody), new Response(204));
+
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
+
+        $this->assertEquals(2, count($this->container));
+        $request = $this->mockHandler->getLastRequest();
+
+        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri()));
+        $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
+            . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
+    }
+
+    public function testRetryIntervalMaxRetries()
+    {
+        $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
+            . 'The Retry-After header describes when to try the write again."}';
+
+        $this->writeApi->writeOptions->maxRetries = 2;
+
+        $this->mockHandler->append(
+            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody),
+            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody),
+            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody));
+
+        $this->expectException(ApiException::class);
+
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
+
+        $this->assertEquals(3, count($this->container));
     }
 }

@@ -1,5 +1,8 @@
 ## 1.6.0 [unreleased]
 
+### Features
+1. [#32](https://github.com/influxdata/influxdb-client-php/pull/32): Added retryInterval and maxRetries to WriteOptions in WriteApi
+
 ## 1.5.0 [2020-07-17]
 
 ### Features
