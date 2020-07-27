@@ -7,6 +7,7 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
+use InfluxDB2\Point;
 use InfluxDB2\WriteType;
 use Webmozart\Assert\Assert;
 
@@ -183,5 +184,37 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
         $this->assertEquals(3, count($this->container));
+    }
+
+    public function testRetryCount()
+    {
+        $this->mockHandler->append(
+        // regular call
+            new Response(429),
+            // retry
+            new Response(429),
+            // retry
+            new Response(429),
+            // retry
+            new Response(429),
+            // not called
+            new Response(429));
+
+        $this->writeApi->writeOptions->batchSize = 1;
+
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+        try {
+            $this->writeApi->write($point);
+        } catch (ApiException $e) {
+            $this->assertEquals(429, $e->getCode());
+        }
+
+        $this->assertEquals(4, count($this->container));
+
+        $count = $this->mockHandler->count();
+        $this->assertEquals(1, $count);
     }
 }
