@@ -103,7 +103,7 @@ class WriteApi extends DefaultApi
 
         $queryParams = ["org" => $orgParam, "bucket" => $bucketParam, "precision" => $precisionParam];
 
-        $this->writeRawInternal($data, $queryParams, 0);
+        $this->writeRawInternal($data, $queryParams, 1);
     }
 
     private function writeRawInternal(string $data, array $queryParams, int $attempts)
@@ -113,19 +113,19 @@ class WriteApi extends DefaultApi
         } catch (ApiException $e) {
             $code = $e->getCode();
 
-            if ($code == null || ($code < 429 || $code > 503) || $attempts >= $this->writeOptions->maxRetries) {
+            if ($code == null || !($code == 429 || $code == 503) || $attempts > $this->writeOptions->maxRetries) {
                 throw $e;
             }
 
             $headers = $e->getResponseHeaders();
 
             if (array_key_exists('Retry-After', $headers)) {
-                $timeout = (int)$headers['Retry-After'];
+                $timeout = (int)$headers['Retry-After'][0] * 1000000.0;
             } else {
-                $timeout = $this->writeOptions->retryInterval / 1000.0;
+                $timeout = $this->writeOptions->retryInterval * 1000.0;
             }
 
-            sleep($timeout);
+            usleep($timeout . "\n");
 
             $this->writeRawInternal($data, $queryParams, $attempts + 1);
         }
