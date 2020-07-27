@@ -125,7 +125,7 @@ class WriteApi extends DefaultApi
                 $timeout = $this->writeOptions->retryInterval * 1000.0;
             }
 
-            usleep($timeout . "\n");
+            usleep($timeout);
 
             $this->writeRawInternal($data, $queryParams, $attempts + 1);
         }
