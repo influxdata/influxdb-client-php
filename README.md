@@ -152,7 +152,7 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | **flushInterval** | the number of milliseconds before the batch is written | 1000 |
 | **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 1000 |
 | **maxRetries** | the number of max retries when write fails | 3 |
-| **maxRetryDelay** | maximum delay when retrying write | 15000 |
+| **maxRetryDelay** | maximum delay when retrying write in milliseconds | 15000 |
 
 ```php
 use InfluxDB2\Client;
