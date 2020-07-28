@@ -8,12 +8,14 @@ class WriteOptions
     const DEFAULT_FLUSH_INTERVAL = 1000;
     const DEFAULT_RETRY_INTERVAL = 1000;
     const DEFAULT_MAX_RETRIES = 3;
+    const DEFAULT_MAX_RETRY_DELAY = 15000;
 
     public $writeType;
     public $batchSize;
     public $flushInterval;
     public $retryInterval;
     public $maxRetries;
+    public $maxRetryDelay;
 
     /**
      * WriteOptions constructor.
@@ -24,6 +26,7 @@ class WriteOptions
      *          'retryInterval' => number of milliseconds to retry unsuccessful write
      *          'maxRetries' => max number of retries when write fails
      *              The retry interval is used when the InfluxDB server does not specify "Retry-After" header.
+     *          'maxRetryDelay' => maximum delay when retrying write
      *      ]
      * @param array $writeOptions Array containing the write parameters (See above)
      */
@@ -35,6 +38,7 @@ class WriteOptions
         $this->flushInterval = $writeOptions["flushInterval"] ??  self::DEFAULT_FLUSH_INTERVAL;
         $this->retryInterval = $writeOptions["retryInterval"] ?? self::DEFAULT_RETRY_INTERVAL;
         $this->maxRetries = $writeOptions["maxRetries"] ?? self::DEFAULT_MAX_RETRIES;
+        $this->maxRetryDelay = $writeOptions["maxRetryDelay"] ?? self::DEFAULT_MAX_RETRY_DELAY;
     }
 }
 

@@ -103,10 +103,10 @@ class WriteApi extends DefaultApi
 
         $queryParams = ["org" => $orgParam, "bucket" => $bucketParam, "precision" => $precisionParam];
 
-        $this->writeRawInternal($data, $queryParams, 1);
+        $this->writeRawInternal($data, $queryParams, 1, $this->writeOptions->retryInterval);
     }
 
-    private function writeRawInternal(string $data, array $queryParams, int $attempts)
+    private function writeRawInternal(string $data, array $queryParams, int $attempts, int $retryInterval)
     {
         try {
             $this->post($data, "/api/v2/write", $queryParams);
@@ -122,12 +122,12 @@ class WriteApi extends DefaultApi
             if (array_key_exists('Retry-After', $headers)) {
                 $timeout = (int)$headers['Retry-After'][0] * 1000000.0;
             } else {
-                $timeout = $this->writeOptions->retryInterval * 1000.0;
+                $timeout = min($retryInterval, $this->writeOptions->maxRetryDelay) * 1000.0;
             }
 
             usleep($timeout);
 
-            $this->writeRawInternal($data, $queryParams, $attempts + 1);
+            $this->writeRawInternal($data, $queryParams, $attempts + 1, $retryInterval * 2);
         }
     }
 
