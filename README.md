@@ -148,8 +148,11 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | Property | Description | Default Value |
 | --- | --- | --- |
 | **writeType** | type of write SYNCHRONOUS / BATCHING /  | SYNCHRONOUS |
-| **batchSize** | the number of data point to collect in batch | 1000 |
+| **batchSize** | the number of data point to collect in batch | 10 |
 | **flushInterval** | the number of milliseconds before the batch is written | 1000 |
+| **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 1000 |
+| **maxRetries** | the number of max retries when write fails | 3 |
+| **maxRetryDelay** | maximum delay when retrying write in milliseconds | 15000 |
 
 ```php
 use InfluxDB2\Client;

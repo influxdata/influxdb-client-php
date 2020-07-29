@@ -130,4 +130,34 @@ class WriteApiTest extends BasicTest
             $this->fail();
         }
     }
+
+    public function testRetryCount()
+    {
+        $this->mockHandler->append(
+        // regular call
+            new Response(429),
+            // retry
+            new Response(429),
+            // retry
+            new Response(429),
+            // retry
+            new Response(429),
+            // not called
+            new Response(429));
+
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+        try {
+            $this->writeApi->write($point);
+        } catch (ApiException $e) {
+            $this->assertEquals(429, $e->getCode());
+        }
+
+        $this->assertEquals(4, count($this->container));
+
+        $count = $this->mockHandler->count();
+        $this->assertEquals(1, $count);
+    }
 }
