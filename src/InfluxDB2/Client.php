@@ -39,7 +39,6 @@ class Client
      *      $writeOptions = [
      *          'writeType' => methods of write (WriteType::SYNCHRONOUS - default, WriteType::BATCHING)
      *          'batchSize' => the number of data point to collect in batch
-     *          'flushInterval' => flush data at least in this interval
      *      ]
      * @param array|null $writeOptions Array containing the write parameters (See above)
      * @return WriteApi

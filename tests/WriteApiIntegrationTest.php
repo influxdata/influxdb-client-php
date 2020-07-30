@@ -67,7 +67,7 @@ class WriteApiIntegrationTest extends TestCase
     public function testBatchingWrite()
     {
         $writeApi = $this->client->createWriteApi(
-            ["writeType"=>WriteType::BATCHING, 'batchSize'=>3, "flushInterval" =>1000]);
+            ["writeType"=>WriteType::BATCHING, 'batchSize'=>3]);
 
         $data = ['name' => 'cpu',
             'tags' => ['host' => 'server_nl', 'region' => 'us'],

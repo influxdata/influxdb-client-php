@@ -20,7 +20,7 @@ class WriteApiBatchingTest extends BasicTest
 {
     protected function getWriteOptions(): ?array
     {
-        return array('writeType' => 2, 'batchSize' => 2, 'flushInterval' => 5000);
+        return array('writeType' => 2, 'batchSize' => 2);
     }
 
     public function testBatchSize()
