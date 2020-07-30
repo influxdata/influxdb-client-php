@@ -23,7 +23,7 @@ $client = new Client([
 print  "*** Write by batching ***\n";
 
 $writeApi = $client->createWriteApi(
-    ["writeType" => WriteType::BATCHING, 'batchSize' => 1000, "flushInterval" => 1000]);
+    ["writeType" => WriteType::BATCHING, 'batchSize' => 1000]);
 
 foreach (range(1, 10000) as $number) {
     $writeApi->write("mem,host=aws_europe,type=batch value=1i $number");

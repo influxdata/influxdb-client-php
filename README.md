@@ -149,7 +149,6 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | --- | --- | --- |
 | **writeType** | type of write SYNCHRONOUS / BATCHING /  | SYNCHRONOUS |
 | **batchSize** | the number of data point to collect in batch | 10 |
-| **flushInterval** | the number of milliseconds before the batch is written | 1000 |
 | **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 1000 |
 | **maxRetries** | the number of max retries when write fails | 3 |
 | **maxRetryDelay** | maximum delay when retrying write in milliseconds | 15000 |
@@ -165,7 +164,7 @@ $client = new Client(["url" => "http://localhost:9999", "token" => "my-token",
 ]);
 
 $writeApi = $client->createWriteApi(
-    ["writeType" => WriteType::BATCHING, 'batchSize' => 1000, "flushInterval" => 1000]);
+    ["writeType" => WriteType::BATCHING, 'batchSize' => 1000]);
 
 foreach (range(1, 10000) as $number) {
     $writeApi->write("mem,host=aws_europe,type=batch value=1i $number");
