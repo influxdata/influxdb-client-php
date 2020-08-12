@@ -201,6 +201,7 @@ class WriteApiBatchingTest extends BasicTest
             new Response(429));
 
         $this->writeApi->writeOptions->batchSize = 1;
+        $this->writeApi->writeOptions->retryInterval = 1000;
         $this->writeApi->writeOptions->maxRetries = 3;
         $this->writeApi->writeOptions->maxRetryDelay = 15000;
         $this->writeApi->writeOptions->exponentialBase = 2;

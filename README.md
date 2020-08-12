@@ -149,7 +149,7 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | --- | --- | --- |
 | **writeType** | type of write SYNCHRONOUS / BATCHING /  | SYNCHRONOUS |
 | **batchSize** | the number of data point to collect in batch | 10 |
-| **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 1000 |
+| **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 5000 |
 | **maxRetries** | the number of max retries when write fails | 5 |
 | **maxRetryDelay** | maximum delay when retrying write in milliseconds | 180000 |
 | **exponentialBase** | the base for the exponential retry delay, the next delay is computed as `retryInterval * exponentialBase^(attempts-1)` | 5 | 

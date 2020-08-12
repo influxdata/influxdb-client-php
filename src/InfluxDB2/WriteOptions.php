@@ -5,7 +5,7 @@ namespace InfluxDB2;
 class WriteOptions
 {
     const DEFAULT_BATCH_SIZE = 10;
-    const DEFAULT_RETRY_INTERVAL = 1000;
+    const DEFAULT_RETRY_INTERVAL = 5000;
     const DEFAULT_MAX_RETRIES = 5;
     const DEFAULT_MAX_RETRY_DELAY = 180000;
     const DEFAULT_EXPONENTIAL_BASE = 5;
@@ -27,7 +27,7 @@ class WriteOptions
      *              The retry interval is used when the InfluxDB server does not specify "Retry-After" header.
      *          'maxRetryDelay' => maximum delay when retrying write
      *          'exponentialBase' => the base for the exponential retry delay, the next delay is computed as
-     *              `retry_interval * exponential_base^(attempts - 1) + random(jitter_interval)`
+     *              `retry_interval * exponentialBase^(attempts - 1)`
      *      ]
      * @param array $writeOptions Array containing the write parameters (See above)
      */
