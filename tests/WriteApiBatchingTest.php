@@ -201,6 +201,9 @@ class WriteApiBatchingTest extends BasicTest
             new Response(429));
 
         $this->writeApi->writeOptions->batchSize = 1;
+        $this->writeApi->writeOptions->maxRetries = 3;
+        $this->writeApi->writeOptions->maxRetryDelay = 15000;
+        $this->writeApi->writeOptions->exponentialBase = 2;
 
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
