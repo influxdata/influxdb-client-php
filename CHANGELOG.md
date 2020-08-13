@@ -5,6 +5,7 @@
 1. [#36](https://github.com/influxdata/influxdb-client-php/pull/35): Added exponentialBase to WriteApi
 1. [#34](https://github.com/influxdata/influxdb-client-php/issues/34): Retry strategy now work also for connection errors
 1. [#17](https://github.com/influxdata/influxdb-client-php/issues/17): Implemented default tags
+1. [#37](https://github.com/influxdata/influxdb-client-php/pull/37): Api generator moved to influxdb-clients-apigen module
 
 ### Bug Fixes
 1. [#33](https://github.com/influxdata/influxdb-client-php/pull/33): Removed unused flushInterval from WriteApi
