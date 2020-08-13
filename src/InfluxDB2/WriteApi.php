@@ -113,7 +113,7 @@ class WriteApi extends DefaultApi
         } catch (ApiException $e) {
             $code = $e->getCode();
 
-            if ($code == null || !($code == 429 || $code == 503) || $attempts > $this->writeOptions->maxRetries) {
+            if ($code == null || ($code < 429) || $attempts > $this->writeOptions->maxRetries) {
                 throw $e;
             }
 
@@ -127,7 +127,8 @@ class WriteApi extends DefaultApi
 
             usleep($timeout);
 
-            $this->writeRawInternal($data, $queryParams, $attempts + 1, $retryInterval * 2);
+            $this->writeRawInternal($data, $queryParams, $attempts + 1,
+                $retryInterval * $this->writeOptions->exponentialBase);
         }
     }
 
