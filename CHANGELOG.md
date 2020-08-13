@@ -2,6 +2,7 @@
 
 ### Features
 1. [#32](https://github.com/influxdata/influxdb-client-php/pull/32): Added retryInterval, maxRetries and maxRetryDelay to WriteOptions in WriteApi
+1. [#17](https://github.com/influxdata/influxdb-client-php/issues/17): Implemented default tags
 
 ### Bug Fixes
 1. [#33](https://github.com/influxdata/influxdb-client-php/pull/33): Removed unused flushInterval from WriteApi
@@ -33,7 +34,6 @@
 
 ### Features
 1. [#14](https://github.com/influxdata/influxdb-client-php/pull/14): Checks the health of a running InfluxDB instance by querying the /health
-2. [#17](https://github.com/influxdata/influxdb-client-php/issues/17): Implemented default tags
 
 ### Documentation
 

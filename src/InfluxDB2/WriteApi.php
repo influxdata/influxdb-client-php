@@ -13,9 +13,9 @@ class PointSettings
         $this->defaultTags = is_null($defaultTags) ? [] : $defaultTags;
     }
 
-    public function addDefaultTag(string $key, string $value)
+    public function addDefaultTag(string $key, string $expression)
     {
-        $this->defaultTags[$key] = $this->getValue($value);
+        $this->defaultTags[$key] = $expression;
     }
 
     public static function getValue(string $value): string
