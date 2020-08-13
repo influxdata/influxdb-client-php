@@ -44,12 +44,10 @@ class PointSettingsTest extends TestCase
         $writeApi = $this->client->createWriteApi();
 
         $writeApi->pointSettings->addDefaultTag('customer', PointSettingsTest::CUSTOMER_TAG);
-        $writeApi->pointSettings->addDefaultTag('data_center', '${env.data_center}');
 
         $defaultTags = $writeApi->pointSettings->getDefaultTags();
 
         $this->assertEquals(PointSettingsTest::ID_TAG, $defaultTags['id']);
         $this->assertEquals(PointSettingsTest::CUSTOMER_TAG, $defaultTags['customer']);
-        $this->assertEquals("LA", $defaultTags['data_center']);
     }
 }
