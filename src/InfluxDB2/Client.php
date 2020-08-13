@@ -24,7 +24,9 @@ class Client
      *          "bucket" => "my-bucket",
      *          "precision" => WritePrecision::NS,
      *          "org" => "my-org",
-     *          "debug" => false
+     *          "debug" => false,
+     *          "tags" => ['id' => '1234',
+     *              'hostname' => '${env.Hostname}']
      *          ]);
      *
      * @param array $options
@@ -41,11 +43,12 @@ class Client
      *          'batchSize' => the number of data point to collect in batch
      *      ]
      * @param array|null $writeOptions Array containing the write parameters (See above)
+     * @param array|null $pointSettings Array of default tags
      * @return WriteApi
      */
-    public function createWriteApi(array $writeOptions = null): WriteApi
+    public function createWriteApi(array $writeOptions = null, array $pointSettings = null): WriteApi
     {
-        $writeApi = new WriteApi($this->options, $writeOptions);
+        $writeApi = new WriteApi($this->options, $writeOptions, $pointSettings);
         $this->autoCloseable[] = $writeApi;
         return $writeApi;
     }

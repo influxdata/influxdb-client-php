@@ -2,8 +2,37 @@
 
 namespace InfluxDB2;
 
-
 use InfluxDB2\Model\WritePrecision;
+
+class PointSettings
+{
+    private $defaultTags;
+
+    public function __construct(array $defaultTags = null)
+    {
+        $this->defaultTags = is_null($defaultTags) ? [] : $defaultTags;
+    }
+
+    public function addDefaultTag(string $key, string $expression)
+    {
+        $this->defaultTags[$key] = $expression;
+    }
+
+    public static function getValue(string $value): string
+    {
+        if (substr( $value, 0, 6 ) === '${env.')
+        {
+            return getenv(substr( $value, 6, strlen($value) - 7));
+        }
+
+        return $value;
+    }
+
+    public function getDefaultTags()
+    {
+        return $this->defaultTags;
+    }
+}
 
 /**
  * Write time series data into InfluxDB.
@@ -12,6 +41,7 @@ use InfluxDB2\Model\WritePrecision;
 class WriteApi extends DefaultApi
 {
     public $writeOptions;
+    public $pointSettings;
 
     /** @var Worker */
     private $worker;
@@ -20,12 +50,22 @@ class WriteApi extends DefaultApi
     /**
      * WriteApi constructor.
      * @param $options
-     * @param $writeOptions
+     * @param array $writeOptions
+     * @param array|null $pointSettings
      */
-    public function __construct($options,array $writeOptions = null)
+    public function __construct($options, array $writeOptions = null, array $pointSettings = null)
     {
         parent::__construct($options);
         $this->writeOptions = new WriteOptions($writeOptions) ?: new WriteOptions();
+        $this->pointSettings = new PointSettings($pointSettings) ?: new PointSettings();
+
+        if (array_key_exists('tags', $options))
+        {
+            foreach (array_keys($options['tags']) as $key)
+            {
+                $this->pointSettings->addDefaultTag($key, $options['tags'][$key]);
+            }
+        }
     }
 
     /**
@@ -66,6 +106,8 @@ class WriteApi extends DefaultApi
         $this->check("bucket", $bucketParam);
         $this->check("org", $orgParam);
 
+        $this->addDefaultTags($data);
+
         $payload = $this->generatePayload($data, $precisionParam, $bucketParam, $orgParam);
 
         if ($payload == null) {
@@ -77,6 +119,36 @@ class WriteApi extends DefaultApi
             $this->worker()->push($payload);
         } else {
             $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
+        }
+    }
+
+    private function addDefaultTags(&$data)
+    {
+        $defaultTags = $this->pointSettings->getDefaultTags();
+
+        if (is_array($data))
+        {
+            if (array_key_exists('name', $data))
+            {
+                foreach (array_keys($defaultTags) as $key)
+                {
+                    $data['tags'][$key] = PointSettings::getValue($defaultTags[$key]);
+                }
+            }
+            else
+            {
+                foreach ($data as &$item)
+                {
+                    $this->addDefaultTags($item);
+                }
+            }
+        }
+        elseif ($data instanceof Point)
+        {
+            foreach (array_keys($defaultTags) as $key)
+            {
+                $data->addTag($key, PointSettings::getValue($defaultTags[$key]));
+            }
         }
     }
 
