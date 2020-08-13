@@ -17,9 +17,9 @@ class WriteApiTest extends BasicTest
     private const ID_TAG = "132-987-655";
     private const CUSTOMER_TAG = "California Miner";
 
-    public function setUp()
+    public function setUp($url = "http://localhost:9999")
     {
-        parent::setUp();
+        parent::setUp($url);
 
         putenv("data_center=LA");
     }

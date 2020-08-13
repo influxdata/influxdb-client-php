@@ -2,14 +2,11 @@
 
 namespace InfluxDB2Test;
 
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
 use InfluxDB2\Point;
-use InfluxDB2\WriteType;
-use Webmozart\Assert\Assert;
 
 require_once('BasicTest.php');
 /**
@@ -220,5 +217,27 @@ class WriteApiBatchingTest extends BasicTest
 
         $count = $this->mockHandler->count();
         $this->assertEquals(1, $count);
+    }
+
+    public function testRetryConnectionError()
+    {
+        $errorMessage = 'Failed to connect to localhost port 9999';
+
+        $this->writeApi->writeOptions->maxRetries = 2;
+        $this->writeApi->writeOptions->retryInterval = 1000;
+        $this->writeApi->writeOptions->maxRetryDelay = 15000;
+        $this->writeApi->writeOptions->exponentialBase = 2;
+
+        $this->mockHandler->append(
+            new ConnectException($errorMessage, new Request('POST', '')),
+            new ConnectException($errorMessage, new Request('POST', '')),
+            new ConnectException($errorMessage, new Request('POST', '')));
+
+        $this->expectException(ApiException::class);
+
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
+
+        $this->assertEquals(3, count($this->container));
     }
 }

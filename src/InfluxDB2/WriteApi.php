@@ -2,37 +2,9 @@
 
 namespace InfluxDB2;
 
+
+use GuzzleHttp\Exception\ConnectException;
 use InfluxDB2\Model\WritePrecision;
-
-class PointSettings
-{
-    private $defaultTags;
-
-    public function __construct(array $defaultTags = null)
-    {
-        $this->defaultTags = is_null($defaultTags) ? [] : $defaultTags;
-    }
-
-    public function addDefaultTag(string $key, string $expression)
-    {
-        $this->defaultTags[$key] = $expression;
-    }
-
-    public static function getValue(string $value): string
-    {
-        if (substr( $value, 0, 6 ) === '${env.')
-        {
-            return getenv(substr( $value, 6, strlen($value) - 7));
-        }
-
-        return $value;
-    }
-
-    public function getDefaultTags()
-    {
-        return $this->defaultTags;
-    }
-}
 
 /**
  * Write time series data into InfluxDB.
@@ -185,13 +157,17 @@ class WriteApi extends DefaultApi
         } catch (ApiException $e) {
             $code = $e->getCode();
 
-            if ($code == null || ($code < 429) || $attempts > $this->writeOptions->maxRetries) {
+            if ($attempts > $this->writeOptions->maxRetries) {
+                throw $e;
+            }
+
+            if (($code == null || $code < 429) && !($e->getPrevious() instanceof ConnectException)) {
                 throw $e;
             }
 
             $headers = $e->getResponseHeaders();
 
-            if (array_key_exists('Retry-After', $headers)) {
+            if ($headers != null && array_key_exists('Retry-After', $headers)) {
                 $timeout = (int)$headers['Retry-After'][0] * 1000000.0;
             } else {
                 $timeout = min($retryInterval, $this->writeOptions->maxRetryDelay) * 1000.0;
