@@ -28,6 +28,7 @@
 
 namespace InfluxDB2;
 
+use GuzzleHttp\Exception\ConnectException;
 use RuntimeException;
 
 /**
@@ -65,14 +66,15 @@ class ApiException extends RuntimeException
     /**
      * Constructor
      *
-     * @param string        $message         Error message
-     * @param int           $code            HTTP status code
+     * @param ConnectException|null $previous The previous throwable used for the exception chaining.
+     * @param string $message Error message
+     * @param int $code HTTP status code
      * @param string[]|null $responseHeaders HTTP response header
-     * @param mixed         $responseBody    HTTP decoded body of the server response either as \stdClass or string
+     * @param mixed $responseBody HTTP decoded body of the server response either as \stdClass or string
      */
-    public function __construct($message = "", $code = 0, $responseHeaders = [], $responseBody = null)
+    public function __construct($previous = null, $message = "", $code = 0, $responseHeaders = [], $responseBody = null)
     {
-        parent::__construct($message, $code);
+        parent::__construct($message, $code, $previous);
         $this->responseHeaders = $responseHeaders;
         $this->responseBody = $responseBody;
     }

@@ -3,6 +3,7 @@
 ### Features
 1. [#32](https://github.com/influxdata/influxdb-client-php/pull/32): Added retryInterval, maxRetries and maxRetryDelay to WriteOptions in WriteApi
 1. [#36](https://github.com/influxdata/influxdb-client-php/pull/35): Added exponentialBase to WriteApi
+1. [#34](https://github.com/influxdata/influxdb-client-php/issues/34): Retry strategy now work also for connection errors
 1. [#17](https://github.com/influxdata/influxdb-client-php/issues/17): Implemented default tags
 
 ### Bug Fixes
