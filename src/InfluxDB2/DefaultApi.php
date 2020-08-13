@@ -73,6 +73,7 @@ class DefaultApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
+                    null,
                     sprintf(
                         '[%d] Error connecting to the API (%s)',
                         $statusCode,
