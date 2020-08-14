@@ -7,7 +7,6 @@ help:
 	@echo "  test           	to perform unit tests"
 	@echo "  coverage       	to perform unit tests with code coverage"
 	@echo "  coverage-show  	to show the code coverage report"
-	@echo "  generate-sources	to generate API sources from swagger.yml"
 	@echo "  deps           	to installs the project dependencies"
 	@echo "  dshell           	to start Docker Shell for Local Development"
 	@echo "  release           	to release client with version specified by VERSION property . make release VERSION=1.5.0"
@@ -18,9 +17,6 @@ dshell:
 
 deps:
 	@composer install
-
-generate-sources:
-	@scripts/generate-sources.sh
 
 test: start-server
 	@docker-compose run php composer run test
