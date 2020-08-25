@@ -240,4 +240,28 @@ class WriteApiBatchingTest extends BasicTest
 
         $this->assertEquals(3, count($this->container));
     }
+
+    public function testJitterInterval()
+    {
+        $this->mockHandler->append(new Response(204),
+            new Response(204));
+
+        $this->writeApi->writeOptions->jitterInterval = 2000;
+
+        $start = microtime(true);
+
+        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=1.0 1');
+        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=2.0 2');
+
+        $time = microtime(true) - $start;
+
+        $this->assertTrue($time > 0 && $time <= 2);
+
+        $this->assertEquals(1, count($this->container));
+
+        $result1 = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
+            . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2";
+
+        $this->assertEquals($result1, $this->container[0]['request']->getBody());
+    }
 }

@@ -152,6 +152,11 @@ class WriteApi extends DefaultApi
 
     private function writeRawInternal(string $data, array $queryParams, int $attempts, int $retryInterval)
     {
+        if ($this->writeOptions->jitterInterval > 0) {
+            $jitterDelay = ($this->writeOptions->jitterInterval * 1000) * (rand(0, 1000) / 1000);
+            usleep($jitterDelay);
+        }
+
         try {
             $this->post($data, "/api/v2/write", $queryParams);
         } catch (ApiException $e) {

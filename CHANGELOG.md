@@ -1,5 +1,8 @@
 ## 1.7.0 [unreleased]
 
+### Features
+1. [#38](https://github.com/influxdata/influxdb-client-php/pull/38): Added jitterInterval to WriteApi
+
 ## 1.6.0 [2020-08-14]
 
 ### Features
