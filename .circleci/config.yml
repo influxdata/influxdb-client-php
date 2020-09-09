@@ -78,6 +78,8 @@ jobs:
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image quay.io/influxdb/<< parameters.influxdb-image >>
+        environment:
+          INFLUXD_HTTP_BIND_ADDRESS: :8086
     steps:
       - prepare
       - test:

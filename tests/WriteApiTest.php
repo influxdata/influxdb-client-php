@@ -17,7 +17,7 @@ class WriteApiTest extends BasicTest
     private const ID_TAG = "132-987-655";
     private const CUSTOMER_TAG = "California Miner";
 
-    public function setUp($url = "http://localhost:9999")
+    public function setUp($url = "http://localhost:8086")
     {
         parent::setUp($url);
 
@@ -31,7 +31,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,location=west value=33i 15', $request->getBody());
     }
@@ -48,7 +48,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,location=europe level=2i', $request->getBody());
     }
@@ -66,7 +66,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123', $request->getBody());
     }
@@ -92,7 +92,7 @@ class WriteApiTest extends BasicTest
             . "h2o,location=europe level=2i\n"
             . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals($expected, strval($request->getBody()));
     }
@@ -104,7 +104,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('Token my-token', implode(' ', $request->getHeaders()['Authorization']));
     }
@@ -157,7 +157,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i',
             strval($request->getBody()));
@@ -180,7 +180,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation="99%" 123',
             strval($request->getBody()));
@@ -211,7 +211,7 @@ class WriteApiTest extends BasicTest
             . "h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i\n"
             . "h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation=\"99%\" 123";
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals($expected, strval($request->getBody()));
     }
@@ -232,7 +232,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o,customer=California\ Miner,data_center=LA,id=132-987-655 level=5i,saturation="99%" 123',
             strval($request->getBody()));

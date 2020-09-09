@@ -13,7 +13,7 @@ class ApiClientSpec extends ObjectBehavior
     function it_supports_creation_with_a_configuration()
     {
         $configuration = new Configuration();
-        $configuration->setHost("my_host:9999");
+        $configuration->setHost("my_host:8086");
         $configuration->setAccessToken("my_access_token");
 
         $this->beConstructedWith($configuration);
@@ -25,11 +25,11 @@ class ApiClientSpec extends ObjectBehavior
     function it_supports_creation_from_environment()
     {
         $configuration = new Configuration();
-        $configuration->setHost("my_host:9999");
+        $configuration->setHost("my_host:8086");
         $configuration->setUsername("user");
         $configuration->setPassword("password");
 
-        putenv("INFLUXDB_CLIENT_HOST=my_host:9999");
+        putenv("INFLUXDB_CLIENT_HOST=my_host:8086");
         putenv("INFLUXDB_CLIENT_USERNAME=user");
         putenv("INFLUXDB_CLIENT_PASSWORD=password");
 
@@ -42,11 +42,11 @@ class ApiClientSpec extends ObjectBehavior
     function it_supports_creation_with_credentials()
     {
         $configuration = new Configuration();
-        $configuration->setHost("my_host:9999");
+        $configuration->setHost("my_host:8086");
         $configuration->setUsername("username");
         $configuration->setPassword("password");
 
-        $this->beConstructedThrough("createWithCredentials", ["my_host:9999", "username", "password"]);
+        $this->beConstructedThrough("createWithCredentials", ["my_host:8086", "username", "password"]);
 
         $this->shouldHaveType(Client::class);
         $this->getConfig()->shouldBeLike($configuration);
@@ -55,7 +55,7 @@ class ApiClientSpec extends ObjectBehavior
     function it_creates_a_write_client()
     {
         $configuration = new Configuration();
-        $configuration->setHost("my_host:9999");
+        $configuration->setHost("my_host:8086");
         $configuration->setAccessToken("my_access_token");
 
         $this->beConstructedWith($configuration);

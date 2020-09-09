@@ -33,7 +33,7 @@ abstract class BasicTest extends TestCase
      * @before
      * @param $url
      */
-    public function setUp($url = "http://localhost:9999")
+    public function setUp($url = "http://localhost:8086")
     {
         $this->client = new Client([
             "url" => $url,

@@ -19,7 +19,7 @@ class Client
      * Client constructor.
      *
      *      client = new Client([
-     *          "url" => "http://localhost:9999",
+     *          "url" => "http://localhost:8086",
      *          "token" => "my-token",
      *          "bucket" => "my-bucket",
      *          "precision" => WritePrecision::NS,

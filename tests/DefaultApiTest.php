@@ -28,17 +28,17 @@ class DefaultApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
 
         $this->tearDown();
-        $this->setUp("http://localhost:9999/");
+        $this->setUp("http://localhost:8086/");
 
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('h2o,location=west value=33i 15');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
     }
 
     public function testContentType()

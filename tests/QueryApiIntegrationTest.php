@@ -23,7 +23,7 @@ class QueryApiIntegrationTest extends TestCase
     public function setUp()
     {
         $this->client = new Client([
-            "url" => "http://localhost:9999",
+            "url" => "http://localhost:8086",
             "token" => "my-token",
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,

@@ -69,32 +69,32 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->container[0]['request'];
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=1.0 1', $request->getBody());
 
         $request = $this->container[1]['request'];
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
             strval($request->getUri()));
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=2.0 2', $request->getBody());
 
         $request = $this->container[2]['request'];
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=3.0 3\n"
             . 'h2o_feet,location=coyote_creek level\\ water_level=4.0 4', $request->getBody());
 
         $request = $this->container[3]['request'];
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org-a&bucket=my-bucket2&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket2&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=5.0 5', $request->getBody());
 
         $request = $this->container[4]['request'];
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=6.0 6', $request->getBody());
     }
@@ -115,7 +115,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2\n"
@@ -136,7 +136,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->assertEquals(2, count($this->container));
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
@@ -157,7 +157,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->assertEquals(2, count($this->container));
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:9999/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri()));
         $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
@@ -221,7 +221,7 @@ class WriteApiBatchingTest extends BasicTest
 
     public function testRetryConnectionError()
     {
-        $errorMessage = 'Failed to connect to localhost port 9999';
+        $errorMessage = 'Failed to connect to localhost port 8086';
 
         $this->writeApi->writeOptions->maxRetries = 2;
         $this->writeApi->writeOptions->retryInterval = 1000;
