@@ -13,7 +13,7 @@ $bucket = 'my-bucket';
 $token = 'my-token';
 
 $client = new Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => $token,
     "bucket" => $bucket,
     "org" => $organization,
@@ -35,10 +35,10 @@ $client->close();
 print  "*** Check result ***\n";
 
 $queryApi = $client->createQueryApi();
-$query = "from(bucket: \"$bucket\") 
-    |> range(start: 0) 
-    |> filter(fn: (r) => r[\"_measurement\"] == \"mem\") 
-    |> filter(fn: (r) => r[\"host\"] == \"aws_europe\") 
+$query = "from(bucket: \"$bucket\")
+    |> range(start: 0)
+    |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")
+    |> filter(fn: (r) => r[\"host\"] == \"aws_europe\")
     |> count()";
 $tables = $queryApi->query($query);
 $record = $tables[0]->records[0];

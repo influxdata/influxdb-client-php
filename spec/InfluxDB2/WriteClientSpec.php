@@ -14,7 +14,7 @@ class WriteClientSpec extends ObjectBehavior
         $client = new \GuzzleHttp\Client();
 
         $configuration = new Configuration();
-        $configuration->setHost("my_host:9999");
+        $configuration->setHost("my_host:8086");
         $configuration->setAccessToken("my_access_token");
 
         $this->beConstructedWith($client, $configuration);

@@ -35,7 +35,7 @@ Use `InfluxDB2\Client` to create a client connected to a running InfluxDB 2 inst
 
 ```php
 $client = new InfluxDB2\Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
@@ -71,7 +71,7 @@ The result retrieved by [QueryApi](https://github.com/influxdata/influxdb-client
 Synchronously executes the Flux query and return result as unprocessed String
 ```php
 $this->client = new Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
@@ -88,7 +88,7 @@ $result = $this->queryApi->queryRaw(
 Synchronously executes the Flux query and return result as a Array of [FluxTables](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxTable.php)
 ```php
 $this->client = new Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
@@ -106,7 +106,7 @@ $result = $this->queryApi->query(
 Synchronously executes the Flux query and return stream of [FluxRecord](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxRecord.php)
 ```php
 $this->client = new Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
@@ -132,7 +132,7 @@ synchronous and batching writes into InfluxDB 2.0. In default api uses synchrono
 can use WriteOption.
 
 ```php
-$client = new InfluxDB2\Client(["url" => "http://localhost:9999", "token" => "my-token",
+$client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
     "precision" => InfluxDB2\Model\WritePrecision::NS
@@ -158,7 +158,7 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 use InfluxDB2\Client;
 use InfluxDB2\WriteType as WriteType;
 
-$client = new Client(["url" => "http://localhost:9999", "token" => "my-token",
+$client = new Client(["url" => "http://localhost:8086", "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
     "precision" => InfluxDB2\Model\WritePrecision::NS
@@ -179,7 +179,7 @@ $writeApi->close();
 
 Configure default time precision:
 ```php
-$client = new InfluxDB2\Client(["url" => "http://localhost:9999", "token" => "my-token",
+$client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
     "precision" => \InfluxDB2\Model\WritePrecision::NS
@@ -189,7 +189,7 @@ $client = new InfluxDB2\Client(["url" => "http://localhost:9999", "token" => "my
 Configure precision per write:
 ```php
 $client = new InfluxDB2\Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
@@ -211,7 +211,7 @@ Default `bucket` and `organization` destination are configured via `InfluxDB2\Cl
 
 ```php
 $client = new InfluxDB2\Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
 ]);
@@ -220,7 +220,7 @@ $client = new InfluxDB2\Client([
 but there is also possibility to override configuration per write:
 
 ```php
-$client = new InfluxDB2\Client(["url" => "http://localhost:9999", "token" => "my-token"]);
+$client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my-token"]);
 
 $writeApi = $client->createWriteApi();
 $writeApi->write('h2o,location=west value=33i 15', \InfluxDB2\Model\WritePrecision::MS, "production-bucket", "customer-1");
@@ -237,7 +237,7 @@ The data could be written as:
 
 ```php
 $client = new InfluxDB2\Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "org" => "my-org",
@@ -279,7 +279,7 @@ The expressions:
 
 ```php
 $this->client = new Client([
-    "url" => "http://localhost:9999",
+    "url" => "http://localhost:8086",
     "token" => "my-token",
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
