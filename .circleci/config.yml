@@ -74,7 +74,7 @@ jobs:
         default: &default-php-image "circleci/php:7.3"
       influxdb-image:
         type: string
-        default: &default-influxdb-image "influxdb:2.0.0-beta"
+        default: &default-influxdb-image "influxdb:2.0.0-rc"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image quay.io/influxdb/<< parameters.influxdb-image >>
