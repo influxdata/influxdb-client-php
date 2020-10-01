@@ -9,8 +9,10 @@ use InfluxDB2\Service\HealthService;
 
 require_once('IntegrationBaseTestCase.php');
 
-
-class BucketServiceTest extends IntegrationBaseTestCase
+/**
+ * @group integration
+ */
+class ITBucketServiceTest extends IntegrationBaseTestCase
 {
     public function testHealthService()
     {

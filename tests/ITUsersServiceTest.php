@@ -4,7 +4,10 @@ use InfluxDB2\Service\UsersService;
 
 require_once('IntegrationBaseTestCase.php');
 
-class UsersServiceTest extends IntegrationBaseTestCase
+/**
+ * @group integration
+ */
+class ITUsersServiceTest extends IntegrationBaseTestCase
 {
     public function testUserService()
     {
