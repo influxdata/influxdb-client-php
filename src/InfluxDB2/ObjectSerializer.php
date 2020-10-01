@@ -269,7 +269,7 @@ class ObjectSerializer
             // be interpreted as a missing field/value. Let's handle
             // this graceful.
             if (!empty($data)) {
-                return new \DateTime($data);
+                return new \DateTime(self::fixDatetimeNanos($data));
             } else {
                 return null;
             }
@@ -326,4 +326,28 @@ class ObjectSerializer
             return $instance;
         }
     }
+    /**
+    * Nano precision is not supported while decoding RFC 3339 formatted date/times.
+    * https://bugs.php.net/bug.php?id=6481
+    * This workaround removes last number of digits in the "time-secfrac" if its length is > 8
+    *
+    * @param String $date
+    *
+    * @return string datetime string "time-secfrac" is cut to max 8 digits
+    */
+    static function fixDatetimeNanos(string $date) : string {
+        $dateParts = explode(".", $date);
+        $nanosZ = $dateParts[1];
+        $posZ = strpos($nanosZ, 'Z');
+        if (strlen($nanosZ) > 9) {
+            $converted = $dateParts[0] . "." . substr($nanosZ, 0, 8);
+            if ($posZ > 0) {
+                $converted .= "Z";
+            }
+            return $converted;
+        } else {
+            return $date;
+        }
+    }
+
 }

@@ -24,7 +24,10 @@ class DefaultApi
 
         $this->http = new Client([
             'base_uri' => $this->options["url"],
-            'timeout' => self::DEFAULT_TIMEOUT
+            'timeout' => self::DEFAULT_TIMEOUT,
+            'headers' => [
+                'Authorization' => "Token {$this->options['token']}"
+            ],
         ]);
     }
 
@@ -73,7 +76,6 @@ class DefaultApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    null,
                     sprintf(
                         '[%d] Error connecting to the API (%s)',
                         $statusCode,
@@ -88,11 +90,11 @@ class DefaultApi
 
         } catch (RequestException $e) {
             throw new ApiException(
-                $e,
                 "[{$e->getCode()}] {$e->getMessage()}",
                 $e->getCode(),
                 $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
+                $e
             );
         }
     }
