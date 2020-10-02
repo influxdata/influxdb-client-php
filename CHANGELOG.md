@@ -1,7 +1,8 @@
-## 1.7.0 [unreleased]
+## 1.7.0 [2020-10-02]
 
 ### Features
 1. [#38](https://github.com/influxdata/influxdb-client-php/pull/38): Added jitterInterval to WriteApi
+
 ### API
 1. [#39](https://github.com/influxdata/influxdb-client-php/issues/39): Default port changed from 9999 -> 8086
 
