@@ -11,7 +11,6 @@ use InfluxDB2\Model\Organization;
 use InfluxDB2\Model\PostBucketRequest;
 use InfluxDB2\Service\BucketsService;
 use InfluxDB2\Service\OrganizationsService;
-use InfluxDB2\WriteType as WriteType;
 
 $organization = 'my-org';
 $bucket = 'my-bucket';
