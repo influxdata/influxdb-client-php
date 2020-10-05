@@ -2,8 +2,13 @@
 
 namespace InfluxDB2;
 
+use RuntimeException;
 use InfluxDB2\Model\HealthCheck;
+use ReflectionClass;
 
+/**
+ *  @template T
+ */
 class Client
 {
     /**
@@ -84,5 +89,37 @@ class Client
         {
             $ac->close();
         }
+    }
+
+    public function getConfiguration() {
+
+        $config = Configuration::getDefaultConfiguration()
+            ->setUserAgent('influxdb-client-php/' . Client::VERSION)
+            ->setDebug(isset($this->options['debug']) ? $this->options['debug'] : null)
+            ->setHost(null);
+
+        return $config;
+    }
+
+    /**
+     * Creates the instance of api service
+     *
+     * @param  $serviceClass
+     * @return object service instance
+     */
+    public function createService($serviceClass) {
+        try {
+            $class = new ReflectionClass($serviceClass);
+            $args  = array($this->getGuzzleClient(), $this->getConfiguration());
+            return $class->newInstanceArgs($args);
+        } catch (\ReflectionException $e) {
+            throw new RuntimeException($e);
+        }
+    }
+
+    private function getGuzzleClient()
+    {
+        $defaultApi = new DefaultApi($this->options);
+        return $defaultApi->http;
     }
 }
