@@ -31,16 +31,18 @@ abstract class BasicTest extends TestCase
 
     /**
      * @before
-     * @param $url
+     * @param string $url
+     * @param string $logFile default log file
      */
-    public function setUp($url = "http://localhost:8086")
+    public function setUp($url = "http://localhost:8086", $logFile = "php://output")
     {
         $this->client = new Client([
             "url" => $url,
             "token" => "my-token",
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,
-            "org" => "my-org"
+            "org" => "my-org",
+            "logFile" => $logFile
         ]);
 
         $this->writeApi = $this->client->createWriteApi($this->getWriteOptions());

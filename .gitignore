@@ -7,3 +7,4 @@ coverage.xml
 /scripts/.m2/
 /generated/
 /*.iml
+log_test.txt

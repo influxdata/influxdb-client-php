@@ -264,4 +264,27 @@ class WriteApiBatchingTest extends BasicTest
 
         $this->assertEquals($result1, $this->container[0]['request']->getBody());
     }
+
+    public function testRetryContainsMessage()
+    {
+        // create log file
+        fopen("log_test.txt", "w");
+
+        $this->tearDown();
+        $this->setUp("http://localhost:8086", "log_test.txt");
+
+        $this->mockHandler->append(
+            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable',
+            'Retry-After' => '3'],
+            'org 04014de4ed590000 has exceeded limited_write plan limit'),
+            new Response(204));
+
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
+        $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
+
+        $this->assertEquals(2, count($this->container));
+
+        $message = file_get_contents("log_test.txt");
+        $this->assertStringContainsString("The retriable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
+    }
 }
