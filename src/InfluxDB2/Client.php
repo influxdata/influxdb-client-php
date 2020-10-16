@@ -2,9 +2,9 @@
 
 namespace InfluxDB2;
 
-use RuntimeException;
 use InfluxDB2\Model\HealthCheck;
 use ReflectionClass;
+use RuntimeException;
 
 /**
  *  @template T
@@ -30,6 +30,7 @@ class Client
      *          "precision" => WritePrecision::NS,
      *          "org" => "my-org",
      *          "debug" => false,
+     *          "logFile" => "php://output",
      *          "tags" => ['id' => '1234',
      *              'hostname' => '${env.Hostname}']
      *          ]);

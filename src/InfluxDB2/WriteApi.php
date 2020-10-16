@@ -178,6 +178,13 @@ class WriteApi extends DefaultApi
                 $timeout = min($retryInterval, $this->writeOptions->maxRetryDelay) * 1000.0;
             }
 
+            $timeoutInSec = $timeout / 1000000.0;
+            $error = $e->getResponseBody();
+            $error = isset($error) ? $error : $e->getMessage();
+
+            $message = "The retriable error occurred during writing of data. Reason: '{$error}'. Retry in: {$timeoutInSec}s.";
+            $this->log("WARNING", $message);
+
             usleep($timeout);
 
             $this->writeRawInternal($data, $queryParams, $attempts + 1,
