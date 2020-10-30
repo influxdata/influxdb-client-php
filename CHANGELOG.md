@@ -1,4 +1,4 @@
-## 1.8.0 [unreleased]
+## 1.8.0 [2020-10-30]
 
 ### Features
 1. [#44](https://github.com/influxdata/influxdb-client-php/pull/44): Added generated APIs from swagger for InfluxDB 2.0 management, buckets, organizations, authorizations...
