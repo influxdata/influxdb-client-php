@@ -1,5 +1,9 @@
 ## 1.9.0 [unreleased]
 
+### Documentation
+
+1. [#46](https://github.com/influxdata/influxdb-client-php/pull/46): Adding info about how to get the query in JSON format
+
 ## 1.8.0 [2020-10-30]
 
 ### Features
