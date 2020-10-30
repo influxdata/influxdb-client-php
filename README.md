@@ -101,6 +101,11 @@ $this->queryApi = $this->client->createQueryApi();
 $result = $this->queryApi->query(
             'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
 ```
+This can then easily be encoded to JSON with [json_encode](https://www.php.net/manual/en/function.json-encode.php)
+```php
+header('Content-type:application/json;charset=utf-8');
+echo json_encode( $result, JSON_PRETTY_PRINT ) ;
+```
 
 #### Query stream
 Synchronously executes the Flux query and return stream of [FluxRecord](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/FluxRecord.php)
