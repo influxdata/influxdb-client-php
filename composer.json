@@ -11,7 +11,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
-    "guzzlehttp/guzzle": "^6.2"
+    "guzzlehttp/guzzle": "^6.2|^7.0.1"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "~2.12",

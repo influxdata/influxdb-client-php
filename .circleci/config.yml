@@ -37,10 +37,13 @@ commands:
     parameters:
       php-image:
         type: string
+      guzzle-version:
+        type: string
     steps:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
+              - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
               - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
               - composer-v1-{{ checksum "composer.json" }}
               - composer-v1-
@@ -48,6 +51,7 @@ commands:
           name: Install dependencies
           command: |
             composer install -n --prefer-dist
+            composer require guzzlehttp/guzzle:<< parameters.guzzle-version >>
       - run:
           name: Run tests
           command: |
@@ -75,6 +79,9 @@ jobs:
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:2.0.0-rc"
+      guzzle-version:
+        type: string
+        default: "6.5.3"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image quay.io/influxdb/<< parameters.influxdb-image >>
@@ -84,6 +91,7 @@ jobs:
       - prepare
       - test:
           php-image: << parameters.php-image >>
+          guzzle-version: << parameters.guzzle-version>>
       - storing-test-results
   tests-windows:
     machine:
@@ -109,6 +117,10 @@ workflows:
       - tests-php:
           name: php-7.4
           php-image: "circleci/php:7.4"
+      - tests-php:
+          name: php-7.4-guzzle-7
+          php-image: "circleci/php:7.4"
+          guzzle-version: "7.0.1"
       - tests-php:
           name: php-7.3
       - tests-php:
