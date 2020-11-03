@@ -1,5 +1,8 @@
 ## 1.9.0 [unreleased]
 
+### Features
+1. [#49](https://github.com/influxdata/influxdb-client-php/pull/49): Added support for Guzzle 7
+
 ### Documentation
 
 1. [#46](https://github.com/influxdata/influxdb-client-php/pull/46): Adding info about how to get the query in JSON format

@@ -4,6 +4,7 @@ namespace InfluxDB2;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -94,6 +95,14 @@ class DefaultApi
                 $e->getCode(),
                 $e->getResponse() ? $e->getResponse()->getHeaders() : null,
                 $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
+                $e
+            );
+        } catch (TransferException $e) {
+            throw new ApiException(
+                "[{$e->getCode()}] {$e->getMessage()}",
+                $e->getCode(),
+                null,
+                null,
                 $e
             );
         }
