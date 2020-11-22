@@ -7,7 +7,7 @@ use ReflectionClass;
 use RuntimeException;
 
 /**
- *  @template T
+ * @template T
  */
 class Client
 {
@@ -60,6 +60,15 @@ class Client
     }
 
     /**
+     * @return UdpWriter
+     * @throws \Exception
+     */
+    public function createUdpWriter()
+    {
+        return new UdpWriter($this->options);
+    }
+
+    /**
      * Get the Query client.
      *
      * @return QueryApi
@@ -86,13 +95,13 @@ class Client
     {
         $this->closed = true;
 
-        foreach ($this->autoCloseable as $ac)
-        {
+        foreach ($this->autoCloseable as $ac) {
             $ac->close();
         }
     }
 
-    public function getConfiguration() {
+    public function getConfiguration()
+    {
 
         $config = Configuration::getDefaultConfiguration()
             ->setUserAgent('influxdb-client-php/' . Client::VERSION)
@@ -108,10 +117,11 @@ class Client
      * @param  $serviceClass
      * @return object service instance
      */
-    public function createService($serviceClass) {
+    public function createService($serviceClass)
+    {
         try {
             $class = new ReflectionClass($serviceClass);
-            $args  = array($this->getGuzzleClient(), $this->getConfiguration());
+            $args = array($this->getGuzzleClient(), $this->getConfiguration());
             return $class->newInstanceArgs($args);
         } catch (\ReflectionException $e) {
             throw new RuntimeException($e);

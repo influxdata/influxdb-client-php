@@ -10,7 +10,7 @@ use InfluxDB2\Model\WritePrecision;
  * Write time series data into InfluxDB.
  * @package InfluxDB2
  */
-class WriteApi extends DefaultApi
+class WriteApi extends DefaultApi implements Writer
 {
     public $writeOptions;
     public $pointSettings;
