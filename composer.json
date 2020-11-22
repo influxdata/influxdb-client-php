@@ -1,5 +1,5 @@
 {
-  "name": "influxdata/influxdb-client-php",
+  "name": "glushkovds/influxdb-client-php",
   "description": "InfluxDB (v2+) Client Library for PHP",
   "keywords": [
     "InfluxDB"
