@@ -145,7 +145,23 @@ $client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my
 $write_api = $client->createWriteApi();
 $write_api->write('h2o,location=west value=33i 15');
 ```
+#### Writing via UDP
 
+UDP Writer Requirements:
+1. Installed ext-sockets
+1. Since Influxdb 2.0+ does not support UDP protocol natively you need to install and configure Telegraf plugin: https://docs.influxdata.com/telegraf/v1.16/plugins/#socket_listener
+1. Extra config option passed to client: udpPort. Optionally you can specify udpHost, otherwise udpHost will parsed from url option
+ 
+```php
+$client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my-token",
+    "bucket" => "my-bucket",
+    "org" => "my-org",
+    "precision" => InfluxDB2\Model\WritePrecision::NS,
+    "udpPort" => 8094,
+]);
+$writer = $client->createUdpWriter();
+$writer->write('h2o,location=west value=33i 15');
+ ```
 #### Batching
 
 The writes are processed in batches which are configurable by `WriteOptions`:
