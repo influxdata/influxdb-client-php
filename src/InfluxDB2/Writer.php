@@ -8,7 +8,7 @@ interface Writer
 {
 
     /**
-     * Write data into specified bucket
+     * Write data
      *
      * Example write data in array
      *      $writeApi->write([
@@ -30,12 +30,9 @@ interface Writer
      *
      * @param string|Point|array $data DataPoints to write into InfluxDB. The data could be represent by
      * array, Point, string
-     * @param string|null $precision The precision for the unix timestamps within the body line-protocol @see \InfluxDB2\Model\WritePrecision
-     * @param string|null $bucket specifies the destination bucket for writes
-     * @param string|null $org specifies the destination organization for writes
      * @throws \Throwable
      */
-    public function write($data, string $precision = null, string $bucket = null, string $org = null);
+    public function write($data);
 
 
 }
