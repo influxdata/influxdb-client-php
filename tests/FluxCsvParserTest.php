@@ -361,6 +361,26 @@ class FluxCsvParserTest extends TestCase
         }
     }
 
+    public function testParseExportFromUserInterface()
+    {
+        $data = "#group,false,false,true,true,true,true,true,true,false,false\n" .
+            "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,double,dateTime:RFC3339\n" .
+            "#default,mean,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_field,_measurement,city,location,_value,_time\n" .
+            ",,0,1754-06-26T11:30:27.613654848Z,2040-10-27T12:13:46.485Z,temperatureC,weather,London,us-midwest,30,1975-09-01T16:59:54.5Z\n" .
+            ",,1,1754-06-26T11:30:27.613654848Z,2040-10-27T12:13:46.485Z,temperatureF,weather,London,us-midwest,86,1975-09-01T16:59:54.5Z\n";
+
+        $parser = new FluxCsvParser($data);
+        $tables = $parser->parse()->tables;
+
+        $this->assertEquals(2, sizeof($tables));
+        $this->assertEquals(1, sizeof($tables[0]->records));
+        $this->assertFalse($tables[0]->columns[0]->group);
+        $this->assertFalse($tables[0]->columns[1]->group);
+        $this->assertTrue($tables[0]->columns[2]->group);
+        $this->assertEquals(1, sizeof($tables[1]->records));
+    }
+
     private function assertColumns(array $columnHeaders, array $values)
     {
         $i = 0;

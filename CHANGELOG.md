@@ -2,6 +2,7 @@
 
 ### Features
 1. [#49](https://github.com/influxdata/influxdb-client-php/pull/49): Added support for Guzzle 7
+1. [#51](https://github.com/influxdata/influxdb-client-php/pull/51): CSV parser is able to parse export from UI
 
 ### Documentation
 
