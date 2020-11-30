@@ -55,6 +55,7 @@ commands:
       - run:
           name: Run tests
           command: |
+            export XDEBUG_MODE=coverage
             vendor/bin/phpunit tests --coverage-clover=coverage.xml
       - run:
           name: "Collecting coverage reports"

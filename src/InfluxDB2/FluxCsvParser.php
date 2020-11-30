@@ -12,6 +12,11 @@ use RuntimeException;
  */
 class FluxCsvParser
 {
+    private const ANNOTATION_DATATYPE = '#datatype';
+    private const ANNOTATION_GROUP = '#group';
+    private const ANNOTATION_DEFAULT = '#default';
+    private const ANNOTATIONS = [self::ANNOTATION_DATATYPE, self::ANNOTATION_GROUP, self::ANNOTATION_DEFAULT];
+
     /* @var  $variable FluxTable[] */
     public $tables;
 
@@ -26,6 +31,7 @@ class FluxCsvParser
 
     /* @var $variable FluxTable */
     private $table;
+    private $groups = [];
 
     private $parsingStateError;
 
@@ -107,10 +113,11 @@ class FluxCsvParser
     {
         $token = $csv[0];
         # start new table
-        if ('#datatype' == $token) {
+        if (in_array($token, self::ANNOTATIONS) && !$this->startNewTable) {
             # Return already parsed DataFrame
             $this->startNewTable = true;
             $this->table = new FluxTable();
+            $this->groups = [];
 
             if (!$this->stream) {
                 $this->tables[$this->tableIndex] = $this->table;
@@ -122,11 +129,11 @@ class FluxCsvParser
             throw new FluxCsvParserException('Unable to parse CSV response. FluxTable definition was not found.');
         }
 
-        if ('#datatype' == $token) {
+        if (self::ANNOTATION_DATATYPE == $token) {
             $this->addDataTypes($this->table, $csv);
-        } elseif ('#group' == $token) {
-            $this->addGroups($this->table, $csv);
-        } elseif ('#default' == $token) {
+        } elseif (self::ANNOTATION_GROUP == $token) {
+            $this->groups = $csv;
+        } elseif (self::ANNOTATION_DEFAULT == $token) {
             $this->addDefaultEmptyValues($this->table, $csv);
         } else {
             return $this->parseValues($csv);
@@ -187,6 +194,7 @@ class FluxCsvParser
     {
         # parse column names
         if ($this->startNewTable) {
+            $this->addGroups($this->table, $this->groups);
             $this->addColumnNamesAndTags($this->table, $csv);
             $this->startNewTable = false;
             return null;
