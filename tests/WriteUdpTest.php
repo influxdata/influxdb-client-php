@@ -40,12 +40,11 @@ class WriteUdpTest extends TestCase
         $client->createUdpWriter();
     }
 
-    public function testRealSend()
+    public function testValidOptions()
     {
         $this->expectNotToPerformAssertions();
         $client = new Client($this->baseConfig + ['udpPort' => 1000]);
         $writer = $client->createUdpWriter();
-        $writer->write('h2o,location=west value=33i 15');
     }
 
     public function testSocketError()
