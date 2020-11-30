@@ -55,17 +55,11 @@ commands:
       - run:
           name: Run tests
           command: |
-            if [[ "<< parameters.php-image >>" == "circleci/php:7.4" ]]; then
-              vendor/bin/phpunit tests --coverage-clover=coverage.xml
-            else
-              vendor/bin/phpunit tests
-            fi
+            export XDEBUG_MODE=coverage
+            vendor/bin/phpunit tests --coverage-clover=coverage.xml
       - run:
           name: "Collecting coverage reports"
-          command: |
-            if [[ "<< parameters.php-image >>" == "circleci/php:7.4" ]]; then
-              bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-            fi
+          command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
       - save_cache:
           name: Saving Cache
           key: composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
