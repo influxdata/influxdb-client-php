@@ -31,18 +31,18 @@ class WritePayloadSerializer
         }
         if ($data instanceof Point) {
             return self::generatePayload($data->toLineProtocol(), $data->getPrecision() !== null ?
-                $data->getPrecision() : $precision, $bucket, $org);
+                $data->getPrecision() : $precision, $bucket, $org, $writeType);
         }
         if (is_array($data)) {
             if (array_key_exists('name', $data)) {
-                return self::generatePayload(Point::fromArray($data), $precision, $bucket, $org);
+                return self::generatePayload(Point::fromArray($data), $precision, $bucket, $org, $writeType);
             }
 
             $payload = '';
 
             foreach ($data as $item) {
                 if (isset($item)) {
-                    $payload .= self::generatePayload($item, $precision, $bucket, $org) . "\n";
+                    $payload .= self::generatePayload($item, $precision, $bucket, $org, $writeType) . "\n";
                 }
             }
 

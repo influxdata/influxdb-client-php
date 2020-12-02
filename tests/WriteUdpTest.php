@@ -20,7 +20,7 @@ class WriteUdpTest extends TestCase
         "bucket" => "my-bucket",
         "precision" => WritePrecision::NS,
         "org" => "my-org",
-        "logFile" => "php://output"
+        "logFile" => "php://output",
     ];
 
     protected function getWriterMock()
@@ -44,7 +44,7 @@ class WriteUdpTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
         $client = new Client($this->baseConfig + ['udpPort' => 1000]);
-        $writer = $client->createUdpWriter();
+        $client->createUdpWriter();
     }
 
     public function testSocketError()
