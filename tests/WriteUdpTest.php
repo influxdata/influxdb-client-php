@@ -20,7 +20,7 @@ class WriteUdpTest extends TestCase
         "bucket" => "my-bucket",
         "precision" => WritePrecision::NS,
         "org" => "my-org",
-        "logFile" => "php://output",
+        "logFile" => "php://output"
     ];
 
     protected function getWriterMock()
