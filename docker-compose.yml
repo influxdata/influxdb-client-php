@@ -11,7 +11,7 @@ services:
     network_mode: host
 
   influxdb_v2:
-    image: quay.io/influxdb/influxdb:2.0.0-rc
+    image: quay.io/influxdb/influxdb:v2.0.2
     ports:
       - "8086:8086"
     command: influxd --reporting-disabled
