@@ -98,16 +98,14 @@ class WriteUdpTest extends TestCase
         ];
 
         $writer = $this->getWriterMock();
-        $buffer = [];
+        $buffer = '';
         $writer->method('writeSocket')->willReturnCallback(function ($data) use (&$buffer) {
-            $buffer[] = $data;
+            $buffer = $data;
         });
         $writer->write(['h2o,location=west value=33i 15', null, $point, $array]);
-        $expected = [
-            "h2o,location=west value=33i 15",
-            "h2o,location=europe level=2i",
-            "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123"
-        ];
+        $expected = "h2o,location=west value=33i 15\n"
+            . "h2o,location=europe level=2i\n"
+            . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
         $this->assertEquals($expected, $buffer);
     }
 

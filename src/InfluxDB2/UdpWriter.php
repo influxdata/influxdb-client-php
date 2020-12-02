@@ -55,26 +55,12 @@ class UdpWriter implements Writer
      */
     public function write($data)
     {
-        $payload = null;
-        if (is_string($data)) {
-            $payload = $data;
-        }
-        if ($data instanceof Point) {
-            $payload = $data->toLineProtocol();
-        }
-        if (is_array($data)) {
-            if (!array_key_exists('name', $data)) {
-                foreach ($data as $item) {
-                    if (isset($item)) {
-                        $this->write($item);
-                    }
-                }
-                return;
-            }
-            $payload = Point::fromArray($data)->toLineProtocol();
-        }
+        $payload = WritePayloadSerializer::generatePayload($data);
         if (empty($payload)) {
-            throw new \InvalidArgumentException("Data passed in unknown format");
+            return;
+        }
+        if ($payload instanceof BatchItem) {
+            throw new \InvalidArgumentException("Batch mode not allowed for writing by UDP");
         }
         $bytesSent = $this->writeSocket($payload);
         if ($bytesSent === false) {
@@ -106,6 +92,16 @@ class UdpWriter implements Writer
             $this->socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         }
         return $this->socket;
+    }
+
+    /**
+     * Closes connection
+     */
+    public function close()
+    {
+        if (isset($this->socket)) {
+            socket_close($this->socket);
+        }
     }
 
 }
