@@ -386,6 +386,9 @@ $client->close();
 ```
 #### Writing via UDP
 
+Sending via UDP will be useful in cases when the execution time is critical to avoid potential delays (even timeouts) in sending metrics to the InfluxDB while are problems with the database or network connectivity.  
+As is known, sending via UDP occurs without waiting for a response, unlike TCP (HTTP).
+
 UDP Writer Requirements:
 1. Installed ext-sockets
 1. Since Influxdb 2.0+ does not support UDP protocol natively you need to install and configure Telegraf plugin: https://docs.influxdata.com/telegraf/v1.16/plugins/#socket_listener
@@ -400,6 +403,7 @@ $client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my
 ]);
 $writer = $client->createUdpWriter();
 $writer->write('h2o,location=west value=33i 15');
+$writer->close();
  ```
 
 ## Local tests
