@@ -1,4 +1,4 @@
-## 1.9.0 [unreleased]
+## 1.9.0 [2020-12-04]
 
 ### Features
 1. [#49](https://github.com/influxdata/influxdb-client-php/pull/49): Added support for Guzzle 7
