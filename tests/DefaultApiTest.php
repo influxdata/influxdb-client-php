@@ -4,6 +4,8 @@ namespace InfluxDB2Test;
 
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
+use InfluxDB2\Client;
+use InfluxDB2\Model\WritePrecision;
 use InvalidArgumentException;
 
 require_once('BasicTest.php');
@@ -69,5 +71,31 @@ class DefaultApiTest extends BasicTest
         $this->expectException(InvalidArgumentException::class);
 
         $this->writeApi->write('h2o,location=west value=33i 15');
+    }
+
+    public function testDefaultVerifySSL()
+    {
+        $config = $this->writeApi->http->getConfig();
+
+        $this->assertEquals(true, $config['verify']);
+    }
+
+    public function testConfigureVerifySSL()
+    {
+        $client = new Client([
+            "url" => "http://localhost:8086",
+            "token" => "my-token",
+            "bucket" => "my-bucket",
+            "precision" => WritePrecision::NS,
+            "org" => "my-org",
+            "logFile" => "php://output",
+            "verifySSL" => false
+        ]);
+
+        $config = $client->createQueryApi()->http->getConfig();
+
+        $this->assertEquals(false, $config['verify']);
+
+        $client->close();
     }
 }
