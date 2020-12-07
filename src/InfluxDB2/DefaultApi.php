@@ -24,8 +24,9 @@ class DefaultApi
         $this->options = $options;
 
         $this->http = new Client([
-            'base_uri' => $this->options["url"],
+            'base_uri' => $this->options['url'],
             'timeout' => self::DEFAULT_TIMEOUT,
+            'verify' => $this->options['verifySSL'] ?? true,
             'headers' => [
                 'Authorization' => "Token {$this->options['token']}"
             ],
