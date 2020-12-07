@@ -384,7 +384,7 @@ $client->close();
 
 
 ```
-#### Writing via UDP
+### Writing via UDP
 
 Sending via UDP will be useful in cases when the execution time is critical to avoid potential delays (even timeouts) in sending metrics to the InfluxDB while are problems with the database or network connectivity.  
 As is known, sending via UDP occurs without waiting for a response, unlike TCP (HTTP).
