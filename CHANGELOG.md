@@ -2,6 +2,7 @@
 
 ### Features
 1. [#53](https://github.com/influxdata/influxdb-client-php/pull/53): Ability to write via UDP protocol
+1. [#57](https://github.com/influxdata/influxdb-client-php/pull/57): Added possibility to disable verification of SSL certificate
 
 ## 1.9.0 [2020-12-04]
 
