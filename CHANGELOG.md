@@ -5,6 +5,7 @@
 ### Features
 1. [#49](https://github.com/influxdata/influxdb-client-php/pull/49): Added support for Guzzle 7
 1. [#51](https://github.com/influxdata/influxdb-client-php/pull/51): CSV parser is able to parse export from UI
+1. [#53](https://github.com/influxdata/influxdb-client-php/pull/53): Ability to write to DB via UDP protocol
 
 ### CI
 1. [#54](https://github.com/influxdata/influxdb-client-php/pull/54): Updated default docker image to v2.0.2

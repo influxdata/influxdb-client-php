@@ -10,7 +10,7 @@ use InfluxDB2\Model\WritePrecision;
  * Write time series data into InfluxDB.
  * @package InfluxDB2
  */
-class WriteApi extends DefaultApi
+class WriteApi extends DefaultApi implements Writer
 {
     public $writeOptions;
     public $pointSettings;
@@ -80,7 +80,7 @@ class WriteApi extends DefaultApi
 
         $this->addDefaultTags($data);
 
-        $payload = $this->generatePayload($data, $precisionParam, $bucketParam, $orgParam);
+        $payload = WritePayloadSerializer::generatePayload($data, $precisionParam, $bucketParam, $orgParam, $this->writeOptions->writeType);
 
         if ($payload == null) {
             return;
@@ -207,51 +207,6 @@ class WriteApi extends DefaultApi
         }
 
         return $this->worker;
-    }
-
-    private function generatePayload($data, string $precision = null, string $bucket = null, string $org = null)
-    {
-        if ($data == null || empty($data)) {
-            return null;
-        }
-        if (is_string($data)) {
-
-            if (WriteType::BATCHING == $this->writeOptions->writeType) {
-                return new BatchItem(new BatchItemKey($bucket, $org, $precision), $data);
-            } else {
-                return $data;
-            }
-        }
-        if ($data instanceof Point) {
-            return $this->generatePayload($data->toLineProtocol(), $data->getPrecision() !== null ?
-                $data->getPrecision() : $precision, $bucket, $org);
-        }
-        if (is_array($data))
-        {
-            if (array_key_exists('name', $data))
-            {
-                return $this->generatePayload(Point::fromArray($data), $precision, $bucket, $org);
-            }
-
-            $payload = '';
-
-            foreach ($data as $item)
-            {
-                if (isset($item)) {
-                    $payload .= $this->generatePayload($item, $precision, $bucket, $org) . "\n";
-                }
-            }
-
-            // remove last new line
-            if (isset($payload) && trim($payload) !== '')
-            {
-                $payload = rtrim($payload, "\n");
-            }
-
-            return $payload;
-        }
-
-        return null;
     }
 
     private function getOption(string $optionName, string $precision = null): string
