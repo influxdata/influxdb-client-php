@@ -13,8 +13,6 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
 
 #### Note: Use this client library with InfluxDB 2.x and InfluxDB 1.8+ ([see details](#influxdb-18-api-compatibility)). For connecting to InfluxDB 1.7 or earlier instances, use the [influxdb-php](https://github.com/influxdata/influxdb-php) client library.
 
-#### Disclaimer: This library is a work in progress and should not be considered production ready yet.
-
 ## Installation
 
 The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php).
