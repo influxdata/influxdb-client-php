@@ -79,7 +79,7 @@ jobs:
         default: &default-php-image "circleci/php:7.4"
       influxdb-image:
         type: string
-        default: &default-influxdb-image "influxdb:v2.0.2"
+        default: &default-influxdb-image "influxdb:v2.0.3"
       guzzle-version:
         type: string
         default: "6.5.3"
@@ -122,7 +122,7 @@ workflows:
           guzzle-version: "7.0.1"
       - tests-php:
           name: php-7.4-nightly
-          influxdb-image: "influx:nightly"
+          influxdb-image: "influxdb2:nightly"
       - tests-php:
           name: php-7.3
           php-image: "circleci/php:7.3"
