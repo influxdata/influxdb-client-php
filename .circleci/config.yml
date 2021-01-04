@@ -118,7 +118,7 @@ jobs:
       - run: |
           mkdir -p tools/php-cs-fixer
           composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
-          vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
+          tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
 
 workflows:
   version: 2
