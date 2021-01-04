@@ -1,6 +1,7 @@
 <?php
 
 namespace InfluxDB2;
+
 /**
  * Class FluxColumn represents a column header specification of FluxTable.
  * @package InfluxDB2
@@ -29,5 +30,4 @@ class FluxColumn
         $this->group = $group;
         $this->defaultValue = $defaultValue;
     }
-
 }

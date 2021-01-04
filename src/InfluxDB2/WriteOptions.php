@@ -46,4 +46,3 @@ class WriteOptions
         $this->jitterInterval = $writeOptions["jitterInterval"] ?? self::DEFAULT_JITTER_INTERVAL;
     }
 }
-

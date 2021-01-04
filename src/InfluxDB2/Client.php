@@ -102,7 +102,6 @@ class Client
 
     public function getConfiguration()
     {
-
         $config = Configuration::getDefaultConfiguration()
             ->setUserAgent('influxdb-client-php/' . Client::VERSION)
             ->setDebug(isset($this->options['debug']) ? $this->options['debug'] : null)

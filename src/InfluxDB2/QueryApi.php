@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class QueryApi extends DefaultApi
 {
-
     private $DEFAULT_DIALECT;
 
     /**
@@ -37,8 +36,7 @@ class QueryApi extends DefaultApi
     {
         $result = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
-        if ($result == null)
-        {
+        if ($result == null) {
             return null;
         }
 
@@ -75,8 +73,7 @@ class QueryApi extends DefaultApi
     {
         $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
-        if ($response == null)
-        {
+        if ($response == null) {
             return null;
         }
 
@@ -91,8 +88,7 @@ class QueryApi extends DefaultApi
         $payload = $this->generatePayload($query, $dialect);
         $queryParams = ["org" => $orgParam];
 
-        if ($payload == null)
-        {
+        if ($payload == null) {
             return null;
         }
 
@@ -114,7 +110,4 @@ class QueryApi extends DefaultApi
             'type' => null
         ]);
     }
-
 }
-
-

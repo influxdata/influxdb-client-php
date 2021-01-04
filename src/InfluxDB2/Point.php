@@ -28,9 +28,13 @@ class Point
      * @param [Integer] time the timestamp for the point
      * @param [WritePrecision] precision the precision for the unix timestamps within the body line-protocol
      */
-    public function __construct($name, $tags = null, $fields =  null, $time = null,
-                                $precision = Point::DEFAULT_WRITE_PRECISION)
-    {
+    public function __construct(
+        $name,
+        $tags = null,
+        $fields =  null,
+        $time = null,
+        $precision = Point::DEFAULT_WRITE_PRECISION
+    ) {
         $this->name = $name;
         $this->tags = $tags;
         $this->fields = $fields;
@@ -58,15 +62,14 @@ class Point
      */
     public static function fromArray($data): ?Point
     {
-        if (!array_key_exists('name' ,$data))
-        {
+        if (!array_key_exists('name', $data)) {
             return null;
         }
 
-        $tags = array_key_exists('tags' ,$data) ? $data['tags'] : null;
-        $fields = array_key_exists('fields' ,$data) ? $data['fields'] : null;
-        $time = array_key_exists('time' ,$data) ? $data['time'] : null;
-        $precision = array_key_exists('precision' ,$data) ? $data['precision'] : null;
+        $tags = array_key_exists('tags', $data) ? $data['tags'] : null;
+        $fields = array_key_exists('fields', $data) ? $data['fields'] : null;
+        $time = array_key_exists('time', $data) ? $data['time'] : null;
+        $precision = array_key_exists('precision', $data) ? $data['precision'] : null;
 
         return new Point($data['name'], $tags, $fields, $time, $precision);
     }
@@ -123,19 +126,15 @@ class Point
 
         $tags = $this->appendTags();
 
-        if (!$this->isNullOrEmptyString($tags))
-        {
+        if (!$this->isNullOrEmptyString($tags)) {
             $lineProtocol .= $tags;
-        }
-        else
-        {
+        } else {
             $lineProtocol .= ' ';
         }
 
         $fields = $this->appendFields();
 
-        if ($this->isNullOrEmptyString($fields))
-        {
+        if ($this->isNullOrEmptyString($fields)) {
             return null;
         }
 
@@ -143,8 +142,7 @@ class Point
 
         $time = $this->appendTime();
 
-        if (!$this->isNullOrEmptyString($time))
-        {
+        if (!$this->isNullOrEmptyString($time)) {
             $lineProtocol .= $time;
         }
 
@@ -155,19 +153,16 @@ class Point
     {
         $tags = '';
 
-        if ($this->tags == null)
-        {
+        if ($this->tags == null) {
             return null;
         }
 
         ksort($this->tags);
 
-        foreach (array_keys($this->tags) as $key)
-        {
+        foreach (array_keys($this->tags) as $key) {
             $value = $this->tags[$key];
 
-            if ($this->isNullOrEmptyString($key) || $this->isNullOrEmptyString($value))
-            {
+            if ($this->isNullOrEmptyString($key) || $this->isNullOrEmptyString($value)) {
                 continue;
             }
 
@@ -182,38 +177,28 @@ class Point
     {
         $fields = '';
 
-        if ($this->fields == null)
-        {
+        if ($this->fields == null) {
             return null;
         }
 
         ksort($this->fields);
 
-        foreach (array_keys($this->fields) as $key)
-        {
+        foreach (array_keys($this->fields) as $key) {
             $value = $this->fields[$key];
 
-            if (!isset($value))
-            {
+            if (!isset($value)) {
                 continue;
             }
 
             $fields .= $this->escapeKey($key) . '=';
 
-            if (is_integer($value) || is_long($value))
-            {
+            if (is_integer($value) || is_long($value)) {
                 $fields .= $value . 'i';
-            }
-            else if (is_string($value))
-            {
+            } elseif (is_string($value)) {
                 $fields .= '"' . $this->escapeValue($value) . '"';
-            }
-            else if (is_bool($value))
-            {
+            } elseif (is_bool($value)) {
                 $fields .= $value ? 'true' : 'false';
-            }
-            else
-            {
+            } else {
                 $fields .= $value;
             }
 
@@ -225,23 +210,18 @@ class Point
 
     private function appendTime()
     {
-        if (!isset($this->time))
-        {
+        if (!isset($this->time)) {
             return null;
         }
 
         $time = $this->time;
 
-        if (is_double($time) || is_float($time))
-        {
+        if (is_double($time) || is_float($time)) {
             $time = round($time);
-        }
-        else if ($time instanceof DateTime)
-        {
+        } elseif ($time instanceof DateTime) {
             $seconds = $time->getTimestamp();
 
-            switch ($this->precision)
-            {
+            switch ($this->precision) {
                 case WritePrecision::MS:
                     $time = strval(round($seconds) . '000');
                     break;
