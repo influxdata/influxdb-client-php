@@ -1,4 +1,5 @@
 <?php
+
 use InfluxDB2\Client;
 use InfluxDB2\Model\Organization;
 use InfluxDB2\Model\WritePrecision;
@@ -10,7 +11,7 @@ class IntegrationBaseTestCase extends TestCase
     public $client;
     public $options;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->options = [
             "url" => "http://localhost:8086",

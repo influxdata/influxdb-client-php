@@ -34,7 +34,7 @@ abstract class BasicTest extends TestCase
      * @param string $url
      * @param string $logFile default log file
      */
-    public function setUp($url = "http://localhost:8086", $logFile = "php://output")
+    public function setUp($url = "http://localhost:8086", $logFile = "php://output"): void
     {
         $this->client = new Client([
             "url" => $url,
@@ -68,7 +68,7 @@ abstract class BasicTest extends TestCase
         ]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->client->close();
     }

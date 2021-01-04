@@ -20,7 +20,7 @@ class QueryApiIntegrationTest extends TestCase
     /**
      * @before
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = new Client([
             "url" => "http://localhost:8086",
@@ -50,8 +50,8 @@ class QueryApiIntegrationTest extends TestCase
 
         $result = $this->queryApi->queryRaw($query);
 
-        $this->assertContains(',result,table,_start,_stop,_time,_value,_field,_measurement,location', $result);
-        $this->assertContains($measurement, $result);
+        $this->assertStringContainsString(',result,table,_start,_stop,_time,_value,_field,_measurement,location', $result);
+        $this->assertStringContainsString($measurement, $result);
     }
 
     public function testQuery()

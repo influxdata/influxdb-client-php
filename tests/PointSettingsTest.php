@@ -15,7 +15,7 @@ class PointSettingsTest extends TestCase
     /** @var Client */
     private $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = new Client([
             "url" => "http://localhost:8086",

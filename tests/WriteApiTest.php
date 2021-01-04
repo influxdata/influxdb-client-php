@@ -17,7 +17,7 @@ class WriteApiTest extends BasicTest
     private const ID_TAG = "132-987-655";
     private const CUSTOMER_TAG = "California Miner";
 
-    public function setUp($url = "http://localhost:8086", $logFile = "php://output")
+    public function setUp($url = "http://localhost:8086", $logFile = "php://output"): void
     {
         parent::setUp($url, $logFile);
 
