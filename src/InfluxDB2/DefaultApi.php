@@ -89,7 +89,6 @@ class DefaultApi
                 );
             }
             return $response;
-
         } catch (RequestException $e) {
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
@@ -109,14 +108,14 @@ class DefaultApi
         }
     }
 
-    function check($key, $value)
+    protected function check($key, $value)
     {
         if ((!isset($value) || trim($value) === '')) {
             $options = implode(', ', array_map(
                 function ($v, $k) {
-                    if(is_array($v)){
+                    if (is_array($v)) {
                         return $k.'[]='.implode('&'.$k.'[]=', $v);
-                    }else{
+                    } else {
                         return $k.'='.$v;
                     }
                 },
@@ -133,7 +132,7 @@ class DefaultApi
      * @param string $level log severity
      * @param string $message log message
      */
-    function log(string $level, string $message): void
+    protected function log(string $level, string $message): void
     {
         $logFile = isset($this->options['logFile']) ? $this->options['logFile'] : "php://output";
         $logDate = date('H:i:s d-M-Y');
@@ -141,4 +140,3 @@ class DefaultApi
         file_put_contents($logFile, "[{$logDate}]: [{$level}] - {$message}", FILE_APPEND);
     }
 }
-

@@ -3,7 +3,6 @@
 
 namespace InfluxDB2;
 
-
 class PointSettings
 {
     private $defaultTags;
@@ -20,9 +19,8 @@ class PointSettings
 
     public static function getValue(string $value): string
     {
-        if (substr( $value, 0, 6 ) === '${env.')
-        {
-            return getenv(substr( $value, 6, strlen($value) - 7));
+        if (substr($value, 0, 6) === '${env.') {
+            return getenv(substr($value, 6, strlen($value) - 7));
         }
 
         return $value;

@@ -2,7 +2,6 @@
 
 namespace InfluxDB2Test;
 
-
 use GuzzleHttp\Psr7\Response;
 
 require_once('BasicTest.php');
@@ -27,7 +26,8 @@ class QueryApiTest extends BasicTest
         $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
 
         $result = $this->queryApi->queryRaw(
-            'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
+            'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()'
+        );
 
         $this->assertEquals(QueryApiTest::SUCCESS_DATA, $result);
     }

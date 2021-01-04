@@ -2,7 +2,6 @@
 
 namespace InfluxDB2;
 
-
 use GuzzleHttp\Exception\ConnectException;
 use InfluxDB2\Model\WritePrecision;
 
@@ -31,10 +30,8 @@ class WriteApi extends DefaultApi implements Writer
         $this->writeOptions = new WriteOptions($writeOptions) ?: new WriteOptions();
         $this->pointSettings = new PointSettings($pointSettings) ?: new PointSettings();
 
-        if (array_key_exists('tags', $options))
-        {
-            foreach (array_keys($options['tags']) as $key)
-            {
+        if (array_key_exists('tags', $options)) {
+            foreach (array_keys($options['tags']) as $key) {
                 $this->pointSettings->addDefaultTag($key, $options['tags'][$key]);
             }
         }
@@ -86,8 +83,7 @@ class WriteApi extends DefaultApi implements Writer
             return;
         }
 
-        if (WriteType::BATCHING == $this->writeOptions->writeType)
-        {
+        if (WriteType::BATCHING == $this->writeOptions->writeType) {
             $this->worker()->push($payload);
         } else {
             $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
@@ -98,27 +94,18 @@ class WriteApi extends DefaultApi implements Writer
     {
         $defaultTags = $this->pointSettings->getDefaultTags();
 
-        if (is_array($data))
-        {
-            if (array_key_exists('name', $data))
-            {
-                foreach (array_keys($defaultTags) as $key)
-                {
+        if (is_array($data)) {
+            if (array_key_exists('name', $data)) {
+                foreach (array_keys($defaultTags) as $key) {
                     $data['tags'][$key] = PointSettings::getValue($defaultTags[$key]);
                 }
-            }
-            else
-            {
-                foreach ($data as &$item)
-                {
+            } else {
+                foreach ($data as &$item) {
                     $this->addDefaultTags($item);
                 }
             }
-        }
-        elseif ($data instanceof Point)
-        {
-            foreach (array_keys($defaultTags) as $key)
-            {
+        } elseif ($data instanceof Point) {
+            foreach (array_keys($defaultTags) as $key) {
                 $data->addTag($key, PointSettings::getValue($defaultTags[$key]));
             }
         }
@@ -187,8 +174,12 @@ class WriteApi extends DefaultApi implements Writer
 
             usleep($timeout);
 
-            $this->writeRawInternal($data, $queryParams, $attempts + 1,
-                $retryInterval * $this->writeOptions->exponentialBase);
+            $this->writeRawInternal(
+                $data,
+                $queryParams,
+                $attempts + 1,
+                $retryInterval * $this->writeOptions->exponentialBase
+            );
         }
     }
 
@@ -201,8 +192,7 @@ class WriteApi extends DefaultApi implements Writer
 
     private function worker(): Worker
     {
-        if (!isset($this->worker))
-        {
+        if (!isset($this->worker)) {
             $this->worker = new Worker($this);
         }
 

@@ -22,7 +22,7 @@ class WriteApiIntegrationTest extends TestCase
     /**
      * @before
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = new Client([
             "url" => "http://localhost:8086",
@@ -67,14 +67,15 @@ class WriteApiIntegrationTest extends TestCase
     public function testBatchingWrite()
     {
         $writeApi = $this->client->createWriteApi(
-            ["writeType"=>WriteType::BATCHING, 'batchSize'=>3]);
+            ["writeType"=>WriteType::BATCHING, 'batchSize'=>3]
+        );
 
         $data = ['name' => 'cpu',
             'tags' => ['host' => 'server_nl', 'region' => 'us'],
             'fields' => ['internal' => 5, 'external' => 6],
             'time' => microtime(true)];
 
-        $writeApi->write($data,WritePrecision::MS);
+        $writeApi->write($data, WritePrecision::MS);
 
         $p1 = ['name' => "h2o", 'tags' => ['host' => 'aws', 'region' => 'us'], 'fields' => ['level' => 1, 'saturation' => 99], 'time' => 1];
         $p2 = ['name' => "h2o", 'tags' => ['host' => 'aws', 'region' => 'us'], 'fields' => ['level' => 2, 'saturation' => 98], 'time' => 2];

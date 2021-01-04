@@ -11,21 +11,27 @@ class PointTest extends TestCase
 {
     public function testToLineProtocol()
     {
-        $pointArgs = new Point('h2o',
+        $pointArgs = new Point(
+            'h2o',
             array('host' => 'aws', 'region' => 'us'),
             array('level' => 5, 'saturation' => '99%'),
-            123);
+            123
+        );
 
-        $this->assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123',
-            $pointArgs->toLineProtocol());
+        $this->assertEquals(
+            'h2o,host=aws,region=us level=5i,saturation="99%" 123',
+            $pointArgs->toLineProtocol()
+        );
 
         $pointArray = Point::fromArray(array('name' => 'h2o',
             'tags' => array('host' => 'aws', 'region' => 'us'),
             'fields' => array('level' => 5, 'saturation' => '99%'),
             'time' => 123));
 
-        $this->assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123',
-            $pointArray->toLineProtocol());
+        $this->assertEquals(
+            'h2o,host=aws,region=us level=5i,saturation="99%" 123',
+            $pointArray->toLineProtocol()
+        );
     }
 
     public function testMeasurementEscape()
@@ -65,12 +71,14 @@ class PointTest extends TestCase
                 ->addTag("t\tab", "t\tab")
                 ->addField("level", 2);
 
-        $this->assertEquals("h\\n2\\ro\\t_data,carriage\\rreturn=carriage\\nreturn,new\\nline=new\\nline,t\\tab=t\\tab level=2i",
-            $point->toLineProtocol());
+        $this->assertEquals(
+            "h\\n2\\ro\\t_data,carriage\\rreturn=carriage\\nreturn,new\\nline=new\\nline,t\\tab=t\\tab level=2i",
+            $point->toLineProtocol()
+        );
     }
 
-    public function testEqualSignEscaping() {
-
+    public function testEqualSignEscaping()
+    {
         $point =  Point::measurement("h=2o")
                 ->addTag("l=ocation", "e=urope")
                 ->addField("l=evel", 2);

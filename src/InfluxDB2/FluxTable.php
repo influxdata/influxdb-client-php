@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 namespace InfluxDB2;
-use phpDocumentor\Reflection\Types\This;
 
 /**
  * This class represents the table structure of the Flux CSV Response.
@@ -43,7 +42,8 @@ class FluxTable
 
     public function getGroupKey()
     {
-        return array_values(array_filter($this->columns, function ($column) { return $column->group; }));
+        return array_values(array_filter($this->columns, function ($column) {
+            return $column->group;
+        }));
     }
-
 }

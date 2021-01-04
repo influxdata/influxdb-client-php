@@ -3,7 +3,6 @@
 
 namespace InfluxDB2;
 
-
 interface Writer
 {
 
@@ -33,6 +32,4 @@ interface Writer
      * @throws \Throwable
      */
     public function write($data);
-
-
 }

@@ -10,7 +10,6 @@ namespace InfluxDB2;
  */
 class FluxRecord
 {
-
     public $table;
     public $values;
 
@@ -54,5 +53,4 @@ class FluxRecord
     {
         return $this->values['_measurement'];
     }
-
 }

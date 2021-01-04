@@ -1,6 +1,6 @@
 bin/
 vendor/
-composer.lock
+composer.lock*
 build/
 .idea/
 coverage.xml
@@ -8,3 +8,6 @@ coverage.xml
 /generated/
 /*.iml
 log_test.txt
+tree.txt
+/.php_cs.cache
+/tools/

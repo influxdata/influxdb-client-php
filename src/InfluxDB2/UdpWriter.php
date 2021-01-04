@@ -26,7 +26,6 @@ namespace InfluxDB2;
  */
 class UdpWriter implements Writer
 {
-
     public $options = [];
 
     /**
@@ -103,5 +102,4 @@ class UdpWriter implements Writer
             socket_close($this->socket);
         }
     }
-
 }

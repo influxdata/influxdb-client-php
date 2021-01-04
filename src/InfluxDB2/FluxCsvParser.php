@@ -59,7 +59,7 @@ class FluxCsvParser
 
     private function stringToStream(string $string)
     {
-        $stream = fopen('php://memory','r+');
+        $stream = fopen('php://memory', 'r+');
         fwrite($stream, $string);
         rewind($stream);
         return $stream;
@@ -92,8 +92,10 @@ class FluxCsvParser
                 if ($this->parsingStateError) {
                     $error = $csv[1];
                     $referenceValue = $csv[2];
-                    throw new FluxQueryError($error,
-                        !isset($referenceValue) || trim($referenceValue) === '' ? 0 : $referenceValue);
+                    throw new FluxQueryError(
+                        $error,
+                        !isset($referenceValue) || trim($referenceValue) === '' ? 0 : $referenceValue
+                    );
                 }
 
                 $result = $this->parseLine($csv);
@@ -102,9 +104,7 @@ class FluxCsvParser
                     yield $result;
                 }
             }
-        }
-        finally
-        {
+        } finally {
             $this->closeConnection();
         }
     }
@@ -270,7 +270,6 @@ class FluxCsvParser
         }
 
         return $strVal;
-
     }
 
     private function readline(StreamInterface $stream)
@@ -278,7 +277,6 @@ class FluxCsvParser
         $buffer = null;
 
         while (null !== ($byte = $stream->read(1))) {
-
             if ($byte === "") {
                 break;
             }
@@ -308,5 +306,4 @@ class FluxCsvParser
 
 class FluxQueryError extends RuntimeException
 {
-
 }

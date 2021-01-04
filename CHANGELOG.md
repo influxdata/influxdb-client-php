@@ -4,8 +4,12 @@
 1. [#53](https://github.com/influxdata/influxdb-client-php/pull/53): Ability to write via UDP protocol
 1. [#57](https://github.com/influxdata/influxdb-client-php/pull/57): Added possibility to disable verification of SSL certificate
 
+### Bug Fixes
+1. [#60](https://github.com/influxdata/influxdb-client-php/pull/60): Compatibility with PHP 7.1 and 7.2
+
 ### CI
 1. [#58](https://github.com/influxdata/influxdb-client-php/pull/58): Updated default docker image to v2.0.3
+1. [#60](https://github.com/influxdata/influxdb-client-php/pull/60): Added PHP 8 to CI, Added code style checking to CI
 
 ## 1.9.0 [2020-12-04]
 

@@ -2,7 +2,6 @@
 
 namespace InfluxDB2;
 
-
 use Exception;
 use SplQueue;
 
@@ -26,16 +25,14 @@ class Worker
     {
         $this->queue->enqueue($payload);
 
-        if ($this->queue->count() >= $this->writeOptions->batchSize)
-        {
+        if ($this->queue->count() >= $this->writeOptions->batchSize) {
             $this->checkBackgroundQueue(true);
         }
     }
 
     public function flush()
     {
-        while ($this->queue->count() != 0)
-        {
+        while ($this->queue->count() != 0) {
             $this->checkBackgroundQueue(false);
         }
     }
@@ -58,7 +55,7 @@ class Worker
 
                 if ($index === null) {
                     $data[] = array('key' => $key, 'data' => array());
-                    $index = array_key_last($data);
+                    $index = array_keys($data)[count($data)-1];
                 }
 
                 $data[$index]['data'][] = $item->data;
@@ -75,13 +72,11 @@ class Worker
 
     private function existsKey($key, $data): ?int
     {
-        foreach ($data as $item)
-        {
+        foreach ($data as $item) {
             $itemKey = $item['key'];
             if ($key->precision === $itemKey->precision &&
                 $key->bucket === $itemKey->bucket &&
-                $key->org === $itemKey->org)
-            {
+                $key->org === $itemKey->org) {
                 return array_search($item, $data);
             }
         }

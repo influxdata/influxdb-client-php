@@ -110,6 +110,15 @@ jobs:
           export PATH=/c/tools/php/:$PATH
           ./vendor/bin/phpunit --exclude-group "integration" --log-junit build/junit.xml
       - storing-test-results
+  check-code-style:
+    docker:
+      - image: *default-php-image
+    steps:
+      - checkout
+      - run: |
+          mkdir -p tools/php-cs-fixer
+          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+          tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
 
 workflows:
   version: 2
@@ -117,6 +126,9 @@ workflows:
     jobs:
       - tests-php:
           name: php-7.4
+      - tests-php:
+          name: php-8.0
+          php-image: "circleci/php:8.0"
       - tests-php:
           name: php-7.4-guzzle-7
           guzzle-version: "7.0.1"
@@ -134,6 +146,7 @@ workflows:
           php-image: "circleci/php:7.1"
       - tests-windows:
           name: php-windows
+      - check-code-style
 
   nightly:
     triggers:

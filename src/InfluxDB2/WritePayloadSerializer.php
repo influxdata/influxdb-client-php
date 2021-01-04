@@ -3,7 +3,6 @@
 
 namespace InfluxDB2;
 
-
 class WritePayloadSerializer
 {
     /**
@@ -22,7 +21,6 @@ class WritePayloadSerializer
             return null;
         }
         if (is_string($data)) {
-
             if (WriteType::BATCHING == $writeType) {
                 return new BatchItem(new BatchItemKey($bucket, $org, $precision), $data);
             } else {
@@ -57,4 +55,3 @@ class WritePayloadSerializer
         return null;
     }
 }
-
