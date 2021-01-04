@@ -2,7 +2,6 @@
 return PhpCsFixer\Config::create()
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->exclude('tests')
             ->exclude('src/InfluxDB2/Model')
             ->exclude('src/InfluxDB2/Service')
             ->notPath('src/InfluxDB2/HeaderSelector.php')

@@ -2,7 +2,6 @@
 
 namespace InfluxDB2Test;
 
-
 use DateTime;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
@@ -51,8 +50,7 @@ class QueryApiStreamTest extends TestCase
 
         $parser = $this->queryApi->queryStream($query);
 
-        foreach ($parser->each() as $record)
-        {
+        foreach ($parser->each() as $record) {
             $this->assertNotNull($record);
 
             $this->assertEquals($measurement, $record->getMeasurement());
@@ -82,10 +80,8 @@ class QueryApiStreamTest extends TestCase
 
         $this->assertFalse($parser->closed);
 
-        foreach ($parser->each() as $record)
-        {
-            if ($count >= 5)
-            {
+        foreach ($parser->each() as $record) {
+            if ($count >= 5) {
                 break;
             }
 
@@ -108,11 +104,13 @@ class QueryApiStreamTest extends TestCase
     private function write($values, $measurement)
     {
         for ($ii = 0; $ii < $values; $ii++) {
-            $this->writeApi->write(Point::measurement($measurement)
+            $this->writeApi->write(
+                Point::measurement($measurement)
                 ->addTag('location', 'europe')
                 ->addField('level', $ii)
                 ->time($this->now->getTimestamp() - $values + $ii, WritePrecision::S),
-                WritePrecision::S);
+                WritePrecision::S
+            );
         }
     }
 }

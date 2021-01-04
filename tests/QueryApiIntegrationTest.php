@@ -92,5 +92,4 @@ class QueryApiIntegrationTest extends TestCase
             |> filter(fn: (r) => r._measurement == "' . $measurement . '")';
         return $query;
     }
-
 }

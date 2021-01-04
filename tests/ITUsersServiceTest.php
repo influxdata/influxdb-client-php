@@ -20,5 +20,4 @@ class ITUsersServiceTest extends IntegrationBaseTestCase
             self::assertNotEmpty($user->getLinks()->getSelf());
         }
     }
-
 }

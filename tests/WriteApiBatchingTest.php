@@ -22,8 +22,10 @@ class WriteApiBatchingTest extends BasicTest
 
     public function testBatchSize()
     {
-        $this->mockHandler->append(new Response(204),
-            new Response(204));
+        $this->mockHandler->append(
+            new Response(204),
+            new Response(204)
+        );
 
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=2.0 2');
@@ -43,59 +45,95 @@ class WriteApiBatchingTest extends BasicTest
 
     public function testBatchSizeGroupBy()
     {
-        $this->mockHandler->append(new Response(204),
+        $this->mockHandler->append(
             new Response(204),
             new Response(204),
             new Response(204),
-            new Response(204));
+            new Response(204),
+            new Response(204)
+        );
 
         $bucket = 'my-bucket';
         $bucket2 = 'my-bucket2';
 
-        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=1.0 1', 'ns',
-            $bucket, 'my-org');
-        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=2.0 2', 's',
-            $bucket, 'my-org');
-        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=3.0 3', 'ns',
-            $bucket, 'my-org-a');
-        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=4.0 4', 'ns',
-            $bucket, 'my-org-a');
-        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=5.0 5', 'ns',
-            $bucket2, 'my-org-a');
-        $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=6.0 6', 'ns',
-            $bucket, 'my-org-a');
+        $this->writeApi->write(
+            'h2o_feet,location=coyote_creek level\\ water_level=1.0 1',
+            'ns',
+            $bucket,
+            'my-org'
+        );
+        $this->writeApi->write(
+            'h2o_feet,location=coyote_creek level\\ water_level=2.0 2',
+            's',
+            $bucket,
+            'my-org'
+        );
+        $this->writeApi->write(
+            'h2o_feet,location=coyote_creek level\\ water_level=3.0 3',
+            'ns',
+            $bucket,
+            'my-org-a'
+        );
+        $this->writeApi->write(
+            'h2o_feet,location=coyote_creek level\\ water_level=4.0 4',
+            'ns',
+            $bucket,
+            'my-org-a'
+        );
+        $this->writeApi->write(
+            'h2o_feet,location=coyote_creek level\\ water_level=5.0 5',
+            'ns',
+            $bucket2,
+            'my-org-a'
+        );
+        $this->writeApi->write(
+            'h2o_feet,location=coyote_creek level\\ water_level=6.0 6',
+            'ns',
+            $bucket,
+            'my-org-a'
+        );
 
         $this->assertEquals(5, count($this->container));
 
         $request = $this->container[0]['request'];
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=1.0 1', $request->getBody());
 
         $request = $this->container[1]['request'];
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($request->getUri())
+        );
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=2.0 2', $request->getBody());
 
         $request = $this->container[2]['request'];
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=3.0 3\n"
             . 'h2o_feet,location=coyote_creek level\\ water_level=4.0 4', $request->getBody());
 
         $request = $this->container[3]['request'];
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket2&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket2&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=5.0 5', $request->getBody());
 
         $request = $this->container[4]['request'];
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=6.0 6', $request->getBody());
     }
 
@@ -115,8 +153,10 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2\n"
             . 'h2o_feet,location=coyote_creek level\\ water_level=3.0 3', $request->getBody());
@@ -127,8 +167,11 @@ class WriteApiBatchingTest extends BasicTest
         $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
             . 'The Retry-After header describes when to try the write again."}';
 
-        $this->mockHandler->append(new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'],
-            $errorBody), new Response(204));
+        $this->mockHandler->append(new Response(
+            429,
+            ['X-Platform-Error-Code' => 'temporarily unavailable'],
+            $errorBody
+        ), new Response(204));
 
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
@@ -136,8 +179,10 @@ class WriteApiBatchingTest extends BasicTest
         $this->assertEquals(2, count($this->container));
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
     }
@@ -147,9 +192,12 @@ class WriteApiBatchingTest extends BasicTest
         $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
             . 'The Retry-After header describes when to try the write again."}';
 
-        $this->mockHandler->append(new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable',
+        $this->mockHandler->append(new Response(
+            429,
+            ['X-Platform-Error-Code' => 'temporarily unavailable',
             'Retry-After' => '3'],
-            $errorBody), new Response(204));
+            $errorBody
+        ), new Response(204));
 
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
@@ -157,8 +205,10 @@ class WriteApiBatchingTest extends BasicTest
         $this->assertEquals(2, count($this->container));
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
-            strval($request->getUri()));
+        $this->assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
+            strval($request->getUri())
+        );
         $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
     }
@@ -173,7 +223,8 @@ class WriteApiBatchingTest extends BasicTest
         $this->mockHandler->append(
             new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody),
             new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody),
-            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody));
+            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable'], $errorBody)
+        );
 
         $this->expectException(ApiException::class);
 
@@ -195,7 +246,8 @@ class WriteApiBatchingTest extends BasicTest
             // retry
             new Response(429),
             // not called
-            new Response(429));
+            new Response(429)
+        );
 
         $this->writeApi->writeOptions->batchSize = 1;
         $this->writeApi->writeOptions->retryInterval = 1000;
@@ -231,7 +283,8 @@ class WriteApiBatchingTest extends BasicTest
         $this->mockHandler->append(
             new ConnectException($errorMessage, new Request('POST', '')),
             new ConnectException($errorMessage, new Request('POST', '')),
-            new ConnectException($errorMessage, new Request('POST', '')));
+            new ConnectException($errorMessage, new Request('POST', ''))
+        );
 
         $this->expectException(ApiException::class);
 
@@ -243,8 +296,10 @@ class WriteApiBatchingTest extends BasicTest
 
     public function testJitterInterval()
     {
-        $this->mockHandler->append(new Response(204),
-            new Response(204));
+        $this->mockHandler->append(
+            new Response(204),
+            new Response(204)
+        );
 
         $this->writeApi->writeOptions->jitterInterval = 2000;
 
@@ -274,10 +329,14 @@ class WriteApiBatchingTest extends BasicTest
         $this->setUp("http://localhost:8086", "log_test.txt");
 
         $this->mockHandler->append(
-            new Response(429, ['X-Platform-Error-Code' => 'temporarily unavailable',
+            new Response(
+                429,
+                ['X-Platform-Error-Code' => 'temporarily unavailable',
             'Retry-After' => '3'],
-            'org 04014de4ed590000 has exceeded limited_write plan limit'),
-            new Response(204));
+                'org 04014de4ed590000 has exceeded limited_write plan limit'
+            ),
+            new Response(204)
+        );
 
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');

@@ -24,23 +24,35 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
 
     public function testFixNanosTimeSerialization()
     {
-        self::assertEquals("2020-09-18T08:03:48.12345Z",
-            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.12345Z"));
+        self::assertEquals(
+            "2020-09-18T08:03:48.12345Z",
+            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.12345Z")
+        );
 
-        self::assertEquals("2020-09-18T08:03:48.123456Z",
-            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.123456Z"));
+        self::assertEquals(
+            "2020-09-18T08:03:48.123456Z",
+            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.123456Z")
+        );
 
-        self::assertEquals("2020-09-18T08:03:48.1234567Z",
-            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.1234567Z"));
+        self::assertEquals(
+            "2020-09-18T08:03:48.1234567Z",
+            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.1234567Z")
+        );
 
-        self::assertEquals("2020-09-18T08:03:48.12345678Z",
-            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.12345678Z"));
+        self::assertEquals(
+            "2020-09-18T08:03:48.12345678Z",
+            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.12345678Z")
+        );
 
-        self::assertEquals("2020-09-18T08:03:48.12345678Z",
-            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.123456789Z"));
+        self::assertEquals(
+            "2020-09-18T08:03:48.12345678Z",
+            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.123456789Z")
+        );
 
-        self::assertEquals("2020-09-18T08:03:48.12345678Z",
-            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.1234567899Z"));
+        self::assertEquals(
+            "2020-09-18T08:03:48.12345678Z",
+            ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.1234567899Z")
+        );
     }
 
     public function testBucketService()
@@ -94,6 +106,4 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         $this->expectExceptionMessage("bucket not found");
         $bucketsService->getBucketsID($findBucket->getId());
     }
-
 }
-

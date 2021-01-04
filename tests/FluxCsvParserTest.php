@@ -56,7 +56,6 @@ class FluxCsvParserTest extends TestCase
         $this->assertEquals(10, sizeof($record->values));
         $this->assertEquals("free", $record->getField());
         $this->assertEquals("mem", $record->getMeasurement());
-
     }
 
     public function testMappingBoolean()
@@ -218,15 +217,13 @@ class FluxCsvParserTest extends TestCase
         try {
             $fluxCsvParser->parse();
             $this->fail();
-        }
-        catch (FluxQueryError $e)
-        {
-            $this->assertEquals('failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
-                $e->getMessage());
+        } catch (FluxQueryError $e) {
+            $this->assertEquals(
+                'failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
+                $e->getMessage()
+            );
             $this->assertEquals(897, $e->getCode());
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->fail();
         }
     }
@@ -244,15 +241,13 @@ class FluxCsvParserTest extends TestCase
         try {
             $fluxCsvParser->parse();
             $this->fail();
-        }
-        catch (FluxQueryError $e)
-        {
-            $this->assertEquals('failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
-                $e->getMessage());
+        } catch (FluxQueryError $e) {
+            $this->assertEquals(
+                'failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
+                $e->getMessage()
+            );
             $this->assertEquals(0, $e->getCode());
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->fail();
         }
     }
@@ -268,14 +263,12 @@ class FluxCsvParserTest extends TestCase
         try {
             $fluxCsvParser->parse();
             $this->fail();
-        }
-        catch (FluxCsvParserException $e)
-        {
-            $this->assertEquals('Unable to parse CSV response. FluxTable definition was not found.',
-                $e->getMessage());
-        }
-        catch (\Exception $e)
-        {
+        } catch (FluxCsvParserException $e) {
+            $this->assertEquals(
+                'Unable to parse CSV response. FluxTable definition was not found.',
+                $e->getMessage()
+            );
+        } catch (\Exception $e) {
             $this->fail();
         }
     }
@@ -348,15 +341,13 @@ class FluxCsvParserTest extends TestCase
         try {
             $fluxCsvParser->parse();
             $this->fail();
-        }
-        catch (FluxQueryError $e)
-        {
-            $this->assertEquals('engine: unknown field type for value: xyz',
-                $e->getMessage());
+        } catch (FluxQueryError $e) {
+            $this->assertEquals(
+                'engine: unknown field type for value: xyz',
+                $e->getMessage()
+            );
             $this->assertEquals(0, $e->getCode());
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->fail();
         }
     }
@@ -427,7 +418,6 @@ class FluxCsvParserTest extends TestCase
             'value_str' => 'test'];
 
         $this->assertRecord($tableRecords[0], $values, 11);
-
     }
 
     private function assertRecord(FluxRecord $fluxRecord, array $values, $size = 0, $value = null)
@@ -449,5 +439,4 @@ class FluxCsvParserTest extends TestCase
         //TODO datetime parsing
         return $timestamp;
     }
-
 }

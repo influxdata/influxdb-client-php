@@ -19,8 +19,10 @@ class DefaultApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertStringStartsWith('influxdb-client-php/',
-            strval($request->getHeader("User-Agent")[0]));
+        $this->assertStringStartsWith(
+            'influxdb-client-php/',
+            strval($request->getHeader("User-Agent")[0])
+        );
     }
 
     public function testTrailingSlashInUrl()

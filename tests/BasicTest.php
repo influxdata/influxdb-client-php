@@ -2,7 +2,6 @@
 
 namespace InfluxDB2Test;
 
-
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;

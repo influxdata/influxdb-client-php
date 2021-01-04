@@ -108,5 +108,4 @@ class WriteUdpTest extends TestCase
             . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
         $this->assertEquals($expected, $buffer);
     }
-
 }
