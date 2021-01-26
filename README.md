@@ -13,6 +13,22 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
 
 #### Note: Use this client library with InfluxDB 2.x and InfluxDB 1.8+ ([see details](#influxdb-18-api-compatibility)). For connecting to InfluxDB 1.7 or earlier instances, use the [influxdb-php](https://github.com/influxdata/influxdb-php) client library.
 
+- [Installation](#installation)
+    - [Install the library](#install-the-library)
+- [Usage](#usage)
+    - [Creating a client](#creating-a-client)
+    - [Querying data](#queries)
+    - [Writing data](#writing-data)
+    - [Default Tags](#default-tags)
+- [Advanced Usage](#advanced-usage)
+    - [Check the server status](#check-the-server-status)
+    - [InfluxDB 1.8 API compatibility](#influxdb-18-api-compatibility)
+    - [InfluxDB 2.0 management API](#influxdb-20-management-api)
+    - [Writing via UDP](#writing-via-udp)
+    - [Delete data](#delete-data)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Installation
 
 The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php).
@@ -399,6 +415,50 @@ $writer = $client->createUdpWriter();
 $writer->write('h2o,location=west value=33i 15');
 $writer->close();
  ```
+
+### Delete data
+
+The [DefaultService.php](/src/InfluxDB2/Service/DefaultService.php) supports deletes [points](https://v2.docs.influxdata.com/v2.0/reference/glossary/#point) from an InfluxDB bucket.
+
+```php
+<?php
+/**
+ * Shows how to delete data from InfluxDB by client
+ */
+use InfluxDB2\Client;
+use InfluxDB2\Model\DeletePredicateRequest;
+use InfluxDB2\Service\DefaultService;
+
+$url = 'http://localhost:8086';
+$token = 'my-token';
+$org = 'my-org';
+$bucket = 'my-bucket';
+
+$client = new Client([
+    "url" => $url,
+    "token" => $token,
+    "bucket" => $bucket,
+    "org" => $org,
+    "precision" => InfluxDB2\Model\WritePrecision::S
+]);
+
+//
+// Delete data by measurement and tag value
+//
+/** @var DefaultService $service */
+$service = $client->createService(DefaultService::class);
+
+$predicate = new DeletePredicateRequest();
+$predicate->setStart(DateTime::createFromFormat('Y', '2020'));
+$predicate->setStop(new DateTime());
+$predicate->setPredicate("_measurement=\"mem\" AND host=\"host1\"");
+
+$service->deletePost($predicate, null, $org, $bucket);
+
+$client->close();
+```
+
+For more details see [DeleteDataExample.php](examples/DeleteDataExample.php).
 
 ## Local tests
 
