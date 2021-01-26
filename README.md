@@ -25,6 +25,7 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
     - [InfluxDB 1.8 API compatibility](#influxdb-18-api-compatibility)
     - [InfluxDB 2.0 management API](#influxdb-20-management-api)
     - [Writing via UDP](#writing-via-udp)
+    - [Delete data](#delete-data)
 - [Contributing](#contributing)
 - [License](#license)
 
