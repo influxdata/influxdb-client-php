@@ -1,4 +1,4 @@
-## 1.10.0 [unreleased]
+## 1.10.0 [2021-01-29]
 
 ### Features
 1. [#53](https://github.com/influxdata/influxdb-client-php/pull/53): Ability to write via UDP protocol
