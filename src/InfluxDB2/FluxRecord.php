@@ -3,6 +3,8 @@
 
 namespace InfluxDB2;
 
+use RuntimeException;
+
 /**
  * Class FluxRecord is a tuple of values. Each record in the table represents a single point in the series.
  * @see http://bit.ly/flux-spec#record
@@ -24,33 +26,69 @@ class FluxRecord
         $this->values = $values;
     }
 
+    /**
+     * @return mixed record value for column named '_start'
+     */
     public function getStart()
     {
-        return $this->values['_start'];
+        return $this->getRecordValue('_start');
     }
 
+    /**
+     * @return mixed record value for column named '_stop'
+     */
     public function getStop()
     {
-        return $this->values['_stop'];
+        return $this->getRecordValue('_stop');
     }
 
+    /**
+     * @return mixed record value for column named '_time'
+     */
     public function getTime()
     {
-        return $this->values['_time'];
+        return $this->getRecordValue('_time');
     }
 
+    /**
+     * @return mixed record value for column named '_value'
+     */
     public function getValue()
     {
-        return $this->values['_value'];
+        return $this->getRecordValue('_value');
     }
 
+    /**
+     * @return mixed record value for column named '_field'
+     */
     public function getField()
     {
-        return $this->values['_field'];
+        return $this->getRecordValue('_field');
     }
 
+    /**
+     * @return mixed record value for column named '_measurement'
+     */
     public function getMeasurement():string
     {
-        return $this->values['_measurement'];
+        return $this->getRecordValue('_measurement');
+    }
+
+    /**
+     * Get record value.
+     *
+     * @param $column string name of column to get
+     * @return mixed the value of column
+     * @throws RuntimeException when the record doesn't contains required column
+     */
+    private function getRecordValue(string $column)
+    {
+        if (array_key_exists($column, $this->values)) {
+            return $this->values[$column];
+        }
+
+        $array_keys = join(", ", array_keys($this->values));
+
+        throw new RuntimeException("Record doesn't contains column named '$column'. Columns: '$array_keys'.");
     }
 }
