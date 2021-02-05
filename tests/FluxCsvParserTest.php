@@ -2,12 +2,12 @@
 
 namespace InfluxDB2Test;
 
+use Exception;
 use InfluxDB2\FluxCsvParser;
 use InfluxDB2\FluxCsvParserException;
 use InfluxDB2\FluxQueryError;
 use InfluxDB2\FluxRecord;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
 class FluxCsvParserTest extends TestCase
 {
@@ -224,7 +224,7 @@ class FluxCsvParserTest extends TestCase
                 $e->getMessage()
             );
             $this->assertEquals(897, $e->getCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -248,7 +248,7 @@ class FluxCsvParserTest extends TestCase
                 $e->getMessage()
             );
             $this->assertEquals(0, $e->getCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -269,7 +269,7 @@ class FluxCsvParserTest extends TestCase
                 'Unable to parse CSV response. FluxTable definition was not found.',
                 $e->getMessage()
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -348,7 +348,7 @@ class FluxCsvParserTest extends TestCase
                 $e->getMessage()
             );
             $this->assertEquals(0, $e->getCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -385,11 +385,13 @@ class FluxCsvParserTest extends TestCase
         $tables = $parser->parse()->tables;
         $record = $tables[0]->records[0];
 
-        $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage("Record doesn't contains column named '_value'. " .
-            "Columns: 'result, table, _start, _stop, _field, _measurement, city, location, value, _time'.");
-
-        $record->getValue();
+        try {
+            $record->getValue();
+            $this->fail("Expected exception");
+        } catch (Exception $e) {
+            $this->assertEquals( "Record doesn't contains column named '_value'. " .
+                "Columns: 'result, table, _start, _stop, _field, _measurement, city, location, value, _time'.", $e->getMessage());
+        }
     }
 
     private function assertColumns(array $columnHeaders, array $values)
