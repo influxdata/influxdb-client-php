@@ -1,40 +1,32 @@
+.PHONY: help
 .DEFAULT_GOAL := help
 
 help:
-	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  start-server   	to start the InfluxDB server"
-	@echo "  stop-server    	to stop the InfluxDB server"
-	@echo "  test           	to perform unit tests"
-	@echo "  coverage       	to perform unit tests with code coverage"
-	@echo "  coverage-show  	to show the code coverage report"
-	@echo "  deps           	to installs the project dependencies"
-	@echo "  dshell           	to start Docker Shell for Local Development"
-	@echo "  release           	to release client with version specified by VERSION property . make release VERSION=1.5.0"
+	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-46s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-# Docker Shell for Local Development
-dshell:
+dshell: ## Start Docker Shell for Local Development
 	@docker-compose run --entrypoint=bash --rm php
 
-deps:
+deps: ## Installs the project dependencies
 	@composer install
 
-test: start-server
+test: start-server ## Perform unit tests
 	@docker-compose run php composer run test
 
-coverage: start-server
+coverage: start-server ## Perform unit tests with code coverage
 	@docker-compose run php composer run test-coverage
 
-coverage-show:
+coverage-show: ## Show the code coverage report
 	open build/coverage-report/index.html
 
-start-server:
+start-server: ## Start the InfluxDB server
 	@docker-compose up -d influxdb_v2
 	@scripts/influxdb-onboarding.sh ||:
 
-stop-server:
+stop-server: ## Stop the InfluxDB serve
 	@docker-compose stop influxdb_v2
 
-release:
+release: ## Release client with version specified by VERSION property . make release VERSION=1.5.0
 	$(if $(VERSION),,$(error VERSION is not defined. Pass via "make release VERSION=1.5.0"))
 	@echo Tagging $(VERSION)
 	git checkout master
@@ -46,3 +38,10 @@ release:
 	git commit -am "chore(release): prepare for next development iteration"
 	git push origin --tags
 	git push origin master
+
+doc-generate: ## Generate documentation
+	@docker-compose run doxygen
+
+doc-publish: ## Publish documentation as GH-Pages
+	$(MAKE) doc-generate
+	@docker-compose run doc-publish
