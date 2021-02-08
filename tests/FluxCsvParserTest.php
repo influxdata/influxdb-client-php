@@ -2,6 +2,7 @@
 
 namespace InfluxDB2Test;
 
+use Exception;
 use InfluxDB2\FluxCsvParser;
 use InfluxDB2\FluxCsvParserException;
 use InfluxDB2\FluxQueryError;
@@ -223,7 +224,7 @@ class FluxCsvParserTest extends TestCase
                 $e->getMessage()
             );
             $this->assertEquals(897, $e->getCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -247,7 +248,7 @@ class FluxCsvParserTest extends TestCase
                 $e->getMessage()
             );
             $this->assertEquals(0, $e->getCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -268,7 +269,7 @@ class FluxCsvParserTest extends TestCase
                 'Unable to parse CSV response. FluxTable definition was not found.',
                 $e->getMessage()
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -347,7 +348,7 @@ class FluxCsvParserTest extends TestCase
                 $e->getMessage()
             );
             $this->assertEquals(0, $e->getCode());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -370,6 +371,27 @@ class FluxCsvParserTest extends TestCase
         $this->assertFalse($tables[0]->columns[1]->group);
         $this->assertTrue($tables[0]->columns[2]->group);
         $this->assertEquals(1, sizeof($tables[1]->records));
+    }
+
+    public function testRecordDoesntContainsKey()
+    {
+        $data = "#group,false,false,true,true,true,true,true,true,false,false\n" .
+            "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,double,dateTime:RFC3339\n" .
+            "#default,mean,,,,,,,,,\n" .
+            ",result,table,_start,_stop,_field,_measurement,city,location,value,_time\n" .
+            ",,0,1754-06-26T11:30:27.613654848Z,2040-10-27T12:13:46.485Z,temperatureC,weather,London,us-midwest,30,1975-09-01T16:59:54.5Z\n";
+
+        $parser = new FluxCsvParser($data);
+        $tables = $parser->parse()->tables;
+        $record = $tables[0]->records[0];
+
+        try {
+            $record->getValue();
+            $this->fail("Expected exception");
+        } catch (Exception $e) {
+            $this->assertEquals("Record doesn't contain column named '_value'. " .
+                "Columns: 'result, table, _start, _stop, _field, _measurement, city, location, value, _time'.", $e->getMessage());
+        }
     }
 
     private function assertColumns(array $columnHeaders, array $values)
