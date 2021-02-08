@@ -79,7 +79,7 @@ class FluxRecord
      *
      * @param $column string name of column to get
      * @return mixed the value of column
-     * @throws RuntimeException when the record doesn't contains required column
+     * @throws RuntimeException when the record doesn't contain required column
      */
     private function getRecordValue(string $column)
     {
@@ -89,6 +89,6 @@ class FluxRecord
 
         $array_keys = join(", ", array_keys($this->values));
 
-        throw new RuntimeException("Record doesn't contains column named '$column'. Columns: '$array_keys'.");
+        throw new RuntimeException("Record doesn't contain column named '$column'. Columns: '$array_keys'.");
     }
 }

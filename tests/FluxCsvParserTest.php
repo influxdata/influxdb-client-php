@@ -389,7 +389,7 @@ class FluxCsvParserTest extends TestCase
             $record->getValue();
             $this->fail("Expected exception");
         } catch (Exception $e) {
-            $this->assertEquals("Record doesn't contains column named '_value'. " .
+            $this->assertEquals("Record doesn't contain column named '_value'. " .
                 "Columns: 'result, table, _start, _stop, _field, _measurement, city, location, value, _time'.", $e->getMessage());
         }
     }
