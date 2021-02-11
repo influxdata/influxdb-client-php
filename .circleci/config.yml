@@ -79,7 +79,7 @@ jobs:
         default: &default-php-image "circleci/php:7.4"
       influxdb-image:
         type: string
-        default: &default-influxdb-image "influxdb:v2.0.3"
+        default: &default-influxdb-image "influxdb:v2.0.4"
       guzzle-version:
         type: string
         default: "6.5.3"
