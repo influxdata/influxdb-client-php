@@ -6,6 +6,9 @@
 ### Documentation
 1. [#65](https://github.com/influxdata/influxdb-client-php/pull/65): Documentation for the client is located at GitHub: https://influxdata.github.io/influxdb-client-php/
 
+### CI
+1. [#67](https://github.com/influxdata/influxdb-client-php/pull/67): Updated stable image to `influxdb:latest` and nightly to `quay.io/influxdb/influxdb:nightly`
+
 ## 1.10.0 [2021-01-29]
 
 ### Features
