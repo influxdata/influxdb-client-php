@@ -79,13 +79,13 @@ jobs:
         default: &default-php-image "circleci/php:7.4"
       influxdb-image:
         type: string
-        default: &default-influxdb-image "influxdb:v2.0.4"
+        default: &default-influxdb-image "influxdb:latest"
       guzzle-version:
         type: string
         default: "6.5.3"
     docker:
       - image: << parameters.php-image >>
-      - image: &influx-image quay.io/influxdb/<< parameters.influxdb-image >>
+      - image: &influx-image << parameters.influxdb-image >>
         environment:
           INFLUXD_HTTP_BIND_ADDRESS: :8086
     steps:
@@ -134,7 +134,7 @@ workflows:
           guzzle-version: "7.0.1"
       - tests-php:
           name: php-7.4-nightly
-          influxdb-image: "influxdb2:nightly"
+          influxdb-image: "quay.io/influxdb/influxdb:nightly"
       - tests-php:
           name: php-7.3
           php-image: "circleci/php:7.3"
