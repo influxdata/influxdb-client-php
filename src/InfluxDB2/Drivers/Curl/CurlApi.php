@@ -5,8 +5,9 @@ namespace InfluxDB2\Drivers\Curl;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
 use InfluxDB2\ApiException;
+use InfluxDB2\DefaultApi;
 
-trait CurlApiTrait
+class CurlApi extends DefaultApi
 {
     protected function setUpClient()
     {

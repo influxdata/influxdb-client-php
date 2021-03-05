@@ -6,9 +6,12 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
 use InfluxDB2\ApiException;
+use InfluxDB2\DefaultApi;
 
-trait GuzzleApiTrait
+class GuzzleApi extends DefaultApi
 {
+    public $http;
+
     protected function setUpClient()
     {
         $this->http = new Client([

@@ -2,15 +2,20 @@
 
 namespace InfluxDB2;
 
+use InfluxDB2\Drivers\Guzzle\GuzzleApi;
+
 /**
  * Write time series data into InfluxDB.
  *
  * @package InfluxDB2
  */
-abstract class WriteApi extends DefaultApi implements Writer
+class WriteApi implements Writer
 {
     public $writeOptions;
     public $pointSettings;
+
+    private $api;
+    private $options;
 
     /** @var Worker */
     protected $worker;
@@ -18,13 +23,14 @@ abstract class WriteApi extends DefaultApi implements Writer
 
     /**
      * WriteApi constructor.
-     * @param $options
-     * @param array $writeOptions
+     * @param array $options
+     * @param array|null $writeOptions
      * @param array|null $pointSettings
      */
-    public function __construct($options, array $writeOptions = null, array $pointSettings = null)
+    public function __construct(array $options, array $writeOptions = null, array $pointSettings = null, DefaultApi $defaultApi = NULL)
     {
-        parent::__construct($options);
+        $this->options = $options;
+        $this->api = $defaultApi ?? new GuzzleApi($options);
         $this->writeOptions = new WriteOptions($writeOptions) ?: new WriteOptions();
         $this->pointSettings = new PointSettings($pointSettings) ?: new PointSettings();
 
@@ -69,9 +75,9 @@ abstract class WriteApi extends DefaultApi implements Writer
         $bucketParam = $this->getOption("bucket", $bucket);
         $orgParam = $this->getOption("org", $org);
 
-        $this->check("precision", $precisionParam);
-        $this->check("bucket", $bucketParam);
-        $this->check("org", $orgParam);
+        $this->api->check("precision", $precisionParam);
+        $this->api->check("bucket", $bucketParam);
+        $this->api->check("org", $orgParam);
 
         $this->addDefaultTags($data);
 
@@ -126,9 +132,9 @@ abstract class WriteApi extends DefaultApi implements Writer
         $bucketParam = $this->getOption("bucket", $bucket);
         $orgParam = $this->getOption("org", $org);
 
-        $this->check("precision", $precisionParam);
-        $this->check("bucket", $bucketParam);
-        $this->check("org", $orgParam);
+        $this->api->check("precision", $precisionParam);
+        $this->api->check("bucket", $bucketParam);
+        $this->api->check("org", $orgParam);
 
         $queryParams = ["org" => $orgParam, "bucket" => $bucketParam, "precision" => $precisionParam];
 
@@ -143,7 +149,7 @@ abstract class WriteApi extends DefaultApi implements Writer
         }
 
         try {
-            $this->post($data, "/api/v2/write", $queryParams);
+            $this->api->post($data, "/api/v2/write", $queryParams);
         } catch (ApiException $e) {
             $code = $e->getCode();
 
@@ -170,7 +176,7 @@ abstract class WriteApi extends DefaultApi implements Writer
             $error = isset($error) ? $error : $e->getMessage();
 
             $message = "The retriable error occurred during writing of data. Reason: '{$error}'. Retry in: {$timeoutInSec}s.";
-            $this->log("WARNING", $message);
+            $this->api->log("WARNING", $message);
 
             usleep($timeout);
 

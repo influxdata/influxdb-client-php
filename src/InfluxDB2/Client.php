@@ -2,12 +2,8 @@
 
 namespace InfluxDB2;
 
-use InfluxDB2\Drivers\Curl\CurlHealthApi;
-use InfluxDB2\Drivers\Curl\CurlQueryApi;
-use InfluxDB2\Drivers\Curl\CurlWriteApi;
-use InfluxDB2\Drivers\Guzzle\GuzzleHealthApi;
-use InfluxDB2\Drivers\Guzzle\GuzzleQueryApi;
-use InfluxDB2\Drivers\Guzzle\GuzzleWriteApi;
+use InfluxDB2\Drivers\Curl\CurlApi;
+use InfluxDB2\Drivers\Guzzle\GuzzleApi;
 use InfluxDB2\Model\HealthCheck;
 use ReflectionClass;
 use ReflectionException;
@@ -26,6 +22,8 @@ class Client
     public $options;
     public $closed = false;
     private $autoCloseable = array();
+    private $curl_api;
+    private $guzzle_api;
 
     /**
      * Client constructor.
@@ -49,6 +47,16 @@ class Client
         $this->options = $options;
     }
 
+    private function getGuzzleApi(): GuzzleApi
+    {
+        return $this->guzzle_api ?? new GuzzleApi($this->options);
+    }
+
+    private function getCurlApi(): CurlApi
+    {
+        return $this->curl_api ?? new CurlApi($this->options);
+    }
+
     /**
      * Write time series data into InfluxDB thought WriteApi.
      *      $writeOptions = [
@@ -61,7 +69,7 @@ class Client
      */
     public function createWriteApi(array $writeOptions = null, array $pointSettings = null): WriteApi
     {
-        $writeApi = new GuzzleWriteApi($this->options, $writeOptions, $pointSettings);
+        $writeApi = new WriteApi($this->options, $writeOptions, $pointSettings, $this->getGuzzleApi());
         $this->autoCloseable[] = $writeApi;
         return $writeApi;
     }
@@ -78,7 +86,7 @@ class Client
      */
     public function createCurlWriteApi(array $writeOptions = null, array $pointSettings = null): WriteApi
     {
-        $writeApi = new CurlWriteApi($this->options, $writeOptions, $pointSettings);
+        $writeApi = new WriteApi($this->options, $writeOptions, $pointSettings, $this->getCurlApi());
         $this->autoCloseable[] = $writeApi;
         return $writeApi;
     }
@@ -87,7 +95,7 @@ class Client
      * @return UdpWriter
      * @throws \Exception
      */
-    public function createUdpWriter()
+    public function createUdpWriter(): UdpWriter
     {
         return new UdpWriter($this->options);
     }
@@ -99,7 +107,7 @@ class Client
      */
     public function createQueryApi(): QueryApi
     {
-        return new GuzzleQueryApi($this->options);
+        return new QueryApi($this->options, $this->getGuzzleApi());
     }
 
     /**
@@ -109,7 +117,7 @@ class Client
      */
     public function createCurlQueryApi(): QueryApi
     {
-        return new CurlQueryApi($this->options);
+        return new QueryApi($this->options, $this->getCurlApi());
     }
 
     /**
@@ -119,7 +127,7 @@ class Client
      */
     public function health(): HealthCheck
     {
-        return (new GuzzleHealthApi($this->options))->health();
+        return (new HealthApi($this->getGuzzleApi()))->health();
     }
 
     /**
@@ -129,7 +137,7 @@ class Client
      */
     public function curlHealth(): HealthCheck
     {
-        return (new CurlHealthApi($this->options))->health();
+        return (new HealthApi($this->getCurlApi()))->health();
     }
 
     /**
@@ -144,14 +152,12 @@ class Client
         }
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): Configuration
     {
-        $config = Configuration::getDefaultConfiguration()
-            ->setUserAgent('influxdb-client-php/' . Client::VERSION)
-            ->setDebug(isset($this->options['debug']) ? $this->options['debug'] : null)
-            ->setHost(null);
-
-        return $config;
+        return Configuration::getDefaultConfiguration()
+                            ->setUserAgent('influxdb-client-php/' . Client::VERSION)
+                            ->setDebug(isset($this->options['debug']) ? $this->options['debug'] : null)
+                            ->setHost(null);
     }
 
     /**
@@ -184,7 +190,6 @@ class Client
 
     private function getGuzzleClient()
     {
-        $defaultApi = new GuzzleQueryApi($this->options);
-        return $defaultApi->http;
+        return $this->getGuzzleApi()->http;
     }
 }

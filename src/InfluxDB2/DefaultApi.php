@@ -7,8 +7,8 @@ use InvalidArgumentException;
 abstract class DefaultApi
 {
     const DEFAULT_TIMEOUT = 10;
+
     public $options;
-    public $http;
 
     /**
      * DefaultApi constructor.
@@ -41,7 +41,7 @@ abstract class DefaultApi
 
     protected abstract function request($payload, $uriPath, $queryParams, $method, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): string;
 
-    protected function check($key, $value)
+    public function check($key, $value)
     {
         if ((!isset($value) || trim($value) === '')) {
             $options = implode(', ', array_map(
@@ -65,7 +65,7 @@ abstract class DefaultApi
      * @param string $level log severity
      * @param string $message log message
      */
-    protected function log(string $level, string $message): void
+    public function log(string $level, string $message): void
     {
         $logFile = isset($this->options['logFile']) ? $this->options['logFile'] : "php://output";
         $logDate = date('H:i:s d-M-Y');
