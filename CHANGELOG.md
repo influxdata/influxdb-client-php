@@ -1,4 +1,4 @@
-## 1.11.0 [unreleased]
+## 1.11.0 [2021-03-05]
 
 ### Features
 1. [#65](https://github.com/influxdata/influxdb-client-php/pull/65): `FluxRecord` uses descriptive message for column that doesn't exists
