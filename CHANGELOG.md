@@ -1,5 +1,8 @@
 ## 1.12.0 [unreleased]
 
+### Features
+1. [#68](https://github.com/influxdata/influxdb-client-php/pull/68): Moved classes to their own file
+
 ## 1.11.0 [2021-03-05]
 
 ### Features
