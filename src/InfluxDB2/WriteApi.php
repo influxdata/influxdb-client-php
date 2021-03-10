@@ -29,7 +29,7 @@ class WriteApi implements Writer
      * @param array|null      $pointSettings
      * @param DefaultApi|null $defaultApi
      */
-    public function __construct(array $options, array $writeOptions = null, array $pointSettings = null, DefaultApi $defaultApi = NULL)
+    public function __construct(array $options, array $writeOptions = null, array $pointSettings = null, DefaultApi $defaultApi = null)
     {
         $this->options = $options;
         $this->api = $defaultApi ?? new GuzzleApi($options);
