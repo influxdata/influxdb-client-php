@@ -19,7 +19,7 @@ class HealthApi
      */
     public function __construct(DefaultApi $defaultAPI)
     {
-        $this->api     = $defaultAPI;
+        $this->api = $defaultAPI;
     }
 
     /**
