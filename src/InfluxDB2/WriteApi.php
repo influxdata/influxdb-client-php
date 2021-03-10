@@ -23,9 +23,11 @@ class WriteApi implements Writer
 
     /**
      * WriteApi constructor.
-     * @param array $options
-     * @param array|null $writeOptions
-     * @param array|null $pointSettings
+     *
+     * @param array           $options
+     * @param array|null      $writeOptions
+     * @param array|null      $pointSettings
+     * @param DefaultApi|null $defaultApi
      */
     public function __construct(array $options, array $writeOptions = null, array $pointSettings = null, DefaultApi $defaultApi = NULL)
     {
