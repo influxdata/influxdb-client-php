@@ -17,6 +17,8 @@ abstract class DefaultApi
     public function __construct(array $options)
     {
         $this->options = $options;
+
+        $this->setUpClient();
     }
 
     /**
