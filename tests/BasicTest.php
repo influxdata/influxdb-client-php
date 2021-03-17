@@ -6,8 +6,6 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use InfluxDB2\Client;
-use InfluxDB2\DefaultApi;
-use InfluxDB2\Drivers\Guzzle\GuzzleApi;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\QueryApi;
 use InfluxDB2\WriteApi;

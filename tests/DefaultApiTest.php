@@ -68,7 +68,7 @@ class DefaultApiTest extends BasicTest
     {
         $this->mockHandler->append(new Response(204));
 
-        $this->writeApi->options["org"] = '';
+        $this->client->options["org"] = '';
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -77,7 +77,7 @@ class DefaultApiTest extends BasicTest
 
     public function testDefaultVerifySSL()
     {
-        $config = $this->writeApi->http->getConfig();
+        $config = $this->client->getApi()->http->getConfig();
 
         $this->assertEquals(true, $config['verify']);
     }
@@ -94,7 +94,7 @@ class DefaultApiTest extends BasicTest
             "verifySSL" => false
         ]);
 
-        $config = $client->createQueryApi()->http->getConfig();
+        $config = $client->getApi()->http->getConfig();
 
         $this->assertEquals(false, $config['verify']);
 
