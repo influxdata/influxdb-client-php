@@ -55,7 +55,7 @@ abstract class BasicTest extends TestCase
         $handlerStack->push($history);
 
         $guzzle = new GuzzleApi([
-            'base_uri' => $this->client->options["url"],
+            'base_uri' => $url,
             'handler' => $handlerStack,
         ]);
 
