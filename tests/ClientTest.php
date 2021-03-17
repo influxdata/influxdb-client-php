@@ -12,7 +12,6 @@ require_once('BasicTest.php');
  */
 class ClientTest extends BasicTest
 {
-
     public function setUp($url = "http://localhost:8086", $logFile = "php://output"): void
     {
         parent::setUp($url, $logFile);
