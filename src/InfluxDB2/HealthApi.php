@@ -30,7 +30,7 @@ class HealthApi
     public function health(): HealthCheck
     {
         try {
-            $response = $this->api->get(NULL, "/health", []);
+            $response = $this->api->get(null, "/health", []);
             return ObjectSerializer::deserialize($response, '\InfluxDB2\Model\HealthCheck');
         } catch (Exception $e) {
             return new HealthCheck([

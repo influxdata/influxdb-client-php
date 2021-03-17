@@ -44,8 +44,7 @@ class CurlApi extends DefaultApi
             ],
         ]);
 
-        if ($payload !== null)
-        {
+        if ($payload !== null) {
             curl_setopt($this->client, CURLOPT_POSTFIELDS, $payload);
         }
 
@@ -58,10 +57,9 @@ class CurlApi extends DefaultApi
 
         $errno      = curl_errno($this->client);
         $info       = curl_getinfo($this->client);
-        $statusCode = curl_getinfo($this->client,  CURLINFO_RESPONSE_CODE);
+        $statusCode = curl_getinfo($this->client, CURLINFO_RESPONSE_CODE);
 
-        if ($errno !== CURLE_OK)
-        {
+        if ($errno !== CURLE_OK) {
             $message = curl_error($this->client);
             throw new ApiException(
                 "[{$errno}] {$message}",
