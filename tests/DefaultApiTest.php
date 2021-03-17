@@ -70,9 +70,11 @@ class DefaultApiTest extends BasicTest
 
         $this->client->options["org"] = '';
 
+        $writeApi = $this->client->createWriteApi($this->getWriteOptions());
+
         $this->expectException(InvalidArgumentException::class);
 
-        $this->writeApi->write('h2o,location=west value=33i 15');
+        $writeApi->write('h2o,location=west value=33i 15');
     }
 
     public function testDefaultVerifySSL()
