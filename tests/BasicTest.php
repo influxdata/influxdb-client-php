@@ -40,6 +40,7 @@ abstract class BasicTest extends TestCase
             "url" => $url,
             "token" => "my-token",
             "bucket" => "my-bucket",
+            "debug" => true,
             "precision" => WritePrecision::NS,
             "org" => "my-org",
             "logFile" => $logFile
