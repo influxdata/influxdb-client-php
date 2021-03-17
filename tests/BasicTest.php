@@ -55,10 +55,16 @@ abstract class BasicTest extends TestCase
 
         $handlerStack->push($history);
 
-        $guzzle = new GuzzleApi([
-            'base_uri' => $url,
-            'handler' => $handlerStack,
-        ]);
+        $guzzle = new GuzzleApi($this->client->options);
+        $guzzle->http = new \GuzzleHttp\Client([
+                           'base_uri' => $url,
+                           'timeout' => GuzzleApi::DEFAULT_TIMEOUT,
+                           'verify' => true,
+                           'handler' => $handlerStack,
+                           'headers' => [
+                               'Authorization' => "Token my-token"
+                           ],
+                        ]);
 
         $this->client->setApi($guzzle);
 
