@@ -68,16 +68,18 @@ class DefaultApiTest extends BasicTest
     {
         $this->mockHandler->append(new Response(204));
 
-        $this->writeApi->options["org"] = '';
+        $this->client->options["org"] = '';
+
+        $writeApi = $this->client->createWriteApi($this->getWriteOptions());
 
         $this->expectException(InvalidArgumentException::class);
 
-        $this->writeApi->write('h2o,location=west value=33i 15');
+        $writeApi->write('h2o,location=west value=33i 15');
     }
 
     public function testDefaultVerifySSL()
     {
-        $config = $this->writeApi->http->getConfig();
+        $config = $this->client->getApi()->http->getConfig();
 
         $this->assertEquals(true, $config['verify']);
     }
@@ -94,7 +96,7 @@ class DefaultApiTest extends BasicTest
             "verifySSL" => false
         ]);
 
-        $config = $client->createQueryApi()->http->getConfig();
+        $config = $client->getApi()->http->getConfig();
 
         $this->assertEquals(false, $config['verify']);
 

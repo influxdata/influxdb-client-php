@@ -2,18 +2,13 @@
 
 namespace InfluxDB2;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\TransferException;
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
 
-class DefaultApi
+abstract class DefaultApi
 {
     const DEFAULT_TIMEOUT = 10;
+
     public $options;
-    /** @var Client */
-    public $http;
 
     /**
      * DefaultApi constructor.
@@ -23,92 +18,48 @@ class DefaultApi
     {
         $this->options = $options;
 
-        $this->http = new Client([
-            'base_uri' => $this->options['url'],
-            'timeout' => self::DEFAULT_TIMEOUT,
-            'verify' => $this->options['verifySSL'] ?? true,
-            'headers' => [
-                'Authorization' => "Token {$this->options['token']}"
-            ],
-        ]);
+        $this->setUpClient();
     }
 
     /**
-     * @param $payload
-     * @param $uriPath
-     * @param $queryParams
+     * @param string|null $payload
+     * @param string $uriPath
+     * @param array $queryParams
      * @param int $timeout - Float describing the timeout of the request in seconds. Use 0 to wait indefinitely (the default behavior).
      * @param bool $stream - use streaming
-     * @return ResponseInterface
+     * @return string response body
      */
-    public function post($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): ResponseInterface
+    public function post($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): string
     {
         return $this->request($payload, $uriPath, $queryParams, 'POST', $timeout, $stream);
     }
 
-    public function get($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT): ResponseInterface
+    /**
+     * @param string|null $payload
+     * @param string    $uriPath
+     * @param array     $queryParams
+     * @param int $timeout
+     * @return string
+     */
+    public function get($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT): string
     {
         return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout, false);
     }
 
-    private function request($payload, $uriPath, $queryParams, $method, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): ResponseInterface
-    {
-        try {
-            $options = [
-                'headers' => [
-                    'Authorization' => "Token {$this->options['token']}",
-                    'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION,
-                    'Content-Type' => 'application/json'
-                ],
-                'query' => $queryParams,
-                'body' => $payload,
-                'stream' => $stream,
-                'timeout' => $timeout
-            ];
+    abstract protected function setUpClient();
 
-            // enable debug
-            if (array_key_exists("debug", $this->options)) {
-                $options['debug'] = $this->options["debug"];
-            }
+    /**
+     * @param string|null $payload
+     * @param string $uriPath
+     * @param array $queryParams
+     * @param string $method
+     * @param int  $timeout
+     * @param bool $stream
+     * @return string
+     */
+    abstract protected function request($payload, $uriPath, $queryParams, $method, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): string;
 
-            //execute post call
-            $response = $this->http->request($method, $uriPath, $options);
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $uriPath
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-            return $response;
-        } catch (RequestException $e) {
-            throw new ApiException(
-                "[{$e->getCode()}] {$e->getMessage()}",
-                $e->getCode(),
-                $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
-                $e
-            );
-        } catch (TransferException $e) {
-            throw new ApiException(
-                "[{$e->getCode()}] {$e->getMessage()}",
-                $e->getCode(),
-                null,
-                null,
-                $e
-            );
-        }
-    }
-
-    protected function check($key, $value)
+    public function check($key, $value)
     {
         if ((!isset($value) || trim($value) === '')) {
             $options = implode(', ', array_map(
@@ -132,7 +83,7 @@ class DefaultApi
      * @param string $level log severity
      * @param string $message log message
      */
-    protected function log(string $level, string $message): void
+    public function log(string $level, string $message): void
     {
         $logFile = isset($this->options['logFile']) ? $this->options['logFile'] : "php://output";
         $logDate = date('H:i:s d-M-Y');

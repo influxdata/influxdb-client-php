@@ -2,6 +2,7 @@
 
 ### Features
 1. [#68](https://github.com/influxdata/influxdb-client-php/pull/68): Moved classes to their own file
+1. [#69](https://github.com/influxdata/influxdb-client-php/pull/69): Split guzzle out of API classes
 
 ### API
 1. [#71](https://github.com/influxdata/influxdb-client-php/pull/71): Updated swagger to the latest version

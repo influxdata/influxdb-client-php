@@ -6,6 +6,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use InfluxDB2\Client;
+use InfluxDB2\Drivers\Guzzle\GuzzleApi;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\QueryApi;
 use InfluxDB2\WriteApi;
@@ -44,9 +45,6 @@ abstract class BasicTest extends TestCase
             "logFile" => $logFile
         ]);
 
-        $this->writeApi = $this->client->createWriteApi($this->getWriteOptions());
-        $this->queryApi = $this->client->createQueryApi();
-
         $this->mockHandler = new MockHandler();
 
         $this->container = [];
@@ -56,15 +54,21 @@ abstract class BasicTest extends TestCase
 
         $handlerStack->push($history);
 
-        $this->writeApi->http = new \GuzzleHttp\Client([
-            'base_uri' => $this->writeApi->options["url"],
-            'handler' => $handlerStack,
-        ]);
+        $guzzle = new GuzzleApi($this->client->options);
+        $guzzle->http = new \GuzzleHttp\Client([
+                           'base_uri' => $url,
+                           'timeout' => GuzzleApi::DEFAULT_TIMEOUT,
+                           'verify' => true,
+                           'handler' => $handlerStack,
+                           'headers' => [
+                               'Authorization' => "Token my-token"
+                           ],
+                        ]);
 
-        $this->queryApi->http = new \GuzzleHttp\Client([
-            'base_uri' => $this->writeApi->options["url"],
-            'handler' => $handlerStack,
-        ]);
+        $this->client->setApi($guzzle);
+
+        $this->writeApi = $this->client->createWriteApi($this->getWriteOptions());
+        $this->queryApi = $this->client->createQueryApi();
     }
 
     public function tearDown(): void

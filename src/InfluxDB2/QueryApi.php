@@ -4,19 +4,25 @@ namespace InfluxDB2;
 
 use InfluxDB2\Model\Dialect;
 use InfluxDB2\Model\Query;
-use Psr\Http\Message\ResponseInterface;
 
-class QueryApi extends DefaultApi
+class QueryApi
 {
     private $DEFAULT_DIALECT;
 
+    private $api;
+    private $options;
+
     /**
      * QueryApi constructor.
-     * @param array $options
+     *
+     * @param array      $options
+     * @param DefaultApi $defaultApi
      */
-    public function __construct(array $options)
+    public function __construct(array $options, DefaultApi $defaultApi)
     {
-        parent::__construct($options);
+        $this->api = $defaultApi;
+        $this->options = $options;
+
         $this->DEFAULT_DIALECT = new Dialect([
             'header' => true,
             'delimiter' => ',',
@@ -40,7 +46,7 @@ class QueryApi extends DefaultApi
             return null;
         }
 
-        return $result->getBody()->getContents();
+        return $result;
     }
 
     /**
@@ -49,7 +55,7 @@ class QueryApi extends DefaultApi
      * @param $dialect
      * @return FluxTable[]
      */
-    public function query($query, $org = null, $dialect = null)
+    public function query($query, $org = null, $dialect = null): ?array
     {
         $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
@@ -57,7 +63,7 @@ class QueryApi extends DefaultApi
             return null;
         }
 
-        $parser = new FluxCsvParser($response->getBody());
+        $parser = new FluxCsvParser($response);
         $parser->parse();
 
         return $parser->tables;
@@ -77,13 +83,13 @@ class QueryApi extends DefaultApi
             return null;
         }
 
-        return new FluxCsvParser($response->getBody(), true);
+        return new FluxCsvParser($response, true);
     }
 
-    private function postQuery($query, $org, $dialect): ?ResponseInterface
+    private function postQuery($query, $org, $dialect): ?string
     {
         $orgParam = $org ?: $this->options["org"];
-        $this->check("org", $orgParam);
+        $this->api->check("org", $orgParam);
 
         $payload = $this->generatePayload($query, $dialect);
         $queryParams = ["org" => $orgParam];
@@ -92,10 +98,10 @@ class QueryApi extends DefaultApi
             return null;
         }
 
-        return $this->post($payload->__toString(), "/api/v2/query", $queryParams);
+        return $this->api->post($payload->__toString(), "/api/v2/query", $queryParams);
     }
 
-    private function generatePayload($query, $dialect)
+    private function generatePayload($query, $dialect): ?Query
     {
         if ((!isset($query) || trim($query) === '')) {
             return null;
