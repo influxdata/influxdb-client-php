@@ -3,6 +3,9 @@
 ### Features
 1. [#68](https://github.com/influxdata/influxdb-client-php/pull/68): Moved classes to their own file
 
+### API
+1. [#71](https://github.com/influxdata/influxdb-client-php/pull/71): Updated swagger to the latest version
+
 ## 1.11.0 [2021-03-05]
 
 ### Features
