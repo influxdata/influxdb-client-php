@@ -14,7 +14,12 @@ class DefaultApi
     public $options;
     /** @var Client */
     public $http;
-
+    /**
+     * Holds GuzzleHttp timeout.
+     *
+     * @var int
+     */
+    private $timeout;
     /**
      * DefaultApi constructor.
      * @param $options
@@ -22,10 +27,10 @@ class DefaultApi
     public function __construct(array $options)
     {
         $this->options = $options;
-
+        $this->timeout = $this->options['timeout'] ?? self::DEFAULT_TIMEOUT;
         $this->http = new Client([
             'base_uri' => $this->options['url'],
-            'timeout' => self::DEFAULT_TIMEOUT,
+            'timeout' => $this->timeout,
             'verify' => $this->options['verifySSL'] ?? true,
             'headers' => [
                 'Authorization' => "Token {$this->options['token']}"
@@ -41,17 +46,19 @@ class DefaultApi
      * @param bool $stream - use streaming
      * @return ResponseInterface
      */
-    public function post($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): ResponseInterface
+    public function post($payload, $uriPath, $queryParams, $timeout = null, bool $stream = false): ResponseInterface
     {
-        return $this->request($payload, $uriPath, $queryParams, 'POST', $timeout, $stream);
+        $requestTimeout = $timeout ?? $this->timeout;
+        return $this->request($payload, $uriPath, $queryParams, 'POST', $requestTimeout, $stream);
     }
 
-    public function get($payload, $uriPath, $queryParams, $timeout = self::DEFAULT_TIMEOUT): ResponseInterface
+    public function get($payload, $uriPath, $queryParams, $timeout = null): ResponseInterface
     {
-        return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout, false);
+        $requestTimeout = $timeout ?? $this->timeout;
+        return $this->request($payload, $uriPath, $queryParams, 'GET', $requestTimeout, false);
     }
 
-    private function request($payload, $uriPath, $queryParams, $method, $timeout = self::DEFAULT_TIMEOUT, bool $stream = false): ResponseInterface
+    private function request($payload, $uriPath, $queryParams, $method, $timeout = null, bool $stream = false): ResponseInterface
     {
         try {
             $options = [
@@ -63,7 +70,7 @@ class DefaultApi
                 'query' => $queryParams,
                 'body' => $payload,
                 'stream' => $stream,
-                'timeout' => $timeout
+                'timeout' => $timeout ?? $this->timeout
             ];
 
             // enable debug

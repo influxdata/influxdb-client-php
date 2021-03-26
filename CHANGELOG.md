@@ -1,7 +1,16 @@
+## 1.12.0 [unreleased]
+
+### Features
+1. [#68](https://github.com/influxdata/influxdb-client-php/pull/68): Moved classes to their own file
+
+### API
+1. [#71](https://github.com/influxdata/influxdb-client-php/pull/71): Updated swagger to the latest version
+
 ## 1.11.0 [2021-03-05]
 
 ### Features
 1. [#65](https://github.com/influxdata/influxdb-client-php/pull/65): `FluxRecord` uses descriptive message for column that doesn't exists
+1. [#68](https://github.com/influxdata/influxdb-client-php/pull/68): Moved classes to their own file
 
 ### Documentation
 1. [#65](https://github.com/influxdata/influxdb-client-php/pull/65): Documentation for the client is located at GitHub: https://influxdata.github.io/influxdb-client-php/

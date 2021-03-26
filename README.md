@@ -65,6 +65,7 @@ $client = new InfluxDB2\Client([
 | org | Default organization bucket for writes | String | none |
 | precision | Default precision for the unix timestamps within the body line-protocol | String | none |
 | verifySSL | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification. | bool | true |
+| timeout | Describing the total timeout of the request in seconds. Use 0 to wait indefinitely. | int | 10
 
 
 
@@ -142,8 +143,8 @@ foreach ($parser->each() as $record)
 
 ### Writing data
 
-The [WriteApi](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/WriteApi.php) supports 
-synchronous and batching writes into InfluxDB 2.0. In default api uses synchronous write. To enable batching you 
+The [WriteApi](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/WriteApi.php) supports
+synchronous and batching writes into InfluxDB 2.0. In default api uses synchronous write. To enable batching you
 can use WriteOption.
 
 ```php
@@ -167,7 +168,7 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | **jitterInterval** | the number of milliseconds before the data is written increased by a random amount | 0 |
 | **maxRetries** | the number of max retries when write fails | 5 |
 | **maxRetryDelay** | maximum delay when retrying write in milliseconds | 180000 |
-| **exponentialBase** | the base for the exponential retry delay, the next delay is computed as `retryInterval * exponentialBase^(attempts-1)` | 5 | 
+| **exponentialBase** | the base for the exponential retry delay, the next delay is computed as `retryInterval * exponentialBase^(attempts-1)` | 5 |
 ```php
 use InfluxDB2\Client;
 use InfluxDB2\WriteType as WriteType;
@@ -269,7 +270,7 @@ $point=InfluxDB2\Point::measurement("h2o")
 $writeApi->write($point);
 
 //data in array structure
-$dataArray = ['name' => 'cpu', 
+$dataArray = ['name' => 'cpu',
     'tags' => ['host' => 'server_nl', 'region' => 'us'],
     'fields' => ['internal' => 5, 'external' => 6],
     'time' => microtime(true)];
@@ -282,7 +283,7 @@ $writeApi->write('h2o,location=west value=33i 15');
 
 #### Default Tags
 
-Sometimes is useful to store same information in every measurement e.g. `hostname`, `location`, `customer`. 
+Sometimes is useful to store same information in every measurement e.g. `hostname`, `location`, `customer`.
 The client is able to use static value, app settings or env variable as a tag value.
 
 The expressions:
@@ -298,12 +299,12 @@ $this->client = new Client([
     "bucket" => "my-bucket",
     "precision" => WritePrecision::NS,
     "org" => "my-org",
-    "tags" => ['id' => '132-987-655', 
+    "tags" => ['id' => '132-987-655',
         'hostname' => '${env.Hostname}']
 ]);
 
 $writeApi = $this->client->createWriteApi(null, ['data_center' => '${env.data_center}']);
-    
+
 $writeApi->pointSettings->addDefaultTag('customer', 'California Miner');
 
 $point = Point::measurement('h2o')
@@ -315,7 +316,7 @@ $this->writeApi->write($point);
 
 ## Advanced Usage
 
-### Check the server status 
+### Check the server status
 
 Server availability can be checked using the `$client->health();` method. That is equivalent of the [influx ping](https://v2.docs.influxdata.com/v2.0/reference/cli/influx/ping/).
 
@@ -329,7 +330,7 @@ The following forward compatible APIs are available:
 |:----------|:----------|:----------|
 | [QueryApi.php](src/InfluxDB2/QueryApi.php) | [/api/v2/query](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-query-http-endpoint) | Query data in InfluxDB 1.8.0+ using the InfluxDB 2.0 API and [Flux](https://docs.influxdata.com/flux/latest/) _(endpoint should be enabled by [`flux-enabled` option](https://docs.influxdata.com/influxdb/latest/administration/config/#flux-enabled-false))_ |
 | [WriteApi.php](src/InfluxDB2/WriteApi.php) | [/api/v2/write](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-write-http-endpoint) | Write data to InfluxDB 1.8.0+ using the InfluxDB 2.0 API |
-| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/latest/tools/api/#health-http-endpoint) | Check the health of your InfluxDB instance |    
+| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/latest/tools/api/#health-http-endpoint) | Check the health of your InfluxDB instance |
 
 For detail info see [InfluxDB 1.8 example](examples/InfluxDB_18_Example.php).
 
@@ -337,7 +338,7 @@ For detail info see [InfluxDB 1.8 example](examples/InfluxDB_18_Example.php).
 
 InfluxDB 2.0 API client is generated using [`influxdb-clients-apigen`](https://github.com/bonitoo-io/influxdb-clients-apigen). Sources are in `InfluxDB2\Service\`  and `InfluxDB2\Model\` packages.
 
-The following example shows how to use `OrganizationService` and `BucketService` to create a new bucket.  
+The following example shows how to use `OrganizationService` and `BucketService` to create a new bucket.
 
 ```php
 
@@ -396,14 +397,14 @@ $client->close();
 ```
 ### Writing via UDP
 
-Sending via UDP will be useful in cases when the execution time is critical to avoid potential delays (even timeouts) in sending metrics to the InfluxDB while are problems with the database or network connectivity.  
+Sending via UDP will be useful in cases when the execution time is critical to avoid potential delays (even timeouts) in sending metrics to the InfluxDB while are problems with the database or network connectivity.
 As is known, sending via UDP occurs without waiting for a response, unlike TCP (HTTP).
 
 UDP Writer Requirements:
 1. Installed ext-sockets
 1. Since Influxdb 2.0+ does not support UDP protocol natively you need to install and configure Telegraf plugin: https://docs.influxdata.com/telegraf/v1.16/plugins/#socket_listener
 1. Extra config option passed to client: udpPort. Optionally you can specify udpHost, otherwise udpHost will parsed from url option
- 
+
 ```php
 $client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my-token",
     "bucket" => "my-bucket",

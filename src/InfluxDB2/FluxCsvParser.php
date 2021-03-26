@@ -303,7 +303,3 @@ class FluxCsvParser
         $this->response->close();
     }
 }
-
-class FluxQueryError extends RuntimeException
-{
-}
