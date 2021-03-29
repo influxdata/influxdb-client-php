@@ -65,7 +65,7 @@ $client = new InfluxDB2\Client([
 | org | Default organization bucket for writes | String | none |
 | precision | Default precision for the unix timestamps within the body line-protocol | String | none |
 | verifySSL | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification. | bool | true |
-
+| timeout | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely | int | 10 |
 
 
 ### Queries

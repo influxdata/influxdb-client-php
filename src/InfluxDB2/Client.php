@@ -32,7 +32,8 @@ class Client
      *          "debug" => false,
      *          "logFile" => "php://output",
      *          "tags" => ['id' => '1234',
-     *              'hostname' => '${env.Hostname}']
+     *              'hostname' => '${env.Hostname}'],
+     *          "timeout" => 2
      *          ]);
      *
      * @param array $options
