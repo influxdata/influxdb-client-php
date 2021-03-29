@@ -1,10 +1,10 @@
 ## 1.12.0 [unreleased]
 
 ### Features
-1. [#68](https://github.com/influxdata/influxdb-client-php/pull/68): Moved classes to their own file
+1. [#74](https://github.com/influxdata/influxdb-client-php/pull/74): Allow to change GuzzleHTTP timeout
 
 ### API
-1. [#71](https://github.com/influxdata/influxdb-client-php/pull/71): Updated swagger to the latest version
+1. [#71](https://github.com/influxdata/influxdb-client-php/pull/71): Update swagger to the latest version
 
 ## 1.11.0 [2021-03-05]
 
