@@ -1,4 +1,4 @@
-## 1.12.0 [unreleased]
+## 1.12.0 [2021-04-01]
 
 ### Features
 1. [#74](https://github.com/influxdata/influxdb-client-php/pull/74): Allow to change GuzzleHTTP timeout
