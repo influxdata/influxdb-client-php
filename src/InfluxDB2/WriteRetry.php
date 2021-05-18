@@ -40,11 +40,15 @@ class WriteRetry
      * @param int $jitterInterval the number of milliseconds before the data is written increased by a random amount
      * @param string $logFile logfile
      */
-    public function __construct(int $maxRetries = 5, int $retryInterval = 5000
-        , int $maxRetryDelay = 125000, int $exponentialBase = 2,
-                                int $maxRetryTime = 180000,
-                                int $jitterInterval = 0, string $logFile = "php://output")
-    {
+    public function __construct(
+        int $maxRetries = 5,
+        int $retryInterval = 5000,
+        int $maxRetryDelay = 125000,
+        int $exponentialBase = 2,
+        int $maxRetryTime = 180000,
+        int $jitterInterval = 0,
+        string $logFile = "php://output"
+    ) {
         $this->maxRetries = $maxRetries;
         $this->retryInterval = $retryInterval;
         $this->maxRetryDelay = $maxRetryDelay;
@@ -65,7 +69,6 @@ class WriteRetry
         try {
             return call_user_func($callable);
         } catch (ApiException $e) {
-
             $error = $e->getResponseBody() ?? $e->getMessage();
 
             if (!$this->isRetryable($e)) {
@@ -121,8 +124,9 @@ class WriteRetry
             $i += 1;
             $range_start = $range_stop;
             $range_stop = $range_stop * $this->exponentialBase;
-            if ($range_stop > $this->maxRetryDelay)
+            if ($range_stop > $this->maxRetryDelay) {
                 break;
+            }
         }
 
         if ($range_stop > $this->maxRetryDelay) {
@@ -136,5 +140,4 @@ class WriteRetry
         $logDate = date('H:i:s d-M-Y');
         file_put_contents($this->logFile, "[$logDate]: [$level] - $message".PHP_EOL, FILE_APPEND);
     }
-
 }

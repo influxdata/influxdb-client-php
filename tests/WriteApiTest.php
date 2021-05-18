@@ -326,8 +326,8 @@ class WriteApiTest extends BasicTest
     }
 
 
-    public function testRetryBackoffTime() {
-
+    public function testRetryBackoffTime()
+    {
         $retry = new WriteRetry();
 
         $backoff = $retry->getBackoffTime(1);
@@ -355,8 +355,9 @@ class WriteApiTest extends BasicTest
         $this->assertLessThan(125000, $backoff);
     }
 
-    public function testConnectExceptionRetry () {
-       $client = new Client([
+    public function testConnectExceptionRetry()
+    {
+        $client = new Client([
             "url" => "http://nonexistenthost:8086/",
             "token" => "my-token",
             "bucket" => "my-bucket",
@@ -365,7 +366,7 @@ class WriteApiTest extends BasicTest
             "logFile" => "php://output"
         ]);
 
-        $writeApi = $client->createWriteApi( ["retryInterval" => 100] );
+        $writeApi = $client->createWriteApi(["retryInterval" => 100]);
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2);
@@ -379,6 +380,5 @@ class WriteApiTest extends BasicTest
             $this->assertEquals(ConnectException::class, get_class($e->getPrevious()));
             throw $e;
         }
-
     }
 }
