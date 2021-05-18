@@ -166,8 +166,9 @@ The writes are processed in batches which are configurable by `WriteOptions`:
 | **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 5000 |
 | **jitterInterval** | the number of milliseconds before the data is written increased by a random amount | 0 |
 | **maxRetries** | the number of max retries when write fails | 5 |
-| **maxRetryDelay** | maximum delay when retrying write in milliseconds | 180000 |
-| **exponentialBase** | the base for the exponential retry delay, the next delay is computed as `retryInterval * exponentialBase^(attempts-1)` | 5 | 
+| **maxRetryDelay** | maximum delay when retrying write in milliseconds | 125000 |
+| **maxRetryTime** | maximum total retry timeout in milliseconds | 180000 |
+| **exponentialBase** | the base for the exponential retry delay, the next delay is computed using random exponential backoff as a random value within the interval  ``retryInterval * exponentialBase^(attempts-1)`` and ``retryInterval * exponentialBase^(attempts)``. Example for ``retryInterval=5000, exponentialBase=2, maxRetryDelay=125000, total=5`` Retry delays are random distributed values within the ranges of ``[5000-10000, 10000-20000, 20000-40000, 40000-80000, 80000-125000]`` | 2 | 
 ```php
 use InfluxDB2\Client;
 use InfluxDB2\WriteType as WriteType;

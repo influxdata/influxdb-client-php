@@ -130,18 +130,4 @@ class DefaultApi
             throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$options}");
         }
     }
-
-    /**
-     * Log message with specified severity to log file defined by: 'options['logFile']'.
-     *
-     * @param string $level log severity
-     * @param string $message log message
-     */
-    protected function log(string $level, string $message): void
-    {
-        $logFile = isset($this->options['logFile']) ? $this->options['logFile'] : "php://output";
-        $logDate = date('H:i:s d-M-Y');
-
-        file_put_contents($logFile, "[{$logDate}]: [{$level}] - {$message}", FILE_APPEND);
-    }
 }
