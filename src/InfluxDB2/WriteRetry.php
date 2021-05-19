@@ -75,7 +75,7 @@ class WriteRetry
                 throw $e;
             }
             $attempts++;
-            if ($attempts > $this->maxRetries || !$this->isRetryable($e)) {
+            if ($attempts > $this->maxRetries) {
                 $this->log("ERROR", "Maximum retry attempts reached");
                 throw $e;
             }
