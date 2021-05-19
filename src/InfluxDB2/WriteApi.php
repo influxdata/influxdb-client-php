@@ -2,9 +2,6 @@
 
 namespace InfluxDB2;
 
-use GuzzleHttp\Exception\ConnectException;
-use InfluxDB2\Model\WritePrecision;
-
 /**
  * Write time series data into InfluxDB.
  * @package InfluxDB2
@@ -21,7 +18,7 @@ class WriteApi extends DefaultApi implements Writer
     /**
      * WriteApi constructor.
      * @param $options
-     * @param array $writeOptions
+     * @param array|null $writeOptions
      * @param array|null $pointSettings
      */
     public function __construct($options, array $writeOptions = null, array $pointSettings = null)
@@ -134,55 +131,20 @@ class WriteApi extends DefaultApi implements Writer
 
         $queryParams = ["org" => $orgParam, "bucket" => $bucketParam, "precision" => $precisionParam];
 
-        $this->writeRawInternal($data, $queryParams, 1, $this->writeOptions->retryInterval);
-    }
+        $retry = new WriteRetry(
+            $this->writeOptions->maxRetries,
+            $this->writeOptions->retryInterval,
+            $this->writeOptions->maxRetryDelay,
+            $this->writeOptions->exponentialBase,
+            $this->writeOptions->maxRetryTime,
+            $this->writeOptions->jitterInterval,
+            $this->options['logFile'] ?? "php://output"
+        );
 
-    private function writeRawInternal(string $data, array $queryParams, int $attempts, int $retryInterval)
-    {
-        if ($this->writeOptions->jitterInterval > 0) {
-            $jitterDelay = ($this->writeOptions->jitterInterval * 1000) * (rand(0, 1000) / 1000);
-            usleep($jitterDelay);
-        }
-
-        try {
+        $retry->retry(function () use ($data, $queryParams) {
             $this->post($data, "/api/v2/write", $queryParams);
-        } catch (ApiException $e) {
-            $code = $e->getCode();
-
-            if ($attempts > $this->writeOptions->maxRetries) {
-                throw $e;
-            }
-
-            if (($code == null || $code < 429) && !($e->getPrevious() instanceof ConnectException)) {
-                throw $e;
-            }
-
-            $headers = $e->getResponseHeaders();
-
-            if ($headers != null && array_key_exists('Retry-After', $headers)) {
-                $timeout = (int)$headers['Retry-After'][0] * 1000000.0;
-            } else {
-                $timeout = min($retryInterval, $this->writeOptions->maxRetryDelay) * 1000.0;
-            }
-
-            $timeoutInSec = $timeout / 1000000.0;
-            $error = $e->getResponseBody();
-            $error = isset($error) ? $error : $e->getMessage();
-
-            $message = "The retriable error occurred during writing of data. Reason: '{$error}'. Retry in: {$timeoutInSec}s.";
-            $this->log("WARNING", $message);
-
-            usleep($timeout);
-
-            $this->writeRawInternal(
-                $data,
-                $queryParams,
-                $attempts + 1,
-                $retryInterval * $this->writeOptions->exponentialBase
-            );
-        }
+        });
     }
-
     public function close()
     {
         $this->closed = true;

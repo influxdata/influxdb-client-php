@@ -2,9 +2,14 @@
 
 namespace InfluxDB2Test;
 
+use Exception;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
+use InfluxDB2\Client;
+use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
+use InfluxDB2\WriteRetry;
 
 require_once('BasicTest.php');
 
@@ -142,7 +147,7 @@ class WriteApiTest extends BasicTest
             $this->assertEquals(400, $e->getCode());
             $this->assertEquals('invalid', implode($e->getResponseHeaders()['X-Platform-Error-Code']));
             $this->assertEquals($errorBody, strval($e->getResponseBody()));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail();
         }
     }
@@ -282,15 +287,98 @@ class WriteApiTest extends BasicTest
             ->addTag('location', 'europe')
             ->addField('level', 2);
 
+        $this->expectExceptionCode(429);
+        $this->expectException(ApiException::class);
+        $this->writeApi->write($point);
+
+        $this->assertCount(4, $this->container);
+        $this->assertCount(1, $this->mockHandler);
+    }
+
+    public function testRetryMaxTime()
+    {
+        $this->mockHandler->append(
+        // regular call
+            new Response(429),
+            // retry
+            new Response(429),
+            // retry
+            new Response(200)
+        );
+
+        $this->writeApi->writeOptions->retryInterval = 1000;
+        $this->writeApi->writeOptions->maxRetries = 3;
+        $this->writeApi->writeOptions->maxRetryDelay = 15000;
+        $this->writeApi->writeOptions->exponentialBase = 2;
+        $this->writeApi->writeOptions->maxRetryTime = 300;
+
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(429);
+
+        $this->writeApi->write($point);
+
+        $this->assertCount(2, $this->container);
+        $this->assertCount(1, $this->mockHandler);
+    }
+
+
+    public function testRetryBackoffTime()
+    {
+        $retry = new WriteRetry();
+
+        $backoff = $retry->getBackoffTime(1);
+        $this->assertGreaterThan(5000, $backoff);
+        $this->assertLessThan(10000, $backoff);
+
+        $backoff = $retry->getBackoffTime(2);
+        $this->assertGreaterThan(10000, $backoff);
+        $this->assertLessThan(20000, $backoff);
+
+        $backoff = $retry->getBackoffTime(3);
+        $this->assertGreaterThan(20000, $backoff);
+        $this->assertLessThan(40000, $backoff);
+
+        $backoff = $retry->getBackoffTime(4);
+        $this->assertGreaterThan(40000, $backoff);
+        $this->assertLessThan(80000, $backoff);
+
+        $backoff = $retry->getBackoffTime(5);
+        $this->assertGreaterThan(80000, $backoff);
+        $this->assertLessThan(125000, $backoff);
+
+        $backoff = $retry->getBackoffTime(6);
+        $this->assertGreaterThan(80000, $backoff);
+        $this->assertLessThan(125000, $backoff);
+    }
+
+    public function testConnectExceptionRetry()
+    {
+        $client = new Client([
+            "url" => "http://nonexistenthost:8086/",
+            "token" => "my-token",
+            "bucket" => "my-bucket",
+            "precision" => WritePrecision::NS,
+            "org" => "my-org",
+            "logFile" => "php://output"
+        ]);
+
+        $writeApi = $client->createWriteApi(["retryInterval" => 100]);
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addField('level', 2);
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage("Could not resolve host: nonexistenthost");
+
         try {
-            $this->writeApi->write($point);
+            $writeApi->write($point);
         } catch (ApiException $e) {
-            $this->assertEquals(429, $e->getCode());
+            $this->assertEquals(ConnectException::class, get_class($e->getPrevious()));
+            throw $e;
         }
-
-        $this->assertEquals(4, count($this->container));
-
-        $count = $this->mockHandler->count();
-        $this->assertEquals(1, $count);
     }
 }

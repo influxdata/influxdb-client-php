@@ -32,7 +32,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=3.0 3');
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=4.0 4');
 
-        $this->assertEquals(2, count($this->container));
+        $this->assertCount(2, $this->container);
 
         $result1 = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2";
@@ -93,7 +93,7 @@ class WriteApiBatchingTest extends BasicTest
             'my-org-a'
         );
 
-        $this->assertEquals(5, count($this->container));
+        $this->assertCount(5, $this->container);
 
         $request = $this->container[0]['request'];
 
@@ -176,7 +176,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertEquals(2, count($this->container));
+        $this->assertCount(2, $this->container);
         $request = $this->mockHandler->getLastRequest();
 
         $this->assertEquals(
@@ -202,7 +202,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertEquals(2, count($this->container));
+        $this->assertCount(2, $this->container);
         $request = $this->mockHandler->getLastRequest();
 
         $this->assertEquals(
@@ -231,7 +231,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertEquals(3, count($this->container));
+        $this->assertCount(3, $this->container);
     }
 
     public function testRetryCount()
@@ -265,7 +265,7 @@ class WriteApiBatchingTest extends BasicTest
             $this->assertEquals(429, $e->getCode());
         }
 
-        $this->assertEquals(4, count($this->container));
+        $this->assertCount(4, $this->container);
 
         $count = $this->mockHandler->count();
         $this->assertEquals(1, $count);
@@ -291,7 +291,7 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertEquals(3, count($this->container));
+        $this->assertCount(3, $this->container);
     }
 
     public function testJitterInterval()
@@ -312,7 +312,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $this->assertTrue($time > 0 && $time <= 2);
 
-        $this->assertEquals(1, count($this->container));
+        $this->assertCount(1, $this->container);
 
         $result1 = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2";
@@ -341,9 +341,9 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertEquals(2, count($this->container));
+        $this->assertCount(2, $this->container);
 
         $message = file_get_contents("log_test.txt");
-        $this->assertStringContainsString("The retriable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
+        $this->assertStringContainsString("The retryable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
     }
 }
