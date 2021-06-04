@@ -1,4 +1,4 @@
-## 1.13.0 [unreleased]
+## 1.13.0 [2021-06-04]
 
 ### Features
 1. [#76](https://github.com/influxdata/influxdb-client-php/pull/76): Exponential random backoff retry strategy
