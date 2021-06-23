@@ -9,6 +9,6 @@ coverage.xml
 /*.iml
 log_test.txt
 tree.txt
-/.php_cs.cache
+/.*.cache
 /tools/
 /docs/

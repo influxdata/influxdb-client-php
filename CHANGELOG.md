@@ -1,5 +1,28 @@
 ## 1.14.0 [unreleased]
 
+### Breaking Changes
+
+This release introduces a support for new InfluxDB OSS API definitions - [oss.yml](https://github.com/influxdata/openapi/blob/master/contracts/oss.yml). The following breaking changes are in underlying API services and doesn't affect common apis such as - `WriteApi`, `QueryApi`, `BucketsApi`, `OrganizationsApi`...
+
+- `UsersService` uses `PostUser` to create `User`
+- `AuthorizationsService` uses `AuthorizationPostRequest` to create `Authorization`
+- `BucketsService` uses `PatchBucketRequest` to update `Bucket`
+- `OrganizationsService` uses `PostOrganizationRequest` to create `Organization`
+- `OrganizationsService` uses `PatchOrganizationRequest` to update `Organization`
+- `DashboardsService` uses `PatchDashboardRequest` to update `Dashboard`
+- `DeleteService` is used to delete time series data instead of `DefaultService`
+- `Run` contains list of `LogEvent` in `Log` property
+- `DBRPs` contains list of `DBRP` in `Content` property
+- `DBRPsService` uses `DBRPCreate` to create `DBRP`
+- Inheritance structure:
+    - `Check` <- `CheckDiscriminator` <- `CheckBase`
+    - `NotificationEndpoint` <- `NotificationEndpointDiscriminator` <- `NotificationEndpointBase`
+    - `NotificationRule` <- `NotificationRuleDiscriminator` <- `NNotificationRuleBase`
+- Flux AST literals extends the AST `Expression` object
+
+### API
+1. [#79](https://github.com/influxdata/influxdb-client-php/pull/79): Use InfluxDB OSS API definitions to generated APIs
+
 ### Bug Fixes
 1. [#81](https://github.com/influxdata/influxdb-client-php/pull/81): Compatibility with PHP 7.1 and 7.2
 
