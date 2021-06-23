@@ -263,7 +263,8 @@ class PointTest extends TestCase
         $this->assertNull($pointArray);
     }
 
-    public function testTagNotString() {
+    public function testTagNotString()
+    {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addTag('tag_not_string', [])
