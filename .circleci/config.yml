@@ -82,7 +82,7 @@ jobs:
         default: &default-influxdb-image "influxdb:latest"
       guzzle-version:
         type: string
-        default: "6.5.3"
+        default: "^7"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image << parameters.influxdb-image >>
@@ -141,9 +141,11 @@ workflows:
       - tests-php:
           name: php-7.2
           php-image: "circleci/php:7.2"
+          guzzle-version: "6^"
       - tests-php:
           name: php-7.1
           php-image: "circleci/php:7.1"
+          guzzle-version: "6^"
       - tests-windows:
           name: php-windows
       - check-code-style
