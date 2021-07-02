@@ -43,7 +43,7 @@ commands:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
-              - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
+              # - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
               - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
               - composer-v1-{{ checksum "composer.json" }}
               - composer-v1-
