@@ -29,6 +29,15 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
 - [Contributing](#contributing)
 - [License](#license)
 
+## Documentation
+
+This section contains links to the client library documentation.
+
+* [Product documentation](https://docs.influxdata.com/influxdb/v2.0/tools/client-libraries/), [Getting Started](#usage)
+* [Examples](examples)
+* [API Reference](https://influxdata.github.io/influxdb-client-php/) 
+* [Changelog](CHANGELOG.md)
+
 ## Installation
 
 The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php).
