@@ -260,6 +260,6 @@ class Point
 
     private function isNullOrEmptyString($str)
     {
-        return (!isset($str) || trim($str) === '');
+        return (!is_string($str) || trim($str) === '');
     }
 }

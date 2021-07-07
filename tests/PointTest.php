@@ -262,4 +262,15 @@ class PointTest extends TestCase
 
         $this->assertNull($pointArray);
     }
+
+    public function testTagNotString()
+    {
+        $point = Point::measurement('h2o')
+            ->addTag('location', 'europe')
+            ->addTag('tag_not_string', [])
+            ->addTag('tag_not_null', null)
+            ->addField('level', 2);
+
+        $this->assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
+    }
 }

@@ -1,5 +1,8 @@
 ## 1.14.0 [unreleased]
 
+### Bug Fixes
+1. [#81](https://github.com/influxdata/influxdb-client-php/pull/81): Compatibility with PHP 7.1 and 7.2
+
 ## 1.13.0 [2021-06-04]
 
 ### Features
