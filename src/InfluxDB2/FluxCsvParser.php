@@ -257,6 +257,12 @@ class FluxCsvParser
         }
 
         if ('double' == $column->dataType) {
+            if ($strVal == '+Inf') {
+                return INF;
+            }
+            if ($strVal == '-Inf') {
+                return -INF;
+            }
             return (double)$strVal;
         }
 

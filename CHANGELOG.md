@@ -1,5 +1,8 @@
 ## 2.1.0 [unreleased]
 
+### Bug Fixes
+1. [#84](https://github.com/influxdata/influxdb-client-php/pull/84): Parsing infinite numbers
+
 ## 2.0.0 [2021-07-09]
 
 ### Breaking Changes
