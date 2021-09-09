@@ -5,6 +5,7 @@ namespace InfluxDB2;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\RedirectMiddleware;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -35,6 +36,8 @@ class DefaultApi
             'headers' => [
                 'Authorization' => "Token {$this->options['token']}"
             ],
+            'proxy' => $this->options['proxy'] ?? null,
+            'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
         ]);
     }
 

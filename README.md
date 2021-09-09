@@ -26,6 +26,7 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
     - [InfluxDB 2.0 management API](#influxdb-20-management-api)
     - [Writing via UDP](#writing-via-udp)
     - [Delete data](#delete-data)
+    - [Proxy and redirects](#proxy-and-redirects)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -469,6 +470,40 @@ $client->close();
 ```
 
 For more details see [DeleteDataExample.php](examples/DeleteDataExample.php).
+
+### Proxy and redirects
+
+You can configure InfluxDB PHP client behind a proxy in two ways:
+
+##### 1. Using environment variable
+Set environment variable `HTTP_PROXY` or `HTTPS_PROXY` based on the scheme of your server url. For more info see Guzzle docs - [environment Variables](https://docs.guzzlephp.org/en/5.3/clients.html?highlight=PROXY#environment-variables).
+
+##### 2. Configure client to use proxy via Options
+You can pass a `proxy` configuration when creating the client:
+```php
+$client = new InfluxDB2\Client([
+  "url" => "http://localhost:8086", 
+  "token" => "my-token",
+  "bucket" => "my-bucket",
+  "org" => "my-org",
+  "proxy" => "http://192.168.16.1:10",
+]);
+```
+For more info see Guzzle docs - [proxy](https://docs.guzzlephp.org/en/5.3/clients.html?highlight=PROXY#proxy).
+
+#### Redirects
+
+Client automatically follows HTTP redirects. You can configure redirects behaviour by  a `allow_redirects` configuration:
+```php
+$client = new InfluxDB2\Client([
+  "url" => "http://localhost:8086", 
+  "token" => "my-token",
+  "bucket" => "my-bucket",
+  "org" => "my-org",
+  "allow_redirects" => false,
+]);
+```
+For more info see Guzzle docs - [allow_redirects](https://docs.guzzlephp.org/en/5.3/clients.html?highlight=redirect#allow-redirects)
 
 ## Local tests
 

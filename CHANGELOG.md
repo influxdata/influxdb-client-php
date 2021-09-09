@@ -1,5 +1,8 @@
 ## 2.2.0 [unreleased]
 
+### Features
+1. [#86](https://github.com/influxdata/influxdb-client-php/pull/86): Add configuration option for `proxy` and `redirects`
+
 ## 2.1.0 [2021-08-20]
 
 ### Bug Fixes

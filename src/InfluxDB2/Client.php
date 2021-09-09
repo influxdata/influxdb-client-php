@@ -23,6 +23,8 @@ class Client
     /**
      * Client constructor.
      *
+     * Example how to create a client:
+     *
      *      client = new Client([
      *          "url" => "http://localhost:8086",
      *          "token" => "my-token",
@@ -35,6 +37,21 @@ class Client
      *              'hostname' => '${env.Hostname}'],
      *          "timeout" => 2
      *          ]);
+     *
+     * Client can be configured with following properties:
+     *
+     * - url: InfluxDB server API url (ex. http://localhost:8086).
+     * - token: auth token
+     * - bucket: destination bucket for writes
+     * - org: organization bucket for writes
+     * - precision: precision for the unix timestamps within the body line-protocol
+     * - verifySSL: Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.
+     * - debug: enable verbose logging of http requests
+     * - logFile: log output
+     * - tags: default tags
+     * - timeout: The number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely.
+     * - proxy: Pass a string to specify an HTTP proxy, or an array to specify different proxies for different protocols.
+     * - allow_redirects: Describes the redirect behavior for requests.
      *
      * @param array $options
      */

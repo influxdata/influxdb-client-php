@@ -2,6 +2,7 @@
 
 namespace InfluxDB2Test;
 
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
 use InfluxDB2\Client;
@@ -99,5 +100,31 @@ class DefaultApiTest extends BasicTest
         $this->assertEquals(false, $config['verify']);
 
         $client->close();
+    }
+
+    public function test_follow_redirect()
+    {
+        $this->mockHandler->append(
+            new Response(
+                307,
+                ['location' => 'http://localhost:8088']
+            ),
+            new Response(204, [], "{\"status\": \"pass\"}")
+        );
+        $this->writeApi->write('h2o,location=west value=33i 15');
+
+        $this->assertCount(2, $this->container);
+
+        $this->assertEquals('Token my-token', $this->getHeader($this->container[0]['request']));
+        $this->assertEquals('Token my-token', $this->getHeader($this->container[1]['request']));
+    }
+
+    /**
+     * @param Request $request with headers
+     * @return string Authorization headers
+     */
+    private function getHeader(Request $request): string
+    {
+        return implode(' ', $request->getHeaders()['Authorization']);
     }
 }
