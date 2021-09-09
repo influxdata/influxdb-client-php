@@ -8,7 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use InfluxDB2\Client;
 use InfluxDB2\Model\DeletePredicateRequest;
 use InfluxDB2\Point;
-use InfluxDB2\Service\DefaultService;
+use InfluxDB2\Service\DeleteService;
 
 $url = 'http://localhost:8086';
 $token = 'my-token';
@@ -39,14 +39,14 @@ $writeApi->close();
 //
 // Delete data by tag value: 'host = host2'
 //
-/** @var DefaultService $service */
-$service = $client->createService(DefaultService::class);
+/** @var DeleteService $service */
+$service = $client->createService(DeleteService::class);
 
 $predicate = new DeletePredicateRequest();
 $predicate->setStart(DateTime::createFromFormat('Y', '2020'));
 $predicate->setStop(new DateTime());
 $predicate->setPredicate("_measurement=\"mem\" AND host=\"host1\"");
-$service->deletePost($predicate, null, $org, $bucket);
+$service->postDelete($predicate, null, $org, $bucket);
 
 //
 // Query Data
