@@ -3,6 +3,9 @@
 ### Features
 1. [#86](https://github.com/influxdata/influxdb-client-php/pull/86): Add configuration option for `proxy` and `redirects`
 
+### CI
+1. [#90](https://github.com/influxdata/influxdb-client-php/pull/90): Switch to next-gen CircleCI's convenience images
+
 ## 2.1.0 [2021-08-20]
 
 ### Bug Fixes

@@ -43,10 +43,10 @@ commands:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
-              - composer-v2-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
-              - composer-v2-{{ checksum "composer.json" }}-<< parameters.php-image >>
-              - composer-v2-{{ checksum "composer.json" }}
-              - composer-v2-
+              - composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
+              - composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>
+              - composer-v3-{{ checksum "composer.json" }}
+              - composer-v3-
       - run:
           name: Install dependencies
           command: |
@@ -62,7 +62,7 @@ commands:
           command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
       - save_cache:
           name: Saving Cache
-          key: composer-v2-{{ checksum "composer.json" }}-<< parameters.php-image >>
+          key: composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>
           paths:
             - vendor
           when: always
@@ -144,7 +144,7 @@ workflows:
           guzzle-version: "^6"
       - tests-php:
           name: php-7.1
-          php-image: "cimg/php:7.1"
+          php-image: "circleci/php:7.1"
           guzzle-version: "^6"
       - tests-windows:
           name: php-windows
