@@ -43,10 +43,10 @@ commands:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
-              - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
-              - composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
-              - composer-v1-{{ checksum "composer.json" }}
-              - composer-v1-
+              - composer-v2-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
+              - composer-v2-{{ checksum "composer.json" }}-<< parameters.php-image >>
+              - composer-v2-{{ checksum "composer.json" }}
+              - composer-v2-
       - run:
           name: Install dependencies
           command: |
@@ -62,7 +62,7 @@ commands:
           command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
       - save_cache:
           name: Saving Cache
-          key: composer-v1-{{ checksum "composer.json" }}-<< parameters.php-image >>
+          key: composer-v2-{{ checksum "composer.json" }}-<< parameters.php-image >>
           paths:
             - vendor
           when: always
@@ -76,7 +76,7 @@ jobs:
     parameters:
       php-image:
         type: string
-        default: &default-php-image "circleci/php:7.4"
+        default: &default-php-image "cimg/php:7.4"
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:latest"
@@ -128,7 +128,7 @@ workflows:
           name: php-7.4
       - tests-php:
           name: php-8.0
-          php-image: "circleci/php:8.0"
+          php-image: "cimg/php:8.0"
       - tests-php:
           name: php-7.4-guzzle-7
           guzzle-version: "7.0.1"
@@ -137,14 +137,14 @@ workflows:
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
       - tests-php:
           name: php-7.3
-          php-image: "circleci/php:7.3"
+          php-image: "cimg/php:7.3"
       - tests-php:
           name: php-7.2
-          php-image: "circleci/php:7.2"
+          php-image: "cimg/php:7.2"
           guzzle-version: "^6"
       - tests-php:
           name: php-7.1
-          php-image: "circleci/php:7.1"
+          php-image: "cimg/php:7.1"
           guzzle-version: "^6"
       - tests-windows:
           name: php-windows
