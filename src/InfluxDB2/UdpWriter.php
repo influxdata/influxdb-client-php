@@ -84,13 +84,32 @@ class UdpWriter implements Writer
     /**
      * Create (if not exists) socket to write UDP datagrams
      * @return false|resource
+     * @throws \Exception
      */
     protected function getSocket()
     {
         if (empty($this->socket)) {
-            $this->socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+            $this->socket = socket_create($this->getConfiguredInetVersion(), SOCK_DGRAM, SOL_UDP);
         }
         return $this->socket;
+    }
+
+    /**
+     * @throws \Exception
+     * @return int socket domain constant
+     */
+    private function getConfiguredInetVersion()
+    {
+        $configuredIpVersion = $this->options['ipVersion'] ?? 4;
+
+        switch ($configuredIpVersion) {
+            case 4:
+                return AF_INET;
+            case 6:
+                return AF_INET6;
+            default:
+                throw new \Exception('ipVersion option invalid!');
+        }
     }
 
     /**

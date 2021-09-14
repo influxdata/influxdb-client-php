@@ -35,7 +35,8 @@ class Client
      *          "logFile" => "php://output",
      *          "tags" => ['id' => '1234',
      *              'hostname' => '${env.Hostname}'],
-     *          "timeout" => 2
+     *          "timeout" => 2,
+     *          "ipVersion" => 6,
      *          ]);
      *
      * Client can be configured with following properties:
@@ -52,6 +53,7 @@ class Client
      * - timeout: The number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely.
      * - proxy: Pass a string to specify an HTTP proxy, or an array to specify different proxies for different protocols.
      * - allow_redirects: Describes the redirect behavior for requests.
+     * - ipVersion: Specifies which version of IP to use, supports 4 and 6 as possible values.
      *
      * @param array $options
      */
