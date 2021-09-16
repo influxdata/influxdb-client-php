@@ -2,6 +2,7 @@
 
 ### Features
 1. [#86](https://github.com/influxdata/influxdb-client-php/pull/86): Add configuration option for `proxy` and `redirects`
+2. [#92](https://github.com/influxdata/influxdb-client-php/pull/92): Add configuration option for `ipVersion` [UDP Writer]
 
 ### CI
 1. [#90](https://github.com/influxdata/influxdb-client-php/pull/90): Switch to next-gen CircleCI's convenience images

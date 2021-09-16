@@ -412,8 +412,9 @@ As is known, sending via UDP occurs without waiting for a response, unlike TCP (
 
 UDP Writer Requirements:
 1. Installed ext-sockets
-1. Since Influxdb 2.0+ does not support UDP protocol natively you need to install and configure Telegraf plugin: https://docs.influxdata.com/telegraf/v1.16/plugins/#socket_listener
-1. Extra config option passed to client: udpPort. Optionally you can specify udpHost, otherwise udpHost will parsed from url option
+2. Since Influxdb 2.0+ does not support UDP protocol natively you need to install and configure Telegraf plugin: https://docs.influxdata.com/telegraf/v1.16/plugins/#socket_listener
+3. Extra config option passed to client: udpPort. Optionally you can specify udpHost, otherwise udpHost will parsed from url option
+4. Extra config option passed to client: ipVersion. Optionally you can specify the ip version, defaults to IPv4
  
 ```php
 $client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my-token",
@@ -421,6 +422,7 @@ $client = new InfluxDB2\Client(["url" => "http://localhost:8086", "token" => "my
     "org" => "my-org",
     "precision" => InfluxDB2\Model\WritePrecision::NS,
     "udpPort" => 8094,
+    "ipVersion" => 6,
 ]);
 $writer = $client->createUdpWriter();
 $writer->write('h2o,location=west value=33i 15');
