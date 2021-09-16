@@ -440,7 +440,7 @@ The [DefaultService.php](/src/InfluxDB2/Service/DefaultService.php) supports del
  */
 use InfluxDB2\Client;
 use InfluxDB2\Model\DeletePredicateRequest;
-use InfluxDB2\Service\DefaultService;
+use InfluxDB2\Service\DeleteService;
 
 $url = 'http://localhost:8086';
 $token = 'my-token';
@@ -458,15 +458,15 @@ $client = new Client([
 //
 // Delete data by measurement and tag value
 //
-/** @var DefaultService $service */
-$service = $client->createService(DefaultService::class);
+/** @var DeleteService $service */
+$service = $client->createService(DeleteService::class);
 
 $predicate = new DeletePredicateRequest();
 $predicate->setStart(DateTime::createFromFormat('Y', '2020'));
 $predicate->setStop(new DateTime());
 $predicate->setPredicate("_measurement=\"mem\" AND host=\"host1\"");
 
-$service->deletePost($predicate, null, $org, $bucket);
+$service->postDelete($predicate, null, $org, $bucket);
 
 $client->close();
 ```
