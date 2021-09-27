@@ -152,6 +152,8 @@ class WriteApi extends DefaultApi implements Writer
         if (isset($this->worker)) {
             $this->worker()->flush();
         }
+
+        unset($this->worker);
     }
 
     private function worker(): Worker
