@@ -118,6 +118,7 @@ class Client
         foreach ($this->autoCloseable as $ac) {
             $ac->close();
         }
+        $this->autoCloseable = [];
     }
 
     public function getConfiguration()
