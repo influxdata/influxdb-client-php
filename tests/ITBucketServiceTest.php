@@ -53,6 +53,11 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
             "2020-09-18T08:03:48.12345678Z",
             ObjectSerializer::fixDatetimeNanos("2020-09-18T08:03:48.1234567899Z")
         );
+
+        self::assertEquals(
+            "2021-09-29T06:32:56Z",
+            ObjectSerializer::fixDatetimeNanos("2021-09-29T06:32:56Z")
+        );
     }
 
     public function testBucketService()

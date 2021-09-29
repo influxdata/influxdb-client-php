@@ -326,6 +326,7 @@ class ObjectSerializer
             return $instance;
         }
     }
+
     /**
     * Nano precision is not supported while decoding RFC 3339 formatted date/times.
     * https://bugs.php.net/bug.php?id=6481
@@ -337,9 +338,9 @@ class ObjectSerializer
     */
     static function fixDatetimeNanos(string $date) : string {
         $dateParts = explode(".", $date);
-        $nanosZ = $dateParts[1];
-        $posZ = strpos($nanosZ, 'Z');
+        $nanosZ = $dateParts[1] ?? "";
         if (strlen($nanosZ) > 9) {
+            $posZ = strpos($nanosZ, 'Z');
             $converted = $dateParts[0] . "." . substr($nanosZ, 0, 8);
             if ($posZ > 0) {
                 $converted .= "Z";
@@ -349,5 +350,4 @@ class ObjectSerializer
             return $date;
         }
     }
-
 }
