@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 1. [#95](https://github.com/influxdata/influxdb-client-php/pull/95): Fix file descriptor leaks in WriteApi
+1. [#96](https://github.com/influxdata/influxdb-client-php/pull/96): Fix nanosecond datetime string convertor
 
 ## 2.2.0 [2021-09-17]
 
