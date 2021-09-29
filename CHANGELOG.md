@@ -1,5 +1,8 @@
 ## 2.3.0 [unreleased]
 
+### Bug Fixes
+1. [#95](https://github.com/influxdata/influxdb-client-php/pull/95): Fix file descriptor leaks in WriteApi
+
 ## 2.2.0 [2021-09-17]
 
 ### Features
