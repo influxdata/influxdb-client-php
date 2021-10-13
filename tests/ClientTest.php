@@ -2,7 +2,7 @@
 
 namespace InfluxDB2Test;
 
-use GuzzleHttp\Exception\ConnectException;
+use Exception;
 use InfluxDB2\Client;
 
 require_once('BasicTest.php');
@@ -52,7 +52,7 @@ class ClientTest extends BasicTest
             "token" => "my-token",
         ]);
 
-        $this->expectException(ConnectException::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage("Failed to connect to localhost");
 
         $this->client->ping();
