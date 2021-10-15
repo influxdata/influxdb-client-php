@@ -144,7 +144,7 @@ workflows:
           guzzle-version: "^6"
       - tests-php:
           name: php-7.1
-          php-image: "circleci/php:7.1"
+          php-image: "cimg/php:7.1"
           guzzle-version: "^6"
       - tests-windows:
           name: php-windows
