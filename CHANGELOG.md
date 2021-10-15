@@ -1,5 +1,9 @@
 ## 2.3.0 [unreleased]
 
+### Bug Fixes
+1. [#95](https://github.com/influxdata/influxdb-client-php/pull/95): Fix file descriptor leaks in WriteApi
+1. [#96](https://github.com/influxdata/influxdb-client-php/pull/96): Fix nanosecond datetime string convertor
+
 ### CI
 1. [#93](https://github.com/influxdata/influxdb-client-php/pull/93): Switch the PHP 7.1 image to next-gen CircleCI's convenience images
 
