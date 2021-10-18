@@ -1,5 +1,8 @@
 ## 2.3.0 [unreleased]
 
+### Features
+1. [#97](https://github.com/influxdata/influxdb-client-php/pull/97): Add `ping()` to check status of OSS and Cloud instance
+
 ### Bug Fixes
 1. [#95](https://github.com/influxdata/influxdb-client-php/pull/95): Fix file descriptor leaks in WriteApi
 1. [#96](https://github.com/influxdata/influxdb-client-php/pull/96): Fix nanosecond datetime string convertor

@@ -3,6 +3,7 @@
 namespace InfluxDB2;
 
 use InfluxDB2\Model\HealthCheck;
+use InfluxDB2\Service\PingService;
 use ReflectionClass;
 use RuntimeException;
 
@@ -101,11 +102,24 @@ class Client
     /**
      * Get the health of an instance.
      *
+     * @deprecated Use `ping()` instead
      * @return HealthCheck
      */
     public function health(): HealthCheck
     {
         return (new HealthApi($this->options))->health();
+    }
+
+    /**
+     * Checks the status of InfluxDB instance and version of InfluxDB.
+     *
+     * @return array with response headers: 'X-Influxdb-Build', 'X-Influxdb-Version'
+     */
+    public function ping(): array
+    {
+        $service = $this->createService(PingService::class);
+        $pingWithHttpInfo = $service->getPingWithHttpInfo();
+        return $pingWithHttpInfo[2];
     }
 
     /**
