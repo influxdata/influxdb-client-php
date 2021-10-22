@@ -1,4 +1,4 @@
-## 2.3.0 [unreleased]
+## 2.3.0 [2021-10-22]
 
 ### Features
 1. [#97](https://github.com/influxdata/influxdb-client-php/pull/97): Add `ping()` to check status of OSS and Cloud instance
