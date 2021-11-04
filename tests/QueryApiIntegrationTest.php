@@ -76,7 +76,8 @@ class QueryApiIntegrationTest extends TestCase
         $this->assertEquals('level', $record->getField());
     }
 
-    public function testWriteQueryNewLine() {
+    public function testWriteQueryNewLine()
+    {
         $measurement = 'h2o_QueryNewLine_' . (new DateTime())->getTimestamp();
 
         $this->writeApi->write(Point::measurement($measurement)
