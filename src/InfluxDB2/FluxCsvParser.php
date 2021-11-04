@@ -2,10 +2,6 @@
 
 namespace InfluxDB2;
 
-use GuzzleHttp\Psr7\Stream;
-use Psr\Http\Message\StreamInterface;
-use RuntimeException;
-
 /**
  * Class FluxCsvParser us used to construct FluxResult from CSV.
  * @package InfluxDB2
@@ -22,6 +18,7 @@ class FluxCsvParser
 
     private $response;
     private $stream;
+    private $resource;
 
     /* @var  $variable int */
     private $tableIndex = 0;
@@ -47,7 +44,8 @@ class FluxCsvParser
      */
     public function __construct($response, $stream = false)
     {
-        $this->response = is_string($response) ? new Stream($this->stringToStream($response)) : $response;
+        $this->response = is_string($response) ? null : $response;
+        $this->resource = is_string($response) ? $this->stringToStream($response) : $response->detach();
         $this->stream = $stream;
         $this->tableIndex = 0;
         if (!$stream) {
@@ -75,12 +73,10 @@ class FluxCsvParser
     public function each()
     {
         try {
-            while ($row = $this->readline($this->response)) {
-                if (!isset($row) || trim($row) === '') {
+            while (($csv = fgetcsv($this->resource)) !== FALSE) {
+                if (!isset($csv) || (count($csv) == 1 && $csv[0] == null)) {
                     continue;
                 }
-
-                $csv = str_getcsv($row);
 
                 //skip empty csv row
                 if ($csv[1] == 'error' && $csv[2] == 'reference') {
@@ -278,34 +274,18 @@ class FluxCsvParser
         return $strVal;
     }
 
-    private function readline(StreamInterface $stream)
-    {
-        $buffer = null;
-
-        while (null !== ($byte = $stream->read(1))) {
-            if ($byte === "") {
-                break;
-            }
-
-            if ($buffer == null) {
-                $buffer .= '';
-            }
-
-            $buffer .= $byte;
-
-            // Break when a new line is found
-            if ($byte === "\n") {
-                break;
-            }
-        }
-
-        return $buffer;
-    }
-
     private function closeConnection()
     {
         # Close CSV Parser
         $this->closed = true;
-        $this->response->close();
+        if (isset($this->response)) {
+            $this->response->close();
+        }
+        if (is_resource($this->resource)) {
+            fclose($this->resource);
+        }
+
+        unset($this->response);
+        unset($this->resource);
     }
 }
