@@ -76,6 +76,26 @@ class QueryApiIntegrationTest extends TestCase
         $this->assertEquals('level', $record->getField());
     }
 
+    public function testWriteQueryNewLine()
+    {
+        $measurement = 'h2o_QueryNewLine_' . (new DateTime())->getTimestamp();
+
+        $this->writeApi->write(Point::measurement($measurement)
+            ->addTag('location', 'europe')
+            ->addField('value', "some \n value"));
+
+        $result = $this->queryApi->query('from(bucket: "my-bucket") |> range(start: 0)
+            |> filter(fn: (r) => r._measurement == "' . $measurement . '")');
+
+        $this->assertNotNull($result);
+        $this->assertEquals(1, sizeof($result));
+        $records = $result[0]->records;
+        $this->assertEquals(1, sizeof($records));
+        $record = $records[0];
+
+        $this->assertEquals("some \r\n value", $record->getValue());
+    }
+
     /**
      * @param string $measurement
      * @param DateTime $now

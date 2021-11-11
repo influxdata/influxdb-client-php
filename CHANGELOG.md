@@ -1,5 +1,8 @@
 ## 2.4.0 [unreleased]
 
+### Bug Fixes
+1. [#101](https://github.com/influxdata/influxdb-client-php/pull/101): Fix parsing Query response with contains new lines in field values
+
 ## 2.3.0 [2021-10-22]
 
 ### Features
