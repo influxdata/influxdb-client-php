@@ -1,5 +1,8 @@
 ## 2.4.0 [unreleased]
 
+### Features
+1. [#102](https://github.com/influxdata/influxdb-client-php/pull/102): Use async HTTP calls to achieve better performance in a multithreading environment.
+
 ### Bug Fixes
 1. [#101](https://github.com/influxdata/influxdb-client-php/pull/101): Fix parsing Query response with contains new lines in field values
 
