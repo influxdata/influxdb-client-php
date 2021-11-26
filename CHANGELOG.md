@@ -1,4 +1,4 @@
-## 2.4.0 [unreleased]
+## 2.4.0 [2021-11-26]
 
 ### Features
 1. [#102](https://github.com/influxdata/influxdb-client-php/pull/102): Use async HTTP calls to achieve better performance in a multithreading environment.
