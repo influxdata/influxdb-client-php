@@ -64,7 +64,7 @@ class Client
     }
 
     /**
-     * Write time series data into InfluxDB thought WriteApi.
+     * Write time series data into InfluxDB through the WriteApi.
      *      $writeOptions = [
      *          'writeType' => methods of write (WriteType::SYNCHRONOUS - default, WriteType::BATCHING)
      *          'batchSize' => the number of data point to collect in batch
