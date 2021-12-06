@@ -1,5 +1,8 @@
 ## 2.5.0 [unreleased]
 
+### Features
+1. [#105](https://github.com/influxdata/influxdb-client-php/pull/105): Add support for latest `guzzlehttp/psr7"`
+
 ## 2.4.0 [2021-11-26]
 
 ### Features
