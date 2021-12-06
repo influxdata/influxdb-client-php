@@ -39,10 +39,13 @@ commands:
         type: string
       guzzle-version:
         type: string
+      guzzle-psr-version:
+        type: string
     steps:
       - restore_cache:
           name: Restoring Composer Cache
           keys:
+              - composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>-<< parameters.guzzle-psr-version >>
               - composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>-<< parameters.guzzle-version >>
               - composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>
               - composer-v3-{{ checksum "composer.json" }}
@@ -51,7 +54,7 @@ commands:
           name: Install dependencies
           command: |
             composer install -n --prefer-dist
-            composer require guzzlehttp/guzzle:<< parameters.guzzle-version >>
+            composer require guzzlehttp/guzzle:<< parameters.guzzle-version >> guzzlehttp/psr7:<< parameters.guzzle-psr-version >>
       - run:
           name: Run tests
           command: |
@@ -83,6 +86,9 @@ jobs:
       guzzle-version:
         type: string
         default: "^7"
+      guzzle-psr-version:
+        type: string
+        default: "^1.7"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image << parameters.influxdb-image >>
@@ -93,6 +99,7 @@ jobs:
       - test:
           php-image: << parameters.php-image >>
           guzzle-version: << parameters.guzzle-version>>
+          guzzle-psr-version: << parameters.guzzle-psr-version>>
       - storing-test-results
   tests-windows:
     machine:
@@ -132,6 +139,7 @@ workflows:
       - tests-php:
           name: php-7.4-guzzle-7
           guzzle-version: "7.0.1"
+          guzzle-psr-version: "^1.7"
       - tests-php:
           name: php-7.4-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
@@ -142,10 +150,12 @@ workflows:
           name: php-7.2
           php-image: "cimg/php:7.2"
           guzzle-version: "^6"
+          guzzle-psr-version: "^1.7"
       - tests-php:
           name: php-7.1
           php-image: "cimg/php:7.1"
           guzzle-version: "^6"
+          guzzle-psr-version: "^1.7"
       - tests-windows:
           name: php-windows
       - check-code-style
