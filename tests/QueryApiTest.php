@@ -2,7 +2,10 @@
 
 namespace InfluxDB2Test;
 
+use DateInterval;
+use DateTime;
 use GuzzleHttp\Psr7\Response;
+use InfluxDB2\Model\Query;
 
 require_once('BasicTest.php');
 
@@ -42,6 +45,40 @@ class QueryApiTest extends BasicTest
 
         $this->assertEquals(1, count($result));
         $this->assertEquals(4, count($result[0]->records));
+
+        $record = $result[0]->records[0];
+
+        $this->assertEquals('1970-01-01T00:00:10Z', $record->getTime());
+        $this->assertEquals('mem', $record->getMeasurement());
+        $this->assertEquals(10, $record->getValue());
+        $this->assertEquals('free', $record->getField());
+    }
+
+    public function testQueryParameterized()
+    {
+        $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
+        $query = new Query();
+
+        $query->setQuery(
+            'from(bucket: params.bucketParam) |> range(start: time(v: params.startParam)) |> last()');
+
+        $today = new DateTime("2021-12-15T11:33:28+00:00");
+        $yesterday = $today->sub(new DateInterval("P1D"));
+
+        $query->setParams([
+            "bucketParam" => "my-bucket",
+            "startParam" => $yesterday
+        ]);
+
+        $result = $this->queryApi->query($query);
+        $contents = $this->mockHandler->getLastRequest()->getBody()->getContents();
+        $json = json_decode($contents, TRUE);
+
+        $this->assertEquals("my-bucket", $json["params"]["bucketParam"]);
+        $this->assertEquals('2021-12-14T11:33:28+00:00', $json["params"]["startParam"]);
+
+        $this->assertCount(1, $result);
+        $this->assertCount(4, $result[0]->records);
 
         $record = $result[0]->records[0];
 
