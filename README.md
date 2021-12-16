@@ -204,9 +204,12 @@ $query = new Query();
 $query->setQuery($parameterizedQuery);
 $query->setParams(["bucketParam" => "my-bucket", "startParam" => "-1d"]);
 $tables = $queryApi->query($query);
-foreach ($tables as $table)
-    foreach ($table->records as $record)
+
+foreach ($tables as $table) {
+    foreach ($table->records as $record) {
         var_export($record->values);
+    }
+}
 
 //
 // Query range start parameter using DateTime
@@ -216,9 +219,11 @@ $query->setParams(["bucketParam" => "my-bucket", "startParam" => $yesterday]);
 $query->setQuery($parameterizedQuery);
 $tables = $queryApi->query($query);
 
-foreach ($tables as $table)
-    foreach ($table->records as $record)
+foreach ($tables as $table) {
+    foreach ($table->records as $record) {
         var_export($record->values);
+    }
+}
 
 $client->close();
 ```

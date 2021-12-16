@@ -57,22 +57,21 @@ class QueryApiTest extends BasicTest
     public function testQueryParameterized()
     {
         $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
-        $query = new Query();
+        $q = new Query();
 
-        $query->setQuery(
-            'from(bucket: params.bucketParam) |> range(start: time(v: params.startParam)) |> last()');
+        $q->setQuery('from(bucket: params.bucketParam) |> range(start: time(v: params.startParam)) |> last()');
 
         $today = new DateTime("2021-12-15T11:33:28+00:00");
         $yesterday = $today->sub(new DateInterval("P1D"));
 
-        $query->setParams([
+        $q->setParams([
             "bucketParam" => "my-bucket",
             "startParam" => $yesterday
         ]);
 
-        $result = $this->queryApi->query($query);
+        $result = $this->queryApi->query($q);
         $contents = $this->mockHandler->getLastRequest()->getBody()->getContents();
-        $json = json_decode($contents, TRUE);
+        $json = json_decode($contents, true);
 
         $this->assertEquals("my-bucket", $json["params"]["bucketParam"]);
         $this->assertEquals('2021-12-14T11:33:28+00:00', $json["params"]["startParam"]);
