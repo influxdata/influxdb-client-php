@@ -16,4 +16,3 @@
 
 - [InfluxDB_18_Example.php](InfluxDB_18_Example.php) - How to connect to InfluxDB 1.8
 - [DeleteDataExample.php](DeleteDataExample.php) - How to use `DeleteService` and predicate to delete time series data
-- 
