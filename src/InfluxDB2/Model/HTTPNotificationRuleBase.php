@@ -291,7 +291,7 @@ class HTTPNotificationRuleBase extends NotificationRule
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -303,6 +303,7 @@ class HTTPNotificationRuleBase extends NotificationRule
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -316,7 +317,7 @@ class HTTPNotificationRuleBase extends NotificationRule
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -332,7 +333,7 @@ class HTTPNotificationRuleBase extends NotificationRule
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

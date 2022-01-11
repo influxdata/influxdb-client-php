@@ -3,6 +3,9 @@
 ### Features
 1. [#105](https://github.com/influxdata/influxdb-client-php/pull/105): Add support for latest `guzzlehttp/psr7"`
 
+### Bug Fixes
+1. [#109](https://github.com/influxdata/influxdb-client-php/pull/109): PHP 8.1 deprecation warnings
+
 ## 2.4.0 [2021-11-26]
 
 ### Features
