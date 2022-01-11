@@ -2,6 +2,7 @@
 
 ### Features
 1. [#105](https://github.com/influxdata/influxdb-client-php/pull/105): Add support for latest `guzzlehttp/psr7"`
+1. [#107](https://github.com/influxdata/influxdb-client-php/pull/107): Add support for Parameterized Queries
 
 ### Bug Fixes
 1. [#109](https://github.com/influxdata/influxdb-client-php/pull/109): PHP 8.1 deprecation warnings

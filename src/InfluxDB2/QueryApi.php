@@ -6,6 +6,11 @@ use InfluxDB2\Model\Dialect;
 use InfluxDB2\Model\Query;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * The client of the InfluxDB 2.0 that implement Query HTTP API endpoint.
+ *
+ * @package InfluxDB2
+ */
 class QueryApi extends DefaultApi
 {
     private $DEFAULT_DIALECT;
@@ -26,13 +31,14 @@ class QueryApi extends DefaultApi
     }
 
     /**
+     * Executes the Flux query and returns the unparsed raw result
      *
-     * @param string $query query the flux query to execute. The data could be represent by string, Query
-     * @param null $org specifies the source organization
-     * @param null $dialect csv dialect
+     * @param string|Query $query flux query to execute. The data could be represent by string, Query
+     * @param string|null $org specifies the source organization
+     * @param Dialect|null $dialect csv dialect
      * @return string
      */
-    public function queryRaw(string $query, $org = null, $dialect = null): ?string
+    public function queryRaw($query, ?string $org = null, ?Dialect $dialect = null): ?string
     {
         $result = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
@@ -44,13 +50,20 @@ class QueryApi extends DefaultApi
     }
 
     /**
-     * @param $query
-     * @param $org
-     * @param $dialect
-     * @return FluxTable[]
+     * Executes the Flux query against the InfluxDB 2.0 and synchronously map the whole response to FluxTable[]
+     * NOTE: This method is not intended for large query results.
+     *
+     * @param string|Query $query
+     * @param string|null $org
+     * @param Dialect|null $dialect
+     * @return  FluxTable[]
      */
-    public function query($query, $org = null, $dialect = null)
+    public function query($query, ?string $org = null, ?Dialect $dialect = null): ?array
     {
+        if ($query instanceof Query) {
+            $query->setDialect($this->DEFAULT_DIALECT);
+        }
+
         $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
         if ($response == null) {
@@ -64,13 +77,20 @@ class QueryApi extends DefaultApi
     }
 
     /**
-     * @param $query
-     * @param $org
-     * @param $dialect
+     * Executes the Flux query against the InfluxDB 2.0 and returns generator to stream the result.
+     *
+     * @param string| Query $query
+     * @param string|null $org
+     * @param Dialect|null $dialect
+     *
      * @return FluxCsvParser generator
      */
-    public function queryStream($query, $org = null, $dialect = null): ?FluxCsvParser
+    public function queryStream($query, ?string $org = null, ?Dialect $dialect = null): ?FluxCsvParser
     {
+        if ($query instanceof Query) {
+            $query->setDialect($this->DEFAULT_DIALECT);
+        }
+
         $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
         if ($response == null) {
@@ -95,7 +115,7 @@ class QueryApi extends DefaultApi
         return $this->post($payload->__toString(), "/api/v2/query", $queryParams);
     }
 
-    private function generatePayload($query, $dialect)
+    private function generatePayload($query, $dialect): ?Query
     {
         if ((!isset($query) || trim($query) === '')) {
             return null;
