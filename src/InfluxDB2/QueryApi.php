@@ -38,7 +38,7 @@ class QueryApi extends DefaultApi
      * @param Dialect|null $dialect csv dialect
      * @return string
      */
-    public function queryRaw($query, string $org = null, ?Dialect $dialect = null): ?string
+    public function queryRaw($query, ?string $org = null, ?Dialect $dialect = null): ?string
     {
         $result = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
 
@@ -58,7 +58,7 @@ class QueryApi extends DefaultApi
      * @param Dialect|null $dialect
      * @return  FluxTable[]
      */
-    public function query($query, string $org = null, Dialect $dialect = null): ?array
+    public function query($query, ?string $org = null, ?Dialect $dialect = null): ?array
     {
         if ($query instanceof Query) {
             $query->setDialect($this->DEFAULT_DIALECT);
@@ -85,7 +85,7 @@ class QueryApi extends DefaultApi
      *
      * @return FluxCsvParser generator
      */
-    public function queryStream($query, string $org = null, Dialect $dialect = null): ?FluxCsvParser
+    public function queryStream($query, ?string $org = null, ?Dialect $dialect = null): ?FluxCsvParser
     {
         if ($query instanceof Query) {
             $query->setDialect($this->DEFAULT_DIALECT);
