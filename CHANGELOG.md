@@ -3,9 +3,13 @@
 ### Features
 1. [#105](https://github.com/influxdata/influxdb-client-php/pull/105): Add support for latest `guzzlehttp/psr7"`
 1. [#107](https://github.com/influxdata/influxdb-client-php/pull/107): Add support for Parameterized Queries
+1. [#111](https://github.com/influxdata/influxdb-client-php/pull/111): Using ArrayAcces in FluxRecord
 
 ### Bug Fixes
 1. [#109](https://github.com/influxdata/influxdb-client-php/pull/109): PHP 8.1 deprecation warnings
+
+### Documentation
+1. [#111](https://github.com/influxdata/influxdb-client-php/pull/111): Added new examples 
 
 ## 2.4.0 [2021-11-26]
 
