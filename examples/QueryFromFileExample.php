@@ -36,7 +36,7 @@ for ($i = 1; $i <= 10; $i++) {
         ->addTag("location", "Prague")
         ->addField("temperature", rand(-5, 15))
         ->time($dateNow->getTimestamp());
-    $pointArray[] = clone($point);
+    $pointArray[] = $point;
     $dateNow->sub(new DateInterval('P1D'));
 }
 

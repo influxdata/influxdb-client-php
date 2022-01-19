@@ -36,7 +36,7 @@ for ($i = 1; $i <= 10; $i++) {
         ->addTag("location", "San Francisco")
         ->addField("temperature", rand(5, 25))
         ->time($dateNow->getTimestamp());
-    $pointArray[] = clone($point);
+    $pointArray[] = $point;
     $dateNow->sub(new DateInterval('P1D'));
 }
 
@@ -62,8 +62,7 @@ $result = $queryApi->queryStream($query);
 // Working with returned data into Stream
 //
 printf("\n\n----------------------------- Query Stream -------------------------------\n\n");
-foreach ($result->each() as $record)
-{
+foreach ($result->each() as $record) {
     $location = $record["location"];
     $temperature = $record->getValue();
     $time = $record->getTime();

@@ -36,7 +36,7 @@ for ($i = 1; $i <= 10; $i++) {
         ->addTag("location", "Sydney")
         ->addField("temperature", rand(15, 30))
         ->time($dateNow->getTimestamp());
-    $pointArray[] = clone($point);
+    $pointArray[] = $point;
     $dateNow->sub(new DateInterval('P1D'));
 }
 
@@ -53,10 +53,11 @@ $queryApi = $client->createQueryApi();
 //
 $result = $queryApi->queryRaw(
     "from(bucket: \"my-bucket\")
-    |> range(start: 0)
-    |> filter(fn: (r) => r[\"_measurement\"] == \"weather\"
-    and r[\"_field\"] == \"temperature\"
-    and r[\"location\"] == \"Sydney\")");
+                |> range(start: 0)
+                |> filter(fn: (r) => r[\"_measurement\"] == \"weather\"
+                                 and r[\"_field\"] == \"temperature\"
+                                 and r[\"location\"] == \"Sydney\")"
+);
 
 printf("\n\n-------------------------- Query Raw ----------------------------\n\n");
 printf($result);

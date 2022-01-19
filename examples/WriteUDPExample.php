@@ -56,7 +56,6 @@ try {
             print "$measurement:   Temperature in $location at $dateTime is $temperature °C\n";
         }
     }
-
 } catch (Exception|Throwable $e) {
     print "\n\n $e \n\n";
 }

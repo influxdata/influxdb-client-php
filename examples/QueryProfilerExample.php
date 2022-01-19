@@ -36,7 +36,7 @@ for ($i = 1; $i <= 10; $i++) {
         ->addTag("location", "New York")
         ->addField("temperature", rand(10, 25))
         ->time($dateNow->getTimestamp());
-    $pointArray[] = clone($point);
+    $pointArray[] = $point;
     $dateNow->sub(new DateInterval('P1D'));
 }
 
@@ -48,12 +48,14 @@ $writeApi->close();
 //
 $queryApi = $client->createQueryApi();
 $query = "import \"profiler\"
-    option profiler.enabledProfilers = [\"query\", \"operator\"]
-    from(bucket: \"my-bucket\")
-    |> range(start: 0)
-    |> filter(fn: (r) => r[\"_measurement\"] == \"weather\"
-    and r[\"_field\"] == \"temperature\"
-    and r[\"location\"] == \"New York\")";
+          option profiler.enabledProfilers = [\"query\", \"operator\"]
+
+          from(bucket: \"my-bucket\")
+                |> range(start: 0)
+                |> filter(fn: (r) => r[\"_measurement\"] == \"weather\"
+                                 and r[\"_field\"] == \"temperature\"
+                                 and r[\"location\"] == \"New York\")";
+
 $result = $queryApi->query($query);
 
 printf("\n\n----------------------------- query result -------------------------------\n\n");
@@ -62,7 +64,7 @@ foreach ($result as $table) {
         $measurement = $record->getMeasurement();
 
         // Get Query profiler
-        if (strpos($measurement, 'profiler/query') !== false){
+        if (strpos($measurement, 'profiler/query') !== false) {
             $totalDuration = $record["TotalDuration"];
             $queueDuration = $record["QueueDuration"];
             $compileDuration = $record["CompileDuration"];
@@ -75,7 +77,7 @@ foreach ($result as $table) {
                    Execute Duration:   $executeDuration\n";
         }
         // Get Operator profiler
-        elseif (strpos($measurement, 'profiler/operator') !== false){
+        elseif (strpos($measurement, 'profiler/operator') !== false) {
             $minDuration = $record["MinDuration"];
             $maxDuration = $record["MaxDuration"];
             $durationSum = $record["DurationSum"];
@@ -88,7 +90,7 @@ foreach ($result as $table) {
                    Mean Duration:      $meanDuration\n";
         }
         //Get query data
-        else{
+        else {
             $location = $record["location"];
             $temperature = $record->getValue();
             $time = $record->getTime();
