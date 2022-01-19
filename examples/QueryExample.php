@@ -74,7 +74,7 @@ $result = $queryApi->query(
 // Encoding to JSON with json_encode
 //
 printf("\n\n----------------------- Query (JsonEncode) -----------------------\n\n");
-echo json_encode( $result, JSON_PRETTY_PRINT);
+echo json_encode($result, JSON_PRETTY_PRINT);
 
 //
 // Working with returned data in FluxTables
