@@ -93,7 +93,8 @@ class FluxRecord implements ArrayAccess
         throw new RuntimeException("Record doesn't contain column named '$column'. Columns: '$array_keys'.");
     }
 
-    public function offsetSet($offset, $value): void {
+    public function offsetSet($offset, $value): void
+    {
         if (is_null($offset)) {
             $this->values[] = $value;
         } else {
@@ -101,16 +102,19 @@ class FluxRecord implements ArrayAccess
         }
     }
 
-    public function offsetExists($offset): bool {
+    public function offsetExists($offset): bool
+    {
         return isset($this->values[$offset]);
     }
 
-    public function offsetUnset($offset): void {
+    public function offsetUnset($offset): void
+    {
         unset($this->values[$offset]);
     }
 
     #[\ReturnTypeWillChange]
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return $this->values[$offset] ?? null;
     }
 }
