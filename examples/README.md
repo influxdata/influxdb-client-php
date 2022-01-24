@@ -7,7 +7,7 @@
 
 ## Queries
 - [QueryRawExample.php](QueryRawExample.php) - How to query data into `string`
-- [QueryExample.php](QueryExample.php) - How to query data into `FluxTable` and using `json_encode`
+- [QueryExample.php](QueryExample.php) - How to query data into `FluxTable` and encode results into JSON
 - [QueryStreamExample.php](QueryStreamExample.php) - How to query data into `Stream`
 - [QueryProfilerExample.php](QueryProfilerExample.php) - How to query data with profilers
 - [QueryFromFileExample.php](QueryFromFileExample.php) - How to use a Flux query defined in a separate file
