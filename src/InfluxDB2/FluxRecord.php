@@ -3,6 +3,7 @@
 
 namespace InfluxDB2;
 
+use ArrayAccess;
 use RuntimeException;
 
 /**
@@ -10,7 +11,7 @@ use RuntimeException;
  * @see http://bit.ly/flux-spec#record
  * @package InfluxDB2
  */
-class FluxRecord
+class FluxRecord implements ArrayAccess
 {
     public $table;
     public $values;
@@ -90,5 +91,30 @@ class FluxRecord
         $array_keys = join(", ", array_keys($this->values));
 
         throw new RuntimeException("Record doesn't contain column named '$column'. Columns: '$array_keys'.");
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        if (is_null($offset)) {
+            $this->values[] = $value;
+        } else {
+            $this->values[$offset] = $value;
+        }
+    }
+
+    public function offsetExists($offset): bool
+    {
+        return isset($this->values[$offset]);
+    }
+
+    public function offsetUnset($offset): void
+    {
+        unset($this->values[$offset]);
+    }
+
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        return $this->values[$offset] ?? null;
     }
 }

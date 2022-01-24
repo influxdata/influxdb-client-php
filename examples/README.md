@@ -1,18 +1,21 @@
 # Examples
 
 ## Writes
-
-- [WriteBatchingExample.php](WriteBatchingExample.php) - How to write data in batches
+- [WriteExample.php](WriteExample.php) - How to write data to InfluxDB via default API using `Point` structure or line protocol
+- [WriteBatchingExample.php](WriteBatchingExample.php) - How to use batching for more performance writes
+- [WriteUDPExample.php](WriteUDPExample.php) - How to write data to InfluxDB via UDP
 
 ## Queries
-
+- [QueryRawExample.php](QueryRawExample.php) - How to query data into `string`
+- [QueryExample.php](QueryExample.php) - How to query data into `FluxTable` and encode results into JSON
+- [QueryStreamExample.php](QueryStreamExample.php) - How to query data into `Stream`
+- [QueryProfilerExample.php](QueryProfilerExample.php) - How to query data with profilers
+- [QueryFromFileExample.php](QueryFromFileExample.php) - How to use a Flux query defined in a separate file
 - [ParameterizedQuery.php](ParameterizedQuery.php) - How to use parameterized Flux queries
 
 ## Management API
-
-- [CreateBucketExample.php](CreateBucketExample.php) - How to create Buckets
+- [BucketManagementExample.php](BucketManagementExample.php) - How to create, list and delete Buckets
 
 ## Others
-
-- [InfluxDB_18_Example.php](InfluxDB_18_Example.php) - How to connect to InfluxDB 1.8
-- [DeleteDataExample.php](DeleteDataExample.php) - How to use `DeleteService` and predicate to delete time series data
+- [InfluxDB_18_Example.php](InfluxDB_18_Example.php) - How to use forward compatibility APIs from InfluxDB 1.8
+- [DeleteDataExample.php](DeleteDataExample.php) - How to delete data from InfluxDB by client
