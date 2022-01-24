@@ -1,4 +1,4 @@
-FROM php:7.1-cli AS dev
+FROM php:7.2-cli AS dev
 
 COPY --from=composer /usr/bin/composer /usr/bin/
 
@@ -7,4 +7,4 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN apt-get update && apt-get -y install git procps make zsh
+RUN apt-get update && apt-get -y install git procps make zsh unzip
