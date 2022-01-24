@@ -1,11 +1,14 @@
-## 2.6.0 [unreleased]
+## 3.0.0 [unreleased]
+
+### Features
+1. [#114](https://github.com/influxdata/influxdb-client-php/pull/114): Minimal supported version of PHP is `7.2`
 
 ## 2.5.0 [2022-01-20]
 
 ### Features
 1. [#105](https://github.com/influxdata/influxdb-client-php/pull/105): Add support for latest `guzzlehttp/psr7"`
 1. [#107](https://github.com/influxdata/influxdb-client-php/pull/107): Add support for Parameterized Queries
-1. [#111](https://github.com/influxdata/influxdb-client-php/pull/111): Using ArrayAcces in FluxRecord
+1. [#111](https://github.com/influxdata/influxdb-client-php/pull/111): Using `ArrayAccess` in `FluxRecord`
 
 ### Bug Fixes
 1. [#109](https://github.com/influxdata/influxdb-client-php/pull/109): PHP 8.1 deprecation warnings
