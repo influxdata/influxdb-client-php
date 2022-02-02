@@ -3,6 +3,9 @@
 ### Features
 1. [#114](https://github.com/influxdata/influxdb-client-php/pull/114): Minimal supported version of PHP is `7.2`
 
+### Bug Fixes
+1. [#115](https://github.com/influxdata/influxdb-client-php/pull/115): Add missing PermissionResources from Cloud API definition
+
 ## 2.5.0 [2022-01-20]
 
 ### Features
