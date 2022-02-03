@@ -198,8 +198,10 @@ class PermissionResource implements ModelInterface, ArrayAccess
     const TYPE_DBRP = 'dbrp';
     const TYPE_NOTEBOOKS = 'notebooks';
     const TYPE_ANNOTATIONS = 'annotations';
-
-
+    const TYPE_REMOTES = 'remotes';
+    const TYPE_REPLICATIONS = 'replications';
+    const TYPE_FLOWS = 'flows';
+    const TYPE_FUNCTIONS = 'functions';
 
     /**
      * Gets allowable values of the enum
@@ -229,6 +231,10 @@ class PermissionResource implements ModelInterface, ArrayAccess
             self::TYPE_DBRP,
             self::TYPE_NOTEBOOKS,
             self::TYPE_ANNOTATIONS,
+            self::TYPE_REMOTES,
+            self::TYPE_REPLICATIONS,
+            self::TYPE_FLOWS,
+            self::TYPE_FUNCTIONS,
         ];
     }
 
