@@ -2,6 +2,7 @@
 
 ### Features
 1. [#114](https://github.com/influxdata/influxdb-client-php/pull/114): Minimal supported version of PHP is `7.2`
+2. [#117](https://github.com/influxdata/influxdb-client-php/pull/117): Using `DateTimeInterface` to be more compatible with all `DateTime` objects (like `DateTimeImmutable`) in `Point`
 
 ### Bug Fixes
 1. [#115](https://github.com/influxdata/influxdb-client-php/pull/115): Add missing PermissionResources from Cloud API definition

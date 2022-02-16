@@ -3,6 +3,7 @@
 namespace InfluxDB2Test;
 
 use DateTime;
+use DateTimeImmutable;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use PHPUnit\Framework\TestCase;
@@ -149,12 +150,11 @@ class PointTest extends TestCase
         $this->assertEquals('h2o,location=europe level=2i 123', $point->toLineProtocol());
     }
 
-    public function testTimeFormatting()
+    /**
+     * @dataProvider providerDateTime
+     */
+    public function testTimeFormatting($time)
     {
-        $time = new DateTime();
-        $time->setDate(2015, 10, 15);
-        $time->setTime(8, 20, 15);
-
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
@@ -182,6 +182,22 @@ class PointTest extends TestCase
             ->time($time, WritePrecision::NS);
 
         $this->assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
+    }
+
+    public function providerDateTime()
+    {
+        return [
+            [
+                (new DateTime())
+                    ->setDate(2015, 10, 15)
+                    ->setTime(8, 20, 15)
+            ],
+            [
+                (new DateTimeImmutable())
+                    ->setDate(2015, 10, 15)
+                    ->setTime(8, 20, 15)
+            ],
+        ];
     }
 
     public function testTimeFormattingDefault()
