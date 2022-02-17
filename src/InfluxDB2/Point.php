@@ -2,7 +2,7 @@
 
 namespace InfluxDB2;
 
-use DateTime;
+use DateTimeInterface;
 use InfluxDB2\Model\WritePrecision;
 
 class Point
@@ -218,7 +218,7 @@ class Point
 
         if (is_double($time) || is_float($time)) {
             $time = round($time);
-        } elseif ($time instanceof DateTime) {
+        } elseif ($time instanceof DateTimeInterface) {
             $seconds = $time->getTimestamp();
 
             switch ($this->precision) {
