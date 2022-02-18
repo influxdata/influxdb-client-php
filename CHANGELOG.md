@@ -1,4 +1,4 @@
-## 3.0.0 [unreleased]
+## 2.6.0 [2022-02-18]
 
 ### Features
 1. [#114](https://github.com/influxdata/influxdb-client-php/pull/114): Minimal supported version of PHP is `7.2`
