@@ -1,5 +1,8 @@
 ## 2.7.0 [unreleased]
 
+### CI
+1. [#118](https://github.com/influxdata/influxdb-client-php/pull/118): Use new Codecov uploader for reporting code coverage
+
 ## 2.6.0 [2022-02-18]
 
 ### Features

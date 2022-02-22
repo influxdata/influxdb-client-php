@@ -49,13 +49,25 @@ commands:
           command: |
             composer install -n --prefer-dist
       - run:
+          name: Install xdebug
+          command: |
+            sudo pecl install xdebug
+      - run:
           name: Run tests
           command: |
             export XDEBUG_MODE=coverage
             vendor/bin/phpunit tests --coverage-clover=coverage.xml
       - run:
-          name: "Collecting coverage reports"
-          command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+          name: Collecting coverage reports
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig
+            curl -s https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+            gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+            shasum -a 256 -c codecov.SHA256SUM
+            chmod +x ./codecov
+            ./codecov
       - save_cache:
           name: Saving Cache
           key: composer-v3-{{ checksum "composer.json" }}-<< parameters.php-image >>
