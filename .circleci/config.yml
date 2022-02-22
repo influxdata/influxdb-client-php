@@ -49,6 +49,10 @@ commands:
           command: |
             composer install -n --prefer-dist
       - run:
+          name: Install xdebug
+          command: |
+            sudo pecl install xdebug
+      - run:
           name: Run tests
           command: |
             export XDEBUG_MODE=coverage
