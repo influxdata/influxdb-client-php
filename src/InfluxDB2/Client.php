@@ -3,6 +3,7 @@
 namespace InfluxDB2;
 
 use InfluxDB2\Model\HealthCheck;
+use InfluxDB2\Service\InvocableScriptsService;
 use InfluxDB2\Service\PingService;
 use ReflectionClass;
 use RuntimeException;
@@ -97,6 +98,18 @@ class Client
     public function createQueryApi(): QueryApi
     {
         return new QueryApi($this->options);
+    }
+
+    /**
+     * Create an InvocableScripts API instance.
+     *
+     * @return InvocableScriptsApi
+     */
+    public function createInvocableScriptsApi(): InvocableScriptsApi
+    {
+        /** @var InvocableScriptsService $service */
+        $service = $this->createService(InvocableScriptsService::class);
+        return new InvocableScriptsApi($service);
     }
 
     /**
