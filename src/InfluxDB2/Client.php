@@ -109,7 +109,7 @@ class Client
     {
         /** @var InvocableScriptsService $service */
         $service = $this->createService(InvocableScriptsService::class);
-        return new InvocableScriptsApi($service);
+        return new InvocableScriptsApi($this->options, $service);
     }
 
     /**
