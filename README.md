@@ -9,7 +9,7 @@
 ![PHP from Packagist](https://img.shields.io/packagist/php-v/influxdata/influxdb-client-php)
 [![Slack Status](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://www.influxdata.com/slack)
 
-This repository contains the reference PHP client for the InfluxDB 2.0.
+This repository contains the reference PHP client for the InfluxDB 2.x.
 
 #### Note: Use this client library with InfluxDB 2.x and InfluxDB 1.8+ ([see details](#influxdb-18-api-compatibility)). For connecting to InfluxDB 1.7 or earlier instances, use the [influxdb-php](https://github.com/influxdata/influxdb-php) client library.
 
@@ -23,7 +23,7 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
 - [Advanced Usage](#advanced-usage)
     - [Check the server status](#check-the-server-status)
     - [InfluxDB 1.8 API compatibility](#influxdb-18-api-compatibility)
-    - [InfluxDB 2.0 management API](#influxdb-20-management-api)
+    - [InfluxDB 2.x management API](#influxdb-2x-management-api)
     - [Writing via UDP](#writing-via-udp)
     - [Delete data](#delete-data)
     - [Proxy and redirects](#proxy-and-redirects)
@@ -34,7 +34,7 @@ This repository contains the reference PHP client for the InfluxDB 2.0.
 
 This section contains links to the client library documentation.
 
-* [Product documentation](https://docs.influxdata.com/influxdb/v2.0/tools/client-libraries/), [Getting Started](#usage)
+* [Product documentation](https://docs.influxdata.com/influxdb/latest/tools/client-libraries/), [Getting Started](#usage)
 * [Examples](examples)
 * [API Reference](https://influxdata.github.io/influxdb-client-php/) 
 * [Changelog](CHANGELOG.md)
@@ -231,7 +231,7 @@ $client->close();
 ### Writing data
 
 The [WriteApi](https://github.com/influxdata/influxdb-client-php/blob/master/src/InfluxDB2/WriteApi.php) supports 
-synchronous and batching writes into InfluxDB 2.0. In default api uses synchronous write. To enable batching you 
+synchronous and batching writes into InfluxDB 2.x. In default api uses synchronous write. To enable batching you 
 can use WriteOption.
 
 ```php
@@ -406,25 +406,25 @@ $this->writeApi->write($point);
 
 ### Check the server status 
 
-Server availability can be checked using the `$client->ping();` method. That is equivalent of the [influx ping](https://v2.docs.influxdata.com/v2.0/reference/cli/influx/ping/).
+Server availability can be checked using the `$client->ping();` method. That is equivalent of the [influx ping](https://docs.influxdata.com/influxdb/latest/reference/cli/influx/ping/).
 
 ### InfluxDB 1.8 API compatibility
 
-[InfluxDB 1.8.0 introduced forward compatibility APIs](https://docs.influxdata.com/influxdb/v1.8/tools/api/#influxdb-2-0-api-compatibility-endpoints) for InfluxDB 2.0. This allow you to easily move from InfluxDB 1.x to InfluxDB 2.0 Cloud or open source.
+[InfluxDB 1.8.0 introduced forward compatibility APIs](https://docs.influxdata.com/influxdb/v1.8/tools/api/#influxdb-2-0-api-compatibility-endpoints) for InfluxDB 2.x. This allow you to easily move from InfluxDB 1.x to InfluxDB 2.x Cloud or open source.
 
 The following forward compatible APIs are available:
 
-| API | Endpoint | Description |
-|:----------|:----------|:----------|
-| [QueryApi.php](src/InfluxDB2/QueryApi.php) | [/api/v2/query](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-query-http-endpoint) | Query data in InfluxDB 1.8.0+ using the InfluxDB 2.0 API and [Flux](https://docs.influxdata.com/flux/latest/) _(endpoint should be enabled by [`flux-enabled` option](https://docs.influxdata.com/influxdb/latest/administration/config/#flux-enabled-false))_ |
-| [WriteApi.php](src/InfluxDB2/WriteApi.php) | [/api/v2/write](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-write-http-endpoint) | Write data to InfluxDB 1.8.0+ using the InfluxDB 2.0 API |
-| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/latest/tools/api/#health-http-endpoint) | Check the health of your InfluxDB instance |    
+| API | Endpoint | Description                                                                                                                                                                                                                                                    |
+|:----------|:----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [QueryApi.php](src/InfluxDB2/QueryApi.php) | [/api/v2/query](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-query-http-endpoint) | Query data in InfluxDB 1.8.0+ using the InfluxDB 2.x API and [Flux](https://docs.influxdata.com/flux/latest/) _(endpoint should be enabled by [`flux-enabled` option](https://docs.influxdata.com/influxdb/latest/administration/config/#flux-enabled-false))_ |
+| [WriteApi.php](src/InfluxDB2/WriteApi.php) | [/api/v2/write](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-write-http-endpoint) | Write data to InfluxDB 1.8.0+ using the InfluxDB 2.x API                                                                                                                                                                                                       |
+| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/latest/tools/api/#health-http-endpoint) | Check the health of your InfluxDB instance                                                                                                                                                                                                                     |    
 
 For detail info see [InfluxDB 1.8 example](examples/InfluxDB_18_Example.php).
 
-### InfluxDB 2.0 management API
+### InfluxDB 2.x management API
 
-InfluxDB 2.0 API client is generated using [`influxdb-clients-apigen`](https://github.com/bonitoo-io/influxdb-clients-apigen). Sources are in `InfluxDB2\Service\`  and `InfluxDB2\Model\` packages.
+InfluxDB 2.x API client is generated using [`influxdb-clients-apigen`](https://github.com/bonitoo-io/influxdb-clients-apigen). Sources are in `InfluxDB2\Service\`  and `InfluxDB2\Model\` packages.
 
 The following example shows how to use `OrganizationService` and `BucketService` to create a new bucket.  
 
@@ -509,7 +509,7 @@ $writer->close();
 
 ### Delete data
 
-The [DefaultService.php](/src/InfluxDB2/Service/DefaultService.php) supports deletes [points](https://v2.docs.influxdata.com/v2.0/reference/glossary/#point) from an InfluxDB bucket.
+The [DefaultService.php](/src/InfluxDB2/Service/DefaultService.php) supports deletes [points](https://docs.influxdata.com/influxdb/latest/reference/syntax/line-protocol/) from an InfluxDB bucket.
 
 ```php
 <?php
