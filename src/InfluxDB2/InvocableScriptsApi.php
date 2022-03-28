@@ -106,7 +106,6 @@ class InvocableScriptsApi extends DefaultApi
      */
     public function invokeScriptStream(string $scriptId, array $params = null): FluxCsvParser
     {
-
         $invocation_params = new ScriptInvocationParams();
         $invocation_params->setParams($params);
 
