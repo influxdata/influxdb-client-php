@@ -373,6 +373,24 @@ class FluxCsvParserTest extends TestCase
         $this->assertEquals(1, sizeof($tables[1]->records));
     }
 
+    public function testParseWithoutDatatype()
+    {
+        $data = ",result,table,_start,_stop,_field,_measurement,host,region,_value2,value1,value_str\n" .
+            ",,0,1677-09-21T00:12:43.145224192Z,2018-07-16T11:21:02.547596934Z,free,mem,A,west,121,11,test\n" .
+            ",,1,1677-09-21T00:12:43.145224192Z,2018-07-16T11:21:02.547596934Z,free,mem,A,west,121,11,test\n";
+
+        $parser = new FluxCsvParser($data, false, "only_names");
+        $tables = $parser->parse()->tables;
+
+        $this->assertEquals(2, sizeof($tables));
+        $this->assertEquals(11, sizeof($tables[0]->columns));
+        $this->assertEquals(1, sizeof($tables[0]->records));
+        $this->assertEquals(11, sizeof($tables[0]->records[0]->values));
+        $this->assertEquals("0", $tables[0]->records[0]->values['table']);
+        $this->assertEquals("11", $tables[0]->records[0]->values['value1']);
+        $this->assertEquals("west", $tables[0]->records[0]->values['region']);
+    }
+
     public function testRecordDoesntContainsKey()
     {
         $data = "#group,false,false,true,true,true,true,true,true,false,false\n" .
