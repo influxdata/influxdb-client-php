@@ -17,7 +17,7 @@ $token = 'my-token';
 // Creating client
 //
 $client = new Client([
-    "url" => "http://localhost:8086",
+    "url" => "https://us-west-2-1.aws.cloud2.influxdata.com",
     "token" => $token,
     "bucket" => $bucket,
     "org" => $organization,
