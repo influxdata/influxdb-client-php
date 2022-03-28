@@ -19,3 +19,4 @@
 ## Others
 - [InfluxDB_18_Example.php](InfluxDB_18_Example.php) - How to use forward compatibility APIs from InfluxDB 1.8
 - [DeleteDataExample.php](DeleteDataExample.php) - How to delete data from InfluxDB by client
+- [InvocableScripts.php](InvocableScripts.php) - How to use Invocable scripts Cloud API to create custom endpoints that query data
