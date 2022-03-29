@@ -18,6 +18,7 @@ class FluxCsvParser
 
     private $response;
     private $stream;
+    private $responseMode;
     private $resource;
 
     /* @var  $variable int */
@@ -41,12 +42,14 @@ class FluxCsvParser
      * FluxCsvParser constructor.
      * @param $response mixed response to by parsed
      * @param $stream bool use streaming
+     * @param $responseMode string metadata expected in response ('full', 'only_names')
      */
-    public function __construct($response, $stream = false)
+    public function __construct($response, bool $stream = false, string $responseMode = "full")
     {
         $this->response = is_string($response) ? null : $response;
         $this->resource = is_string($response) ? $this->stringToStream($response) : $response->detach();
         $this->stream = $stream;
+        $this->responseMode = $responseMode;
         $this->tableIndex = 0;
         if (!$stream) {
             $this->tables = [];
@@ -109,7 +112,8 @@ class FluxCsvParser
     {
         $token = $csv[0];
         # start new table
-        if (in_array($token, self::ANNOTATIONS) && !$this->startNewTable) {
+        if ((in_array($token, self::ANNOTATIONS) && !$this->startNewTable)
+            || ($this->responseMode == "only_names" && is_null($this->table))) {
             # Return already parsed DataFrame
             $this->startNewTable = true;
             $this->table = new FluxTable();
@@ -190,6 +194,10 @@ class FluxCsvParser
     {
         # parse column names
         if ($this->startNewTable) {
+            if ($this->responseMode == 'only_names' && empty($this->table->columns)) {
+                $this->addDataTypes($this->table, array_fill(0, sizeof($csv), 'string'));
+                $this->groups = array_fill(0, sizeof($csv), 'false');
+            }
             $this->addGroups($this->table, $this->groups);
             $this->addColumnNamesAndTags($this->table, $csv);
             $this->startNewTable = false;

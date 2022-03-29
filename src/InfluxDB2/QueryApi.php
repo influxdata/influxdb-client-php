@@ -7,7 +7,7 @@ use InfluxDB2\Model\Query;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * The client of the InfluxDB 2.0 that implement Query HTTP API endpoint.
+ * The client of the InfluxDB 2.x that implement Query HTTP API endpoint.
  *
  * @package InfluxDB2
  */
@@ -50,7 +50,7 @@ class QueryApi extends DefaultApi
     }
 
     /**
-     * Executes the Flux query against the InfluxDB 2.0 and synchronously map the whole response to FluxTable[]
+     * Executes the Flux query against the InfluxDB 2.x and synchronously map the whole response to FluxTable[]
      * NOTE: This method is not intended for large query results.
      *
      * @param string|Query $query
@@ -77,7 +77,7 @@ class QueryApi extends DefaultApi
     }
 
     /**
-     * Executes the Flux query against the InfluxDB 2.0 and returns generator to stream the result.
+     * Executes the Flux query against the InfluxDB 2.x and returns generator to stream the result.
      *
      * @param string| Query $query
      * @param string|null $org
