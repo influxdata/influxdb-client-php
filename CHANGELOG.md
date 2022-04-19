@@ -1,4 +1,4 @@
-## 2.7.0 [unreleased]
+## 2.7.0 [2022-04-19]
 
 ### Features
 1. [#119](https://github.com/influxdata/influxdb-client-php/pull/119): Add `InvocableScriptsApi` to create, update, list, delete and invoke scripts by seamless way
