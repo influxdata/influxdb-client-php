@@ -6,7 +6,7 @@ use InfluxDB2\Model\Script;
 use InfluxDB2\Model\ScriptCreateRequest;
 use InfluxDB2\Model\ScriptInvocationParams;
 use InfluxDB2\Model\ScriptUpdateRequest;
-use InfluxDB2\Service\InvocableScriptsService;
+use InfluxDB2\Service\InvokableScriptsService;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -17,17 +17,17 @@ use Psr\Http\Message\StreamInterface;
  *
  * @package InfluxDB2
  */
-class InvocableScriptsApi extends DefaultApi
+class InvokableScriptsApi extends DefaultApi
 {
     private $service;
 
     /**
-     * InvocableScriptsApi constructor.
+     * InvokableScriptsApi constructor.
      *
      * @param array $options default array options
-     * @param InvocableScriptsService $service HTTP API for Invocable Scripts
+     * @param InvokableScriptsService $service HTTP API for Invokable Scripts
      */
-    public function __construct(array $options, InvocableScriptsService $service)
+    public function __construct(array $options, InvokableScriptsService $service)
     {
         parent::__construct($options);
         $this->service = $service;

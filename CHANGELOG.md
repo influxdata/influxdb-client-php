@@ -3,7 +3,7 @@
 ## 2.7.0 [2022-04-19]
 
 ### Features
-1. [#119](https://github.com/influxdata/influxdb-client-php/pull/119): Add `InvocableScriptsApi` to create, update, list, delete and invoke scripts by seamless way
+1. [#119](https://github.com/influxdata/influxdb-client-php/pull/119): Add `InvokableScriptsApi` to create, update, list, delete and invoke scripts by seamless way
 
 ### CI
 1. [#118](https://github.com/influxdata/influxdb-client-php/pull/118): Use new Codecov uploader for reporting code coverage
