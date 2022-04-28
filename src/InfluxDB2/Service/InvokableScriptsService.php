@@ -1,6 +1,6 @@
 <?php
 /**
- * InvocableScriptsService
+ * InvokableScriptsService
  * PHP version 5
  *
  * @category Class
@@ -40,14 +40,14 @@ use InfluxDB2\HeaderSelector;
 use InfluxDB2\ObjectSerializer;
 
 /**
- * InvocableScriptsService Class Doc Comment
+ * InvokableScriptsService Class Doc Comment
  *
  * @category Class
  * @package  InfluxDB2
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class InvocableScriptsService
+class InvokableScriptsService
 {
     /**
      * @var ClientInterface

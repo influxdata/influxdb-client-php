@@ -1,8 +1,8 @@
 <?php
 /**
- * Show to use Invocable scripts Cloud API to create custom endpoints that query data
+ * Show to use Invokable scripts Cloud API to create custom endpoints that query data
  *
- * Invocable Scripts are supported only in InfluxDB Cloud, currently there is no support in InfluxDB OSS.
+ * Invokable Scripts are supported only in InfluxDB Cloud, currently there is no support in InfluxDB OSS.
  */
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -39,12 +39,12 @@ $point2 = Point::measurement("my_measurement")
 $client->createWriteApi()->write([$point1, $point2]);
 
 //
-// Creating InvocableScripts Api
+// Creating InvokableScripts Api
 //
-$scriptsApi = $client->createInvocableScriptsApi();
+$scriptsApi = $client->createInvokableScriptsApi();
 
 //
-// Create Invocable Script
+// Create Invokable Script
 //
 print "\n------- Create -------\n";
 $scriptQuery = 'from(bucket: params.bucket_name) |> range(start: -30d) |> limit(n:2)';
@@ -58,7 +58,7 @@ $createdScript = $scriptsApi->createScript($createRequest);
 print $createdScript;
 
 //
-// Update Invocable Script
+// Update Invokable Script
 //
 print "\n------- Update -------\n";
 $updateRequest = new ScriptUpdateRequest([
