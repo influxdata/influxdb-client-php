@@ -1,4 +1,4 @@
-## 2.8.0 [unreleased]
+## 2.8.0 [2022-05-20]
 
 ### Breaking Changes
 1. [#121](https://github.com/influxdata/influxdb-client-php/pull/121): Rename `InvocableScripts` to `InvokableScripts`
