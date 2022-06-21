@@ -107,7 +107,7 @@ class DefaultApiTest extends BasicTest
         $this->mockHandler->append(
             new Response(
                 307,
-                ['location' => 'http://localhost:8088']
+                ['location' => 'http://localhost:8086']
             ),
             new Response(204, [], "{\"status\": \"pass\"}")
         );
