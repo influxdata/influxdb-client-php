@@ -125,6 +125,6 @@ class DefaultApiTest extends BasicTest
      */
     private function getHeader(Request $request): string
     {
-        return implode(' ', $request->getHeaders()['Authorization']);
+        return implode(' ', (array)$request->getHeaders()['Authorization']);
     }
 }
