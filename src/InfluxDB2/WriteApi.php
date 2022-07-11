@@ -138,7 +138,7 @@ class WriteApi extends DefaultApi implements Writer
             $this->writeOptions->exponentialBase,
             $this->writeOptions->maxRetryTime,
             $this->writeOptions->jitterInterval,
-            $this->options['logFile'] ?? "php://output"
+            $this->options
         );
 
         $retry->retry(function () use ($data, $queryParams) {

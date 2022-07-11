@@ -5,8 +5,13 @@ namespace InfluxDB2;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\RedirectMiddleware;
 use InvalidArgumentException;
+use Psr\Http\Message\MessageInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class DefaultApi
@@ -21,14 +26,29 @@ class DefaultApi
      * @var int
      */
     private $timeout;
+
     /**
      * DefaultApi constructor.
-     * @param $options
+     * @param array $options
      */
     public function __construct(array $options)
     {
         $this->options = $options;
         $this->timeout = $this->options['timeout'] ?? self::DEFAULT_TIMEOUT;
+        $stack = new HandlerStack();
+        $stack->setHandler(new CurlHandler());
+
+        $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
+            DefaultApi::log("DEBUG", "-> " . $request->getMethod() . " " . $request->getUri(), $this->options);
+            $this->headers($request, "->");
+            return $request;
+        }));
+        $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
+            DefaultApi::log("DEBUG", "<- HTTP/" . $response->getProtocolVersion() . " " . $response->getStatusCode() . " " . $response->getReasonPhrase(), $this->options);
+            $this->headers($response, "<-");
+            return $response;
+        }));
+
         $this->http = new Client([
             'base_uri' => $this->options['url'],
             'timeout' => $this->timeout,
@@ -38,6 +58,7 @@ class DefaultApi
             ],
             'proxy' => $this->options['proxy'] ?? null,
             'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
+            'handler' => $stack
         ]);
     }
 
@@ -73,11 +94,6 @@ class DefaultApi
                 'stream' => $stream,
                 'timeout' => $timeout ?? $this->timeout
             ];
-
-            // enable debug
-            if (array_key_exists("debug", $this->options)) {
-                $options['debug'] = $this->options["debug"];
-            }
 
             //execute post call
             $response = $this->http->requestAsync($method, $uriPath, $options)->wait();
@@ -132,5 +148,34 @@ class DefaultApi
             ));
             throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$options}");
         }
+    }
+
+    /**
+     * Log the message with required severity.
+     *
+     * @param string $level LOG level
+     * @param string $message Message to log
+     * @param array $options Client options with logFile.
+     * @return void
+     */
+    public static function log(string $level, string $message, array $options): void
+    {
+        $logDate = date('H:i:s d-M-Y');
+        file_put_contents($options["logFile"] ?? "php://output", "[$logDate]: [$level] - $message" . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * Log HTTP headers.
+     *
+     * @param MessageInterface $message HTTP request or response.
+     * @param string $prefix LOG prefix
+     * @return void
+     */
+    private function headers(MessageInterface $message, string $prefix): void
+    {
+        foreach ($message->getHeaders() as $key => $values) {
+            DefaultApi::log("DEBUG", $prefix . " $key: " . implode(', ', $values), $this->options);
+        }
+        DefaultApi::log("DEBUG", $prefix . " Body: " . $message->getBody(), $this->options);
     }
 }
