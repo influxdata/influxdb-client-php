@@ -38,16 +38,18 @@ class DefaultApi
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
 
-        $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
-            DefaultApi::log("DEBUG", "-> " . $request->getMethod() . " " . $request->getUri(), $this->options);
-            $this->headers($request, "->");
-            return $request;
-        }));
-        $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
-            DefaultApi::log("DEBUG", "<- HTTP/" . $response->getProtocolVersion() . " " . $response->getStatusCode() . " " . $response->getReasonPhrase(), $this->options);
-            $this->headers($response, "<-");
-            return $response;
-        }));
+        if ($this->options['debug'] ?? true) {
+            $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
+                DefaultApi::log("DEBUG", "-> " . $request->getMethod() . " " . $request->getUri(), $this->options);
+                $this->headers($request, "->");
+                return $request;
+            }));
+            $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
+                DefaultApi::log("DEBUG", "<- HTTP/" . $response->getProtocolVersion() . " " . $response->getStatusCode() . " " . $response->getReasonPhrase(), $this->options);
+                $this->headers($response, "<-");
+                return $response;
+            }));
+        }
 
         $this->http = new Client([
             'base_uri' => $this->options['url'],
