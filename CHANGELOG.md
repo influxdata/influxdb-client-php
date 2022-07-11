@@ -1,5 +1,8 @@
 ## 2.9.0 [unreleased]
 
+### Features
+1. [#125](https://github.com/influxdata/influxdb-client-php/pull/125): Add logging for HTTP requests
+
 ## 2.8.0 [2022-05-20]
 
 ### Breaking Changes

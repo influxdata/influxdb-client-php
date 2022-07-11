@@ -30,7 +30,7 @@ class WriteApiIntegrationTest extends TestCase
             "bucket" => "my-bucket",
             "precision" => WritePrecision::NS,
             "org" => "my-org",
-            "debug" => true
+            "debug" => false
         ]);
         $this->writeApi = $this->client->createWriteApi();
     }
