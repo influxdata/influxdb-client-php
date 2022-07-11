@@ -38,12 +38,20 @@ class DefaultApi
 
         if ($this->options['debug'] ?? false) {
             $handler->push(Middleware::mapRequest(function (RequestInterface $request) {
-                DefaultApi::log("DEBUG", "-> " . $request->getMethod() . " " . $request->getUri(), $this->options);
+                DefaultApi::log("DEBUG", "-> "
+                    . $request->getMethod()
+                    . " "
+                    . $request->getUri(), $this->options);
                 $this->headers($request, "->");
                 return $request;
             }));
             $handler->push(Middleware::mapResponse(function (ResponseInterface $response) {
-                DefaultApi::log("DEBUG", "<- HTTP/" . $response->getProtocolVersion() . " " . $response->getStatusCode() . " " . $response->getReasonPhrase(), $this->options);
+                DefaultApi::log("DEBUG", "<- HTTP/"
+                    . $response->getProtocolVersion()
+                    . " "
+                    . $response->getStatusCode()
+                    . " "
+                    . $response->getReasonPhrase(), $this->options);
                 $this->headers($response, "<-");
                 return $response;
             }));
@@ -174,7 +182,11 @@ class DefaultApi
     private function headers(MessageInterface $message, string $prefix): void
     {
         foreach ($message->getHeaders() as $key => $values) {
-            DefaultApi::log("DEBUG", $prefix . " $key: " . implode(', ', $values), $this->options);
+            $value = implode(', ', $values);
+            if (strcasecmp($key, 'Authorization') == 0) {
+                $value = '***';
+            }
+            DefaultApi::log("DEBUG", $prefix . " $key: " . $value, $this->options);
         }
         DefaultApi::log("DEBUG", $prefix . " Body: " . $message->getBody(), $this->options);
         $message->getBody()->rewind();
