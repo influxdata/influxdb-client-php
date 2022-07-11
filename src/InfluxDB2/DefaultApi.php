@@ -5,7 +5,6 @@ namespace InfluxDB2;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
-use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\RedirectMiddleware;
@@ -35,16 +34,15 @@ class DefaultApi
     {
         $this->options = $options;
         $this->timeout = $this->options['timeout'] ?? self::DEFAULT_TIMEOUT;
-        $stack = new HandlerStack();
-        $stack->setHandler(new CurlHandler());
+        $handler = HandlerStack::create();
 
-        if ($this->options['debug'] ?? true) {
-            $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
+        if ($this->options['debug'] ?? false) {
+            $handler->push(Middleware::mapRequest(function (RequestInterface $request) {
                 DefaultApi::log("DEBUG", "-> " . $request->getMethod() . " " . $request->getUri(), $this->options);
                 $this->headers($request, "->");
                 return $request;
             }));
-            $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
+            $handler->push(Middleware::mapResponse(function (ResponseInterface $response) {
                 DefaultApi::log("DEBUG", "<- HTTP/" . $response->getProtocolVersion() . " " . $response->getStatusCode() . " " . $response->getReasonPhrase(), $this->options);
                 $this->headers($response, "<-");
                 return $response;
@@ -60,7 +58,7 @@ class DefaultApi
             ],
             'proxy' => $this->options['proxy'] ?? null,
             'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
-            'handler' => $stack
+            'handler' => $handler
         ]);
     }
 
@@ -179,5 +177,6 @@ class DefaultApi
             DefaultApi::log("DEBUG", $prefix . " $key: " . implode(', ', $values), $this->options);
         }
         DefaultApi::log("DEBUG", $prefix . " Body: " . $message->getBody(), $this->options);
+        $message->getBody()->rewind();
     }
 }
