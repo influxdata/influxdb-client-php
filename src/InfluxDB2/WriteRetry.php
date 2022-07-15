@@ -17,9 +17,9 @@ class WriteRetry
     private $maxRetryTime;
     private $retryTimout;
     /**
-     * @var mixed|string
+     * @var array
      */
-    private $logFile;
+    private $options;
 
     /**
      * WriteRetry constructor.
@@ -38,7 +38,7 @@ class WriteRetry
      *
      * @param int $maxRetryTime maximum total time when retrying write in milliseconds
      * @param int $jitterInterval the number of milliseconds before the data is written increased by a random amount
-     * @param string $logFile logfile
+     * @param array $options Client options with logFile.
      */
     public function __construct(
         int $maxRetries = 5,
@@ -47,7 +47,7 @@ class WriteRetry
         int $exponentialBase = 2,
         int $maxRetryTime = 180000,
         int $jitterInterval = 0,
-        string $logFile = "php://output"
+        array $options = []
     ) {
         $this->maxRetries = $maxRetries;
         $this->retryInterval = $retryInterval;
@@ -55,7 +55,7 @@ class WriteRetry
         $this->maxRetryTime = $maxRetryTime;
         $this->exponentialBase = $exponentialBase;
         $this->jitterInterval = $jitterInterval;
-        $this->logFile = $logFile;
+        $this->options = $options;
 
         //retry timout
         $this->retryTimout = microtime(true) * 1000 + $maxRetryTime;
@@ -76,13 +76,13 @@ class WriteRetry
             }
             $attempts++;
             if ($attempts > $this->maxRetries) {
-                $this->log("ERROR", "Maximum retry attempts reached");
+                DefaultApi::log("ERROR", "Maximum retry attempts reached", $this->options);
                 throw $e;
             }
 
             // throws exception when max retry time is exceeded
             if (microtime(true) * 1000 > $this->retryTimout) {
-                $this->log("ERROR", "Maximum retry time $this->maxRetryTime ms exceeded");
+                DefaultApi::log("ERROR", "Maximum retry time $this->maxRetryTime ms exceeded", $this->options);
                 throw $e;
             }
 
@@ -98,7 +98,7 @@ class WriteRetry
             $timeoutInSec = $timeout / 1000000.0;
 
             $message = "The retryable error occurred during writing of data. Reason: '$error'. Retry in: {$timeoutInSec}s.";
-            $this->log("WARNING", $message);
+            DefaultApi::log("WARNING", $message, $this->options);
             usleep($timeout);
             $this->retry($callable, $attempts);
         }
@@ -133,11 +133,5 @@ class WriteRetry
             $range_stop = $this->maxRetryDelay;
         }
         return $range_start + ($range_stop - $range_start) * (rand(0, 1000) / 1000);
-    }
-
-    private function log(string $level, string $message): void
-    {
-        $logDate = date('H:i:s d-M-Y');
-        file_put_contents($this->logFile, "[$logDate]: [$level] - $message".PHP_EOL, FILE_APPEND);
     }
 }

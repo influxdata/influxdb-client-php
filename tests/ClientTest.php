@@ -57,4 +57,22 @@ class ClientTest extends BasicTest
 
         $this->client->ping();
     }
+
+    public function test_debug()
+    {
+        $logFilePath = stream_get_meta_data(tmpfile())['uri'];
+        $this->client->close();
+        $this->client = new Client([
+            "url" => "http://localhost:8086",
+            "token" => "my-token",
+            "debug" => true,
+            "logFile" => $logFilePath
+        ]);
+
+        $tables = $this->client->createQueryApi()->query("buckets()", "my-org");
+        $this->assertCount(1, $tables);
+
+        $this->assertStringContainsString('Authorization: ***', file_get_contents($logFilePath));
+        unlink($logFilePath);
+    }
 }

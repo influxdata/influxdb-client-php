@@ -148,14 +148,12 @@ class Client
         $this->autoCloseable = [];
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): Configuration
     {
-        $config = Configuration::getDefaultConfiguration()
+        return Configuration::getDefaultConfiguration()
             ->setUserAgent('influxdb-client-php/' . Client::VERSION)
-            ->setDebug(isset($this->options['debug']) ? $this->options['debug'] : null)
+            ->setDebugFile($this->options['logFile'] ?? null)
             ->setHost(null);
-
-        return $config;
     }
 
     /**
