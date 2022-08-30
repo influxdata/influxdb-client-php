@@ -4,27 +4,43 @@ namespace InfluxDB2;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\RedirectMiddleware;
+use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\MessageInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class DefaultApi
 {
     const DEFAULT_TIMEOUT = 10;
     public $options;
-    /** @var Client */
+    /**
+     * @var Client
+     */
     public $http;
+
     /**
      * Holds GuzzleHttp timeout.
      *
      * @var int
      */
     private $timeout;
+
+    /**
+     * @var RequestFactoryInterface
+     */
+    private $requestFactory;
+
+    /**
+     * @var StreamFactoryInterface
+     */
+    private $streamFactory;
 
     /**
      * DefaultApi constructor.
@@ -68,27 +84,30 @@ class DefaultApi
             'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
             'handler' => $handler
         ]);
+
+        $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
     }
 
     /**
      * @param $payload
      * @param $uriPath
      * @param $queryParams
-     * @param int $timeout - Float describing the timeout of the request in seconds. Use 0 to wait indefinitely (the default behavior).
-     * @param bool $stream - use streaming
+     * @param int|null $timeout - Float describing the timeout of the request in seconds.
+     *                            Use 0 to wait indefinitely (the default behavior).
      * @return ResponseInterface
      */
-    public function post($payload, $uriPath, $queryParams, $timeout = null, bool $stream = false): ResponseInterface
+    public function post($payload, $uriPath, $queryParams, int $timeout = null): ResponseInterface
     {
-        return $this->request($payload, $uriPath, $queryParams, 'POST', $timeout, $stream);
+        return $this->request($payload, $uriPath, $queryParams, 'POST', $timeout);
     }
 
     public function get($payload, $uriPath, $queryParams, $timeout = null): ResponseInterface
     {
-        return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout, false);
+        return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout);
     }
 
-    private function request($payload, $uriPath, $queryParams, $method, $timeout = null, bool $stream = false): ResponseInterface
+    private function request($payload, $uriPath, $queryParams, $method, $timeout = null): ResponseInterface
     {
         try {
             $options = [
@@ -99,12 +118,19 @@ class DefaultApi
                 ],
                 'query' => $queryParams,
                 'body' => $payload,
-                'stream' => $stream,
                 'timeout' => $timeout ?? $this->timeout
             ];
 
-            //execute post call
-            $response = $this->http->requestAsync($method, $uriPath, $options)->wait();
+            //execute HTTP call
+            $request = $this->requestFactory->createRequest($method, $uriPath);
+            $request = $request->withBody($this->streamFactory->createStream($payload));
+            $request = $request->withAddedHeader('Authorization', "Token {$this->options['token']}");
+            $request = $request->withAddedHeader('User-Agent', 'influxdb-client-php/' . \InfluxDB2\Client::VERSION);
+            $request = $request->withAddedHeader('Content-Type', 'application/json');
+            $uri = $request->getUri()->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
+            $request = $request->withUri($uri);
+            // TODO timeout
+            $response = $this->http->sendRequest($request);
 
             $statusCode = $response->getStatusCode();
 
@@ -129,7 +155,7 @@ class DefaultApi
                 $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
                 $e
             );
-        } catch (TransferException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
                 $e->getCode(),

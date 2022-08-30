@@ -166,14 +166,14 @@ class Client
     {
         try {
             $class = new ReflectionClass($serviceClass);
-            $args = array($this->getGuzzleClient(), $this->getConfiguration());
+            $args = array($this->getHttpClient(), $this->getConfiguration());
             return $class->newInstanceArgs($args);
         } catch (\ReflectionException $e) {
             throw new RuntimeException($e);
         }
     }
 
-    private function getGuzzleClient()
+    private function getHttpClient(): \GuzzleHttp\Client
     {
         $defaultApi = new DefaultApi($this->options);
         return $defaultApi->http;
