@@ -583,7 +583,7 @@ $client = new InfluxDB2\Client([
   "allow_redirects" => false,
 ]);
 ```
-For more info see Guzzle docs - [allow_redirects](https://docs.guzzlephp.org/en/5.3/clients.html?highlight=redirect#allow-redirects)
+For more info see Redirect Plugin docs - [allow_redirects](https://docs.php-http.org/en/latest/plugins/redirect.html#redirect-plugin)
 
 ## Local tests
 

@@ -83,7 +83,6 @@ class DefaultApi
                 'Authorization' => "Token {$this->options['token']}"
             ],
             'proxy' => $this->options['proxy'] ?? null,
-//            'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
             'handler' => $handler
         ]);
         $this->http = $this->configuredClient($client);
@@ -183,8 +182,9 @@ class DefaultApi
             ]),
         ];
 
-        if ($this->options['allow_redirects']) {
-            $plugins[] = new Plugin\RedirectPlugin();
+        $allow_redirects = $this->options['allow_redirects'] ?? true;
+        if ($allow_redirects) {
+            $plugins[] = new Plugin\RedirectPlugin(is_array($allow_redirects) ? $allow_redirects : []);
         }
         return new PluginClient($client, $plugins);
     }

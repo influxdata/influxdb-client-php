@@ -102,7 +102,7 @@ class DefaultApiTest extends BasicTest
         $client->close();
     }
 
-    public function test_follow_redirect()
+    public function testFollowRedirect()
     {
         $this->mockHandler->append(
             new Response(
