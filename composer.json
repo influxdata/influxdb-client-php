@@ -11,6 +11,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
+    "php-http/client-common": "^2.2.1",
     "php-http/discovery": "^1.9.1",
     "psr/http-client": "^1.0.1"
   },

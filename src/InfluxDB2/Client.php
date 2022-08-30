@@ -5,6 +5,7 @@ namespace InfluxDB2;
 use InfluxDB2\Model\HealthCheck;
 use InfluxDB2\Service\InvokableScriptsService;
 use InfluxDB2\Service\PingService;
+use Psr\Http\Client\ClientInterface;
 use ReflectionClass;
 use RuntimeException;
 
@@ -173,7 +174,7 @@ class Client
         }
     }
 
-    private function getHttpClient(): \GuzzleHttp\Client
+    private function getHttpClient(): ClientInterface
     {
         $defaultApi = new DefaultApi($this->options);
         return $defaultApi->http;

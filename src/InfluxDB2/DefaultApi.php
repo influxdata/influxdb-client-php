@@ -6,10 +6,12 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\RedirectMiddleware;
+use Http\Client\Common\Plugin;
+use Http\Client\Common\PluginClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -21,7 +23,7 @@ class DefaultApi
     const DEFAULT_TIMEOUT = 10;
     public $options;
     /**
-     * @var Client
+     * @var ClientInterface
      */
     public $http;
 
@@ -73,7 +75,7 @@ class DefaultApi
             }));
         }
 
-        $this->http = new Client([
+        $client = new Client([
             'base_uri' => $this->options['url'],
             'timeout' => $this->timeout,
             'verify' => $this->options['verifySSL'] ?? true,
@@ -81,9 +83,10 @@ class DefaultApi
                 'Authorization' => "Token {$this->options['token']}"
             ],
             'proxy' => $this->options['proxy'] ?? null,
-            'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
+//            'allow_redirects' => $this->options['allow_redirects'] ?? RedirectMiddleware::$defaultSettings,
             'handler' => $handler
         ]);
+        $this->http = $this->configuredClient($client);
 
         $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
@@ -110,6 +113,7 @@ class DefaultApi
     private function request($payload, $uriPath, $queryParams, $method, $timeout = null): ResponseInterface
     {
         try {
+            // TODO remove
             $options = [
                 'headers' => [
                     'Authorization' => "Token {$this->options['token']}",
@@ -124,8 +128,6 @@ class DefaultApi
             //execute HTTP call
             $request = $this->requestFactory->createRequest($method, $uriPath);
             $request = $request->withBody($this->streamFactory->createStream($payload));
-            $request = $request->withAddedHeader('Authorization', "Token {$this->options['token']}");
-            $request = $request->withAddedHeader('User-Agent', 'influxdb-client-php/' . \InfluxDB2\Client::VERSION);
             $request = $request->withAddedHeader('Content-Type', 'application/json');
             $uri = $request->getUri()->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
             $request = $request->withUri($uri);
@@ -164,6 +166,27 @@ class DefaultApi
                 $e
             );
         }
+    }
+
+    /**
+     * Configure client with defaults - UserAgent, Token, Redirects...
+     *
+     * @param ClientInterface $client to configure
+     * @return ClientInterface
+     */
+    public function configuredClient(ClientInterface $client): ClientInterface
+    {
+        $plugins = [
+            new Plugin\HeaderDefaultsPlugin([
+                'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION,
+                'Authorization' => "Token {$this->options['token']}",
+            ]),
+        ];
+
+        if ($this->options['allow_redirects']) {
+            $plugins[] = new Plugin\RedirectPlugin();
+        }
+        return new PluginClient($client, $plugins);
     }
 
     protected function check($key, $value)
