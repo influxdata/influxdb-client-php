@@ -1,4 +1,26 @@
-## 2.10.0 [unreleased]
+## 3.0.0 [unreleased]
+
+This release uses new version of InfluxDB OSS API definitions - [oss.yml](https://github.com/influxdata/openapi/blob/master/contracts/oss.yml). The following breaking changes are in underlying API services and doesn't affect common apis such as - `WriteApi`, `QueryApi`, `HealthApi`, ...
+
+### Management API
+
+- Add `ConfigService` to retrieve InfluxDB's runtime configuration
+- Add `DebugService` to retrieve debug and performance data from runtime
+- Add `MetricsService` to deal with exposed prometheus metrics
+- Add `RemoteConnectionsService` to deal with registered remote InfluxDB connections
+- Add `ResourcesService` to manage InfluxDB resources
+- Add `ReplicationService` to manage InfluxDB replications
+- Add `ReplicationService` to manage InfluxDB replications
+- Update `TemplatesService` to deal with `Stack` and `Template` API
+- Update `RestoreService` to deal with new restore functions of InfluxDB
+
+#### Breaking Changes
+
+- Remove asynchronous operation based on `GuzzleHttp\Message\FutureResponse`
+- Remove `DocumentService` in favour of [InfluxDB Community Templates](https://github.com/influxdata/community-templates). For more info see - [influxdb#19300](https://github.com/influxdata/influxdb/pull/19300), [openapi#192](https://github.com/influxdata/openapi/pull/192)
+- Remove `DefaultSerive`:
+  - `PostSignin` operation is moved to `SigninService`
+  - `PostSignout` operation is moved to `SignoutService`
 
 ## 2.9.0 [2022-07-29]
 
