@@ -79,9 +79,6 @@ class DefaultApi
             'base_uri' => $this->options['url'],
             'timeout' => $this->timeout,
             'verify' => $this->options['verifySSL'] ?? true,
-            'headers' => [
-                'Authorization' => "Token {$this->options['token']}"
-            ],
             'proxy' => $this->options['proxy'] ?? null,
             'handler' => $handler
         ]);
