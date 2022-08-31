@@ -167,16 +167,10 @@ class Client
     {
         try {
             $class = new ReflectionClass($serviceClass);
-            $args = array($this->getHttpClient(), $this->getConfiguration());
+            $args = array(new DefaultApi($this->options));
             return $class->newInstanceArgs($args);
         } catch (\ReflectionException $e) {
             throw new RuntimeException($e);
         }
-    }
-
-    private function getHttpClient(): ClientInterface
-    {
-        $defaultApi = new DefaultApi($this->options);
-        return $defaultApi->http;
     }
 }

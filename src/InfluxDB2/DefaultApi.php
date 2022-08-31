@@ -109,64 +109,6 @@ class DefaultApi
         return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout);
     }
 
-    private function request($payload, $uriPath, $queryParams, $method, $timeout = null): ResponseInterface
-    {
-        try {
-            // TODO remove
-            $options = [
-                'headers' => [
-                    'Authorization' => "Token {$this->options['token']}",
-                    'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION,
-                    'Content-Type' => 'application/json'
-                ],
-                'query' => $queryParams,
-                'body' => $payload,
-                'timeout' => $timeout ?? $this->timeout
-            ];
-
-            //execute HTTP call
-            $request = $this->requestFactory->createRequest($method, $uriPath);
-            $request = $request->withBody($this->streamFactory->createStream($payload));
-            $request = $request->withAddedHeader('Content-Type', 'application/json');
-            $uri = $request->getUri()->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
-            $request = $request->withUri($uri);
-            // TODO timeout
-            $response = $this->http->sendRequest($request);
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $uriPath
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-            return $response;
-        } catch (RequestException $e) {
-            throw new ApiException(
-                "[{$e->getCode()}] {$e->getMessage()}",
-                $e->getCode(),
-                $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
-                $e
-            );
-        } catch (ClientExceptionInterface $e) {
-            throw new ApiException(
-                "[{$e->getCode()}] {$e->getMessage()}",
-                $e->getCode(),
-                null,
-                null,
-                $e
-            );
-        }
-    }
-
     /**
      * Configure client with defaults - UserAgent, Token, Redirects...
      *
@@ -189,6 +131,81 @@ class DefaultApi
         return new PluginClient($client, $plugins);
     }
 
+    /**
+     * Create HTTP request.
+     *
+     * @param string $method The HTTP method associated with the request.
+     * @param string $uriPath The URI associated with the request.
+     * @param string $payload String content with which to populate the stream.
+     * @param array<string, string> $headers Request headers
+     * @param array<string, string> $queryParams The query string to use with the new instance.
+     * @return RequestInterface
+     */
+    public function createRequest(
+        string $method,
+        string $uriPath,
+        string $payload,
+        array  $headers,
+        array  $queryParams
+    ): RequestInterface {
+        $request = $this->requestFactory->createRequest($method, $uriPath);
+        $request = $request->withBody($this->streamFactory->createStream($payload));
+        foreach ($headers as $header => $value) {
+            $request = $request->withAddedHeader($header, $value);
+        }
+        $uri = $request->getUri()->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
+        return $request->withUri($uri);
+    }
+
+    /**
+     * Sends a HTTP request and returns a HTTP response.
+     *
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    public function sendRequest(RequestInterface $request): ResponseInterface
+    {
+        try {
+            // TODO timeout
+            // execute HTTP call
+            $response = $this->http->sendRequest($request);
+
+            $statusCode = $response->getStatusCode();
+            if ($statusCode < 200 || $statusCode > 299) {
+                $responseBody = $response->getBody()->getContents();
+                $jsonBody = json_decode($responseBody);
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)(%s)',
+                        $statusCode,
+                        $request->getUri(),
+                        $jsonBody ? ": {$jsonBody->message}" : ''
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $responseBody
+                );
+            }
+            return $response;
+        } catch (RequestException $e) {
+            throw new ApiException(
+                "[{$e->getCode()}] {$e->getMessage()}",
+                $e->getCode(),
+                $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
+                $e
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new ApiException(
+                "[{$e->getCode()}] {$e->getMessage()}",
+                $e->getCode(),
+                null,
+                null,
+                $e
+            );
+        }
+    }
+
     protected function check($key, $value)
     {
         if ((!isset($value) || trim($value) === '')) {
@@ -205,6 +222,28 @@ class DefaultApi
             ));
             throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$options}");
         }
+    }
+
+    private function request($payload, $uriPath, $queryParams, $method, $timeout = null): ResponseInterface
+    {
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+        $request = $this->createRequest($method, $uriPath, $payload, $headers, $queryParams);
+
+        // TODO remove
+        $options = [
+            'headers' => [
+                'Authorization' => "Token {$this->options['token']}",
+                'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION,
+                'Content-Type' => 'application/json'
+            ],
+            'query' => $queryParams,
+            'body' => $payload,
+            'timeout' => $timeout ?? $this->timeout
+        ];
+
+        return $this->sendRequest($request);
     }
 
     /**
