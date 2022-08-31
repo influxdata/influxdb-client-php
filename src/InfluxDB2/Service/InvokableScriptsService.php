@@ -28,14 +28,7 @@
 
 namespace InfluxDB2\Service;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\MultipartStream;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
-use InfluxDB2\ApiException;
-use InfluxDB2\Configuration;
+use InfluxDB2\DefaultApi;
 use InfluxDB2\HeaderSelector;
 use InfluxDB2\ObjectSerializer;
 
@@ -50,14 +43,9 @@ use InfluxDB2\ObjectSerializer;
 class InvokableScriptsService
 {
     /**
-     * @var ClientInterface
+     * @var DefaultApi
      */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
+    protected $defaultApi;
 
     /**
      * @var HeaderSelector
@@ -65,27 +53,15 @@ class InvokableScriptsService
     protected $headerSelector;
 
     /**
-     * @param ClientInterface $client
-     * @param Configuration   $config
+     * @param DefaultApi $defaultApi
      * @param HeaderSelector  $selector
      */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
+    public function __construct(DefaultApi $defaultApi)
+    {
+        $this->defaultApi = $defaultApi;
+        $this->headerSelector = new HeaderSelector();
     }
 
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation deleteScriptsID
@@ -118,107 +94,9 @@ class InvokableScriptsService
     {
         $request = $this->deleteScriptsIDRequest($script_id);
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+        $response = $this->defaultApi->sendRequest($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            return [null, $statusCode, $response->getHeaders()];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation deleteScriptsIDAsync
-     *
-     * Delete a script
-     *
-     * @param  string $script_id The ID of the script to delete. (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function deleteScriptsIDAsync($script_id)
-    {
-        return $this->deleteScriptsIDAsyncWithHttpInfo($script_id)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation deleteScriptsIDAsyncWithHttpInfo
-     *
-     * Delete a script
-     *
-     * @param  string $script_id The ID of the script to delete. (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function deleteScriptsIDAsyncWithHttpInfo($script_id)
-    {
-        $returnType = '';
-        $request = $this->deleteScriptsIDRequest($script_id);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
+        return [null, $response->getStatusCode(), $response->getHeaders()];
     }
 
     /**
@@ -227,7 +105,7 @@ class InvokableScriptsService
      * @param  string $script_id The ID of the script to delete. (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
+     * @return \Psr\Http\Message\RequestInterface
      */
     protected function deleteScriptsIDRequest($script_id)
     {
@@ -239,7 +117,6 @@ class InvokableScriptsService
         }
 
         $resourcePath = '/api/v2/scripts/{scriptID}';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
@@ -260,11 +137,11 @@ class InvokableScriptsService
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
+                []
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
+                [],
                 []
             );
         }
@@ -273,50 +150,18 @@ class InvokableScriptsService
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
             } else {
                 $httpBody = $_tempBody;
             }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
         $headers = array_merge(
-            $defaultHeaders,
             $headerParams,
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
-            'DELETE',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        return $this->defaultApi->createRequest('DELETE', $resourcePath, $httpBody, $headers, $queryParams);
     }
 
     /**
@@ -324,16 +169,19 @@ class InvokableScriptsService
      *
      * List scripts
      *
-     * @param  int $limit The number of scripts to return. (optional)
-     * @param  int $offset The offset for pagination. (optional)
+     * @param  int $limit Limits the number of scripts returned. Default is &#x60;100&#x60;. (optional, default to 100)
+     * @param  int $offset The offset for pagination. The number of records to skip. (optional, default to 0)
+     * @param  string $name The name of the script. (optional)
+     * @param  string[] $label_names A list of label names. Only returns scripts that have all these labels. To retrieve a script, each name you pass in &#x60;labelNames&#x60; must exactly match the label for a script. (optional)
+     * @param  string $label_contains A part of the label name. Returns scripts that have a label that contains this phrase. (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Scripts|string
+     * @return \InfluxDB2\Model\Scripts|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
      */
-    public function getScripts($limit = null, $offset = null)
+    public function getScripts($limit = 100, $offset = 0, $name = null, $label_names = null, $label_contains = null)
     {
-        list($response) = $this->getScriptsWithHttpInfo($limit, $offset);
+        list($response) = $this->getScriptsWithHttpInfo($limit, $offset, $name, $label_names, $label_contains);
         return $response;
     }
 
@@ -342,195 +190,64 @@ class InvokableScriptsService
      *
      * List scripts
      *
-     * @param  int $limit The number of scripts to return. (optional)
-     * @param  int $offset The offset for pagination. (optional)
+     * @param  int $limit Limits the number of scripts returned. Default is &#x60;100&#x60;. (optional, default to 100)
+     * @param  int $offset The offset for pagination. The number of records to skip. (optional, default to 0)
+     * @param  string $name The name of the script. (optional)
+     * @param  string[] $label_names A list of label names. Only returns scripts that have all these labels. To retrieve a script, each name you pass in &#x60;labelNames&#x60; must exactly match the label for a script. (optional)
+     * @param  string $label_contains A part of the label name. Returns scripts that have a label that contains this phrase. (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Scripts|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \InfluxDB2\Model\Scripts|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getScriptsWithHttpInfo($limit = null, $offset = null)
+    public function getScriptsWithHttpInfo($limit = 100, $offset = 0, $name = null, $label_names = null, $label_contains = null)
     {
-        $request = $this->getScriptsRequest($limit, $offset);
+        $request = $this->getScriptsRequest($limit, $offset, $name, $label_names, $label_contains);
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+        $response = $this->defaultApi->sendRequest($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\InfluxDB2\Model\Scripts' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\InfluxDB2\Model\Scripts', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('string' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'string', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\InfluxDB2\Model\Scripts';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\InfluxDB2\Model\Scripts',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation getScriptsAsync
-     *
-     * List scripts
-     *
-     * @param  int $limit The number of scripts to return. (optional)
-     * @param  int $offset The offset for pagination. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getScriptsAsync($limit = null, $offset = null)
-    {
-        return $this->getScriptsAsyncWithHttpInfo($limit, $offset)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation getScriptsAsyncWithHttpInfo
-     *
-     * List scripts
-     *
-     * @param  int $limit The number of scripts to return. (optional)
-     * @param  int $offset The offset for pagination. (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getScriptsAsyncWithHttpInfo($limit = null, $offset = null)
-    {
         $returnType = '\InfluxDB2\Model\Scripts';
-        $request = $this->getScriptsRequest($limit, $offset);
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+        }
 
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
      * Create request for operation 'getScripts'
      *
-     * @param  int $limit The number of scripts to return. (optional)
-     * @param  int $offset The offset for pagination. (optional)
+     * @param  int $limit Limits the number of scripts returned. Default is &#x60;100&#x60;. (optional, default to 100)
+     * @param  int $offset The offset for pagination. The number of records to skip. (optional, default to 0)
+     * @param  string $name The name of the script. (optional)
+     * @param  string[] $label_names A list of label names. Only returns scripts that have all these labels. To retrieve a script, each name you pass in &#x60;labelNames&#x60; must exactly match the label for a script. (optional)
+     * @param  string $label_contains A part of the label name. Returns scripts that have a label that contains this phrase. (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
+     * @return \Psr\Http\Message\RequestInterface
      */
-    protected function getScriptsRequest($limit = null, $offset = null)
+    protected function getScriptsRequest($limit = 100, $offset = 0, $name = null, $label_names = null, $label_contains = null)
     {
+        if ($limit !== null && $limit > 500) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling InvokableScriptsService.getScripts, must be smaller than or equal to 500.');
+        }
+        if ($limit !== null && $limit < 0) {
+            throw new \InvalidArgumentException('invalid value for "$limit" when calling InvokableScriptsService.getScripts, must be bigger than or equal to 0.');
+        }
+
+        if ($offset !== null && $offset < 0) {
+            throw new \InvalidArgumentException('invalid value for "$offset" when calling InvokableScriptsService.getScripts, must be bigger than or equal to 0.');
+        }
+
 
         $resourcePath = '/api/v2/scripts';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
@@ -543,6 +260,21 @@ class InvokableScriptsService
         // query params
         if ($offset !== null) {
             $queryParams['offset'] = ObjectSerializer::toQueryValue($offset);
+        }
+        // query params
+        if ($name !== null) {
+            $queryParams['name'] = ObjectSerializer::toQueryValue($name);
+        }
+        // query params
+        if (is_array($label_names)) {
+            $label_names = ObjectSerializer::serializeCollection($label_names, 'multi', true);
+        }
+        if ($label_names !== null) {
+            $queryParams['labelNames'] = ObjectSerializer::toQueryValue($label_names);
+        }
+        // query params
+        if ($label_contains !== null) {
+            $queryParams['labelContains'] = ObjectSerializer::toQueryValue($label_contains);
         }
 
 
@@ -564,50 +296,18 @@ class InvokableScriptsService
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
             } else {
                 $httpBody = $_tempBody;
             }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
         $headers = array_merge(
-            $defaultHeaders,
             $headerParams,
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
 
     /**
@@ -619,7 +319,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Script|string
+     * @return \InfluxDB2\Model\Script
      */
     public function getScriptsID($script_id)
     {
@@ -636,172 +336,27 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \InfluxDB2\Model\Script, HTTP status code, HTTP response headers (array of strings)
      */
     public function getScriptsIDWithHttpInfo($script_id)
     {
         $request = $this->getScriptsIDRequest($script_id);
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+        $response = $this->defaultApi->sendRequest($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\InfluxDB2\Model\Script' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\InfluxDB2\Model\Script', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('string' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'string', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\InfluxDB2\Model\Script';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\InfluxDB2\Model\Script',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation getScriptsIDAsync
-     *
-     * Retrieve a script
-     *
-     * @param  string $script_id The script ID. (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getScriptsIDAsync($script_id)
-    {
-        return $this->getScriptsIDAsyncWithHttpInfo($script_id)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation getScriptsIDAsyncWithHttpInfo
-     *
-     * Retrieve a script
-     *
-     * @param  string $script_id The script ID. (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getScriptsIDAsyncWithHttpInfo($script_id)
-    {
         $returnType = '\InfluxDB2\Model\Script';
-        $request = $this->getScriptsIDRequest($script_id);
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+        }
 
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -810,7 +365,7 @@ class InvokableScriptsService
      * @param  string $script_id The script ID. (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
+     * @return \Psr\Http\Message\RequestInterface
      */
     protected function getScriptsIDRequest($script_id)
     {
@@ -822,7 +377,6 @@ class InvokableScriptsService
         }
 
         $resourcePath = '/api/v2/scripts/{scriptID}';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
@@ -856,50 +410,18 @@ class InvokableScriptsService
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
             } else {
                 $httpBody = $_tempBody;
             }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
         $headers = array_merge(
-            $defaultHeaders,
             $headerParams,
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
 
     /**
@@ -912,7 +434,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Script|string
+     * @return \InfluxDB2\Model\Script
      */
     public function patchScriptsID($script_id, $script_update_request)
     {
@@ -930,174 +452,27 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \InfluxDB2\Model\Script, HTTP status code, HTTP response headers (array of strings)
      */
     public function patchScriptsIDWithHttpInfo($script_id, $script_update_request)
     {
         $request = $this->patchScriptsIDRequest($script_id, $script_update_request);
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+        $response = $this->defaultApi->sendRequest($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\InfluxDB2\Model\Script' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\InfluxDB2\Model\Script', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('string' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'string', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\InfluxDB2\Model\Script';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\InfluxDB2\Model\Script',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation patchScriptsIDAsync
-     *
-     * Update a script
-     *
-     * @param  string $script_id The script ID. (required)
-     * @param  \InfluxDB2\Model\ScriptUpdateRequest $script_update_request Script update to apply (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function patchScriptsIDAsync($script_id, $script_update_request)
-    {
-        return $this->patchScriptsIDAsyncWithHttpInfo($script_id, $script_update_request)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation patchScriptsIDAsyncWithHttpInfo
-     *
-     * Update a script
-     *
-     * @param  string $script_id The script ID. (required)
-     * @param  \InfluxDB2\Model\ScriptUpdateRequest $script_update_request Script update to apply (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function patchScriptsIDAsyncWithHttpInfo($script_id, $script_update_request)
-    {
         $returnType = '\InfluxDB2\Model\Script';
-        $request = $this->patchScriptsIDRequest($script_id, $script_update_request);
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+        }
 
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1107,7 +482,7 @@ class InvokableScriptsService
      * @param  \InfluxDB2\Model\ScriptUpdateRequest $script_update_request Script update to apply (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
+     * @return \Psr\Http\Message\RequestInterface
      */
     protected function patchScriptsIDRequest($script_id, $script_update_request)
     {
@@ -1125,7 +500,6 @@ class InvokableScriptsService
         }
 
         $resourcePath = '/api/v2/scripts/{scriptID}';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
@@ -1162,50 +536,270 @@ class InvokableScriptsService
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
             } else {
                 $httpBody = $_tempBody;
             }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
         $headers = array_merge(
-            $defaultHeaders,
             $headerParams,
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
-            'PATCH',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
+        return $this->defaultApi->createRequest('PATCH', $resourcePath, $httpBody, $headers, $queryParams);
+    }
+
+    /**
+     * Operation patchScriptsIDAddLabels
+     *
+     * Adds labels to a script
+     *
+     * @param  string $script_id The script ID. (required)
+     * @param  \InfluxDB2\Model\LabelMapping $label_mapping The names of labels to add to the script. (required)
+     *
+     * @throws \InfluxDB2\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error
+     */
+    public function patchScriptsIDAddLabels($script_id, $label_mapping)
+    {
+        list($response) = $this->patchScriptsIDAddLabelsWithHttpInfo($script_id, $label_mapping);
+        return $response;
+    }
+
+    /**
+     * Operation patchScriptsIDAddLabelsWithHttpInfo
+     *
+     * Adds labels to a script
+     *
+     * @param  string $script_id The script ID. (required)
+     * @param  \InfluxDB2\Model\LabelMapping $label_mapping The names of labels to add to the script. (required)
+     *
+     * @throws \InfluxDB2\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function patchScriptsIDAddLabelsWithHttpInfo($script_id, $label_mapping)
+    {
+        $request = $this->patchScriptsIDAddLabelsRequest($script_id, $label_mapping);
+
+        $response = $this->defaultApi->sendRequest($request);
+
+        $returnType = '\InfluxDB2\Model\Script';
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
+    }
+
+    /**
+     * Create request for operation 'patchScriptsIDAddLabels'
+     *
+     * @param  string $script_id The script ID. (required)
+     * @param  \InfluxDB2\Model\LabelMapping $label_mapping The names of labels to add to the script. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \Psr\Http\Message\RequestInterface
+     */
+    protected function patchScriptsIDAddLabelsRequest($script_id, $label_mapping)
+    {
+        // verify the required parameter 'script_id' is set
+        if ($script_id === null || (is_array($script_id) && count($script_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $script_id when calling patchScriptsIDAddLabels'
+            );
+        }
+        // verify the required parameter 'label_mapping' is set
+        if ($label_mapping === null || (is_array($label_mapping) && count($label_mapping) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $label_mapping when calling patchScriptsIDAddLabels'
+            );
+        }
+
+        $resourcePath = '/api/v2/scripts/{scriptID}/labels/add';
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($script_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'scriptID' . '}',
+                ObjectSerializer::toPathValue($script_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($label_mapping)) {
+            $_tempBody = $label_mapping;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        }
+
+        $headers = array_merge(
+            $headerParams,
+            $headers
         );
+
+        return $this->defaultApi->createRequest('PATCH', $resourcePath, $httpBody, $headers, $queryParams);
+    }
+
+    /**
+     * Operation patchScriptsIDRemoveLabels
+     *
+     * Removes labels from a script
+     *
+     * @param  string $script_id The script ID. (required)
+     * @param  \InfluxDB2\Model\LabelMapping $label_mapping The names of labels to remove from the script. (required)
+     *
+     * @throws \InfluxDB2\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error
+     */
+    public function patchScriptsIDRemoveLabels($script_id, $label_mapping)
+    {
+        list($response) = $this->patchScriptsIDRemoveLabelsWithHttpInfo($script_id, $label_mapping);
+        return $response;
+    }
+
+    /**
+     * Operation patchScriptsIDRemoveLabelsWithHttpInfo
+     *
+     * Removes labels from a script
+     *
+     * @param  string $script_id The script ID. (required)
+     * @param  \InfluxDB2\Model\LabelMapping $label_mapping The names of labels to remove from the script. (required)
+     *
+     * @throws \InfluxDB2\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function patchScriptsIDRemoveLabelsWithHttpInfo($script_id, $label_mapping)
+    {
+        $request = $this->patchScriptsIDRemoveLabelsRequest($script_id, $label_mapping);
+
+        $response = $this->defaultApi->sendRequest($request);
+
+        $returnType = '\InfluxDB2\Model\Script';
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
+    }
+
+    /**
+     * Create request for operation 'patchScriptsIDRemoveLabels'
+     *
+     * @param  string $script_id The script ID. (required)
+     * @param  \InfluxDB2\Model\LabelMapping $label_mapping The names of labels to remove from the script. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \Psr\Http\Message\RequestInterface
+     */
+    protected function patchScriptsIDRemoveLabelsRequest($script_id, $label_mapping)
+    {
+        // verify the required parameter 'script_id' is set
+        if ($script_id === null || (is_array($script_id) && count($script_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $script_id when calling patchScriptsIDRemoveLabels'
+            );
+        }
+        // verify the required parameter 'label_mapping' is set
+        if ($label_mapping === null || (is_array($label_mapping) && count($label_mapping) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $label_mapping when calling patchScriptsIDRemoveLabels'
+            );
+        }
+
+        $resourcePath = '/api/v2/scripts/{scriptID}/labels/remove';
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($script_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'scriptID' . '}',
+                ObjectSerializer::toPathValue($script_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($label_mapping)) {
+            $_tempBody = $label_mapping;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+            } else {
+                $httpBody = $_tempBody;
+            }
+        }
+
+        $headers = array_merge(
+            $headerParams,
+            $headers
+        );
+
+        return $this->defaultApi->createRequest('PATCH', $resourcePath, $httpBody, $headers, $queryParams);
     }
 
     /**
@@ -1217,7 +811,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Script|string
+     * @return \InfluxDB2\Model\Script|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
      */
     public function postScripts($script_create_request)
     {
@@ -1234,172 +828,27 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \InfluxDB2\Model\Script|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
     public function postScriptsWithHttpInfo($script_create_request)
     {
         $request = $this->postScriptsRequest($script_create_request);
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+        $response = $this->defaultApi->sendRequest($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 201:
-                    if ('\InfluxDB2\Model\Script' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\InfluxDB2\Model\Script', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('string' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'string', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\InfluxDB2\Model\Script';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\InfluxDB2\Model\Script',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation postScriptsAsync
-     *
-     * Create a script
-     *
-     * @param  \InfluxDB2\Model\ScriptCreateRequest $script_create_request The script to create. (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postScriptsAsync($script_create_request)
-    {
-        return $this->postScriptsAsyncWithHttpInfo($script_create_request)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation postScriptsAsyncWithHttpInfo
-     *
-     * Create a script
-     *
-     * @param  \InfluxDB2\Model\ScriptCreateRequest $script_create_request The script to create. (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postScriptsAsyncWithHttpInfo($script_create_request)
-    {
         $returnType = '\InfluxDB2\Model\Script';
-        $request = $this->postScriptsRequest($script_create_request);
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
+        }
 
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1408,7 +857,7 @@ class InvokableScriptsService
      * @param  \InfluxDB2\Model\ScriptCreateRequest $script_create_request The script to create. (required)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
+     * @return \Psr\Http\Message\RequestInterface
      */
     protected function postScriptsRequest($script_create_request)
     {
@@ -1420,7 +869,6 @@ class InvokableScriptsService
         }
 
         $resourcePath = '/api/v2/scripts';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
@@ -1449,50 +897,18 @@ class InvokableScriptsService
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
             } else {
                 $httpBody = $_tempBody;
             }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
         $headers = array_merge(
-            $defaultHeaders,
             $headerParams,
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        return $this->defaultApi->createRequest('POST', $resourcePath, $httpBody, $headers, $queryParams);
     }
 
     /**
@@ -1500,12 +916,12 @@ class InvokableScriptsService
      *
      * Invoke a script
      *
-     * @param  string $script_id script_id (required)
+     * @param  string $script_id Script ID. Only returns scripts with this ID. (required)
      * @param  \InfluxDB2\Model\ScriptInvocationParams $script_invocation_params script_invocation_params (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string|string
+     * @return \SplFileObject|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
      */
     public function postScriptsIDInvoke($script_id, $script_invocation_params = null)
     {
@@ -1518,189 +934,42 @@ class InvokableScriptsService
      *
      * Invoke a script
      *
-     * @param  string $script_id (required)
+     * @param  string $script_id Script ID. Only returns scripts with this ID. (required)
      * @param  \InfluxDB2\Model\ScriptInvocationParams $script_invocation_params (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \SplFileObject|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
      */
     public function postScriptsIDInvokeWithHttpInfo($script_id, $script_invocation_params = null)
     {
         $request = $this->postScriptsIDInvokeRequest($script_id, $script_invocation_params);
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+        $response = $this->defaultApi->sendRequest($request);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('string' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'string', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('string' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'string', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = 'string';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+        $returnType = '\SplFileObject';
+        $responseBody = $response->getBody();
+        if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+        } else {
+            $content = $responseBody->getContents();
         }
-    }
 
-    /**
-     * Operation postScriptsIDInvokeAsync
-     *
-     * Invoke a script
-     *
-     * @param  string $script_id (required)
-     * @param  \InfluxDB2\Model\ScriptInvocationParams $script_invocation_params (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postScriptsIDInvokeAsync($script_id, $script_invocation_params = null)
-    {
-        return $this->postScriptsIDInvokeAsyncWithHttpInfo($script_id, $script_invocation_params)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation postScriptsIDInvokeAsyncWithHttpInfo
-     *
-     * Invoke a script
-     *
-     * @param  string $script_id (required)
-     * @param  \InfluxDB2\Model\ScriptInvocationParams $script_invocation_params (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function postScriptsIDInvokeAsyncWithHttpInfo($script_id, $script_invocation_params = null)
-    {
-        $returnType = 'string';
-        $request = $this->postScriptsIDInvokeRequest($script_id, $script_invocation_params);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
      * Create request for operation 'postScriptsIDInvoke'
      *
-     * @param  string $script_id (required)
+     * @param  string $script_id Script ID. Only returns scripts with this ID. (required)
      * @param  \InfluxDB2\Model\ScriptInvocationParams $script_invocation_params (optional)
      *
      * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
+     * @return \Psr\Http\Message\RequestInterface
      */
     protected function postScriptsIDInvokeRequest($script_id, $script_invocation_params = null)
     {
@@ -1712,7 +981,6 @@ class InvokableScriptsService
         }
 
         $resourcePath = '/api/v2/scripts/{scriptID}/invoke';
-        $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
@@ -1736,11 +1004,11 @@ class InvokableScriptsService
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
+                ['text/csv', 'application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
+                ['text/csv', 'application/json'],
                 ['application/json']
             );
         }
@@ -1749,68 +1017,18 @@ class InvokableScriptsService
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
+                $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($_tempBody));
             } else {
                 $httpBody = $_tempBody;
             }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
         $headers = array_merge(
-            $defaultHeaders,
             $headerParams,
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
-        return new Request(
-            'POST',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
+        return $this->defaultApi->createRequest('POST', $resourcePath, $httpBody, $headers, $queryParams);
     }
 
-    /**
-     * Create http client option
-     *
-     * @throws \RuntimeException on file opening failure
-     * @return array of http client options
-     */
-    protected function createHttpClientOption()
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
-
-        return $options;
-    }
 }

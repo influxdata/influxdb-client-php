@@ -65,7 +65,8 @@ class Script implements ModelInterface, ArrayAccess
         'language' => '\InfluxDB2\Model\ScriptLanguage',
         'url' => 'string',
         'created_at' => '\DateTime',
-        'updated_at' => '\DateTime'
+        'updated_at' => '\DateTime',
+        'labels' => 'string[]'
     ];
 
     /**
@@ -82,7 +83,8 @@ class Script implements ModelInterface, ArrayAccess
         'language' => null,
         'url' => null,
         'created_at' => 'date-time',
-        'updated_at' => 'date-time'
+        'updated_at' => 'date-time',
+        'labels' => null
     ];
 
     /**
@@ -120,7 +122,8 @@ class Script implements ModelInterface, ArrayAccess
         'language' => 'language',
         'url' => 'url',
         'created_at' => 'createdAt',
-        'updated_at' => 'updatedAt'
+        'updated_at' => 'updatedAt',
+        'labels' => 'labels'
     ];
 
     /**
@@ -137,7 +140,8 @@ class Script implements ModelInterface, ArrayAccess
         'language' => 'setLanguage',
         'url' => 'setUrl',
         'created_at' => 'setCreatedAt',
-        'updated_at' => 'setUpdatedAt'
+        'updated_at' => 'setUpdatedAt',
+        'labels' => 'setLabels'
     ];
 
     /**
@@ -154,7 +158,8 @@ class Script implements ModelInterface, ArrayAccess
         'language' => 'getLanguage',
         'url' => 'getUrl',
         'created_at' => 'getCreatedAt',
-        'updated_at' => 'getUpdatedAt'
+        'updated_at' => 'getUpdatedAt',
+        'labels' => 'getLabels'
     ];
 
     /**
@@ -226,6 +231,7 @@ class Script implements ModelInterface, ArrayAccess
         $this->container['url'] = isset($data['url']) ? $data['url'] : null;
         $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['updated_at'] = isset($data['updated_at']) ? $data['updated_at'] : null;
+        $this->container['labels'] = isset($data['labels']) ? $data['labels'] : null;
     }
 
     /**
@@ -473,6 +479,30 @@ class Script implements ModelInterface, ArrayAccess
     public function setUpdatedAt($updated_at)
     {
         $this->container['updated_at'] = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets labels
+     *
+     * @return string[]|null
+     */
+    public function getLabels()
+    {
+        return $this->container['labels'];
+    }
+
+    /**
+     * Sets labels
+     *
+     * @param string[]|null $labels The list of label names associated with the script.
+     *
+     * @return $this
+     */
+    public function setLabels($labels)
+    {
+        $this->container['labels'] = $labels;
 
         return $this;
     }
