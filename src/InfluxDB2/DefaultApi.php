@@ -11,7 +11,6 @@ use InfluxDB2\Internal\DebugHttpPlugin;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -53,7 +52,6 @@ class DefaultApi
         $this->timeout = $this->options['timeout'] ?? self::DEFAULT_TIMEOUT;
 
         $client = new Client([
-            'base_uri' => $this->options['url'],
             'timeout' => $this->timeout,
             'verify' => $this->options['verifySSL'] ?? true,
             'proxy' => $this->options['proxy'] ?? null
@@ -124,7 +122,7 @@ class DefaultApi
         array  $headers,
         array  $queryParams
     ): RequestInterface {
-        $request = $this->requestFactory->createRequest($method, $uriPath);
+        $request = $this->requestFactory->createRequest($method, $this->options['url'] . $uriPath);
         $request = $request->withBody($this->streamFactory->createStream($payload));
         foreach ($headers as $header => $value) {
             $request = $request->withAddedHeader($header, $value);
@@ -234,25 +232,5 @@ class DefaultApi
     {
         $logDate = date('H:i:s d-M-Y');
         file_put_contents($options["logFile"] ?? "php://output", "[$logDate]: [$level] - $message" . PHP_EOL, FILE_APPEND);
-    }
-
-    /**
-     * Log HTTP headers.
-     *
-     * @param MessageInterface $message HTTP request or response.
-     * @param string $prefix LOG prefix
-     * @return void
-     */
-    private function headers(MessageInterface $message, string $prefix): void
-    {
-        foreach ($message->getHeaders() as $key => $values) {
-            $value = implode(', ', $values);
-            if (strcasecmp($key, 'Authorization') == 0) {
-                $value = '***';
-            }
-            DefaultApi::log("DEBUG", $prefix . " $key: " . $value, $this->options);
-        }
-        DefaultApi::log("DEBUG", $prefix . " Body: " . $message->getBody(), $this->options);
-        $message->getBody()->rewind();
     }
 }
