@@ -129,7 +129,8 @@ class DefaultApi
         array  $queryParams
     ): RequestInterface {
         $uri = $this->uriFactory
-            ->createUri($this->options['url'] . $uriPath)
+            ->createUri($this->options['url'])
+            ->withPath($uriPath)
             ->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
         $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withBody($this->streamFactory->createStream($payload));
