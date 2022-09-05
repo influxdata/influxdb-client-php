@@ -3,9 +3,9 @@
 namespace InfluxDB2;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
+use Http\Client\Exception\HttpException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InfluxDB2\Internal\DebugHttpPlugin;
 use InvalidArgumentException;
@@ -163,7 +163,7 @@ class DefaultApi
                 );
             }
             return $response;
-        } catch (RequestException $e) {
+        } catch (HttpException $e) {
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
                 $e->getCode(),
