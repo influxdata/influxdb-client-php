@@ -4,11 +4,10 @@ namespace InfluxDB2;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\Psr17FactoryDiscovery;
+use InfluxDB2\Internal\DebugHttpPlugin;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -52,35 +51,12 @@ class DefaultApi
     {
         $this->options = $options;
         $this->timeout = $this->options['timeout'] ?? self::DEFAULT_TIMEOUT;
-        $handler = HandlerStack::create();
-
-        if ($this->options['debug'] ?? false) {
-            $handler->push(Middleware::mapRequest(function (RequestInterface $request) {
-                DefaultApi::log("DEBUG", "-> "
-                    . $request->getMethod()
-                    . " "
-                    . $request->getUri(), $this->options);
-                $this->headers($request, "->");
-                return $request;
-            }));
-            $handler->push(Middleware::mapResponse(function (ResponseInterface $response) {
-                DefaultApi::log("DEBUG", "<- HTTP/"
-                    . $response->getProtocolVersion()
-                    . " "
-                    . $response->getStatusCode()
-                    . " "
-                    . $response->getReasonPhrase(), $this->options);
-                $this->headers($response, "<-");
-                return $response;
-            }));
-        }
 
         $client = new Client([
             'base_uri' => $this->options['url'],
             'timeout' => $this->timeout,
             'verify' => $this->options['verifySSL'] ?? true,
-            'proxy' => $this->options['proxy'] ?? null,
-            'handler' => $handler
+            'proxy' => $this->options['proxy'] ?? null
         ]);
         $this->http = $this->configuredClient($client);
 
@@ -124,6 +100,9 @@ class DefaultApi
         $allow_redirects = $this->options['allow_redirects'] ?? true;
         if ($allow_redirects) {
             $plugins[] = new Plugin\RedirectPlugin(is_array($allow_redirects) ? $allow_redirects : []);
+        }
+        if ($this->options['debug'] ?? false) {
+            $plugins[] = new DebugHttpPlugin($this->options);
         }
         return new PluginClient($client, $plugins);
     }
