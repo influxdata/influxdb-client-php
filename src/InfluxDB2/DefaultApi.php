@@ -43,6 +43,11 @@ class DefaultApi
     private $streamFactory;
 
     /**
+     * @var UriFactoryInterface
+     */
+    private $uriFactory;
+
+    /**
      * DefaultApi constructor.
      * @param array $options
      */
@@ -60,6 +65,7 @@ class DefaultApi
 
         $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        $this->uriFactory = Psr17FactoryDiscovery::findUrlFactory();
     }
 
     /**
@@ -122,12 +128,14 @@ class DefaultApi
         array  $headers,
         array  $queryParams
     ): RequestInterface {
-        $request = $this->requestFactory->createRequest($method, $this->options['url'] . $uriPath);
+        $uri = $this->uriFactory
+            ->createUri($this->options['url'] . $uriPath)
+            ->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
+        $request = $this->requestFactory->createRequest($method, $uri);
         $request = $request->withBody($this->streamFactory->createStream($payload));
         foreach ($headers as $header => $value) {
             $request = $request->withAddedHeader($header, $value);
         }
-        $uri = $request->getUri()->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
         return $request->withUri($uri);
     }
 
