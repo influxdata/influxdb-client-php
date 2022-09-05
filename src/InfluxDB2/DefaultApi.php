@@ -2,11 +2,12 @@
 
 namespace InfluxDB2;
 
-use GuzzleHttp\Client;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\Exception\HttpException;
+use Http\Discovery\ClassDiscovery;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use InfluxDB2\Internal\DebugHttpPlugin;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -15,22 +16,15 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
 
 class DefaultApi
 {
-    const DEFAULT_TIMEOUT = 10;
     public $options;
     /**
      * @var ClientInterface
      */
     public $http;
-
-    /**
-     * Holds GuzzleHttp timeout.
-     *
-     * @var int
-     */
-    private $timeout;
 
     /**
      * @var RequestFactoryInterface
@@ -54,36 +48,38 @@ class DefaultApi
     public function __construct(array $options)
     {
         $this->options = $options;
-        $this->timeout = $this->options['timeout'] ?? self::DEFAULT_TIMEOUT;
 
-        $client = new Client([
-            'timeout' => $this->timeout,
-            'verify' => $this->options['verifySSL'] ?? true,
-            'proxy' => $this->options['proxy'] ?? null
-        ]);
+        $guzzleHttp = "GuzzleHttp\Client";
+        if (ClassDiscovery::safeClassExists($guzzleHttp)) {
+            $client = new $guzzleHttp([
+                'timeout' => $this->options['timeout'] ?? 10,
+                'verify' => $this->options['verifySSL'] ?? true,
+                'proxy' => $this->options['proxy'] ?? null
+            ]);
+        } else {
+            $client = Psr18ClientDiscovery::find();
+        }
         $this->http = $this->configuredClient($client);
 
         $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
-        $this->uriFactory = Psr17FactoryDiscovery::findUrlFactory();
+        $this->uriFactory = Psr17FactoryDiscovery::findUriFactory();
     }
 
     /**
      * @param $payload
      * @param $uriPath
      * @param $queryParams
-     * @param int|null $timeout - Float describing the timeout of the request in seconds.
-     *                            Use 0 to wait indefinitely (the default behavior).
      * @return ResponseInterface
      */
-    public function post($payload, $uriPath, $queryParams, int $timeout = null): ResponseInterface
+    public function post($payload, $uriPath, $queryParams): ResponseInterface
     {
-        return $this->request($payload, $uriPath, $queryParams, 'POST', $timeout);
+        return $this->request($payload, $uriPath, $queryParams, 'POST');
     }
 
-    public function get($payload, $uriPath, $queryParams, $timeout = null): ResponseInterface
+    public function get($payload, $uriPath, $queryParams): ResponseInterface
     {
-        return $this->request($payload, $uriPath, $queryParams, 'GET', $timeout);
+        return $this->request($payload, $uriPath, $queryParams, 'GET');
     }
 
     /**
@@ -96,7 +92,7 @@ class DefaultApi
     {
         $plugins = [
             new Plugin\HeaderDefaultsPlugin([
-                'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION,
+                'User-Agent' => 'influxdb-client-php/' . Client::VERSION,
                 'Authorization' => "Token {$this->options['token']}",
             ]),
         ];
@@ -127,7 +123,8 @@ class DefaultApi
         string $payload,
         array  $headers,
         array  $queryParams
-    ): RequestInterface {
+    ): RequestInterface
+    {
         $uri = $this->uriFactory
             ->createUri($this->options['url'])
             ->withPath($uriPath)
@@ -149,7 +146,6 @@ class DefaultApi
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         try {
-            // TODO timeout
             // execute HTTP call
             $response = $this->http->sendRequest($request);
 
@@ -195,9 +191,9 @@ class DefaultApi
             $options = implode(', ', array_map(
                 function ($v, $k) {
                     if (is_array($v)) {
-                        return $k.'[]='.implode('&'.$k.'[]=', $v);
+                        return $k . '[]=' . implode('&' . $k . '[]=', $v);
                     } else {
-                        return $k.'='.$v;
+                        return $k . '=' . $v;
                     }
                 },
                 $this->options,
@@ -207,24 +203,12 @@ class DefaultApi
         }
     }
 
-    private function request($payload, $uriPath, $queryParams, $method, $timeout = null): ResponseInterface
+    private function request($payload, $uriPath, $queryParams, $method): ResponseInterface
     {
         $headers = [
             'Content-Type' => 'application/json'
         ];
         $request = $this->createRequest($method, $uriPath, $payload, $headers, $queryParams);
-
-        // TODO remove
-        $options = [
-            'headers' => [
-                'Authorization' => "Token {$this->options['token']}",
-                'User-Agent' => 'influxdb-client-php/' . \InfluxDB2\Client::VERSION,
-                'Content-Type' => 'application/json'
-            ],
-            'query' => $queryParams,
-            'body' => $payload,
-            'timeout' => $timeout ?? $this->timeout
-        ];
 
         return $this->sendRequest($request);
     }

@@ -71,19 +71,19 @@ $client = new InfluxDB2\Client([
 
 #### Client Options
 
-| Option          | Description                                                                                               | Note                                    | Type   | Default      |
-|-----------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------|--------|--------------|
-| url             | InfluxDB server API url (e.g. http://localhost:8086)                                                      | **required**                            | String | none         |
-| token           | Token to use for the authorization                                                                        | **required**                            | String | none         |
-| bucket          | Default destination bucket for writes                                                                     |                                         | String | none         |
-| org             | Default destination organization for writes                                                               |                                         | String | none         |
-| precision       | Default precision for the unix timestamps within the body line-protocol                                   |                                         | String | none         |
-| allow_redirects | Enable HTTP redirects                                                                                     |                                         | bool   | true         |
-| debug           | Enable verbose logging of http requests                                                                   |                                         | bool   | false        |
-| logFile         | Default output for logs                                                                                   |                                         | bool   | php://output |
-| verifySSL       | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.             | :warning: required `Guzzle` HTTP client | bool   | true         |
-| timeout         | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: required `Guzzle` HTTP client | int    | 10           |
-| proxy           | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: required `Guzzle` HTTP client | string | none         |
+| Option           | Description                                                                                               | Note                                    | Type   | Default      |
+|------------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------|--------|--------------|
+| **url**          | InfluxDB server API url (e.g. http://localhost:8086)                                                      | **required**                            | String | none         |
+| **token**        | Token to use for the authorization                                                                        | **required**                            | String | none         |
+| bucket           | Default destination bucket for writes                                                                     |                                         | String | none         |
+| org              | Default destination organization for writes                                                               |                                         | String | none         |
+| precision        | Default precision for the unix timestamps within the body line-protocol                                   |                                         | String | none         |
+| allow_redirects  | Enable HTTP redirects                                                                                     |                                         | bool   | true         |
+| debug            | Enable verbose logging of http requests                                                                   |                                         | bool   | false        |
+| logFile          | Default output for logs                                                                                   |                                         | bool   | php://output |
+| verifySSL        | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.             | :warning: required `Guzzle` HTTP client | bool   | true         |
+| timeout          | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: required `Guzzle` HTTP client | int    | 10           |
+| proxy            | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: required `Guzzle` HTTP client | string | none         |
 
 
 ### Queries

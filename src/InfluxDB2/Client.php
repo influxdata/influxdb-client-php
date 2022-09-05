@@ -5,7 +5,6 @@ namespace InfluxDB2;
 use InfluxDB2\Model\HealthCheck;
 use InfluxDB2\Service\InvokableScriptsService;
 use InfluxDB2\Service\PingService;
-use Psr\Http\Client\ClientInterface;
 use ReflectionClass;
 use RuntimeException;
 
@@ -147,14 +146,6 @@ class Client
             $ac->close();
         }
         $this->autoCloseable = [];
-    }
-
-    public function getConfiguration(): Configuration
-    {
-        return Configuration::getDefaultConfiguration()
-            ->setUserAgent('influxdb-client-php/' . Client::VERSION)
-            ->setDebugFile($this->options['logFile'] ?? null)
-            ->setHost(null);
     }
 
     /**

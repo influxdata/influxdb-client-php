@@ -2,7 +2,7 @@
 
 namespace InfluxDB2;
 
-use GuzzleHttp\Exception\ConnectException;
+use Http\Client\Exception\NetworkException;
 
 /**
  * Exponential random write retry.
@@ -108,7 +108,7 @@ class WriteRetry
     {
         $code = $e->getCode();
         if (($code == null || $code < 429) &&
-            !($e->getPrevious() instanceof ConnectException)) {
+            !($e->getPrevious() instanceof NetworkException)) {
             return false;
         }
         return true;
