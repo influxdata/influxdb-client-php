@@ -1,6 +1,15 @@
 ## 3.0.0 [unreleased]
 
-This release uses new version of InfluxDB OSS API definitions - [oss.yml](https://github.com/influxdata/openapi/blob/master/contracts/oss.yml). The following breaking changes are in underlying API services and doesn't affect common apis such as - `WriteApi`, `QueryApi`, `HealthApi`, ...
+:warning: This release drops strong couple to [Guzzle HTTP client](https://github.com/guzzle/guzzle). 
+Now you are able to use any implementation of `PSR-18` compliant HTTP client: https://packagist.org/providers/psr/http-client-implementation.
+
+The client has to be installed together with HTTP client:
+
+```
+composer require influxdata/influxdb-client-php guzzlehttp/guzzle
+```
+
+This release also uses a new version of InfluxDB OSS API definitions - [oss.yml](https://github.com/influxdata/openapi/blob/master/contracts/oss.yml). The following breaking changes are in underlying API services and doesn't affect common apis such as - `WriteApi`, `QueryApi`, `HealthApi`, ...
 
 ### Management API
 
@@ -21,6 +30,9 @@ This release uses new version of InfluxDB OSS API definitions - [oss.yml](https:
 - Remove `DefaultSerive`:
   - `PostSignin` operation is moved to `SigninService`
   - `PostSignout` operation is moved to `SignoutService`
+
+### Features
+1. [#129](https://github.com/influxdata/influxdb-client-php/pull/129): Use generic PSR-18 as an HTTP client
 
 ## 2.9.0 [2022-07-29]
 
