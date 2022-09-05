@@ -41,15 +41,13 @@ This section contains links to the client library documentation.
 
 ## Installation
 
-The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php).
-
 The client is not hard coupled to HTTP client library like Guzzle, Buzz or something else. 
 The client uses [PSR-18](https://www.php-fig.org/psr/psr-18/) abstraction which give you
 freedom to use your favorite HTTP client - [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation).
 
 ### Install the library
 
-The client can be installed with composer.
+The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php) and can be installed with composer:
 
 ```
 composer require influxdata/influxdb-client-php guzzlehttp/guzzle
@@ -73,19 +71,19 @@ $client = new InfluxDB2\Client([
 
 #### Client Options
 
-| Option          | Description                                                                                               | Note                                     | Type   | Default      |
-|-----------------|-----------------------------------------------------------------------------------------------------------|------------------------------------------|--------|--------------|
-| url             | InfluxDB server API url (e.g. http://localhost:8086)                                                      | **required**                             | String | none         |
-| token           | Token to use for the authorization                                                                        | **required**                             | String | none         |
-| bucket          | Default destination bucket for writes                                                                     |                                          | String | none         |
-| org             | Default destination organization for writes                                                               |                                          | String | none         |
-| precision       | Default precision for the unix timestamps within the body line-protocol                                   |                                          | String | none         |
-| debug           | Enable verbose logging of http requests                                                                   |                                          | bool   | false        |
-| logFile         | Default output for logs                                                                                   |                                          | bool   | php://output |
-| allow_redirects | Enable HTTP redirects                                                                                     |                                          | bool   | true         |
-| verifySSL       | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.             | :warning: Requires `Guzzle` HTTP client. | bool   | true         |
-| timeout         | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: Requires `Guzzle` HTTP client. | int    | 10           |
-| proxy           | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: Requires `Guzzle` HTTP client. | string | none         |
+| Option          | Description                                                                                               | Note                                    | Type   | Default      |
+|-----------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------|--------|--------------|
+| url             | InfluxDB server API url (e.g. http://localhost:8086)                                                      | **required**                            | String | none         |
+| token           | Token to use for the authorization                                                                        | **required**                            | String | none         |
+| bucket          | Default destination bucket for writes                                                                     |                                         | String | none         |
+| org             | Default destination organization for writes                                                               |                                         | String | none         |
+| precision       | Default precision for the unix timestamps within the body line-protocol                                   |                                         | String | none         |
+| allow_redirects | Enable HTTP redirects                                                                                     |                                         | bool   | true         |
+| debug           | Enable verbose logging of http requests                                                                   |                                         | bool   | false        |
+| logFile         | Default output for logs                                                                                   |                                         | bool   | php://output |
+| verifySSL       | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.             | :warning: required `Guzzle` HTTP client | bool   | true         |
+| timeout         | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: required `Guzzle` HTTP client | int    | 10           |
+| proxy           | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: required `Guzzle` HTTP client | string | none         |
 
 
 ### Queries
