@@ -123,8 +123,7 @@ class DefaultApi
         string $payload,
         array  $headers,
         array  $queryParams
-    ): RequestInterface
-    {
+    ): RequestInterface {
         $uri = $this->uriFactory
             ->createUri($this->options['url'])
             ->withPath($uriPath)
