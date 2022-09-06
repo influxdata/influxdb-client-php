@@ -116,6 +116,7 @@ jobs:
           command: |
             composer install -n --prefer-dist
             composer remove --dev guzzlehttp/guzzle guzzlehttp/psr7
+            composer require --dev nyholm/psr7 php-http/curl-client
       - run:
           name: Install xdebug
           command: |
@@ -181,7 +182,7 @@ workflows:
       - tests-windows:
           name: php-windows
       - tests-cURL:
-          name: cURL-http-client
+          name: php-cURL-client
       - check-code-style
 
   nightly:
