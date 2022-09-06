@@ -291,7 +291,7 @@ class WriteApiTest extends BasicTest
         $this->expectException(ApiException::class);
         $this->writeApi->write($point);
 
-        $this->assertCount(4, $this->container);
+        $this->assertCount(4, $this->requests);
         $this->assertCount(1, $this->mockHandler);
     }
 
@@ -321,7 +321,7 @@ class WriteApiTest extends BasicTest
 
         $this->writeApi->write($point);
 
-        $this->assertCount(2, $this->container);
+        $this->assertCount(2, $this->requests);
         $this->assertCount(1, $this->mockHandler);
     }
 

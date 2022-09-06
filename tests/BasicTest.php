@@ -26,7 +26,7 @@ abstract class BasicTest extends TestCase
     /** @var MockHandler */
     protected $mockHandler;
     /** @var array */
-    protected $container;
+    protected $requests;
 
     /**
      * @before
@@ -49,12 +49,10 @@ abstract class BasicTest extends TestCase
 
         $this->mockHandler = new MockHandler();
 
-        $this->container = [];
-        $history = Middleware::history($this->container);
+        $this->requests = [];
 
         $handlerStack = HandlerStack::create($this->mockHandler);
-
-        $handlerStack->push($history);
+        $handlerStack->push(Middleware::history($this->requests));
 
         $this->writeApi->http = $this->writeApi->configuredClient(new \GuzzleHttp\Client([
             'handler' => $handlerStack,

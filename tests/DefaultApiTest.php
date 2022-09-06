@@ -114,10 +114,10 @@ class DefaultApiTest extends BasicTest
         );
         $this->writeApi->write('h2o,location=west value=33i 15');
 
-        $this->assertCount(2, $this->container);
+        $this->assertCount(2, $this->requests);
 
-        $this->assertEquals('Token my-token', $this->getHeader($this->container[0]['request']));
-        $this->assertEquals('Token my-token', $this->getHeader($this->container[1]['request']));
+        $this->assertEquals('Token my-token', $this->getHeader($this->requests[0]['request']));
+        $this->assertEquals('Token my-token', $this->getHeader($this->requests[1]['request']));
     }
 
     /**
