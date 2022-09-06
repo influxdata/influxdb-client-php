@@ -87,9 +87,9 @@ $client = new InfluxDB2\Client([
 | timeout          | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: required `Guzzle` HTTP client | int                               | 10           |
 | proxy            | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: required `Guzzle` HTTP client | string                            | none         |
 
-#### Custom configured HTTP client
+#### Custom HTTP client
 
-This following code show you how to use [cURL](https://github.com/php-http/curl-client) HTTP client:
+The following code shows how to use and configure [cURL](https://github.com/php-http/curl-client) HTTP client:
 
 ##### Install dependencies via composer
 
