@@ -57,12 +57,10 @@ abstract class BasicTest extends TestCase
         $handlerStack->push($history);
 
         $this->writeApi->http = $this->writeApi->configuredClient(new \GuzzleHttp\Client([
-            'base_uri' => $this->writeApi->options["url"],
             'handler' => $handlerStack,
         ]));
 
         $this->queryApi->http = $this->writeApi->configuredClient(new \GuzzleHttp\Client([
-            'base_uri' => $this->writeApi->options["url"],
             'handler' => $handlerStack,
         ]));
     }
