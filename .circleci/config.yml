@@ -118,10 +118,6 @@ jobs:
             composer remove --dev guzzlehttp/guzzle guzzlehttp/psr7
             composer require --dev nyholm/psr7 php-http/curl-client
       - run:
-          name: Install xdebug
-          command: |
-            sudo pecl install xdebug
-      - run:
           name: Run tests
           command: |
             vendor/bin/phpunit tests --group "integration"
