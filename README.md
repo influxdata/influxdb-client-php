@@ -89,7 +89,7 @@ $client = new InfluxDB2\Client([
 
 #### Custom configured HTTP client
 
-This following code show you how to use [Buzz](https://github.com/kriswallsmith/Buzz) HTTP client:
+This following code show you how to use [cURL](https://github.com/php-http/curl-client) HTTP client:
 
 ##### Install dependencies via composer
 

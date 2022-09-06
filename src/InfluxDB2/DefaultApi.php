@@ -50,7 +50,7 @@ class DefaultApi
         $this->options = $options;
 
         $guzzleHttp = "GuzzleHttp\Client";
-        if ($this->options['httpClient']) {
+        if ($this->options['httpClient'] ?? false) {
             $client = $this->options['httpClient'];
         } elseif (ClassDiscovery::safeClassExists($guzzleHttp)) {
             $client = new $guzzleHttp([
