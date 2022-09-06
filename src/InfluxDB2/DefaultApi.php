@@ -50,7 +50,9 @@ class DefaultApi
         $this->options = $options;
 
         $guzzleHttp = "GuzzleHttp\Client";
-        if (ClassDiscovery::safeClassExists($guzzleHttp)) {
+        if ($this->options['httpClient']) {
+            $client = $this->options['httpClient'];
+        } elseif (ClassDiscovery::safeClassExists($guzzleHttp)) {
             $client = new $guzzleHttp([
                 'timeout' => $this->options['timeout'] ?? 10,
                 'verify' => $this->options['verifySSL'] ?? true,
