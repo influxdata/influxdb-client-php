@@ -8,6 +8,7 @@ use InfluxDB2\ApiException;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InvalidArgumentException;
+use ReflectionObject;
 
 require_once('BasicTest.php');
 
@@ -78,9 +79,9 @@ class DefaultApiTest extends BasicTest
 
     public function testDefaultVerifySSL()
     {
-        $config = $this->writeApi->http->getConfig();
+        $guzzle = $this->property_value($this->property_value($this->writeApi->http, 'client'), 'httpClient');
 
-        $this->assertEquals(true, $config['verify']);
+        $this->assertEquals(true, $guzzle->getConfig()['verify']);
     }
 
     public function testConfigureVerifySSL()
@@ -95,14 +96,14 @@ class DefaultApiTest extends BasicTest
             "verifySSL" => false
         ]);
 
-        $config = $client->createQueryApi()->http->getConfig();
+        $guzzle = $this->property_value($this->property_value($client->createQueryApi()->http, 'client'), 'httpClient');
 
-        $this->assertEquals(false, $config['verify']);
+        $this->assertEquals(false, $guzzle->getConfig()['verify']);
 
         $client->close();
     }
 
-    public function test_follow_redirect()
+    public function testFollowRedirect()
     {
         $this->mockHandler->append(
             new Response(
@@ -113,10 +114,10 @@ class DefaultApiTest extends BasicTest
         );
         $this->writeApi->write('h2o,location=west value=33i 15');
 
-        $this->assertCount(2, $this->container);
+        $this->assertCount(2, $this->requests);
 
-        $this->assertEquals('Token my-token', $this->getHeader($this->container[0]['request']));
-        $this->assertEquals('Token my-token', $this->getHeader($this->container[1]['request']));
+        $this->assertEquals('Token my-token', $this->getHeader($this->requests[0]['request']));
+        $this->assertEquals('Token my-token', $this->getHeader($this->requests[1]['request']));
     }
 
     /**
@@ -126,5 +127,16 @@ class DefaultApiTest extends BasicTest
     private function getHeader(Request $request): string
     {
         return implode(' ', $request->getHeaders()['Authorization']);
+    }
+
+    /**
+     * @throws \ReflectionException fail to access property
+     */
+    private function property_value(object $object, string $property_name): object
+    {
+        $reflection = new ReflectionObject($object);
+        $property = $reflection->getProperty($property_name);
+        $property->setAccessible(true);
+        return $property->getValue($object);
     }
 }

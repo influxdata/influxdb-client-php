@@ -98,6 +98,36 @@ jobs:
       - test:
           php-image: << parameters.php-image >>
       - storing-test-results
+  tests-cURL:
+    docker:
+      - image: *default-php-image
+      - image: *default-influxdb-image
+        environment:
+          INFLUXD_HTTP_BIND_ADDRESS: :8086
+    steps:
+      - prepare
+      - restore_cache:
+          name: Restoring Composer Cache
+          keys:
+            - http-client-v1-{{ checksum "composer.json" }}
+            - http-client-v1-
+      - run:
+          name: Install dependencies
+          command: |
+            composer install -n --prefer-dist
+            composer remove --dev guzzlehttp/guzzle guzzlehttp/psr7
+            composer require --dev nyholm/psr7 php-http/curl-client
+      - run:
+          name: Run tests
+          command: |
+            vendor/bin/phpunit tests --group "integration"
+      - save_cache:
+          name: Saving Cache
+          key: http-client-v1-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+          when: always
+      - storing-test-results
   tests-windows:
     machine:
       image: "windows-server-2019-vs2019:stable"
@@ -147,6 +177,8 @@ workflows:
           php-image: "cimg/php:7.2"
       - tests-windows:
           name: php-windows
+      - tests-cURL:
+          name: php-cURL-client
       - check-code-style
 
   nightly:

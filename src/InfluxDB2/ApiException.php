@@ -28,7 +28,7 @@
 
 namespace InfluxDB2;
 
-use GuzzleHttp\Exception\ConnectException;
+use Psr\Http\Client\ClientExceptionInterface;
 use RuntimeException;
 
 /**
@@ -66,7 +66,7 @@ class ApiException extends RuntimeException
     /**
      * Constructor
      *
-     * @param ConnectException|null $previous The previous throwable used for the exception chaining.
+     * @param ClientExceptionInterface|null $previous The previous throwable used for the exception chaining.
      * @param string $message Error message
      * @param int $code HTTP status code
      * @param string[]|null $responseHeaders HTTP response header

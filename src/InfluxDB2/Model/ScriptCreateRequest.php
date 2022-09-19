@@ -247,7 +247,7 @@ class ScriptCreateRequest implements ModelInterface, ArrayAccess
     /**
      * Sets name
      *
-     * @param string $name The name of the script. The name must be unique within the organization.
+     * @param string $name Script name. The name must be unique within the organization.
      *
      * @return $this
      */
@@ -271,7 +271,7 @@ class ScriptCreateRequest implements ModelInterface, ArrayAccess
     /**
      * Sets description
      *
-     * @param string $description description
+     * @param string $description Script description. A description of the script.
      *
      * @return $this
      */

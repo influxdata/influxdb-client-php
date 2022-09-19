@@ -41,14 +41,17 @@ This section contains links to the client library documentation.
 
 ## Installation
 
-The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php).
+The client is not hard coupled to HTTP client library like Guzzle, Buzz or something else. 
+The client uses general abstractions ([PSR-7 - HTTP messages](https://www.php-fig.org/psr/psr-18/),
+[PSR-17 - HTTP factories](https://www.php-fig.org/psr/psr-18/), [PSR-18 - HTTP client](https://www.php-fig.org/psr/psr-18/)) which give you
+freedom to use your favorite one.
 
 ### Install the library
 
-The client can be installed with composer.
+The InfluxDB 2 client is bundled and hosted on [https://packagist.org/](https://packagist.org/packages/influxdata/influxdb-client-php) and can be installed with composer:
 
 ```
-composer require influxdata/influxdb-client-php
+composer require influxdata/influxdb-client-php guzzlehttp/guzzle
 ```
 
 ## Usage
@@ -69,14 +72,55 @@ $client = new InfluxDB2\Client([
 
 #### Client Options
 
-| Option | Description | Type | Default |
-|---|---|---|---|
-| bucket | Default destination bucket for writes | String | none |
-| org | Default organization bucket for writes | String | none |
-| precision | Default precision for the unix timestamps within the body line-protocol | String | none |
-| verifySSL | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification. | bool | true |
-| timeout | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely | int | 10 |
+| Option           | Description                                                                                               | Note                                    | Type                              | Default      |
+|------------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------|-----------------------------------|--------------|
+| **url**          | InfluxDB server API url (e.g. http://localhost:8086)                                                      | **required**                            | String                            | none         |
+| **token**        | Token to use for the authorization                                                                        | **required**                            | String                            | none         |
+| bucket           | Default destination bucket for writes                                                                     |                                         | String                            | none         |
+| org              | Default destination organization for writes                                                               |                                         | String                            | none         |
+| precision        | Default precision for the unix timestamps within the body line-protocol                                   |                                         | String                            | none         |
+| allow_redirects  | Enable HTTP redirects                                                                                     |                                         | bool                              | true         |
+| debug            | Enable verbose logging of http requests                                                                   |                                         | bool                              | false        |
+| logFile          | Default output for logs                                                                                   |                                         | bool                              | php://output |
+| httpClient       | Configured HTTP client to use for communication with InfluxDB                                             |                                         | `Psr\Http\Client\ClientInterface` | none         |
+| verifySSL        | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.             | :warning: required `Guzzle` HTTP client | bool                              | true         |
+| timeout          | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: required `Guzzle` HTTP client | int                               | 10           |
+| proxy            | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: required `Guzzle` HTTP client | string                            | none         |
 
+#### Custom HTTP client
+
+The following code shows how to use and configure [cURL](https://github.com/php-http/curl-client) HTTP client:
+
+##### Install dependencies via composer
+
+```
+composer require influxdata/influxdb-client-php nyholm/psr7 php-http/curl-client
+```
+
+##### Configure cURL client
+
+```php
+$curlOptions = [
+    CURLOPT_CONNECTTIMEOUT => 30, // The number of seconds to wait while trying to connect.
+];
+$curlClient = new Http\Client\Curl\Client(
+    Http\Discovery\Psr17FactoryDiscovery::findRequestFactory(),
+    Http\Discovery\Psr17FactoryDiscovery::findStreamFactory(),
+    $curlOptions
+);
+```
+
+##### Initialize InfluxDB client
+
+```php
+$client = new Client([
+    "url" => "http://localhost:8086",
+    "token" => "my-token",
+    "bucket" => "my-bucket",
+    "org" => "my-org",
+    "httpClient" => $curlClient
+]);
+```
 
 ### Queries
 
@@ -247,16 +291,16 @@ $write_api->write('h2o,location=west value=33i 15');
 
 The writes are processed in batches which are configurable by `WriteOptions`:
 
-| Property | Description | Default Value |
-| --- | --- | --- |
-| **writeType** | type of write SYNCHRONOUS / BATCHING /  | SYNCHRONOUS |
-| **batchSize** | the number of data point to collect in batch | 10 |
-| **retryInterval** | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header. | 5000 |
-| **jitterInterval** | the number of milliseconds before the data is written increased by a random amount | 0 |
-| **maxRetries** | the number of max retries when write fails | 5 |
-| **maxRetryDelay** | maximum delay when retrying write in milliseconds | 125000 |
-| **maxRetryTime** | maximum total retry timeout in milliseconds | 180000 |
-| **exponentialBase** | the base for the exponential retry delay, the next delay is computed using random exponential backoff as a random value within the interval  ``retryInterval * exponentialBase^(attempts-1)`` and ``retryInterval * exponentialBase^(attempts)``. Example for ``retryInterval=5000, exponentialBase=2, maxRetryDelay=125000, total=5`` Retry delays are random distributed values within the ranges of ``[5000-10000, 10000-20000, 20000-40000, 40000-80000, 80000-125000]`` | 2 | 
+| Property            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Default Value |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| **writeType**       | type of write SYNCHRONOUS / BATCHING /                                                                                                                                                                                                                                                                                                                                                                                                                                       | SYNCHRONOUS   |
+| **batchSize**       | the number of data point to collect in batch                                                                                                                                                                                                                                                                                                                                                                                                                                 | 10            |
+| **retryInterval**   | the number of milliseconds to retry unsuccessful write. The retry interval is "exponentially" used when the InfluxDB server does not specify "Retry-After" header.                                                                                                                                                                                                                                                                                                           | 5000          |
+| **jitterInterval**  | the number of milliseconds before the data is written increased by a random amount                                                                                                                                                                                                                                                                                                                                                                                           | 0             |
+| **maxRetries**      | the number of max retries when write fails                                                                                                                                                                                                                                                                                                                                                                                                                                   | 5             |
+| **maxRetryDelay**   | maximum delay when retrying write in milliseconds                                                                                                                                                                                                                                                                                                                                                                                                                            | 125000        |
+| **maxRetryTime**    | maximum total retry timeout in milliseconds                                                                                                                                                                                                                                                                                                                                                                                                                                  | 180000        |
+| **exponentialBase** | the base for the exponential retry delay, the next delay is computed using random exponential backoff as a random value within the interval  ``retryInterval * exponentialBase^(attempts-1)`` and ``retryInterval * exponentialBase^(attempts)``. Example for ``retryInterval=5000, exponentialBase=2, maxRetryDelay=125000, total=5`` Retry delays are random distributed values within the ranges of ``[5000-10000, 10000-20000, 20000-40000, 40000-80000, 80000-125000]`` | 2             | 
 ```php
 use InfluxDB2\Client;
 use InfluxDB2\WriteType as WriteType;
@@ -414,11 +458,11 @@ Server availability can be checked using the `$client->ping();` method. That is 
 
 The following forward compatible APIs are available:
 
-| API | Endpoint | Description                                                                                                                                                                                                                                                    |
-|:----------|:----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [QueryApi.php](src/InfluxDB2/QueryApi.php) | [/api/v2/query](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-query-http-endpoint) | Query data in InfluxDB 1.8.0+ using the InfluxDB 2.x API and [Flux](https://docs.influxdata.com/flux/latest/) _(endpoint should be enabled by [`flux-enabled` option](https://docs.influxdata.com/influxdb/latest/administration/config/#flux-enabled-false))_ |
-| [WriteApi.php](src/InfluxDB2/WriteApi.php) | [/api/v2/write](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-write-http-endpoint) | Write data to InfluxDB 1.8.0+ using the InfluxDB 2.x API                                                                                                                                                                                                       |
-| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/latest/tools/api/#health-http-endpoint) | Check the health of your InfluxDB instance                                                                                                                                                                                                                     |    
+| API                                          | Endpoint                                                                                           | Description                                                                                                                                                                                                                                                    |
+|:---------------------------------------------|:---------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [QueryApi.php](src/InfluxDB2/QueryApi.php)   | [/api/v2/query](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-query-http-endpoint) | Query data in InfluxDB 1.8.0+ using the InfluxDB 2.x API and [Flux](https://docs.influxdata.com/flux/latest/) _(endpoint should be enabled by [`flux-enabled` option](https://docs.influxdata.com/influxdb/latest/administration/config/#flux-enabled-false))_ |
+| [WriteApi.php](src/InfluxDB2/WriteApi.php)   | [/api/v2/write](https://docs.influxdata.com/influxdb/latest/tools/api/#api-v2-write-http-endpoint) | Write data to InfluxDB 1.8.0+ using the InfluxDB 2.x API                                                                                                                                                                                                       |
+| [HealthApi.php](src/InfluxDB2/HealthApi.php) | [/health](https://docs.influxdata.com/influxdb/latest/tools/api/#health-http-endpoint)             | Check the health of your InfluxDB instance                                                                                                                                                                                                                     |    
 
 For detail info see [InfluxDB 1.8 example](examples/InfluxDB_18_Example.php).
 
@@ -583,7 +627,7 @@ $client = new InfluxDB2\Client([
   "allow_redirects" => false,
 ]);
 ```
-For more info see Guzzle docs - [allow_redirects](https://docs.guzzlephp.org/en/5.3/clients.html?highlight=redirect#allow-redirects)
+For more info see Redirect Plugin docs - [allow_redirects](https://docs.php-http.org/en/latest/plugins/redirect.html#redirect-plugin)
 
 ## Local tests
 

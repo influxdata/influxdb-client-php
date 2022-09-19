@@ -2,10 +2,12 @@
 
 namespace InfluxDB2;
 
+use Exception;
 use InfluxDB2\Model\HealthCheck;
 use InfluxDB2\Service\InvokableScriptsService;
 use InfluxDB2\Service\PingService;
 use ReflectionClass;
+use ReflectionException;
 use RuntimeException;
 
 /**
@@ -83,9 +85,9 @@ class Client
 
     /**
      * @return UdpWriter
-     * @throws \Exception
+     * @throws Exception
      */
-    public function createUdpWriter()
+    public function createUdpWriter(): UdpWriter
     {
         return new UdpWriter($this->options);
     }
@@ -148,14 +150,6 @@ class Client
         $this->autoCloseable = [];
     }
 
-    public function getConfiguration(): Configuration
-    {
-        return Configuration::getDefaultConfiguration()
-            ->setUserAgent('influxdb-client-php/' . Client::VERSION)
-            ->setDebugFile($this->options['logFile'] ?? null)
-            ->setHost(null);
-    }
-
     /**
      * Creates the instance of api service
      *
@@ -166,16 +160,10 @@ class Client
     {
         try {
             $class = new ReflectionClass($serviceClass);
-            $args = array($this->getGuzzleClient(), $this->getConfiguration());
+            $args = array(new DefaultApi($this->options));
             return $class->newInstanceArgs($args);
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             throw new RuntimeException($e);
         }
-    }
-
-    private function getGuzzleClient()
-    {
-        $defaultApi = new DefaultApi($this->options);
-        return $defaultApi->http;
     }
 }

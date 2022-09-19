@@ -4,13 +4,14 @@ namespace InfluxDB2Test;
 
 use Exception;
 use InfluxDB2\Client;
+use IntegrationBaseTestCase;
 
-require_once('BasicTest.php');
+require_once('IntegrationBaseTestCase.php');
 
 /**
  * @group integration
  */
-class ClientTest extends BasicTest
+class ClientTest extends IntegrationBaseTestCase
 {
     public function test_health()
     {

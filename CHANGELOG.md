@@ -1,4 +1,38 @@
-## 2.10.0 [unreleased]
+## 3.0.0 [unreleased]
+
+:warning: This release drops strong couple to [Guzzle HTTP client](https://github.com/guzzle/guzzle). 
+Now you are able to use any implementation of `PSR-18` compliant HTTP client - https://packagist.org/providers/psr/http-client-implementation.
+
+The client has to be installed together with HTTP client:
+
+```
+composer require influxdata/influxdb-client-php guzzlehttp/guzzle
+```
+
+### Management API
+
+This release also uses a new version of InfluxDB OSS API definitions - [oss.yml](https://github.com/influxdata/openapi/blob/master/contracts/oss.yml). The following breaking changes are in underlying API services and doesn't affect common apis such as - `WriteApi`, `QueryApi`, `HealthApi`, ...
+
+- Add `ConfigService` to retrieve InfluxDB's runtime configuration
+- Add `DebugService` to retrieve debug and performance data from runtime
+- Add `MetricsService` to deal with exposed prometheus metrics
+- Add `RemoteConnectionsService` to deal with registered remote InfluxDB connections
+- Add `ResourcesService` to manage InfluxDB resources
+- Add `ReplicationService` to manage InfluxDB replications
+- Add `ReplicationService` to manage InfluxDB replications
+- Update `TemplatesService` to deal with `Stack` and `Template` API
+- Update `RestoreService` to deal with new restore functions of InfluxDB
+
+#### Breaking Changes
+
+- Remove asynchronous operation based on `GuzzleHttp\Message\FutureResponse`
+- Remove `DocumentService` in favour of [InfluxDB Community Templates](https://github.com/influxdata/community-templates). For more info see - [influxdb#19300](https://github.com/influxdata/influxdb/pull/19300), [openapi#192](https://github.com/influxdata/openapi/pull/192)
+- Remove `DefaultSerive`:
+  - `PostSignin` operation is moved to `SigninService`
+  - `PostSignout` operation is moved to `SignoutService`
+
+### Features
+1. [#129](https://github.com/influxdata/influxdb-client-php/pull/129): Use generic PSR-18 as an HTTP client
 
 ## 2.9.0 [2022-07-29]
 

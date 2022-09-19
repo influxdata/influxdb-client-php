@@ -26,7 +26,7 @@ abstract class BasicTest extends TestCase
     /** @var MockHandler */
     protected $mockHandler;
     /** @var array */
-    protected $container;
+    protected $requests;
 
     /**
      * @before
@@ -49,22 +49,18 @@ abstract class BasicTest extends TestCase
 
         $this->mockHandler = new MockHandler();
 
-        $this->container = [];
-        $history = Middleware::history($this->container);
+        $this->requests = [];
 
         $handlerStack = HandlerStack::create($this->mockHandler);
+        $handlerStack->push(Middleware::history($this->requests));
 
-        $handlerStack->push($history);
-
-        $this->writeApi->http = new \GuzzleHttp\Client([
-            'base_uri' => $this->writeApi->options["url"],
+        $this->writeApi->http = $this->writeApi->configuredClient(new \GuzzleHttp\Client([
             'handler' => $handlerStack,
-        ]);
+        ]));
 
-        $this->queryApi->http = new \GuzzleHttp\Client([
-            'base_uri' => $this->writeApi->options["url"],
+        $this->queryApi->http = $this->writeApi->configuredClient(new \GuzzleHttp\Client([
             'handler' => $handlerStack,
-        ]);
+        ]));
     }
 
     public function tearDown(): void
