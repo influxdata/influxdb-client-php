@@ -332,27 +332,27 @@ class WriteApiTest extends BasicTest
 
         $backoff = $retry->getBackoffTime(1);
         $this->assertGreaterThan(5000, $backoff);
-        $this->assertLessThan(10000, $backoff);
+        $this->assertLessThanOrEqual(10000, $backoff);
 
         $backoff = $retry->getBackoffTime(2);
         $this->assertGreaterThan(10000, $backoff);
-        $this->assertLessThan(20000, $backoff);
+        $this->assertLessThanOrEqual(20000, $backoff);
 
         $backoff = $retry->getBackoffTime(3);
         $this->assertGreaterThan(20000, $backoff);
-        $this->assertLessThan(40000, $backoff);
+        $this->assertLessThanOrEqual(40000, $backoff);
 
         $backoff = $retry->getBackoffTime(4);
         $this->assertGreaterThan(40000, $backoff);
-        $this->assertLessThan(80000, $backoff);
+        $this->assertLessThanOrEqual(80000, $backoff);
 
         $backoff = $retry->getBackoffTime(5);
         $this->assertGreaterThan(80000, $backoff);
-        $this->assertLessThan(125000, $backoff);
+        $this->assertLessThanOrEqual(125000, $backoff);
 
         $backoff = $retry->getBackoffTime(6);
         $this->assertGreaterThan(80000, $backoff);
-        $this->assertLessThan(125000, $backoff);
+        $this->assertLessThanOrEqual(125000, $backoff);
     }
 
     public function testConnectExceptionRetry()
