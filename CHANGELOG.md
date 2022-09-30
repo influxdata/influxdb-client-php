@@ -1,3 +1,5 @@
+## 3.1.0 [unreleased]
+
 ## 3.0.0 [2022-09-30]
 
 :warning: This release drops strong couple to [Guzzle HTTP client](https://github.com/guzzle/guzzle). 
