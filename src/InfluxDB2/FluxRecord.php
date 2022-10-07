@@ -15,16 +15,18 @@ class FluxRecord implements ArrayAccess
 {
     public $table;
     public $values;
+    public $row;
 
     /**
      * FluxRecord constructor.
      * @param $table int table index
      * @param $values array array with record values, key is the column name
      */
-    public function __construct($table, $values=null)
+    public function __construct($table, $values = null, $row = null)
     {
         $this->table = $table;
         $this->values = $values;
+        $this->row = $row;
     }
 
     /**
@@ -70,7 +72,7 @@ class FluxRecord implements ArrayAccess
     /**
      * @return mixed record value for column named '_measurement'
      */
-    public function getMeasurement():string
+    public function getMeasurement(): string
     {
         return $this->getRecordValue('_measurement');
     }
