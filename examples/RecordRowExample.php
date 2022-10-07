@@ -29,7 +29,7 @@ $client = new Client([
 $writeApi = $client->createWriteApi();
 
 foreach (range(1, 5) as $i) {
-    $writeApi->write("point,table=my-table result={$i}", InfluxDB2\Model\WritePrecision::MS, $bucket, $org);
+    $writeApi->write("point,table=my-table result=$i", InfluxDB2\Model\WritePrecision::MS, $bucket, $org);
 }
 
 $writeApi->close();
@@ -40,7 +40,7 @@ $writeApi->close();
 $queryApi = $client->createQueryApi();
 
 $result = $queryApi->query(
-    "from(bucket: \"{$bucket}\") |> range(start: -1m) |> filter(fn: (r) => (r[\"_measurement\"] == \"point\"))
+    "from(bucket: \"$bucket\") |> range(start: -1m) |> filter(fn: (r) => (r[\"_measurement\"] == \"point\"))
 |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")"
 );
 
@@ -51,7 +51,7 @@ printf("\n--------------------------------------- FluxRecord.values ------------
 foreach ($result as $table) {
     foreach ($table->records as $record) {
         $values = implode(", ", $record->values);
-        print "{$values}\n";
+        print "$values\n";
     }
 }
 
@@ -59,7 +59,7 @@ printf("\n----------------------------------------- FluxRecord.row -------------
 foreach ($result as $table) {
     foreach ($table->records as $record) {
         $row = implode(", ", $record->row);
-        print "{$row}\n";
+        print "$row\n";
     }
 }
 
