@@ -190,8 +190,11 @@ class FluxCsvParser
 
         foreach ($table->columns as $column) {
             $column->label = $csv[$i];
-            if (in_array($column->label, $labels)) $duplicates[] = $column->label;
-            else $labels[] = $column->label;
+            if (in_array($column->label, $labels)) {
+                $duplicates[] = $column->label;
+            } else {
+                $labels[] = $column->label;
+            }
             $i++;
         }
 

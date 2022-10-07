@@ -28,8 +28,9 @@ $client = new Client([
 //
 $writeApi = $client->createWriteApi();
 
-foreach (range(1, 5) as $i)
+foreach (range(1, 5) as $i) {
     $writeApi->write("point,table=my-table result={$i}", InfluxDB2\Model\WritePrecision::MS, $bucket, $org);
+}
 
 $writeApi->close();
 
@@ -47,15 +48,19 @@ $result = $queryApi->query(
 // Write data to output
 //
 printf("\n--------------------------------------- FluxRecord.values ----------------------------------------\n");
-foreach ($result as $table) foreach ($table->records as $record) {
-    $values = implode(", ",$record->values);
-    print "{$values}\n";
+foreach ($result as $table) {
+    foreach ($table->records as $record) {
+        $values = implode(", ", $record->values);
+        print "{$values}\n";
+    }
 }
 
 printf("\n----------------------------------------- FluxRecord.row -----------------------------------------\n");
-foreach ($result as $table) foreach ($table->records as $record) {
-    $row = implode(", ", $record->row);
-    print "{$row}\n";
+foreach ($result as $table) {
+    foreach ($table->records as $record) {
+        $row = implode(", ", $record->row);
+        print "{$row}\n";
+    }
 }
 
 $client->close();
