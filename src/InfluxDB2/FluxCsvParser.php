@@ -147,7 +147,9 @@ class FluxCsvParser
         foreach ($table->columns as $fluxColumn) {
             $columnName = $fluxColumn->label;
             $strVal = $csv[$fluxColumn->index + 1];
-            $record->values[$columnName] = $this->toValue($strVal, $fluxColumn);
+            $value = $this->toValue($strVal, $fluxColumn);
+            $record->values[$columnName] = $value;
+            $record->row[] = $value;
         }
         return $record;
     }
@@ -183,9 +185,23 @@ class FluxCsvParser
     private function addColumnNamesAndTags(FluxTable $table, array $csv)
     {
         $i = 1;
-        foreach ($table->columns as &$column) {
+
+        foreach ($table->columns as $column) {
             $column->label = $csv[$i];
             $i++;
+        }
+
+        $duplicates = array();
+        foreach (array_count_values($csv) as $label => $count) {
+            if ($count > 1) {
+                $duplicates[] = $label;
+            }
+        }
+
+        if (count($duplicates) > 0) {
+            $duplicatesStr = implode(", ", $duplicates);
+            print "The response contains columns with duplicated names: {$duplicatesStr}\n";
+            print "You should use the 'FluxRecord.row' to access your data instead of 'FluxRecord.values'.";
         }
     }
 

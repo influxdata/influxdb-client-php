@@ -20,3 +20,5 @@
 - [InfluxDB_18_Example.php](InfluxDB_18_Example.php) - How to use forward compatibility APIs from InfluxDB 1.8
 - [DeleteDataExample.php](DeleteDataExample.php) - How to delete data from InfluxDB by client
 - [InvokableScripts.php](InvokableScripts.php) - How to use Invokable scripts Cloud API to create custom endpoints that query data
+- [RecordRowExample.php](RecordRowExample.php) - How to use `FluxRecord.row` instead of `FluxRecord.values`,
+  in case of duplicity column names

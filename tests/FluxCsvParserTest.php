@@ -442,6 +442,28 @@ class FluxCsvParserTest extends TestCase
         $this->assertEquals(-INF, $tables[0]->records[11]->values['le']);
     }
 
+    public function testParseDuplicateColumnNames()
+    {
+        $data = "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,string,string,double
+#group,false,false,true,true,false,true,true,false
+#default,_result,,,,,,,
+ ,result,table,_start,_stop,_time,_measurement,location,result
+,,0,2022-09-13T06:14:40.469404272Z,2022-09-13T06:24:40.469404272Z,2022-09-13T06:24:33.746Z,my_measurement,Prague,25.3
+,,0,2022-09-13T06:14:40.469404272Z,2022-09-13T06:24:40.469404272Z,2022-09-13T06:24:39.299Z,my_measurement,Prague,25.3
+,,0,2022-09-13T06:14:40.469404272Z,2022-09-13T06:24:40.469404272Z,2022-09-13T06:24:40.454Z,my_measurement,Prague,25.3
+";
+
+        $parser = new FluxCsvParser($data);
+        $tables = $parser->parse()->tables;
+
+        $this->assertEquals(1, sizeof($tables));
+        $this->assertEquals(3, sizeof($tables[0]->records));
+        $this->assertEquals(8, sizeof($tables[0]->columns));
+        $this->assertEquals(7, sizeof($tables[0]->records[0]->values));
+        $this->assertEquals(8, sizeof($tables[0]->records[0]->row));
+        $this->assertEquals(25.3, $tables[0]->records[0]->row[7]);
+    }
+
     private function assertColumns(array $columnHeaders, array $values)
     {
         $i = 0;
