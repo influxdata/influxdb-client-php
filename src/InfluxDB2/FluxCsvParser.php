@@ -185,14 +185,17 @@ class FluxCsvParser
     private function addColumnNamesAndTags(FluxTable $table, array $csv)
     {
         $i = 1;
-        $duplicates = array();
 
+        foreach ($table->columns as $column) {
+            $column->label = $csv[$i];
+            $i++;
+        }
+
+        $duplicates = array();
         foreach (array_count_values($csv) as $label => $count) {
             if ($count > 1) {
                 $duplicates[] = $label;
             }
-            $table->columns[$i]->label = $label;
-            $i++;
         }
 
         if (count($duplicates) > 0) {
