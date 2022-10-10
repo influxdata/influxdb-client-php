@@ -201,7 +201,7 @@ class FluxCsvParser
         if (count($duplicates) > 0) {
             $duplicatesStr = implode(", ", $duplicates);
             print "The response contains columns with duplicated names: {$duplicatesStr}\n";
-            print "You should use the 'FluxRecord.row to access your data instead of 'FluxRecord.values'.";
+            print "You should use the 'FluxRecord.row' to access your data instead of 'FluxRecord.values'.";
         }
     }
 
