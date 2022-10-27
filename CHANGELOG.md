@@ -1,8 +1,7 @@
-## 3.1.0 [unreleased]
+## 3.1.0 [2022-10-27]
 
 ### Features
 1. [#131](https://github.com/influxdata/influxdb-client-php/pull/131): Add `FluxRecord.row` which stores response data in a array
-
 
 ## 3.0.0 [2022-09-30]
 
