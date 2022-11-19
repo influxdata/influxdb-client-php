@@ -10,9 +10,6 @@ use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
 
-/**
- * @template T
- */
 class Client
 {
     /**
