@@ -66,7 +66,7 @@ class PingService
     /**
      * Operation getPing
      *
-     * Get the status and version of the instance
+     * Get the status of the instance
      *
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
@@ -81,7 +81,7 @@ class PingService
     /**
      * Operation getPingWithHttpInfo
      *
-     * Get the status and version of the instance
+     * Get the status of the instance
      *
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
@@ -150,7 +150,7 @@ class PingService
     /**
      * Operation headPing
      *
-     * Get the status and version of the instance
+     * Get the status of the instance
      *
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
@@ -165,7 +165,7 @@ class PingService
     /**
      * Operation headPingWithHttpInfo
      *
-     * Get the status and version of the instance
+     * Get the status of the instance
      *
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
