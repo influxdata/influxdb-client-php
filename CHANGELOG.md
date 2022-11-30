@@ -1,5 +1,8 @@
 ## 3.2.0 [unreleased]
 
+### Others
+1. [#134](https://github.com/influxdata/influxdb-client-php/pull/134): Update generated `PingService`
+
 ## 3.1.0 [2022-10-27]
 
 ### Features
