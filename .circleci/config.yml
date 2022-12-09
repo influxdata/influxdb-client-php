@@ -51,7 +51,7 @@ commands:
       - run:
           name: Install xdebug
           command: |
-            sudo pecl install xdebug
+            sudo pecl install xdebug-3.1.6
       - run:
           name: Run tests
           command: |
