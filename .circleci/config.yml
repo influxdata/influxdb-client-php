@@ -37,6 +37,8 @@ commands:
     parameters:
       php-image:
         type: string
+      xdebug-package:
+        type: string
     steps:
       - restore_cache:
           name: Restoring Composer Cache
@@ -51,7 +53,7 @@ commands:
       - run:
           name: Install xdebug
           command: |
-            sudo pecl install xdebug-3.1.6
+            sudo pecl install << parameters.xdebug-package >>
       - run:
           name: Run tests
           command: |
@@ -88,6 +90,9 @@ jobs:
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:latest"
+      xdebug-package:
+        type: string
+        default: "xdebug-3.1.6"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image << parameters.influxdb-image >>
@@ -97,6 +102,7 @@ jobs:
       - prepare
       - test:
           php-image: << parameters.php-image >>
+          xdebug-package: << parameters.xdebug-package >>
       - storing-test-results
   tests-cURL:
     docker:
@@ -169,6 +175,10 @@ workflows:
       - tests-php:
           name: php-8.1
           php-image: "cimg/php:8.1"
+      - tests-php:
+          name: php-8.2
+          php-image: "cimg/php:8.2"
+          xdebug-package: "xdebug"
       - tests-php:
           name: php-7.4-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
