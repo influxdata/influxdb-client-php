@@ -170,6 +170,9 @@ workflows:
           name: php-8.1
           php-image: "cimg/php:8.1"
       - tests-php:
+          name: php-8.2
+          php-image: "cimg/php:8.2"
+      - tests-php:
           name: php-7.4-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
       - tests-php:
