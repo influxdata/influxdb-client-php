@@ -8,7 +8,7 @@ dshell: ## Start Docker Shell for Local Development
 	@docker-compose run --entrypoint=bash --rm php
 
 deps: ## Installs the project dependencies
-	@composer install
+	@docker-compose run php composer install
 
 test: start-server ## Perform unit tests
 	@docker-compose run php composer run test
