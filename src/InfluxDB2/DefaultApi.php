@@ -200,7 +200,7 @@ class DefaultApi
                 $this->options,
                 array_keys($this->options)
             ));
-            throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$options}");
+            throw new InvalidArgumentException("The '{$key}' should be defined as argument or default option: {$options}");
         }
     }
 

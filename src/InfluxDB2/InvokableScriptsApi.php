@@ -133,6 +133,6 @@ class InvokableScriptsApi extends DefaultApi
 
     private function _invokeScript(ScriptInvocationParams $invocation_params, string $scriptId): StreamInterface
     {
-        return $this->post($invocation_params->__toString(), "/api/v2/scripts/${scriptId}/invoke", [])->getBody();
+        return $this->post($invocation_params->__toString(), "/api/v2/scripts/{$scriptId}/invoke", [])->getBody();
     }
 }

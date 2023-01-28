@@ -74,7 +74,7 @@ print "\n------- Invoke to FluxTables -------\n";
 $tables = $scriptsApi->invokeScript($createdScript->getId(), ["bucket_name" => $bucket]);
 foreach ($tables as $table) {
     foreach ($table->records as $record) {
-        print "\n${record['time']} ${record['location']}: ${record['_field']} ${record['_value']}";
+        print "\n{$record['time']} {$record['location']}: {$record['_field']} {$record['_value']}";
     }
 }
 
@@ -85,7 +85,7 @@ print "\n";
 print "\n------- Invoke to Stream of FluxRecords -------\n";
 $records = $scriptsApi->invokeScriptStream($createdScript->getId(), ["bucket_name" => $bucket]);
 foreach ($records->each() as $record) {
-    print "\n${record['time']} ${record['location']}: ${record['_field']} ${record['_value']}";
+    print "\n{$record['time']} {$record['location']}: {$record['_field']} {$record['_value']}";
 }
 
 //
@@ -94,7 +94,7 @@ foreach ($records->each() as $record) {
 print "\n";
 print "\n------- Invoke to Raw-------\n";
 $raw = $scriptsApi->invokeScriptRaw($createdScript->getId(), ["bucket_name" => $bucket]);
-print "RAW output:\n\n ${raw}";
+print "RAW output:\n\n {$raw}";
 
 //
 // List scripts
