@@ -159,7 +159,7 @@ class DefaultApi
                         '[%d] Error connecting to the API (%s)(%s)',
                         $statusCode,
                         $request->getUri(),
-                        $jsonBody ? ": {$jsonBody->message}" : ''
+                        $jsonBody ? ": $jsonBody->message" : ''
                     ),
                     $statusCode,
                     $response->getHeaders(),
@@ -200,7 +200,7 @@ class DefaultApi
                 $this->options,
                 array_keys($this->options)
             ));
-            throw new InvalidArgumentException("The '${key}' should be defined as argument or default option: {$options}");
+            throw new InvalidArgumentException("The '$key' should be defined as argument or default option: $options");
         }
     }
 
