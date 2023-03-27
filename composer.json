@@ -34,6 +34,10 @@
   "scripts": {
     "test": "vendor/bin/phpunit tests",
     "test-coverage": "vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": false
+    }
   }
-
 }
