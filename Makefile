@@ -31,10 +31,10 @@ release: ## Release client with version specified by VERSION property . make rel
 	@echo Tagging $(VERSION)
 	git checkout master
 	git pull
-	sed -i '' -e "s/VERSION = '.*'/VERSION = '$(VERSION)'/" src/InfluxDB2/Client.php
+	sed -i -e "s/VERSION = '.*'/VERSION = '$(VERSION)'/" src/InfluxDB2/Client.php
 	git commit -am "chore(release): release influxdb-client-php-$(VERSION)"
 	git tag $(VERSION)
-	sed -i '' -e "s/VERSION = '.*'/VERSION = 'dev'/" src/InfluxDB2/Client.php
+	sed -i -e "s/VERSION = '.*'/VERSION = 'dev'/" src/InfluxDB2/Client.php
 	git commit -am "chore(release): prepare for next development iteration"
 	git push origin --tags
 	git push origin master
