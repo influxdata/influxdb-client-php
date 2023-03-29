@@ -25,5 +25,5 @@ cp -R "${SCRIPT_PATH}"/../.circleci/ "$SCRIPT_PATH"/../influxdb-client-php/
 
 echo "# Deploy site"
 git add -f .
-git commit -m "Pushed the latest Docs to GitHub pages [skip CI]"
+git commit -c commit.gpgsign=false -m "Pushed the latest Docs to GitHub pages [skip CI]"
 git push -fq origin gh-pages
