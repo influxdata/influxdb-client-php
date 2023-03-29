@@ -1,4 +1,9 @@
-## 3.3.0 [unreleased]
+## 3.3.0 [2023-03-29]
+
+### Others
+1. [#140](https://github.com/influxdata/influxdb-client-php/pull/140): fixes strings to prevent PHP 8.2 notices
+1. [#136](https://github.com/influxdata/influxdb-client-php/pull/136): add PHP 8.2 do CI build
+1. [#135](https://github.com/influxdata/influxdb-client-php/pull/135): freeze xdebug version to 3.1.6 which also supports PHP 7.2
 
 ## 3.2.0 [2022-12-01]
 
@@ -12,7 +17,7 @@
 
 ## 3.0.0 [2022-09-30]
 
-:warning: This release drops strong couple to [Guzzle HTTP client](https://github.com/guzzle/guzzle). 
+:warning: This release drops strong couple to [Guzzle HTTP client](https://github.com/guzzle/guzzle).
 Now you are able to use any implementation of `PSR-18` compliant HTTP client - https://packagist.org/providers/psr/http-client-implementation.
 
 The client has to be installed together with HTTP client:
@@ -84,7 +89,7 @@ This release also uses a new version of InfluxDB OSS API definitions - [oss.yml]
 1. [#109](https://github.com/influxdata/influxdb-client-php/pull/109): PHP 8.1 deprecation warnings
 
 ### Documentation
-1. [#111](https://github.com/influxdata/influxdb-client-php/pull/111): Added new examples 
+1. [#111](https://github.com/influxdata/influxdb-client-php/pull/111): Added new examples
 
 ## 2.4.0 [2021-11-26]
 
@@ -197,7 +202,7 @@ This release introduces a support for new InfluxDB OSS API definitions - [oss.ym
 
 ### CI
 1. [#54](https://github.com/influxdata/influxdb-client-php/pull/54): Updated default docker image to v2.0.2
- 
+
 ### Documentation
 1. [#46](https://github.com/influxdata/influxdb-client-php/pull/46): Adding info about how to get the query in JSON format
 
@@ -233,7 +238,7 @@ This release introduces a support for new InfluxDB OSS API definitions - [oss.ym
 1. [#29](https://github.com/influxdata/influxdb-client-php/issues/29): Prevent invalid array access when no write options are passed to the WriteApi.
 
 ### Bug Fixes
-1. [#27](https://github.com/influxdata/influxdb-client-php/pull/27): Fixed serialization of `\n`, `\r` and `\t` to Line Protocol, `=` is valid sign for measurement name  
+1. [#27](https://github.com/influxdata/influxdb-client-php/pull/27): Fixed serialization of `\n`, `\r` and `\t` to Line Protocol, `=` is valid sign for measurement name
 
 ## 1.4.0 [2020-06-19]
 
