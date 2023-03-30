@@ -631,8 +631,15 @@ For more info see Redirect Plugin docs - [allow_redirects](https://docs.php-http
 
 ## Local tests
 
+Run once to install dependencies:
+
 ```shell script
-# run unit & integration tests
+make deps
+```
+
+Run unit & intergration tests:
+
+```shell script
 make test
 ```
 
