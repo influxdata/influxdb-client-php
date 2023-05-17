@@ -27,7 +27,7 @@ class FluxCsvParser
 
     private $startNewTable;
 
-    /* @var $variable FluxTable */
+    /** @var FluxTable */
     private $table;
     private $groups = [];
 
@@ -35,7 +35,7 @@ class FluxCsvParser
 
     public $closed;
 
-    /* @var $variable FluxColumn[] */
+    /** @var FluxColumn[] */
     private $fluxColumns;
 
     /**
