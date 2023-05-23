@@ -26,9 +26,9 @@ namespace InfluxDB2;
  */
 class FluxTable
 {
-    /* @var $variable FluxColumn[]  */
+    /** @var FluxColumn[] */
     public $columns;
-    /* @var $variable FluxRecord[]  */
+    /** @var FluxRecord[] */
     public $records;
 
     /**
