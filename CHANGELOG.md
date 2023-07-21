@@ -1,5 +1,8 @@
 ## 3.4.0 [unreleased]
 
+### Bug Fixes
+1. [#144](https://github.com/influxdata/influxdb-client-php/pull/144): Correcti closing the UdpWriter
+
 ## 3.3.0 [2023-03-29]
 
 ### Others

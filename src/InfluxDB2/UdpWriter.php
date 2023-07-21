@@ -119,6 +119,8 @@ class UdpWriter implements Writer
     {
         if (isset($this->socket)) {
             socket_close($this->socket);
+
+            $this->socket = null;
         }
     }
 }
