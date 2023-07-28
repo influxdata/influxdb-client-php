@@ -66,11 +66,11 @@ class PointTest extends TestCase
 
     public function testTagEscapingKeyAndValue()
     {
-        $point =  Point::measurement("h\n2\ro\t_data")
-                ->addTag("new\nline", "new\nline")
-                ->addTag("carriage\rreturn", "carriage\nreturn")
-                ->addTag("t\tab", "t\tab")
-                ->addField("level", 2);
+        $point = Point::measurement("h\n2\ro\t_data")
+            ->addTag("new\nline", "new\nline")
+            ->addTag("carriage\rreturn", "carriage\nreturn")
+            ->addTag("t\tab", "t\tab")
+            ->addField("level", 2);
 
         $this->assertEquals(
             "h\\n2\\ro\\t_data,carriage\\rreturn=carriage\\nreturn,new\\nline=new\\nline,t\\tab=t\\tab level=2i",
@@ -78,11 +78,33 @@ class PointTest extends TestCase
         );
     }
 
+    public function testStringableTag()
+    {
+        // this is just a random native class, implementing __toString()
+        $tag = new StringableClass();
+
+        $point = new Point("data", ['test' => $tag], ['value' => 1]);
+
+        $this->assertStringStartsWith(
+            "data,test=stringable",
+            $point->toLineProtocol()
+        );
+    }
+
+    public function testNonStringableTag()
+    {
+        $this->expectWarning();
+        $this->expectWarningMessage('Tag value for key test cannot be converted to string');
+        $point = new Point("data", ['test' => []]);
+
+        $point->toLineProtocol();
+    }
+
     public function testEqualSignEscaping()
     {
-        $point =  Point::measurement("h=2o")
-                ->addTag("l=ocation", "e=urope")
-                ->addField("l=evel", 2);
+        $point = Point::measurement("h=2o")
+            ->addTag("l=ocation", "e=urope")
+            ->addField("l=evel", 2);
 
         $this->assertEquals("h=2o,l\\=ocation=e\\=urope l\\=evel=2i", $point->toLineProtocol());
     }
@@ -279,14 +301,14 @@ class PointTest extends TestCase
         $this->assertNull($pointArray);
     }
 
-    public function testTagNotString()
+    public function testTagNonString()
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
-            ->addTag('tag_not_string', [])
+            ->addTag('tag_not_string', 4711)
             ->addTag('tag_not_null', null)
             ->addField('level', 2);
 
-        $this->assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
+        $this->assertEquals('h2o,location=europe,tag_not_string=4711 level=2i', $point->toLineProtocol());
     }
 }

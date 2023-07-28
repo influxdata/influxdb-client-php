@@ -80,7 +80,7 @@ class Point
      * @param [Object] value the tag value
      * @return Point
      */
-    public function addTag($key, $value): Point
+    public function addTag($key, ?string $value): Point
     {
         $this->tags[$key] = $value;
 
@@ -161,6 +161,18 @@ class Point
 
         foreach (array_keys($this->tags) as $key) {
             $value = $this->tags[$key];
+
+            if (!is_string($value) && null !== $value) {
+                if (
+                    is_scalar($value)  ||
+                    (is_object($value) && method_exists($value, '__toString')) ||
+                    (\PHP_VERSION_ID >= 80000 && $value instanceof \Stringable)
+                ) {
+                    $value = (string) $value;
+                } else {
+                    trigger_error(sprintf('Tag value for key %s cannot be converted to string', $key), E_USER_WARNING);
+                }
+            }
 
             if ($this->isNullOrEmptyString($key) || $this->isNullOrEmptyString($value)) {
                 continue;
