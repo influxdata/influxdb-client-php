@@ -5,10 +5,6 @@ set -e
 SCRIPT_PATH="$( cd "$(dirname "$0")" || exit ; pwd -P )"
 cd "$SCRIPT_PATH"/..
 
-echo "# Install Git"
-apt-get update \
-  && apt-get install git --yes \
-
 echo "# Clone client and switch to branch for GH-Pages"
 git clone git@github.com:influxdata/influxdb-client-php.git \
   && cd influxdb-client-php \
@@ -25,5 +21,5 @@ cp -R "${SCRIPT_PATH}"/../.circleci/ "$SCRIPT_PATH"/../influxdb-client-php/
 
 echo "# Deploy site"
 git add -f .
-git commit -c commit.gpgsign=false -m "Pushed the latest Docs to GitHub pages [skip CI]"
+git commit -m "Pushed the latest Docs to GitHub pages [skip CI]"
 git push -fq origin gh-pages

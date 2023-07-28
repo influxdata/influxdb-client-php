@@ -24,7 +24,7 @@ services:
     command: doxygen
 
   doc-publish:
-    image: ubuntu
+    image: bitnami/git
     volumes:
       - ./docs/html:/code/docs
       - ./scripts:/code/scripts
