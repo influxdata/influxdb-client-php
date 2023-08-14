@@ -1,4 +1,6 @@
 ## 3.5.0 [unreleased]
+### Others
+1. [#148](https://github.com/influxdata/influxdb-client-php/pull/148): Update wrong php types in \InfluxDB2\Point
 
 ## 3.4.0 [2023-07-28]
 

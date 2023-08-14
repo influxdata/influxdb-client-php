@@ -15,18 +15,18 @@ class Point
     private $tags;
     /** @var array */
     private $fields;
-    /** @var int */
+    /** @var int|null */
     private $time;
-    /** @var WritePrecision */
+    /** @var WritePrecision::* */
     private $precision;
 
     /** Create DataPoint instance for specified measurement name.
      *
-     * @param [String] name the measurement name for the point.
-     * @param [Array] tags the tag set for the point
-     * @param [Array] fields the fields for the point
-     * @param [Integer] time the timestamp for the point
-     * @param [WritePrecision] precision the precision for the unix timestamps within the body line-protocol
+     * @param string $name the measurement name for the point.
+     * @param array $tags the tag set for the point
+     * @param array $fields the fields for the point
+     * @param int $time the timestamp for the point
+     * @param WritePrecision::* $precision the precision for the unix timestamps within the body line-protocol
      */
     public function __construct(
         $name,
@@ -43,7 +43,7 @@ class Point
     }
 
     /**
-     * @return WritePrecision
+     * @return WritePrecision::*
      */
     public function getPrecision(): ?string
     {
@@ -55,12 +55,10 @@ class Point
         return new Point($name);
     }
 
-    /** Create DataPoint instance from specified data.
-     *
-     * @param [Array] data
-     * @return Point
+    /**
+     * Create DataPoint instance from specified data.
      */
-    public static function fromArray($data): ?Point
+    public static function fromArray(array $data): ?Point
     {
         if (!array_key_exists('name', $data)) {
             return null;
@@ -76,8 +74,8 @@ class Point
 
     /** Adds or replaces a tag value for a point.
      *
-     * @param [Object] key the tag name
-     * @param [Object] value the tag value
+     * @param mixed $key the tag name
+     * @param mixed $value the tag value
      * @return Point
      */
     public function addTag($key, $value): Point
@@ -89,8 +87,8 @@ class Point
 
     /** Adds or replaces a field value for a point.
      *
-     * @param [Object] key the tag name
-     * @param [Object] value the tag value
+     * @param mixed $key the tag name
+     * @param mixed $value the tag value
      * @return Point
      */
     public function addField($key, $value): Point
@@ -102,8 +100,8 @@ class Point
 
     /** Updates the timestamp for the point.
      *
-     * @param [Object] time the timestamp
-     * @param [WritePrecision] precision the timestamp precision
+     * @param mixed $time the timestamp
+     * @param WritePrecision::* $precision the timestamp precision
      * @return Point
      */
     public function time($time, $precision = null): Point
@@ -116,9 +114,9 @@ class Point
 
     /** If there is no field then return null.
      *
-     * @return string representation of the point
+     * @return string|null representation of the point
      */
-    public function toLineProtocol()
+    public function toLineProtocol():  ?string
     {
         $measurement = $this->escapeKey($this->name, false);
 
@@ -149,7 +147,7 @@ class Point
         return $lineProtocol;
     }
 
-    private function appendTags()
+    private function appendTags(): ?string
     {
         $tags = '';
 
@@ -173,7 +171,7 @@ class Point
         return $tags;
     }
 
-    private function appendFields()
+    private function appendFields(): ?string
     {
         $fields = '';
 
@@ -208,7 +206,7 @@ class Point
         return rtrim($fields, ',');
     }
 
-    private function appendTime()
+    private function appendTime(): ?string
     {
         if (!isset($this->time)) {
             return null;
@@ -240,7 +238,7 @@ class Point
         return ' ' . $time;
     }
 
-    private function escapeKey($key, $escapeEqual = true)
+    private function escapeKey($key, $escapeEqual = true): string
     {
         $escapeKeys = array(' ' => '\\ ', ',' => '\\,', "\\" => '\\\\',
             "\n" => '\\n', "\r" => '\\r', "\t" => '\\t');
@@ -252,13 +250,13 @@ class Point
         return strtr($key, $escapeKeys);
     }
 
-    private function escapeValue($value)
+    private function escapeValue($value): string
     {
         $escapeValues = array('"' => '\\"', "\\" => '\\\\');
         return strtr($value, $escapeValues);
     }
 
-    private function isNullOrEmptyString($str)
+    private function isNullOrEmptyString($str): bool
     {
         return (!is_string($str) || trim($str) === '');
     }
