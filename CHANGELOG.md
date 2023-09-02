@@ -1,5 +1,7 @@
 ## 3.5.0 [unreleased]
 
+1. [#149](https://github.com/influxdata/influxdb-client-php/issues/149): Throw exception on empty field
+
 ## 3.4.0 [2023-07-28]
 
 ### Bug Fixes
