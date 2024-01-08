@@ -1,6 +1,7 @@
 ## 3.5.0 [unreleased]
 
-1. [#146](https://github.com/influxdata/influxdb-client-php/pull/146): Try to convert non-string-tags to strings, throw an exception if a value cannot be converted
+### Bug Fixes
+1. [#146](https://github.com/influxdata/influxdb-client-php/pull/146): Try to convert non-string-tags to strings, generate a warning if a value cannot be converted
 
 ## 3.4.0 [2023-07-28]
 
