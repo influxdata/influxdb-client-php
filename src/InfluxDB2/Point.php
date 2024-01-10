@@ -77,7 +77,7 @@ class Point
     /** Adds or replaces a tag value for a point.
      *
      * @param [Object] key the tag name
-     * @param [Object] value the tag value
+     * @param string|object|null $value the tag value, can be "object" with "__toString" function or "object" implements Stringable interface
      * @return Point
      */
     public function addTag($key, ?string $value): Point
