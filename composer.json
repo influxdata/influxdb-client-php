@@ -28,7 +28,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "InfluxDB2\\": "test/InfluxDB2"
+      "InfluxDB2Test\\": "tests/"
     }
   },
   "scripts": {
