@@ -166,7 +166,7 @@ class DefaultApi
                         '[%d] Error connecting to the API (%s)(%s)',
                         $statusCode,
                         $request->getUri(),
-                        $errorMessage,
+                        $errorMessage
                     ),
                     $statusCode,
                     $response->getHeaders(),
