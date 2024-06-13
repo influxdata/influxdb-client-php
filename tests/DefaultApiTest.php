@@ -120,6 +120,26 @@ class DefaultApiTest extends BasicTest
         $this->assertEquals('Token my-token', $this->getHeader($this->requests[1]['request']));
     }
 
+    public function testJsonBodyWithMessageReturnsMessage()
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessageMatches('~^\[500\].*\(a failure\)$~');
+        $this->mockHandler->append(
+            new Response(500, [], "{\"message\": \"a failure\"}")
+        );
+        $this->queryApi->query('some broken query');
+    }
+
+    public function testJsonBodyWithErrorReturnsMessage()
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessageMatches('~^\[500\].*\(another failure\)$~');
+        $this->mockHandler->append(
+            new Response(500, [], "{\"error\": \"another failure\"}")
+        );
+        $this->queryApi->query('some broken query');
+    }
+
     /**
      * @param Request $request with headers
      * @return string Authorization headers

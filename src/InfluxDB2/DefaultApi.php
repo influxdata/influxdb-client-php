@@ -154,12 +154,19 @@ class DefaultApi
             if ($statusCode < 200 || $statusCode > 299) {
                 $responseBody = $response->getBody()->getContents();
                 $jsonBody = json_decode($responseBody);
+                $errorMessage = $responseBody;
+                if (isset($jsonBody->message)) {
+                    $errorMessage = $jsonBody->message;
+                }
+                if (isset($jsonBody->error)) {
+                    $errorMessage = $jsonBody->error;
+                }
                 throw new ApiException(
                     sprintf(
                         '[%d] Error connecting to the API (%s)(%s)',
                         $statusCode,
                         $request->getUri(),
-                        $jsonBody ? ": {$jsonBody->message}" : ''
+                        $errorMessage
                     ),
                     $statusCode,
                     $response->getHeaders(),
