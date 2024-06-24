@@ -1,4 +1,4 @@
-## 3.6.0 [unreleased]
+## 3.6.0 [2024-06-24]
 
 ### Bug Fixes
 1. [#155](https://github.com/influxdata/influxdb-client-php/pull/155): Fixes error handling in some cases, throw ApiException instead of ErrorException about undefined property
