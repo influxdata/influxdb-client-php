@@ -76,7 +76,7 @@ class FluxCsvParser
     public function each()
     {
         try {
-            while (($csv = fgetcsv($this->resource, escape: '')) !== false) {
+            while (($csv = fgetcsv($this->resource, null, ',', '"', '')) !== false) {
                 if (!isset($csv) || (count($csv) == 1 && $csv[0] == null)) {
                     continue;
                 }
