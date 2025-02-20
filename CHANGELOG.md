@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 1. [#162](https://github.com/influxdata/influxdb-client-php/issues/162): PHP 8.4 - fgetcsv() needs provide explicitly argument escape
+2. [#164](https://github.com/influxdata/influxdb-client-php/pull/164): Fixes deprecation warnings about implicitly nullable arguments
 
 ## 3.6.0 [2024-06-24]
 
