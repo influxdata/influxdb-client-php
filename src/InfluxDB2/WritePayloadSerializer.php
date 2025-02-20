@@ -15,7 +15,7 @@ class WritePayloadSerializer
      * @param int|null $writeType specify type of writes - WriteType::SYNCHRONOUS or WriteType::BATCHING
      * @return BatchItem|string|null
      */
-    public static function generatePayload($data, string $precision = null, string $bucket = null, string $org = null, int $writeType = null)
+    public static function generatePayload($data, ?string $precision = null, ?string $bucket = null, ?string $org = null, ?int $writeType = null)
     {
         if ($data == null || empty($data)) {
             return null;
