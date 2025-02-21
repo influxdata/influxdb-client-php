@@ -1,4 +1,4 @@
-## 3.7.0 [unreleased]
+## 3.7.0 [2024-02-21]
 
 ### Bug Fixes
 1. [#162](https://github.com/influxdata/influxdb-client-php/issues/162): PHP 8.4 - fgetcsv() needs provide explicitly argument escape
