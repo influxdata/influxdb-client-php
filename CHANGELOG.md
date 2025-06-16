@@ -1,5 +1,8 @@
 ## 3.8.0 [unreleased]
 
+### Bug Fixes
+1. [#166](https://github.com/influxdata/influxdb-client-php/pull/166): Fix PHP 8.4 deprecated implicit nullable arguments. PHP minimum version is still PHP 7.2.
+
 ## 3.7.0 [2025-02-21]
 
 ### Bug Fixes
