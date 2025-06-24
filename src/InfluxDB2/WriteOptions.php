@@ -42,7 +42,7 @@ class WriteOptions
      *      ]
      * @param array|null $writeOptions Array containing the write parameters (See above)
      */
-    public function __construct(array $writeOptions = null)
+    public function __construct(?array $writeOptions = null)
     {
         //initialize with default values
         $this->writeType =  $writeOptions["writeType"] ?? WriteType::SYNCHRONOUS;

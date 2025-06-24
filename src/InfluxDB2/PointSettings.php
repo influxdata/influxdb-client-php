@@ -7,7 +7,7 @@ class PointSettings
 {
     private $defaultTags;
 
-    public function __construct(array $defaultTags = null)
+    public function __construct(?array $defaultTags = null)
     {
         $this->defaultTags = is_null($defaultTags) ? [] : $defaultTags;
     }

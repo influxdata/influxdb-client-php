@@ -73,7 +73,7 @@ class Client
      * @param array|null $pointSettings Array of default tags
      * @return WriteApi
      */
-    public function createWriteApi(array $writeOptions = null, array $pointSettings = null): WriteApi
+    public function createWriteApi(?array $writeOptions = null, ?array $pointSettings = null): WriteApi
     {
         $writeApi = new WriteApi($this->options, $writeOptions, $pointSettings);
         $this->autoCloseable[] = $writeApi;

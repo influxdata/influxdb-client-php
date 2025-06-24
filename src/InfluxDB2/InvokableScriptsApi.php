@@ -75,7 +75,7 @@ class InvokableScriptsApi extends DefaultApi
      *
      * @return Script[]
      */
-    public function findScripts(int $limit = null, int $offset = null): array
+    public function findScripts(?int $limit = null, ?int $offset = null): array
     {
         return $this->service->getScripts($limit, $offset)->getScripts();
     }
@@ -87,7 +87,7 @@ class InvokableScriptsApi extends DefaultApi
      * @param array<string,object>|null $params Represent key/value pairs parameters to be injected into script
      * @return FluxTable[]
      */
-    public function invokeScript(string $scriptId, array $params = null): ?array
+    public function invokeScript(string $scriptId, ?array $params = null): ?array
     {
         $response = $this->invokeScriptRaw($scriptId, $params);
 
@@ -104,7 +104,7 @@ class InvokableScriptsApi extends DefaultApi
      * @param array<string,object>|null $params Represent key/value pairs parameters to be injected into script
      * @return FluxCsvParser generator of FluxRecords
      */
-    public function invokeScriptStream(string $scriptId, array $params = null): FluxCsvParser
+    public function invokeScriptStream(string $scriptId, ?array $params = null): FluxCsvParser
     {
         $invocation_params = new ScriptInvocationParams();
         $invocation_params->setParams($params);
@@ -121,7 +121,7 @@ class InvokableScriptsApi extends DefaultApi
      * @param array|null $params Represent key/value pairs parameters to be injected into script
      * @return string
      */
-    public function invokeScriptRaw(string $scriptId, array $params = null): ?string
+    public function invokeScriptRaw(string $scriptId, ?array $params = null): ?string
     {
         $invocation_params = new ScriptInvocationParams();
         $invocation_params->setParams($params);

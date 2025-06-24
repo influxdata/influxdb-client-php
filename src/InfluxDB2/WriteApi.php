@@ -21,7 +21,7 @@ class WriteApi extends DefaultApi implements Writer
      * @param array|null $writeOptions
      * @param array|null $pointSettings
      */
-    public function __construct($options, array $writeOptions = null, array $pointSettings = null)
+    public function __construct($options, ?array $writeOptions = null, ?array $pointSettings = null)
     {
         parent::__construct($options);
         $this->writeOptions = new WriteOptions($writeOptions) ?: new WriteOptions();
@@ -62,7 +62,7 @@ class WriteApi extends DefaultApi implements Writer
      * @param string|null $org specifies the destination organization for writes
      * @throws ApiException
      */
-    public function write($data, string $precision = null, string $bucket = null, string $org = null)
+    public function write($data, ?string $precision = null, ?string $bucket = null, ?string $org = null)
     {
         $precisionParam = $this->getOption("precision", $precision);
         $bucketParam = $this->getOption("bucket", $bucket);
@@ -119,7 +119,7 @@ class WriteApi extends DefaultApi implements Writer
      *
      * @see \InfluxDB2\Model\WritePrecision
      */
-    public function writeRaw(string $data, string $precision = null, string $bucket = null, string $org = null)
+    public function writeRaw(string $data, ?string $precision = null, ?string $bucket = null, ?string $org = null)
     {
         $precisionParam = $this->getOption("precision", $precision);
         $bucketParam = $this->getOption("bucket", $bucket);
@@ -165,7 +165,7 @@ class WriteApi extends DefaultApi implements Writer
         return $this->worker;
     }
 
-    private function getOption(string $optionName, string $precision = null): string
+    private function getOption(string $optionName, ?string $precision = null): string
     {
         return isset($precision) ? $precision : $this->options["$optionName"];
     }
