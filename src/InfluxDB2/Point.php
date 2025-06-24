@@ -114,9 +114,10 @@ class Point
         return $this;
     }
 
-    /** If there is no field then return null.
+    /** If there is no field then throw an exception.
      *
      * @return string representation of the point
+     * @throws \InvalidArgumentException when no field is provided
      */
     public function toLineProtocol()
     {
@@ -135,7 +136,7 @@ class Point
         $fields = $this->appendFields();
 
         if ($this->isNullOrEmptyString($fields)) {
-            return null;
+            throw new \InvalidArgumentException("Failed to write Point: At least one field is required.");
         }
 
         $lineProtocol .= $fields;
