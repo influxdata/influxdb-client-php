@@ -1,5 +1,0 @@
-ignore:
-  - "src/InfluxDB2/Model/*"
-  - "src/InfluxDB2/Model/**/*"
-  - "src/InfluxDB2/Service/*"
-  - "src/InfluxDB2/Service/**/*"
