@@ -156,7 +156,9 @@ class DefaultApiTest extends BasicTest
     {
         $reflection = new ReflectionObject($object);
         $property = $reflection->getProperty($property_name);
-        $property->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $property->setAccessible(true);
+        }
         return $property->getValue($object);
     }
 }

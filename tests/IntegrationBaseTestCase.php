@@ -1,5 +1,7 @@
 <?php
 
+namespace InfluxDB2Test;
+
 use InfluxDB2\Client;
 use InfluxDB2\Model\Organization;
 use InfluxDB2\Model\WritePrecision;

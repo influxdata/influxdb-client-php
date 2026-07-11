@@ -1,5 +1,7 @@
 <?php
 
+namespace InfluxDB2Test;
+
 use InfluxDB2\ApiException;
 use InfluxDB2\Model\BucketRetentionRules;
 use InfluxDB2\Model\PostBucketRequest;

@@ -515,7 +515,7 @@ class FluxCsvParserTest extends TestCase
     private function assertRecord(FluxRecord $fluxRecord, array $values, $size = 0, $value = null)
     {
         foreach ($values as $key => $val) {
-            $this->assertEquals($values[$key], $fluxRecord->values[$key]);
+            $this->assertEquals($val, $fluxRecord->values[$key]);
         }
 
         if ($value == null) {

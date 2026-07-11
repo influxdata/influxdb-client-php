@@ -4,7 +4,6 @@ namespace InfluxDB2Test;
 
 use Exception;
 use InfluxDB2\Client;
-use IntegrationBaseTestCase;
 
 require_once('IntegrationBaseTestCase.php');
 
