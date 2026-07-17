@@ -180,14 +180,15 @@ workflows:
           php-image: "cimg/php:8.2"
           xdebug-package: "xdebug"
       - tests-php:
+          name: php-8.5
+          php-image: "cimg/php:8.5"
+          xdebug-package: "xdebug"
+      - tests-php:
           name: php-7.4-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
       - tests-php:
           name: php-7.3
           php-image: "cimg/php:7.3"
-      - tests-php:
-          name: php-7.2
-          php-image: "cimg/php:7.2"
       - tests-windows:
           name: php-windows
       - tests-cURL:
