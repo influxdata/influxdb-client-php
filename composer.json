@@ -21,6 +21,9 @@
     "guzzlehttp/guzzle": "^7.0.1",
     "guzzlehttp/psr7": "^2.0.0"
   },
+  "suggest": {
+    "ext-sockets": "Required for UDP writer."
+  },
   "autoload": {
     "psr-4": {
       "InfluxDB2\\": "src/InfluxDB2"
