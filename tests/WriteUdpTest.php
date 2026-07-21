@@ -26,9 +26,11 @@ class WriteUdpTest extends TestCase
     protected function getWriterMock()
     {
         $method = new \ReflectionMethod(UdpWriter::class, 'writeSocket');
-        $method->setAccessible(true);
+        if (PHP_VERSION_ID < 80100) {
+            $method->setAccessible(true);
+        }
         return $this->getMockBuilder(UdpWriter::class)
-            ->setMethods(['writeSocket'])
+            ->onlyMethods(['writeSocket'])
             ->setConstructorArgs([$this->baseConfig + ['udpPort' => 1000]])
             ->getMock();
     }

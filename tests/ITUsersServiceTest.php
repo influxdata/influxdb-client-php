@@ -1,5 +1,7 @@
 <?php
 
+namespace InfluxDB2Test;
+
 use InfluxDB2\Service\UsersService;
 
 require_once('IntegrationBaseTestCase.php');

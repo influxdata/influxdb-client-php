@@ -283,7 +283,7 @@ class FluxCsvParser
             if ($strVal == '-Inf') {
                 return -INF;
             }
-            return (double)$strVal;
+            return (float)$strVal;
         }
 
         if ('base64Binary' == $column->dataType) {
