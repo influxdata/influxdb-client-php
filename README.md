@@ -86,6 +86,10 @@ $client = new InfluxDB2\Client([
 | verifySSL        | Turn on/off SSL certificate verification. Set to `false` to disable certificate verification.             | :warning: required `Guzzle` HTTP client | bool                              | true         |
 | timeout          | Describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely. | :warning: required `Guzzle` HTTP client | int                               | 10           |
 | proxy            | specify an HTTP proxy, or an array to specify different proxies for different protocols.                  | :warning: required `Guzzle` HTTP client | string                            | none         |
+| udpPort          | Port for the UDP connection                                                                               |                                         | int                               | none         |
+| ipVersion        | You can specify the ip version                                                                            |                                         | int (4 or 6)                      | 4            |
+| udpPort          | Host for the UDP connection, otherwise udpHost will parsed from url option                                |                                         | String                            | url host     |
+| tags             | default tags (e.g `"tags" => ['id' => '1234', 'hostname' => '${env.Hostname}'`]                           |                                         | array<String, String>             | none         |
 
 #### Custom HTTP client
 
