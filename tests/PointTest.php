@@ -6,6 +6,7 @@ use DateTime;
 use DateTimeImmutable;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class PointTest extends TestCase
@@ -284,11 +285,13 @@ class PointTest extends TestCase
 
     public function testWithoutFields()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->time(123);
 
-        $this->assertNull($point->toLineProtocol());
+        $point->toLineProtocol();
     }
 
     public function testFromArrayWithoutName()
