@@ -3,9 +3,10 @@ includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - phpstan-baseline.neon
 
 parameters:
-    level: 6
+    level: 7
     excludePaths:
         # Exclude generated files from analysis
         analyse:
