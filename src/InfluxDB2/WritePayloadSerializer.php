@@ -3,13 +3,15 @@
 
 namespace InfluxDB2;
 
+use InfluxDB2\Model\WritePrecision;
+
 class WritePayloadSerializer
 {
     /**
      * Generate payload from provided data.
      *
      * @param $data string|Point|array to generate payload
-     * @param string|null $precision the precision used as a key for Batch
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision the precision used as a key for Batch
      * @param string|null $bucket the bucket used as a key for Batch
      * @param string|null $org the org used as a key for Batch
      * @param int|null $writeType specify type of writes - WriteType::SYNCHRONOUS or WriteType::BATCHING

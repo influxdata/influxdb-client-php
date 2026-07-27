@@ -7,6 +7,7 @@ use InfluxDB2\FluxCsvParser;
 use InfluxDB2\FluxCsvParserException;
 use InfluxDB2\FluxQueryError;
 use InfluxDB2\FluxRecord;
+use InfluxDB2\FluxTable;
 use PHPUnit\Framework\TestCase;
 
 class FluxCsvParserTest extends TestCase
@@ -524,10 +525,10 @@ class FluxCsvParserTest extends TestCase
             self::assertEquals($val, $fluxRecord->values[$key]);
         }
 
-        if ($value === null) {
-            self::assertNull($value);
-        } else {
+        if ($value instanceof FluxTable) {
             self::assertEquals($value, $fluxRecord->getValue());
+        } else {
+            self::assertNull($value);
         }
         self::assertEquals($size, sizeof($fluxRecord->values));
     }
