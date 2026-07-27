@@ -9,6 +9,7 @@
    - Remove PHP 7.2 from CI build.
    - Add PHP 8.5 to CI build.
 2. [#172](https://github.com/influxdata/influxdb-client-php/pull/172): Suggest dependency on `ext-sockets` for `InfluxDB2\UdpWriter`.
+3. [#175](https://github.com/influxdata/influxdb-client-php/pull/175): Use Docker Compose v2+ in Makefile since v1 is not maintained anymore.
 
 ## 3.8.0 [2025-06-26]
 
