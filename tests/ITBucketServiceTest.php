@@ -16,7 +16,7 @@ require_once('IntegrationBaseTestCase.php');
  */
 class ITBucketServiceTest extends IntegrationBaseTestCase
 {
-    public function testHealthService()
+    public function testHealthService(): void
     {
         $healthService = $this->client->createService(HealthService::class);
         $healthCheck = $healthService->getHealth();
@@ -24,7 +24,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         self::assertEquals("ready for queries and writes", $healthCheck->getMessage());
     }
 
-    public function testFixNanosTimeSerialization()
+    public function testFixNanosTimeSerialization(): void
     {
         self::assertEquals(
             "2020-09-18T08:03:48.12345Z",
@@ -62,7 +62,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         );
     }
 
-    public function testBucketService()
+    public function testBucketService(): void
     {
         /** @var BucketsService $bucketsService */
         $bucketsService = $this->client->createService(BucketsService::class);
@@ -73,7 +73,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         }
     }
 
-    public function testBucketServiceCreateBucket()
+    public function testBucketServiceCreateBucket(): void
     {
         /** @var BucketsService $bucketsService */
         $bucketsService = $this->client->createService(BucketsService::class);
@@ -98,7 +98,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         foreach ($buckets as $bucket) {
             self::assertNotEmpty($bucket->getName());
             self::assertNotEmpty($bucket->getId());
-            if ($bucket->getId() == $respBucket->getId()) {
+            if ($bucket->getId() === $respBucket->getId()) {
                 $findBucket = $bucket;
             }
         }

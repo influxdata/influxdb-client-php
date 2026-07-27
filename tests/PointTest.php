@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class PointTest extends TestCase
 {
-    public function testToLineProtocol()
+    public function testToLineProtocol(): void
     {
         $pointArgs = new Point(
             'h2o',
@@ -19,7 +19,7 @@ class PointTest extends TestCase
             123
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'h2o,host=aws,region=us level=5i,saturation="99%" 123',
             $pointArgs->toLineProtocol()
         );
@@ -29,42 +29,42 @@ class PointTest extends TestCase
             'fields' => array('level' => 5, 'saturation' => '99%'),
             'time' => 123));
 
-        $this->assertEquals(
+        self::assertEquals(
             'h2o,host=aws,region=us level=5i,saturation="99%" 123',
             $pointArray->toLineProtocol()
         );
     }
 
-    public function testMeasurementEscape()
+    public function testMeasurementEscape(): void
     {
         $point = new Point('h2 o 2', array('location' => 'europe'), array('level' => 2));
-        $this->assertEquals('h2\\ o\\ 2,location=europe level=2i', $point->toLineProtocol());
+        self::assertEquals('h2\\ o\\ 2,location=europe level=2i', $point->toLineProtocol());
 
         $point = new Point('h2,o', array('location' => 'europe'), array('level' => 2));
-        $this->assertEquals('h2\\,o,location=europe level=2i', $point->toLineProtocol());
+        self::assertEquals('h2\\,o,location=europe level=2i', $point->toLineProtocol());
     }
 
-    public function testEmptyKey()
+    public function testEmptyKey(): void
     {
         $point = Point::measurement('h2o')
             ->addField('level', 2)
             ->addTag('location', 'europe')
             ->addTag('', 'warn');
 
-        $this->assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
     }
 
-    public function testEmptyValue()
+    public function testEmptyValue(): void
     {
         $point = Point::measurement('h2o')
             ->addField('level', 2)
             ->addTag('location', 'europe')
             ->addTag('log', '');
 
-        $this->assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
     }
 
-    public function testTagEscapingKeyAndValue()
+    public function testTagEscapingKeyAndValue(): void
     {
         $point = Point::measurement("h\n2\ro\t_data")
             ->addTag("new\nline", "new\nline")
@@ -72,26 +72,26 @@ class PointTest extends TestCase
             ->addTag("t\tab", "t\tab")
             ->addField("level", 2);
 
-        $this->assertEquals(
+        self::assertEquals(
             "h\\n2\\ro\\t_data,carriage\\rreturn=carriage\\nreturn,new\\nline=new\\nline,t\\tab=t\\tab level=2i",
             $point->toLineProtocol()
         );
     }
 
-    public function testStringableTag()
+    public function testStringableTag(): void
     {
         // this is just a random native class, implementing __toString()
         $tag = new StringableClass();
 
         $point = new Point("data", ['test' => $tag], ['value' => 1]);
 
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             "data,test=stringable",
             $point->toLineProtocol()
         );
     }
 
-    public function testNonStringableTag()
+    public function testNonStringableTag(): void
     {
         $this->expectWarning();
         $this->expectWarningMessage('Tag value for key test cannot be converted to string');
@@ -100,16 +100,16 @@ class PointTest extends TestCase
         $point->toLineProtocol();
     }
 
-    public function testEqualSignEscaping()
+    public function testEqualSignEscaping(): void
     {
         $point = Point::measurement("h=2o")
             ->addTag("l=ocation", "e=urope")
             ->addField("l=evel", 2);
 
-        $this->assertEquals("h=2o,l\\=ocation=e\\=urope l\\=evel=2i", $point->toLineProtocol());
+        self::assertEquals("h=2o,l\\=ocation=e\\=urope l\\=evel=2i", $point->toLineProtocol());
     }
 
-    public function testOverrideTagAndField()
+    public function testOverrideTagAndField(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
@@ -118,10 +118,10 @@ class PointTest extends TestCase
             ->addField('level', 2)
             ->addField('level', 3);
 
-        $this->assertEquals('h2o,location=europe2 level=3i', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe2 level=3i', $point->toLineProtocol());
     }
 
-    public function testFieldTypes()
+    public function testFieldTypes(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('tag_b', 'b')
@@ -134,79 +134,83 @@ class PointTest extends TestCase
             ->addField('string', 'string value');
 
         $expected = 'h2o,tag_a=a,tag_b=b bool=true,n1=-2i,n2=10i,n3=9223372036854775807i,n4=5.5,string="string value"';
-        $this->assertEquals($expected, $point->toLineProtocol());
+        self::assertEquals($expected, $point->toLineProtocol());
     }
 
-    public function testFieldNullValue()
+    public function testFieldNullValue(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->addField('warning', null);
 
-        $this->assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i', $point->toLineProtocol());
     }
 
-    public function testFieldEscape()
+    public function testFieldEscape(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 'string esc"ape value');
 
-        $this->assertEquals('h2o,location=europe level="string esc\"ape value"', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level="string esc\"ape value"', $point->toLineProtocol());
 
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 'string esc\\ape value');
 
-        $this->assertEquals('h2o,location=europe level="string esc\\\\ape value"', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level="string esc\\\\ape value"', $point->toLineProtocol());
     }
 
-    public function testTime()
+    public function testTime(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time(123, WritePrecision::NS);
 
-        $this->assertEquals('h2o,location=europe level=2i 123', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 123', $point->toLineProtocol());
     }
 
     /**
      * @dataProvider providerDateTime
+     * @param DateTime|DateTimeImmutable $time
      */
-    public function testTimeFormatting($time)
+    public function testTimeFormatting($time): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time($time, WritePrecision::MS);
 
-        $this->assertEquals('h2o,location=europe level=2i 1444897215000', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 1444897215000', $point->toLineProtocol());
 
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time($time, WritePrecision::S);
 
-        $this->assertEquals('h2o,location=europe level=2i 1444897215', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 1444897215', $point->toLineProtocol());
 
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time($time, WritePrecision::US);
 
-        $this->assertEquals('h2o,location=europe level=2i 1444897215000000', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 1444897215000000', $point->toLineProtocol());
 
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time($time, WritePrecision::NS);
 
-        $this->assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
     }
 
-    public function providerDateTime()
+    /**
+     * @return array<int, array{DateTime|DateTimeImmutable}>
+     */
+    public function providerDateTime(): array
     {
         return [
             [
@@ -222,7 +226,7 @@ class PointTest extends TestCase
         ];
     }
 
-    public function testTimeFormattingDefault()
+    public function testTimeFormattingDefault(): void
     {
         $time = new DateTime();
         $time->setDate(2015, 10, 15);
@@ -233,75 +237,75 @@ class PointTest extends TestCase
             ->addField('level', 2)
             ->time($time);
 
-        $this->assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
 
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time($time, null);
 
-        $this->assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
     }
 
-    public function testTimeString()
+    public function testTimeString(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time('123');
 
-        $this->assertEquals('h2o,location=europe level=2i 123', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 123', $point->toLineProtocol());
     }
 
-    public function testTimeFloat()
+    public function testTimeFloat(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->addField('level', 2)
             ->time(102030405060.24);
 
-        $this->assertEquals('h2o,location=europe level=2i 102030405060', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe level=2i 102030405060', $point->toLineProtocol());
     }
 
-    public function testUtf8()
+    public function testUtf8(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'Přerov')
             ->addField('level', 2)
             ->time(123);
 
-        $this->assertEquals('h2o,location=Přerov level=2i 123', $point->toLineProtocol());
+        self::assertEquals('h2o,location=Přerov level=2i 123', $point->toLineProtocol());
     }
 
-    public function testWithoutTags()
+    public function testWithoutTags(): void
     {
         $point = Point::measurement('h2o')
             ->addField('level', 2)
             ->time(123);
 
-        $this->assertEquals('h2o level=2i 123', $point->toLineProtocol());
+        self::assertEquals('h2o level=2i 123', $point->toLineProtocol());
     }
 
-    public function testWithoutFields()
+    public function testWithoutFields(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
             ->time(123);
 
-        $this->assertNull($point->toLineProtocol());
+        self::assertNull($point->toLineProtocol());
     }
 
-    public function testFromArrayWithoutName()
+    public function testFromArrayWithoutName(): void
     {
         $pointArray = Point::fromArray(array(
             'tags' => array('host' => 'aws', 'region' => 'us'),
             'fields' => array('level' => 5, 'saturation' => '99%'),
             'time' => 123));
 
-        $this->assertNull($pointArray);
+        self::assertNull($pointArray);
     }
 
-    public function testTagNonString()
+    public function testTagNonString(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
@@ -309,6 +313,6 @@ class PointTest extends TestCase
             ->addTag('tag_not_null', null)
             ->addField('level', 2);
 
-        $this->assertEquals('h2o,location=europe,tag_not_string=4711 level=2i', $point->toLineProtocol());
+        self::assertEquals('h2o,location=europe,tag_not_string=4711 level=2i', $point->toLineProtocol());
     }
 }

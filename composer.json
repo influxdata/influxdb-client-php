@@ -19,7 +19,11 @@
     "phpunit/phpunit": "^8.5.27",
     "squizlabs/php_codesniffer": "~4.0",
     "guzzlehttp/guzzle": "^7.0.1",
-    "guzzlehttp/psr7": "^2.0.0"
+    "guzzlehttp/psr7": "^2.0.0",
+    "phpstan/phpstan": "^1.12.33 || ^2.2.6",
+    "phpstan/phpstan-deprecation-rules": "^1.2.1 || ^2.0.4",
+    "phpstan/phpstan-phpunit": "^1.4.2 || ^2.0.18",
+    "phpstan/phpstan-strict-rules": "^1.6.2 || ^2.0.12"
   },
   "suggest": {
     "ext-sockets": "Required for UDP writer."

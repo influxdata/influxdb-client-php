@@ -1,0 +1,30 @@
+includes:
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: 6
+    excludePaths:
+        # Exclude generated files from analysis
+        analyse:
+            - src/InfluxDB2/ApiException.php
+            - src/InfluxDB2/Configuration.php
+            - src/InfluxDB2/HeaderSelector.php
+            - src/InfluxDB2/ObjectSerializer.php
+            - src/InfluxDB2/Model
+            - src/InfluxDB2/Service
+    paths:
+        - examples
+        - src
+        - tests
+    phpVersion: 70400
+    ignoreErrors:
+        -
+            message: '''
+                #^Call to deprecated method health\(\) of class InfluxDB2\\Client:
+                Use `ping\(\)` instead$#
+            '''
+            path: tests/ClientTest.php
+            count: 2

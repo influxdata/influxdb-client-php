@@ -35,19 +35,19 @@ class WriteApiIntegrationTest extends TestCase
         $this->writeApi = $this->client->createWriteApi();
     }
 
-    public function testExistsWriteApi()
+    public function testExistsWriteApi(): void
     {
-        $this->assertNotNull($this->writeApi);
+        self::assertNotNull($this->writeApi);
     }
 
-    public function testWriteApiWriteRaw()
+    public function testWriteApiWriteRaw(): void
     {
         $payload = 'h2o_feet,location=coyote_creek water_level=2.0 2';
         $response = $this->writeApi->writeRaw($payload);
         self::assertNull($response);
     }
 
-    public function testWriteArray()
+    public function testWriteArray(): void
     {
         $data = [
             'name' => "h2o",
@@ -64,7 +64,7 @@ class WriteApiIntegrationTest extends TestCase
         self::assertNull($response);
     }
 
-    public function testBatchingWrite()
+    public function testBatchingWrite(): void
     {
         $writeApi = $this->client->createWriteApi(
             ["writeType"=>WriteType::BATCHING, 'batchSize'=>3]
@@ -91,12 +91,12 @@ class WriteApiIntegrationTest extends TestCase
         $writeApi->write($p5);
         $writeApi->write($p6);
 
-        $this->assertNotNull($writeApi);
+        self::assertNotNull($writeApi);
 
         $this->client->close();
     }
 
-    public function testWriteArrayOfPoint()
+    public function testWriteArrayOfPoint(): void
     {
         $point1 = Point::measurement('h2o')
             ->addTag('location', 'europe')
@@ -113,7 +113,7 @@ class WriteApiIntegrationTest extends TestCase
         self::assertNull($response);
     }
 
-    public function testWriteArrayOfArray()
+    public function testWriteArrayOfArray(): void
     {
         $data1 = [
             'name' => "h2o",

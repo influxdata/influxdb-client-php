@@ -24,7 +24,7 @@ class QueryApiTest extends BasicTest
         . ",,0,1970-01-01T00:00:20Z,1970-01-01T00:00:30Z,1970-01-01T00:00:20Z,11,free,mem,A,west\n"
         . ",,0,1970-01-01T00:00:20Z,1970-01-01T00:00:30Z,1970-01-01T00:00:20Z,22,free,mem,B,west";
 
-    public function testQueryRaw()
+    public function testQueryRaw(): void
     {
         $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
 
@@ -32,10 +32,10 @@ class QueryApiTest extends BasicTest
             'from(bucket:"my-bucket") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()'
         );
 
-        $this->assertEquals(QueryApiTest::SUCCESS_DATA, $result);
+        self::assertEquals(QueryApiTest::SUCCESS_DATA, $result);
     }
 
-    public function testQuery()
+    public function testQuery(): void
     {
         $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
 
@@ -43,18 +43,18 @@ class QueryApiTest extends BasicTest
         $result = $this->queryApi->query('from(bucket:"' . $bucket
             . '") |> range(start: 1970-01-01T00:00:00.000000001Z) |> last()');
 
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(4, count($result[0]->records));
+        self::assertCount(1, $result);
+        self::assertCount(4, $result[0]->records);
 
         $record = $result[0]->records[0];
 
-        $this->assertEquals('1970-01-01T00:00:10Z', $record->getTime());
-        $this->assertEquals('mem', $record->getMeasurement());
-        $this->assertEquals(10, $record->getValue());
-        $this->assertEquals('free', $record->getField());
+        self::assertEquals('1970-01-01T00:00:10Z', $record->getTime());
+        self::assertEquals('mem', $record->getMeasurement());
+        self::assertEquals(10, $record->getValue());
+        self::assertEquals('free', $record->getField());
     }
 
-    public function testQueryParameterized()
+    public function testQueryParameterized(): void
     {
         $this->mockHandler->append(new Response(204, [], QueryApiTest::SUCCESS_DATA));
         $q = new Query();
@@ -73,31 +73,31 @@ class QueryApiTest extends BasicTest
         $contents = $this->mockHandler->getLastRequest()->getBody()->getContents();
         $json = json_decode($contents, true);
 
-        $this->assertEquals("my-bucket", $json["params"]["bucketParam"]);
-        $this->assertEquals('2021-12-14T11:33:28+00:00', $json["params"]["startParam"]);
+        self::assertEquals("my-bucket", $json["params"]["bucketParam"]);
+        self::assertEquals('2021-12-14T11:33:28+00:00', $json["params"]["startParam"]);
 
-        $this->assertCount(1, $result);
-        $this->assertCount(4, $result[0]->records);
+        self::assertCount(1, $result);
+        self::assertCount(4, $result[0]->records);
 
         $record = $result[0]->records[0];
 
-        $this->assertEquals('1970-01-01T00:00:10Z', $record->getTime());
-        $this->assertEquals('mem', $record->getMeasurement());
-        $this->assertEquals(10, $record->getValue());
-        $this->assertEquals('free', $record->getField());
+        self::assertEquals('1970-01-01T00:00:10Z', $record->getTime());
+        self::assertEquals('mem', $record->getMeasurement());
+        self::assertEquals(10, $record->getValue());
+        self::assertEquals('free', $record->getField());
     }
 
-    public function testQueryRawEmptyData()
+    public function testQueryRawEmptyData(): void
     {
         $result = $this->queryApi->queryRaw('');
 
-        $this->assertNull($result);
+        self::assertNull($result);
     }
 
-    public function testQueryEmptyData()
+    public function testQueryEmptyData(): void
     {
         $result = $this->queryApi->query(null);
 
-        $this->assertNull($result);
+        self::assertNull($result);
     }
 }

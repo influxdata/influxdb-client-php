@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class FluxCsvParserTest extends TestCase
 {
-    public function testMultipleValues()
+    public function testMultipleValues(): void
     {
         $data = "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,long,long,string\n" .
             "#group,false,false,true,true,true,true,true,true,false,false,false\n" .
@@ -26,15 +26,15 @@ class FluxCsvParserTest extends TestCase
         $tables = $fluxCsvParser->parse()->tables;
         $columnHeaders = $tables[0]->columns;
 
-        $this->assertEquals(11, sizeof($columnHeaders));
+        self::assertEquals(11, sizeof($columnHeaders));
         $values = [false, false, true, true, true, true, true, true, false, false, false];
-        $this->assertColumns($columnHeaders, $values);
-        $this->assertEquals(4, sizeof($tables));
+        self::assertColumns($columnHeaders, $values);
+        self::assertEquals(4, sizeof($tables));
 
-        $this->assertMultipleRecords($tables);
+        self::assertMultipleRecords($tables);
     }
 
-    public function testParseShortCut()
+    public function testParseShortCut(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,boolean\n" .
@@ -46,20 +46,20 @@ class FluxCsvParserTest extends TestCase
         $fluxCsvParser = new FluxCsvParser($data);
         $tables = $fluxCsvParser->parse()->tables;
 
-        $this->assertEquals(1, sizeof($tables));
-        $this->assertEquals(1, sizeof($tables[0]->records));
+        self::assertEquals(1, sizeof($tables));
+        self::assertEquals(1, sizeof($tables[0]->records));
 
         $record = $tables[0]->records[0];
-        $this->assertEquals($this->parseTime('1970-01-01T00:00:10Z'), $record->getStart());
-        $this->assertEquals($this->parseTime('1970-01-01T00:00:20Z'), $record->getStop());
-        $this->assertEquals($this->parseTime('1970-01-01T00:00:10Z'), $record->getTime());
+        self::assertEquals($this->parseTime('1970-01-01T00:00:10Z'), $record->getStart());
+        self::assertEquals($this->parseTime('1970-01-01T00:00:20Z'), $record->getStop());
+        self::assertEquals($this->parseTime('1970-01-01T00:00:10Z'), $record->getTime());
 
-        $this->assertEquals(10, sizeof($record->values));
-        $this->assertEquals("free", $record->getField());
-        $this->assertEquals("mem", $record->getMeasurement());
+        self::assertEquals(10, sizeof($record->values));
+        self::assertEquals("free", $record->getField());
+        self::assertEquals("mem", $record->getMeasurement());
     }
 
-    public function testMappingBoolean()
+    public function testMappingBoolean(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,boolean\n" .
@@ -74,21 +74,21 @@ class FluxCsvParserTest extends TestCase
         $fluxCsvParser = new FluxCsvParser($data);
         $tables = $fluxCsvParser->parse()->tables;
 
-        $this->assertEquals(1, sizeof($tables));
-        $this->assertEquals(4, sizeof($tables[0]->records));
+        self::assertEquals(1, sizeof($tables));
+        self::assertEquals(4, sizeof($tables[0]->records));
 
         $records = $tables[0]->records;
 
-        $this->assertEquals(true, $records[0]->values['value']);
-        $this->assertEquals(false, $records[1]->values['value']);
-        $this->assertEquals(false, $records[2]->values['value']);
-        $this->assertEquals(true, $records[3]->values['value']);
+        self::assertEquals(true, $records[0]->values['value']);
+        self::assertEquals(false, $records[1]->values['value']);
+        self::assertEquals(false, $records[2]->values['value']);
+        self::assertEquals(true, $records[3]->values['value']);
     }
 
     /**
      * TODO - PHP supports only signed 64bit integers
      */
-    public function testMappingUnsignedLong()
+    public function testMappingUnsignedLong(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,unsignedLong\n" .
@@ -105,11 +105,11 @@ class FluxCsvParserTest extends TestCase
         $tables = $fluxCsvParser->parse()->tables;
 
         $records = $tables[0]->records;
-        $this->assertEquals($expected, $records[0]->values['value']);
-        $this->assertNull($records[1]->values['value']);
+        self::assertEquals($expected, $records[0]->values['value']);
+        self::assertNull($records[1]->values['value']);
     }
 
-    public function testMappingDouble()
+    public function testMappingDouble(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,double\n" .
@@ -124,11 +124,11 @@ class FluxCsvParserTest extends TestCase
 
         $records = $tables[0]->records;
 
-        $this->assertEquals(12.25, $records[0]->values['value']);
-        $this->assertNull($records[1]->values['value']);
+        self::assertEquals(12.25, $records[0]->values['value']);
+        self::assertNull($records[1]->values['value']);
     }
 
-    public function testMappingBase64Binary()
+    public function testMappingBase64Binary(): void
     {
         $binaryData = 'test value';
         $encodedData = base64_encode($binaryData);
@@ -146,11 +146,11 @@ class FluxCsvParserTest extends TestCase
 
         $records = $tables[0]->records;
 
-        $this->assertEquals($binaryData, $records[0]->values['value']);
-        $this->assertNull($records[1]->values['value']);
+        self::assertEquals($binaryData, $records[0]->values['value']);
+        self::assertNull($records[1]->values['value']);
     }
 
-    public function testMappingDuration()
+    public function testMappingDuration(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339' .
             ",dateTime:RFC3339,long,string,string,string,duration\n" .
@@ -165,11 +165,11 @@ class FluxCsvParserTest extends TestCase
 
         $records = $tables[0]->records;
 
-        $this->assertEquals(125, $records[0]->values['value']);
-        $this->assertNull($records[1]->values['value']);
+        self::assertEquals(125, $records[0]->values['value']);
+        self::assertNull($records[1]->values['value']);
     }
 
-    public function testGroupKey()
+    public function testGroupKey(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,duration\n" .
@@ -182,11 +182,11 @@ class FluxCsvParserTest extends TestCase
         $fluxCsvParser = new FluxCsvParser($data);
         $tables = $fluxCsvParser->parse()->tables;
 
-        $this->assertEquals(10, count($tables[0]->columns));
-        $this->assertEquals(2, count($tables[0]->getGroupKey()));
+        self::assertCount(10, $tables[0]->columns);
+        self::assertCount(2, $tables[0]->getGroupKey());
     }
 
-    public function testUnknownTypeAsString()
+    public function testUnknownTypeAsString(): void
     {
         $data = '#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,' .
             "dateTime:RFC3339,long,string,string,string,unknown\n" .
@@ -201,11 +201,11 @@ class FluxCsvParserTest extends TestCase
 
         $records = $tables[0]->records;
 
-        $this->assertEquals('12.25', $records[0]->values['value']);
-        $this->assertNull($records[1]->values['value']);
+        self::assertEquals('12.25', $records[0]->values['value']);
+        self::assertNull($records[1]->values['value']);
     }
 
-    public function testError()
+    public function testError(): void
     {
         $data = "#datatype,string,string\n" .
             "#group,true,true\n" .
@@ -217,19 +217,19 @@ class FluxCsvParserTest extends TestCase
 
         try {
             $fluxCsvParser->parse();
-            $this->fail();
+            self::fail();
         } catch (FluxQueryError $e) {
-            $this->assertEquals(
+            self::assertEquals(
                 'failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
                 $e->getMessage()
             );
-            $this->assertEquals(897, $e->getCode());
+            self::assertEquals(897, $e->getCode());
         } catch (Exception $e) {
-            $this->fail();
+            self::fail();
         }
     }
 
-    public function testErrorWithoutReference()
+    public function testErrorWithoutReference(): void
     {
         $data = "#datatype,string,string\n" .
             "#group,true,true\n" .
@@ -241,19 +241,19 @@ class FluxCsvParserTest extends TestCase
 
         try {
             $fluxCsvParser->parse();
-            $this->fail();
+            self::fail();
         } catch (FluxQueryError $e) {
-            $this->assertEquals(
+            self::assertEquals(
                 'failed to create physical plan: invalid time bounds from procedure from: bounds contain zero time',
                 $e->getMessage()
             );
-            $this->assertEquals(0, $e->getCode());
+            self::assertEquals(0, $e->getCode());
         } catch (Exception $e) {
-            $this->fail();
+            self::fail();
         }
     }
 
-    public function testWithoutTableReference()
+    public function testWithoutTableReference(): void
     {
         $data = ",result,table,_start,_stop,_time,_value,_field,_measurement,host,value\n" .
             ",,0,1970-01-01T00:00:10Z,1970-01-01T00:00:20Z,1970-01-01T00:00:10Z,10,free,mem,A,12.25\n" .
@@ -263,18 +263,18 @@ class FluxCsvParserTest extends TestCase
 
         try {
             $fluxCsvParser->parse();
-            $this->fail();
+            self::fail();
         } catch (FluxCsvParserException $e) {
-            $this->assertEquals(
+            self::assertEquals(
                 'Unable to parse CSV response. FluxTable definition was not found.',
                 $e->getMessage()
             );
         } catch (Exception $e) {
-            $this->fail();
+            self::fail();
         }
     }
 
-    public function testParserErrorUndefinedOffset()
+    public function testParserErrorUndefinedOffset(): void
     {
         $data = "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string\n" .
             "#group,false,false,true,true,false,false,true,true,true,true,true\n" .
@@ -313,14 +313,14 @@ class FluxCsvParserTest extends TestCase
         $parser = new FluxCsvParser($data);
         $tables = $parser->parse()->tables;
 
-        $this->assertEquals(4, sizeof($tables));
-        $this->assertEquals(6, sizeof($tables[0]->records));
-        $this->assertEquals(1, sizeof($tables[1]->records));
-        $this->assertEquals(6, sizeof($tables[2]->records));
-        $this->assertEquals(1, sizeof($tables[3]->records));
+        self::assertEquals(4, sizeof($tables));
+        self::assertEquals(6, sizeof($tables[0]->records));
+        self::assertEquals(1, sizeof($tables[1]->records));
+        self::assertEquals(6, sizeof($tables[2]->records));
+        self::assertEquals(1, sizeof($tables[3]->records));
     }
 
-    public function testResponseWithError()
+    public function testResponseWithError(): void
     {
         $data = "#datatype,string,long,string,string,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string\n" .
             "#group,false,false,true,true,true,true,false,false,true\n" .
@@ -341,19 +341,19 @@ class FluxCsvParserTest extends TestCase
 
         try {
             $fluxCsvParser->parse();
-            $this->fail();
+            self::fail();
         } catch (FluxQueryError $e) {
-            $this->assertEquals(
+            self::assertEquals(
                 'engine: unknown field type for value: xyz',
                 $e->getMessage()
             );
-            $this->assertEquals(0, $e->getCode());
+            self::assertEquals(0, $e->getCode());
         } catch (Exception $e) {
-            $this->fail();
+            self::fail();
         }
     }
 
-    public function testParseExportFromUserInterface()
+    public function testParseExportFromUserInterface(): void
     {
         $data = "#group,false,false,true,true,true,true,true,true,false,false\n" .
             "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,double,dateTime:RFC3339\n" .
@@ -365,15 +365,15 @@ class FluxCsvParserTest extends TestCase
         $parser = new FluxCsvParser($data);
         $tables = $parser->parse()->tables;
 
-        $this->assertEquals(2, sizeof($tables));
-        $this->assertEquals(1, sizeof($tables[0]->records));
-        $this->assertFalse($tables[0]->columns[0]->group);
-        $this->assertFalse($tables[0]->columns[1]->group);
-        $this->assertTrue($tables[0]->columns[2]->group);
-        $this->assertEquals(1, sizeof($tables[1]->records));
+        self::assertEquals(2, sizeof($tables));
+        self::assertEquals(1, sizeof($tables[0]->records));
+        self::assertFalse($tables[0]->columns[0]->group);
+        self::assertFalse($tables[0]->columns[1]->group);
+        self::assertTrue($tables[0]->columns[2]->group);
+        self::assertEquals(1, sizeof($tables[1]->records));
     }
 
-    public function testParseWithoutDatatype()
+    public function testParseWithoutDatatype(): void
     {
         $data = ",result,table,_start,_stop,_field,_measurement,host,region,_value2,value1,value_str\n" .
             ",,0,1677-09-21T00:12:43.145224192Z,2018-07-16T11:21:02.547596934Z,free,mem,A,west,121,11,test\n" .
@@ -382,16 +382,16 @@ class FluxCsvParserTest extends TestCase
         $parser = new FluxCsvParser($data, false, "only_names");
         $tables = $parser->parse()->tables;
 
-        $this->assertEquals(2, sizeof($tables));
-        $this->assertEquals(11, sizeof($tables[0]->columns));
-        $this->assertEquals(1, sizeof($tables[0]->records));
-        $this->assertEquals(11, sizeof($tables[0]->records[0]->values));
-        $this->assertEquals("0", $tables[0]->records[0]->values['table']);
-        $this->assertEquals("11", $tables[0]->records[0]->values['value1']);
-        $this->assertEquals("west", $tables[0]->records[0]->values['region']);
+        self::assertEquals(2, sizeof($tables));
+        self::assertEquals(11, sizeof($tables[0]->columns));
+        self::assertEquals(1, sizeof($tables[0]->records));
+        self::assertEquals(11, sizeof($tables[0]->records[0]->values));
+        self::assertEquals("0", $tables[0]->records[0]->values['table']);
+        self::assertEquals("11", $tables[0]->records[0]->values['value1']);
+        self::assertEquals("west", $tables[0]->records[0]->values['region']);
     }
 
-    public function testRecordDoesntContainsKey()
+    public function testRecordDoesntContainsKey(): void
     {
         $data = "#group,false,false,true,true,true,true,true,true,false,false\n" .
             "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,double,dateTime:RFC3339\n" .
@@ -405,14 +405,14 @@ class FluxCsvParserTest extends TestCase
 
         try {
             $record->getValue();
-            $this->fail("Expected exception");
+            self::fail("Expected exception");
         } catch (Exception $e) {
-            $this->assertEquals("Record doesn't contain column named '_value'. " .
+            self::assertEquals("Record doesn't contain column named '_value'. " .
                 "Columns: 'result, table, _start, _stop, _field, _measurement, city, location, value, _time'.", $e->getMessage());
         }
     }
 
-    public function testParseInfinity()
+    public function testParseInfinity(): void
     {
         $data = "#group,false,false,true,true,true,true,true,true,true,true,false,false
 #datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,string,string,string,string,string,string,double,double
@@ -436,13 +436,13 @@ class FluxCsvParserTest extends TestCase
         $parser = new FluxCsvParser($data);
         $tables = $parser->parse()->tables;
 
-        $this->assertEquals(1, sizeof($tables));
-        $this->assertEquals(12, sizeof($tables[0]->records));
-        $this->assertEquals(INF, $tables[0]->records[10]->values['le']);
-        $this->assertEquals(-INF, $tables[0]->records[11]->values['le']);
+        self::assertEquals(1, sizeof($tables));
+        self::assertEquals(12, sizeof($tables[0]->records));
+        self::assertEquals(INF, $tables[0]->records[10]->values['le']);
+        self::assertEquals(-INF, $tables[0]->records[11]->values['le']);
     }
 
-    public function testParseDuplicateColumnNames()
+    public function testParseDuplicateColumnNames(): void
     {
         $data = "#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,string,string,double
 #group,false,false,true,true,false,true,true,false
@@ -456,77 +456,83 @@ class FluxCsvParserTest extends TestCase
         $parser = new FluxCsvParser($data);
         $tables = $parser->parse()->tables;
 
-        $this->assertEquals(1, sizeof($tables));
-        $this->assertEquals(3, sizeof($tables[0]->records));
-        $this->assertEquals(8, sizeof($tables[0]->columns));
-        $this->assertEquals(7, sizeof($tables[0]->records[0]->values));
-        $this->assertEquals(8, sizeof($tables[0]->records[0]->row));
-        $this->assertEquals(25.3, $tables[0]->records[0]->row[7]);
+        self::assertEquals(1, sizeof($tables));
+        self::assertEquals(3, sizeof($tables[0]->records));
+        self::assertEquals(8, sizeof($tables[0]->columns));
+        self::assertEquals(7, sizeof($tables[0]->records[0]->values));
+        self::assertEquals(8, sizeof($tables[0]->records[0]->row));
+        self::assertEquals(25.3, $tables[0]->records[0]->row[7]);
     }
 
-    private function assertColumns(array $columnHeaders, array $values)
+    private function assertColumns(array $columnHeaders, array $values): void
     {
         $i = 0;
         foreach ($values as $value) {
-            $this->assertEquals($value, $columnHeaders[$i]->group, "column assert '" . $columnHeaders[$i]->label . "'");
+            self::assertEquals($value, $columnHeaders[$i]->group, "column assert '" . $columnHeaders[$i]->label . "'");
             $i++;
         }
     }
 
-    private function assertMultipleRecords(array $tables)
+    private function assertMultipleRecords(array $tables): void
     {
         #Record 1
         $tableRecords = $tables[0]->records;
-        $this->assertEquals(1, sizeof($tableRecords));
+        self::assertEquals(1, sizeof($tableRecords));
 
         $values = ['table' => 0, 'host' => 'A', 'region' => 'west', 'value1' => 11, '_value2' => 121,
             'value_str' => 'test'];
 
-        $this->assertRecord($tableRecords[0], $values, 11);
+        self::assertRecord($tableRecords[0], $values, 11);
 
         #Record 2
         $tableRecords = $tables[1]->records;
-        $this->assertEquals(1, sizeof($tableRecords));
+        self::assertEquals(1, sizeof($tableRecords));
 
         $values = ['table' => 1, 'host' => 'B', 'region' => 'west', 'value1' => 22, '_value2' => 484,
             'value_str' => 'test'];
 
-        $this->assertRecord($tableRecords[0], $values, 11);
+        self::assertRecord($tableRecords[0], $values, 11);
 
         #Record 3
         $tableRecords = $tables[2]->records;
-        $this->assertEquals(1, sizeof($tableRecords));
+        self::assertEquals(1, sizeof($tableRecords));
 
         $values = ['table' => 2, 'host' => 'A', 'region' => 'west', 'value1' => 38, '_value2' => 1444,
             'value_str' => 'test'];
 
-        $this->assertRecord($tableRecords[0], $values, 11);
+        self::assertRecord($tableRecords[0], $values, 11);
 
         #Record 4
         $tableRecords = $tables[3]->records;
-        $this->assertEquals(1, sizeof($tableRecords));
+        self::assertEquals(1, sizeof($tableRecords));
 
         $values = ['table' => 3, 'host' => 'A', 'region' => 'west', 'value1' => 49, '_value2' => 2401,
             'value_str' => 'test'];
 
-        $this->assertRecord($tableRecords[0], $values, 11);
+        self::assertRecord($tableRecords[0], $values, 11);
     }
 
-    private function assertRecord(FluxRecord $fluxRecord, array $values, $size = 0, $value = null)
+    /**
+     * @template V of mixed
+     * @param array<string, V> $values
+     * @param int $size
+     * @param V $value
+     */
+    private function assertRecord(FluxRecord $fluxRecord, array $values, int $size = 0, $value = null): void
     {
         foreach ($values as $key => $val) {
-            $this->assertEquals($val, $fluxRecord->values[$key]);
+            self::assertEquals($val, $fluxRecord->values[$key]);
         }
 
-        if ($value == null) {
-            $this->assertNull($value);
+        if ($value === null) {
+            self::assertNull($value);
         } else {
-            $this->assertEquals($value, $fluxRecord->getValue());
+            self::assertEquals($value, $fluxRecord->getValue());
         }
-        $this->assertEquals($size, sizeof($fluxRecord->values));
+        self::assertEquals($size, sizeof($fluxRecord->values));
     }
 
-    private function parseTime(string $timestamp)
+    private function parseTime(string $timestamp): string
     {
         //TODO datetime parsing
         return $timestamp;

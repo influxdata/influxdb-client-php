@@ -10,10 +10,10 @@ require_once('BasicTest.php');
  */
 class InvokableScriptsApiTest extends BasicTest
 {
-    public function testCreateInstance()
+    public function testCreateInstance(): void
     {
         $invokableScriptsApi = $this->client->createInvokableScriptsApi();
 
-        $this->assertNotNull($invokableScriptsApi);
+        self::assertNotNull($invokableScriptsApi);
     }
 }
