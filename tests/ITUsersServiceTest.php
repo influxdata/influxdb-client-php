@@ -11,7 +11,7 @@ require_once('IntegrationBaseTestCase.php');
  */
 class ITUsersServiceTest extends IntegrationBaseTestCase
 {
-    public function testUserService()
+    public function testUserService(): void
     {
         /** @var UsersService $usersService */
         $usersService = $this->client->createService(UsersService::class);

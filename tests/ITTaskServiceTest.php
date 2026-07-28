@@ -12,7 +12,7 @@ require_once('IntegrationBaseTestCase.php');
  */
 class ITTaskServiceTest extends IntegrationBaseTestCase
 {
-    public function testCreateTask()
+    public function testCreateTask(): void
     {
         /** @var TasksService $taskService */
         $taskService = $this->client->createService(TasksService::class);

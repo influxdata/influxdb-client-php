@@ -22,28 +22,28 @@ class WriteApiTest extends BasicTest
     private const ID_TAG = "132-987-655";
     private const CUSTOMER_TAG = "California Miner";
 
-    public function setUp($url = "http://localhost:8086", $logFile = "php://output"): void
+    public function setUp(string $url = "http://localhost:8086", string $logFile = "php://output"): void
     {
         parent::setUp($url, $logFile);
 
         putenv("data_center=LA");
     }
 
-    public function testWriteLineProtocol()
+    public function testWriteLineProtocol(): void
     {
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('h2o,location=west value=33i 15');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o,location=west value=33i 15', $request->getBody());
+        self::assertEquals('h2o,location=west value=33i 15', $request->getBody());
     }
 
-    public function testWritePoint()
+    public function testWritePoint(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -55,14 +55,14 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o,location=europe level=2i', $request->getBody());
+        self::assertEquals('h2o,location=europe level=2i', $request->getBody());
     }
 
-    public function testWriteArray()
+    public function testWriteArray(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -75,14 +75,14 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123', $request->getBody());
+        self::assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123', $request->getBody());
     }
 
-    public function testWriteCollection()
+    public function testWriteCollection(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -103,38 +103,38 @@ class WriteApiTest extends BasicTest
             . "h2o,location=europe level=2i\n"
             . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals($expected, strval($request->getBody()));
+        self::assertEquals($expected, strval($request->getBody()));
     }
 
-    public function testAuthorizationHeader()
+    public function testAuthorizationHeader(): void
     {
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('h2o,location=west value=33i 15');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('Token my-token', implode(' ', $request->getHeaders()['Authorization']));
+        self::assertEquals('Token my-token', implode(' ', $request->getHeaders()['Authorization']));
     }
 
-    public function testWithoutData()
+    public function testWithoutData(): void
     {
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertNull($request);
+        self::assertNull($request);
     }
 
-    public function testInfluxException()
+    public function testInfluxException(): void
     {
         $errorBody = '{"code":"invalid","message":"unable to parse \'h2o_feet, location=coyote_creek water_level=1.0 1\': missing tag key"}';
 
@@ -142,17 +142,17 @@ class WriteApiTest extends BasicTest
 
         try {
             $this->writeApi->write('h2o,location=west value=33i 15');
-            $this->fail();
+            self::fail();
         } catch (ApiException $e) {
-            $this->assertEquals(400, $e->getCode());
-            $this->assertEquals('invalid', implode($e->getResponseHeaders()['X-Platform-Error-Code']));
-            $this->assertEquals($errorBody, strval($e->getResponseBody()));
+            self::assertEquals(400, $e->getCode());
+            self::assertEquals('invalid', implode($e->getResponseHeaders()['X-Platform-Error-Code']));
+            self::assertEquals($errorBody, strval($e->getResponseBody()));
         } catch (Exception $e) {
-            $this->fail();
+            self::fail();
         }
     }
 
-    public function testWritePointWithDefaultTags()
+    public function testWritePointWithDefaultTags(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -168,17 +168,17 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals(
+        self::assertEquals(
             'h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i',
             strval($request->getBody())
         );
     }
 
-    public function testWriteArrayWithDefaultTags()
+    public function testWriteArrayWithDefaultTags(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -195,17 +195,17 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals(
+        self::assertEquals(
             'h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation="99%" 123',
             strval($request->getBody())
         );
     }
 
-    public function testWriteCollectionWithDefaultTags()
+    public function testWriteCollectionWithDefaultTags(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -230,14 +230,14 @@ class WriteApiTest extends BasicTest
             . "h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i\n"
             . "h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation=\"99%\" 123";
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals($expected, strval($request->getBody()));
+        self::assertEquals($expected, strval($request->getBody()));
     }
 
-    public function testWriteArrayWithoutTagsWithDefaultTags()
+    public function testWriteArrayWithoutTagsWithDefaultTags(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -253,17 +253,17 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals(
+        self::assertEquals(
             'h2o,customer=California\ Miner,data_center=LA,id=132-987-655 level=5i,saturation="99%" 123',
             strval($request->getBody())
         );
     }
 
-    public function testRetryCount()
+    public function testRetryCount(): void
     {
         $this->mockHandler->append(
         // regular call
@@ -291,11 +291,11 @@ class WriteApiTest extends BasicTest
         $this->expectException(ApiException::class);
         $this->writeApi->write($point);
 
-        $this->assertCount(4, $this->requests);
-        $this->assertCount(1, $this->mockHandler);
+        self::assertCount(4, $this->requests);
+        self::assertCount(1, $this->mockHandler);
     }
 
-    public function testRetryMaxTime()
+    public function testRetryMaxTime(): void
     {
         $this->mockHandler->append(
         // regular call
@@ -321,41 +321,41 @@ class WriteApiTest extends BasicTest
 
         $this->writeApi->write($point);
 
-        $this->assertCount(2, $this->requests);
-        $this->assertCount(1, $this->mockHandler);
+        self::assertCount(2, $this->requests);
+        self::assertCount(1, $this->mockHandler);
     }
 
 
-    public function testRetryBackoffTime()
+    public function testRetryBackoffTime(): void
     {
         $retry = new WriteRetry();
 
         $backoff = $retry->getBackoffTime(1);
-        $this->assertGreaterThanOrEqual(5000, $backoff);
-        $this->assertLessThanOrEqual(10000, $backoff);
+        self::assertGreaterThanOrEqual(5000, $backoff);
+        self::assertLessThanOrEqual(10000, $backoff);
 
         $backoff = $retry->getBackoffTime(2);
-        $this->assertGreaterThanOrEqual(10000, $backoff);
-        $this->assertLessThanOrEqual(20000, $backoff);
+        self::assertGreaterThanOrEqual(10000, $backoff);
+        self::assertLessThanOrEqual(20000, $backoff);
 
         $backoff = $retry->getBackoffTime(3);
-        $this->assertGreaterThanOrEqual(20000, $backoff);
-        $this->assertLessThanOrEqual(40000, $backoff);
+        self::assertGreaterThanOrEqual(20000, $backoff);
+        self::assertLessThanOrEqual(40000, $backoff);
 
         $backoff = $retry->getBackoffTime(4);
-        $this->assertGreaterThanOrEqual(40000, $backoff);
-        $this->assertLessThanOrEqual(80000, $backoff);
+        self::assertGreaterThanOrEqual(40000, $backoff);
+        self::assertLessThanOrEqual(80000, $backoff);
 
         $backoff = $retry->getBackoffTime(5);
-        $this->assertGreaterThanOrEqual(80000, $backoff);
-        $this->assertLessThanOrEqual(125000, $backoff);
+        self::assertGreaterThanOrEqual(80000, $backoff);
+        self::assertLessThanOrEqual(125000, $backoff);
 
         $backoff = $retry->getBackoffTime(6);
-        $this->assertGreaterThanOrEqual(80000, $backoff);
-        $this->assertLessThanOrEqual(125000, $backoff);
+        self::assertGreaterThanOrEqual(80000, $backoff);
+        self::assertLessThanOrEqual(125000, $backoff);
     }
 
-    public function testConnectExceptionRetry()
+    public function testConnectExceptionRetry(): void
     {
         $client = new Client([
             "url" => "http://nonexistenthost:8086/",
@@ -377,7 +377,7 @@ class WriteApiTest extends BasicTest
         try {
             $writeApi->write($point);
         } catch (ApiException $e) {
-            $this->assertEquals(ConnectException::class, get_class($e->getPrevious()));
+            self::assertEquals(ConnectException::class, get_class($e->getPrevious()));
             throw $e;
         }
     }

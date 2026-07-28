@@ -14,6 +14,25 @@ use PHPUnit\Framework\TestCase;
  */
 class WriteUdpTest extends TestCase
 {
+    /**
+     * @var array{
+     *     url: string,
+     *     token: string,
+     *     bucket?: string,
+     *     org?: string,
+     *     precision?: WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS,
+     *     allow_redirects?: bool,
+     *     debug?: bool,
+     *     logFile?: string,
+     *     httpClient?: \Psr\Http\Client\ClientInterface,
+     *     verifySSL?: bool,
+     *     timeout?: int,
+     *     proxy?: string,
+     *     udpPort?: int<1, 65535>,
+     *     ipVersion?: 4|6,
+     *     tags?: array<string, string>,
+     * } $baseConfig
+     */
     protected $baseConfig = [
         "url" => "http://localhost:8086",
         "token" => "my-token",
@@ -23,6 +42,9 @@ class WriteUdpTest extends TestCase
         "logFile" => "php://output",
     ];
 
+    /**
+     * @return (UdpWriter&\PHPUnit\Framework\MockObject\MockObject)
+     */
     protected function getWriterMock()
     {
         $method = new \ReflectionMethod(UdpWriter::class, 'writeSocket');
@@ -35,21 +57,21 @@ class WriteUdpTest extends TestCase
             ->getMock();
     }
 
-    public function testRequireOptions()
+    public function testRequireOptions(): void
     {
         $client = new Client($this->baseConfig);
         $this->expectException(\Exception::class);
         $client->createUdpWriter();
     }
 
-    public function testValidOptions()
+    public function testValidOptions(): void
     {
         $this->expectNotToPerformAssertions();
         $client = new Client($this->baseConfig + ['udpPort' => 1000]);
         $client->createUdpWriter();
     }
 
-    public function testSocketError()
+    public function testSocketError(): void
     {
         $writer = $this->getWriterMock();
         $writer->method('writeSocket')->willReturn(false);
@@ -57,7 +79,7 @@ class WriteUdpTest extends TestCase
         $writer->write('h2o,location=west value=33i 15');
     }
 
-    public function testLineProtocol()
+    public function testLineProtocol(): void
     {
         $writer = $this->getWriterMock();
         $buffer = '';
@@ -65,10 +87,10 @@ class WriteUdpTest extends TestCase
             $buffer = $data;
         });
         $writer->write('h2o,location=west value=33i 15');
-        $this->assertEquals('h2o,location=west value=33i 15', $buffer);
+        self::assertEquals('h2o,location=west value=33i 15', $buffer);
     }
 
-    public function testWriteArray()
+    public function testWriteArray(): void
     {
         $array = [
             'name' => 'h2o',
@@ -83,10 +105,10 @@ class WriteUdpTest extends TestCase
             $buffer = $data;
         });
         $writer->write($array);
-        $this->assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123', $buffer);
+        self::assertEquals('h2o,host=aws,region=us level=5i,saturation="99%" 123', $buffer);
     }
 
-    public function testWriteCollection()
+    public function testWriteCollection(): void
     {
         $point = Point::measurement('h2o')
             ->addTag('location', 'europe')
@@ -108,6 +130,6 @@ class WriteUdpTest extends TestCase
         $expected = "h2o,location=west value=33i 15\n"
             . "h2o,location=europe level=2i\n"
             . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
-        $this->assertEquals($expected, $buffer);
+        self::assertEquals($expected, $buffer);
     }
 }

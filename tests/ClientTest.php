@@ -12,16 +12,16 @@ require_once('IntegrationBaseTestCase.php');
  */
 class ClientTest extends IntegrationBaseTestCase
 {
-    public function test_health()
+    public function test_health(): void
     {
         $health = $this->client->health();
 
-        $this->assertEquals('ready for queries and writes', $health->getMessage());
-        $this->assertEquals('influxdb', $health->getName());
-        $this->assertEquals('pass', $health->getStatus());
+        self::assertEquals('ready for queries and writes', $health->getMessage());
+        self::assertEquals('influxdb', $health->getName());
+        self::assertEquals('pass', $health->getStatus());
     }
 
-    public function test_health_not_running()
+    public function test_health_not_running(): void
     {
         $this->client->close();
         $this->client = new Client([
@@ -31,20 +31,20 @@ class ClientTest extends IntegrationBaseTestCase
 
         $health = $this->client->health();
 
-        $this->assertStringContainsString('Failed to connect to localhost port 8099', $health->getMessage());
-        $this->assertEquals('influxdb', $health->getName());
-        $this->assertEquals('fail', $health->getStatus());
+        self::assertStringContainsString('Failed to connect to localhost port 8099', $health->getMessage());
+        self::assertEquals('influxdb', $health->getName());
+        self::assertEquals('fail', $health->getStatus());
     }
 
-    public function test_ping()
+    public function test_ping(): void
     {
         $ping = $this->client->ping();
 
-        $this->assertArrayHasKey('X-Influxdb-Build', $ping);
-        $this->assertArrayHasKey('X-Influxdb-Version', $ping);
+        self::assertArrayHasKey('X-Influxdb-Build', $ping);
+        self::assertArrayHasKey('X-Influxdb-Version', $ping);
     }
 
-    public function test_ping_not_running()
+    public function test_ping_not_running(): void
     {
         $this->client->close();
         $this->client = new Client([
@@ -58,7 +58,7 @@ class ClientTest extends IntegrationBaseTestCase
         $this->client->ping();
     }
 
-    public function test_debug()
+    public function test_debug(): void
     {
         $logFilePath = stream_get_meta_data(tmpfile())['uri'];
         $this->client->close();
@@ -70,9 +70,9 @@ class ClientTest extends IntegrationBaseTestCase
         ]);
 
         $tables = $this->client->createQueryApi()->query("buckets()", "my-org");
-        $this->assertCount(1, $tables);
+        self::assertCount(1, $tables);
 
-        $this->assertStringContainsString('Authorization: ***', file_get_contents($logFilePath));
+        self::assertStringContainsString('Authorization: ***', file_get_contents($logFilePath));
         unlink($logFilePath);
     }
 }

@@ -14,27 +14,27 @@ require_once('BasicTest.php');
 
 class DefaultApiTest extends BasicTest
 {
-    public function testUserAgent()
+    public function testUserAgent(): void
     {
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('h2o,location=west value=33i 15');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             'influxdb-client-php/',
             strval($request->getHeader("User-Agent")[0])
         );
     }
 
-    public function testTrailingSlashInUrl()
+    public function testTrailingSlashInUrl(): void
     {
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('h2o,location=west value=33i 15');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
+        self::assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
 
         $this->tearDown();
         $this->setUp("http://localhost:8086/");
@@ -44,20 +44,20 @@ class DefaultApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
+        self::assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
     }
 
-    public function testContentType()
+    public function testContentType(): void
     {
         $this->mockHandler->append(new Response(204));
         $this->writeApi->write('h2o,location=west value=33i 15');
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertNotEmpty($request->getHeader("Content-Type"));
+        self::assertNotEmpty($request->getHeader("Content-Type"));
     }
 
-    public function testApiException()
+    public function testApiException(): void
     {
         $this->mockHandler->append(new Response(400));
 
@@ -66,7 +66,7 @@ class DefaultApiTest extends BasicTest
         $this->writeApi->write('h2o,location=west value=33i 15');
     }
 
-    public function testInvalidArgument()
+    public function testInvalidArgument(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -77,14 +77,14 @@ class DefaultApiTest extends BasicTest
         $this->writeApi->write('h2o,location=west value=33i 15');
     }
 
-    public function testDefaultVerifySSL()
+    public function testDefaultVerifySSL(): void
     {
         $guzzle = $this->property_value($this->property_value($this->writeApi->http, 'client'), 'httpClient');
 
-        $this->assertEquals(true, $guzzle->getConfig()['verify']);
+        self::assertTrue($guzzle->getConfig()['verify']);
     }
 
-    public function testConfigureVerifySSL()
+    public function testConfigureVerifySSL(): void
     {
         $client = new Client([
             "url" => "http://localhost:8086",
@@ -98,12 +98,12 @@ class DefaultApiTest extends BasicTest
 
         $guzzle = $this->property_value($this->property_value($client->createQueryApi()->http, 'client'), 'httpClient');
 
-        $this->assertEquals(false, $guzzle->getConfig()['verify']);
+        self::assertFalse($guzzle->getConfig()['verify']);
 
         $client->close();
     }
 
-    public function testFollowRedirect()
+    public function testFollowRedirect(): void
     {
         $this->mockHandler->append(
             new Response(
@@ -114,13 +114,13 @@ class DefaultApiTest extends BasicTest
         );
         $this->writeApi->write('h2o,location=west value=33i 15');
 
-        $this->assertCount(2, $this->requests);
+        self::assertCount(2, $this->requests);
 
-        $this->assertEquals('Token my-token', $this->getHeader($this->requests[0]['request']));
-        $this->assertEquals('Token my-token', $this->getHeader($this->requests[1]['request']));
+        self::assertEquals('Token my-token', $this->getHeader($this->requests[0]['request']));
+        self::assertEquals('Token my-token', $this->getHeader($this->requests[1]['request']));
     }
 
-    public function testJsonBodyWithMessageReturnsMessage()
+    public function testJsonBodyWithMessageReturnsMessage(): void
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionMessageMatches('~^\[500\].*\(a failure\)$~');
@@ -130,7 +130,7 @@ class DefaultApiTest extends BasicTest
         $this->queryApi->query('some broken query');
     }
 
-    public function testJsonBodyWithErrorReturnsMessage()
+    public function testJsonBodyWithErrorReturnsMessage(): void
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionMessageMatches('~^\[500\].*\(another failure\)$~');

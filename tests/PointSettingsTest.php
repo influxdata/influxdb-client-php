@@ -26,17 +26,17 @@ class PointSettingsTest extends TestCase
         ]);
     }
 
-    public function testPointSettings()
+    public function testPointSettings(): void
     {
         $writeApi = $this->client->createWriteApi(null, ['customer' => PointSettingsTest::CUSTOMER_TAG]);
 
         $defaultTags = $writeApi->pointSettings->getDefaultTags();
 
-        $this->assertEquals(PointSettingsTest::ID_TAG, $defaultTags['id']);
-        $this->assertEquals(PointSettingsTest::CUSTOMER_TAG, $defaultTags['customer']);
+        self::assertEquals(PointSettingsTest::ID_TAG, $defaultTags['id']);
+        self::assertEquals(PointSettingsTest::CUSTOMER_TAG, $defaultTags['customer']);
     }
 
-    public function testPointSettingsWithAdd()
+    public function testPointSettingsWithAdd(): void
     {
         putenv("data_center=LA");
 
@@ -46,7 +46,7 @@ class PointSettingsTest extends TestCase
 
         $defaultTags = $writeApi->pointSettings->getDefaultTags();
 
-        $this->assertEquals(PointSettingsTest::ID_TAG, $defaultTags['id']);
-        $this->assertEquals(PointSettingsTest::CUSTOMER_TAG, $defaultTags['customer']);
+        self::assertEquals(PointSettingsTest::ID_TAG, $defaultTags['id']);
+        self::assertEquals(PointSettingsTest::CUSTOMER_TAG, $defaultTags['customer']);
     }
 }

@@ -1,0 +1,1741 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method object\:\:deleteBucketsID\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: examples/BucketManagementExample.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getBuckets\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: examples/BucketManagementExample.php
+
+		-
+			message: '#^Call to an undefined method object\:\:postBuckets\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: examples/BucketManagementExample.php
+
+		-
+			message: '#^Cannot call method getOrgs\(\) on object\|string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: examples/BucketManagementExample.php
+
+		-
+			message: '#^Function findMyOrg\(\) has parameter \$client with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: examples/BucketManagementExample.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 1
+			path: examples/BucketManagementExample.php
+
+		-
+			message: '#^Parameter \#1 \$start of method InfluxDB2\\Model\\DeletePredicateRequest\:\:setStart\(\) expects DateTime, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/DeleteDataExample.php
+
+		-
+			message: '#^Parameter \#2 \$params of method InfluxDB2\\InvokableScriptsApi\:\:invokeScript\(\) expects array\<string, object\>\|null, array\<string, string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/InvokableScripts.php
+
+		-
+			message: '#^Parameter \#2 \$params of method InfluxDB2\\InvokableScriptsApi\:\:invokeScriptStream\(\) expects array\<string, object\>\|null, array\<string, string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/InvokableScripts.php
+
+		-
+			message: '#^Call to an undefined method object\:\:postDelete\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: examples/QueryExample.php
+
+		-
+			message: '#^Parameter \#1 \$start of method InfluxDB2\\Model\\DeletePredicateRequest\:\:setStart\(\) expects DateTime, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/QueryExample.php
+
+		-
+			message: '#^Parameter \#1 \$fp of function fclose expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Parameter \#1 \$fp of function fread expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Parameter \#1 \$query of method InfluxDB2\\QueryApi\:\:query\(\) expects InfluxDB2\\Model\\Query\|string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Parameter \#2 \$length of function fread expects int\<1, max\>, int\<0, max\>\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "0" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "1" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "2" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "3" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "4" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "5" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Switch condition type \(int\) does not match case condition "6" \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: examples/QueryFromFileExample.php
+
+		-
+			message: '#^Function checkResult\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: examples/WriteExample.php
+
+		-
+			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
+			identifier: catch.neverThrown
+			count: 1
+			path: examples/WriteUDPExample.php
+
+		-
+			message: '#^Method InfluxDB2\\BatchItem\:\:__construct\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/BatchItem.php
+
+		-
+			message: '#^Method InfluxDB2\\BatchItem\:\:__construct\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/BatchItem.php
+
+		-
+			message: '#^Method InfluxDB2\\BatchItemKey\:\:__construct\(\) has parameter \$bucket with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/BatchItemKey.php
+
+		-
+			message: '#^Method InfluxDB2\\BatchItemKey\:\:__construct\(\) has parameter \$org with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/BatchItemKey.php
+
+		-
+			message: '#^Method InfluxDB2\\BatchItemKey\:\:__construct\(\) has parameter \$precision with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/BatchItemKey.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getPingWithHttpInfo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\Client\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\Client\:\:close\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\Client\:\:createService\(\) has parameter \$serviceClass with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\Client\:\:createWriteApi\(\) has parameter \$pointSettings with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\Client\:\:createWriteApi\(\) has parameter \$writeOptions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\Client\:\:ping\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Property InfluxDB2\\Client\:\:\$autoCloseable has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Property InfluxDB2\\Client\:\:\$closed has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Property InfluxDB2\\Client\:\:\$options has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/Client.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:check\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:check\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:check\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:get\(\) has parameter \$payload with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:get\(\) has parameter \$queryParams with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:get\(\) has parameter \$uriPath with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:log\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:post\(\) has parameter \$payload with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:post\(\) has parameter \$queryParams with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:post\(\) has parameter \$uriPath with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:request\(\) has parameter \$method with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:request\(\) has parameter \$payload with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:request\(\) has parameter \$queryParams with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\DefaultApi\:\:request\(\) has parameter \$uriPath with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Only booleans are allowed in a ternary operator condition, Psr\\Http\\Message\\ResponseInterface given\.$#'
+			identifier: ternary.condNotBoolean
+			count: 2
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Parameter \#3 \$responseHeaders of class InfluxDB2\\ApiException constructor expects array\<string\>\|null, array\<array\<string\>\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Property InfluxDB2\\DefaultApi\:\:\$options has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 2
+			path: src/InfluxDB2/DefaultApi.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxColumn\:\:__construct\(\) has parameter \$dataType with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxColumn\:\:__construct\(\) has parameter \$defaultValue with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxColumn\:\:__construct\(\) has parameter \$group with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxColumn\:\:__construct\(\) has parameter \$index with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxColumn\:\:__construct\(\) has parameter \$label with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxColumn\:\:\$dataType has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxColumn\:\:\$defaultValue has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxColumn\:\:\$group has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxColumn\:\:\$index has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxColumn\:\:\$label has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxColumn.php
+
+		-
+			message: '#^Call to function base64_decode\(\) requires parameter \#2 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Call to function is_null\(\) with InfluxDB2\\FluxTable will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 25
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:__construct\(\) has parameter \$response with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addColumnNamesAndTags\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addColumnNamesAndTags\(\) has parameter \$csv with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addDataTypes\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addDataTypes\(\) has parameter \$data_types with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addDefaultEmptyValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addDefaultEmptyValues\(\) has parameter \$defaultValues with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addGroups\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:addGroups\(\) has parameter \$csv with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:closeConnection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:each\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parseLine\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parseLine\(\) has parameter \$csv with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parseRecord\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parseRecord\(\) has parameter \$csv with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parseValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:parseValues\(\) has parameter \$csv with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:stringToStream\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:toValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxCsvParser\:\:toValue\(\) has parameter \$strVal with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Parameter \#1 \$fp of function fwrite expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Parameter \#1 \$fp of function rewind expects resource, resource\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Parameter \#2 \$code of class InfluxDB2\\FluxQueryError constructor expects int, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$closed has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$groups has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$parsingStateError has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$resource has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$response has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$responseMode has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$startNewTable has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$stream has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$tableId has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$tableIndex has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxCsvParser\:\:\$tables has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: src/InfluxDB2/FluxCsvParser.php
+
+		-
+			message: '#^Class InfluxDB2\\FluxRecord implements generic interface ArrayAccess but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxRecord\:\:__construct\(\) has parameter \$row with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxRecord\:\:__construct\(\) has parameter \$table with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxRecord\:\:__construct\(\) has parameter \$values with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^PHPDoc tag @return with type mixed is not subtype of native type string\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxRecord\:\:\$row has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxRecord\:\:\$table has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Property InfluxDB2\\FluxRecord\:\:\$values has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/FluxRecord.php
+
+		-
+			message: '#^Method InfluxDB2\\FluxTable\:\:getGroupKey\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/FluxTable.php
+
+		-
+			message: '#^Method InfluxDB2\\HealthApi\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/HealthApi.php
+
+		-
+			message: '#^Method InfluxDB2\\HealthApi\:\:health\(\) should return InfluxDB2\\Model\\HealthCheck but returns array\|object\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/InfluxDB2/HealthApi.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 1
+			path: src/InfluxDB2/Internal/DebugHttpPlugin.php
+
+		-
+			message: '#^Method InfluxDB2\\Internal\\DebugHttpPlugin\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Internal/DebugHttpPlugin.php
+
+		-
+			message: '#^Property InfluxDB2\\Internal\\DebugHttpPlugin\:\:\$options has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/Internal/DebugHttpPlugin.php
+
+		-
+			message: '#^Method InfluxDB2\\InvokableScriptsApi\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/InvokableScriptsApi.php
+
+		-
+			message: '#^Method InfluxDB2\\InvokableScriptsApi\:\:invokeScriptRaw\(\) has parameter \$params with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/InvokableScriptsApi.php
+
+		-
+			message: '#^Property InfluxDB2\\InvokableScriptsApi\:\:\$service has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/InvokableScriptsApi.php
+
+		-
+			message: '#^Call to function is_double\(\) with int will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Call to function is_float\(\) with int will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Call to function is_long\(\) with mixed will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Instanceof between int and DateTimeInterface will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 2
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$fields with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$name with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$precision with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$tags with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$time with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:addField\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:addField\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:addTag\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:appendFields\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:appendTags\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:appendTime\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:escapeKey\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:escapeKey\(\) has parameter \$escapeEqual with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:escapeKey\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:escapeValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:escapeValue\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:fromArray\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:getPrecision\(\) should return string\|null but returns InfluxDB2\\Model\\WritePrecision\.$#'
+			identifier: return.type
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:isNullOrEmptyString\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:isNullOrEmptyString\(\) has parameter \$str with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:measurement\(\) has parameter \$name with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:time\(\) has parameter \$precision with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:time\(\) has parameter \$time with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\Point\:\:toLineProtocol\(\) should return string but returns null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$value with type object\|string\|null is not subtype of native type string\|null\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Array\] data\)\: Unexpected token "\]", expected ''\('' at offset 78 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Array\] fields the fields for the point\)\: Unexpected token "\]", expected ''\('' at offset 206 on line 5$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Array\] tags the tag set for the point\)\: Unexpected token "\]", expected ''\('' at offset 153 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Integer\] time the timestamp for the point\)\: Unexpected token "\[", expected type at offset 254 on line 6$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Object\] key the tag name\)\: Unexpected token "\[", expected type at offset 67 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Object\] key the tag name\)\: Unexpected token "\[", expected type at offset 69 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Object\] time the timestamp\)\: Unexpected token "\[", expected type at offset 62 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[Object\] value the tag value\)\: Unexpected token "\[", expected type at offset 109 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[String\] name the measurement name for the point\.\)\: Unexpected token "\[", expected type at offset 83 on line 3$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[WritePrecision\] precision the precision for the unix timestamps within the body line\-protocol\)\: Unexpected token "\[", expected type at offset 311 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[WritePrecision\] precision the timestamp precision\)\: Unexpected token "\[", expected type at offset 104 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^PHPDoc tag @return with type InfluxDB2\\Model\\WritePrecision is incompatible with native type string\|null\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Property InfluxDB2\\Point\:\:\$fields type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Property InfluxDB2\\Point\:\:\$tags type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Property InfluxDB2\\Point\:\:\$time \(int\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Result of \|\| is always false\.$#'
+			identifier: booleanOr.alwaysFalse
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Switch condition type \(InfluxDB2\\Model\\WritePrecision\) does not match case condition \\InfluxDB2\\Model\\WritePrecision\:\:MS \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Switch condition type \(InfluxDB2\\Model\\WritePrecision\) does not match case condition \\InfluxDB2\\Model\\WritePrecision\:\:S \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Switch condition type \(InfluxDB2\\Model\\WritePrecision\) does not match case condition \\InfluxDB2\\Model\\WritePrecision\:\:US \(string\)\.$#'
+			identifier: switch.type
+			count: 1
+			path: src/InfluxDB2/Point.php
+
+		-
+			message: '#^Method InfluxDB2\\PointSettings\:\:__construct\(\) has parameter \$defaultTags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/PointSettings.php
+
+		-
+			message: '#^Method InfluxDB2\\PointSettings\:\:addDefaultTag\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/PointSettings.php
+
+		-
+			message: '#^Method InfluxDB2\\PointSettings\:\:getDefaultTags\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/PointSettings.php
+
+		-
+			message: '#^Method InfluxDB2\\PointSettings\:\:getValue\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/InfluxDB2/PointSettings.php
+
+		-
+			message: '#^Property InfluxDB2\\PointSettings\:\:\$defaultTags has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/PointSettings.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 4
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Method InfluxDB2\\QueryApi\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Method InfluxDB2\\QueryApi\:\:generatePayload\(\) has parameter \$dialect with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Method InfluxDB2\\QueryApi\:\:generatePayload\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Method InfluxDB2\\QueryApi\:\:postQuery\(\) has parameter \$dialect with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Method InfluxDB2\\QueryApi\:\:postQuery\(\) has parameter \$org with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Method InfluxDB2\\QueryApi\:\:postQuery\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Property InfluxDB2\\QueryApi\:\:\$DEFAULT_DIALECT has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+			identifier: ternary.shortNotAllowed
+			count: 4
+			path: src/InfluxDB2/QueryApi.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 4
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Method InfluxDB2\\UdpWriter\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Method InfluxDB2\\UdpWriter\:\:close\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Method InfluxDB2\\UdpWriter\:\:write\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Method InfluxDB2\\UdpWriter\:\:write\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, resource\|false given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Property InfluxDB2\\UdpWriter\:\:\$options has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Property InfluxDB2\\UdpWriter\:\:\$socket \(resource\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Property InfluxDB2\\UdpWriter\:\:\$socket \(resource\) does not accept resource\|false\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Property InfluxDB2\\UdpWriter\:\:\$socket \(resource\) in empty\(\) is not falsy\.$#'
+			identifier: empty.property
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Property InfluxDB2\\UdpWriter\:\:\$socket \(resource\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: src/InfluxDB2/UdpWriter.php
+
+		-
+			message: '#^Call to function array_search\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 2
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:__construct\(\) has parameter \$client with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:checkBackgroundQueue\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:existsKey\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:existsKey\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:existsKey\(\) should return int\|null but returns int\|string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:flush\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:push\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:push\(\) has parameter \$payload with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:write\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Method InfluxDB2\\Worker\:\:write\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Property InfluxDB2\\Worker\:\:\$queue has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Property InfluxDB2\\Worker\:\:\$writeOptions has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/Worker.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 2
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:__construct\(\) has parameter \$pointSettings with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:__construct\(\) has parameter \$writeOptions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:addDefaultTags\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:addDefaultTags\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:close\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:write\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:write\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteApi\:\:writeRaw\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Parameter \#1 \$data of method InfluxDB2\\WriteApi\:\:writeRaw\(\) expects string, InfluxDB2\\BatchItem\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Parameter \#1 \$key of method InfluxDB2\\PointSettings\:\:addDefaultTag\(\) expects string, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteApi\:\:\$closed has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteApi\:\:\$pointSettings has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteApi\:\:\$worker \(InfluxDB2\\Worker\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 2
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteApi\:\:\$writeOptions has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Short ternary operator is not allowed\. Use null coalesce operator if applicable or consider using long ternary\.$#'
+			identifier: ternary.shortNotAllowed
+			count: 2
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 2
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteOptions\:\:__construct\(\) has parameter \$writeOptions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$batchSize has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$exponentialBase has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$jitterInterval has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$maxRetries has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$maxRetryDelay has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$maxRetryTime has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$retryInterval has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteOptions\:\:\$writeType has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteOptions.php
+
+		-
+			message: '#^Binary operation "\." between InfluxDB2\\BatchItem\|string\|null and "\\n" results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/InfluxDB2/WritePayloadSerializer.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: src/InfluxDB2/WritePayloadSerializer.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 2
+			path: src/InfluxDB2/WritePayloadSerializer.php
+
+		-
+			message: '#^Method InfluxDB2\\WritePayloadSerializer\:\:generatePayload\(\) has parameter \$data with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/WritePayloadSerializer.php
+
+		-
+			message: '#^Variable \$payload in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/InfluxDB2/WritePayloadSerializer.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteRetry\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteRetry\:\:getBackoffTime\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteRetry\:\:retry\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteRetry\:\:retry\(\) has parameter \$attempts with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Method InfluxDB2\\WriteRetry\:\:retry\(\) has parameter \$callable with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$exponentialBase has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$jitterInterval has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$maxRetries has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$maxRetryDelay has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$maxRetryTime has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$options type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$retryInterval has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Property InfluxDB2\\WriteRetry\:\:\$retryTimout has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/InfluxDB2/WriteRetry.php
+
+		-
+			message: '#^Method InfluxDB2\\Writer\:\:write\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/InfluxDB2/Writer.php
+
+		-
+			message: '#^Method InfluxDB2\\Writer\:\:write\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/InfluxDB2/Writer.php
+
+		-
+			message: '#^Property InfluxDB2Test\\BasicTest\:\:\$requests \(array\<int, array\{request\: GuzzleHttp\\Psr7\\Request, response\: GuzzleHttp\\Psr7\\Response, error\: mixed, options\: array\<mixed\>\}\>\) does not accept array\|ArrayAccess\<int, array\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/BasicTest.php
+
+		-
+			message: '#^Offset ''uri'' might not exist on array\{timed_out\: bool, blocked\: bool, eof\: bool, unread_bytes\: int, stream_type\: string, wrapper_type\: string, wrapper_data\: mixed, mode\: string, \.\.\.\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/ClientTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/ClientTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getConfig\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/DefaultApiTest.php
+
+		-
+			message: '#^Method InfluxDB2Test\\FluxCsvParserTest\:\:assertColumns\(\) has parameter \$columnHeaders with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/FluxCsvParserTest.php
+
+		-
+			message: '#^Method InfluxDB2Test\\FluxCsvParserTest\:\:assertColumns\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/FluxCsvParserTest.php
+
+		-
+			message: '#^Method InfluxDB2Test\\FluxCsvParserTest\:\:assertMultipleRecords\(\) has parameter \$tables with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/FluxCsvParserTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getBuckets\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/ITBucketServiceTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getHealth\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/ITBucketServiceTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/ITBucketServiceTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/ITBucketServiceTest.php
+
+		-
+			message: '#^Parameter object of print cannot be converted to string\.$#'
+			identifier: print.nonString
+			count: 1
+			path: tests/ITBucketServiceTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/ITTaskServiceTest.php
+
+		-
+			message: '#^Cannot call method getUsers\(\) on InfluxDB2\\Model\\Error\|InfluxDB2\\Model\\Users\|string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/ITUsersServiceTest.php
+
+		-
+			message: '#^Cannot call method getOrgs\(\) on object\|string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/IntegrationBaseTestCase.php
+
+		-
+			message: '#^Offset ''org'' might not exist on array\{url\: string, token\: string, bucket\?\: string, org\?\: string, precision\?\: ''ms''\|''ns''\|''s''\|''us'', allow_redirects\?\: bool, debug\?\: bool, logFile\?\: string, \.\.\.\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/IntegrationBaseTestCase.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNotNull\(\) with InfluxDB2\\InvokableScriptsApi will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/InvokableScriptsApiTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNull\(\) with string will always evaluate to false\.$#'
+			identifier: staticMethod.impossibleType
+			count: 1
+			path: tests/PointTest.php
+
+		-
+			message: '#^Parameter \#2 \$value of method InfluxDB2\\Point\:\:addTag\(\) expects string\|null, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/PointTest.php
+
+		-
+			message: '#^Parameter \#1 \$query of method InfluxDB2\\QueryApi\:\:queryStream\(\) expects InfluxDB2\\Model\\Query\|string, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/QueryApiStreamTest.php
+
+		-
+			message: '#^Parameter \#1 \$query of method InfluxDB2\\QueryApi\:\:query\(\) expects InfluxDB2\\Model\\Query\|string, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/QueryApiTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Psr\\\\Http\\\\Message\\\\RequestInterface'' and null will always evaluate to false\.$#'
+			identifier: staticMethod.impossibleType
+			count: 1
+			path: tests/WriteApiBatchingTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/WriteApiBatchingTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNotNull\(\) with InfluxDB2\\WriteApi will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/WriteApiIntegrationTest.php
+
+		-
+			message: '#^Parameter \#1 \$glue of function implode expects array, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/WriteApiTest.php

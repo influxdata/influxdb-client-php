@@ -6,6 +6,8 @@ use DateTime;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
+use InfluxDB2\QueryApi;
+use InfluxDB2\WriteApi;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,9 +15,13 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryApiStreamTest extends TestCase
 {
+    /** @var Client */
     private $client;
+    /** @var WriteApi */
     private $writeApi;
+    /** @var QueryApi */
     private $queryApi;
+    /** @var DateTime */
     private $now;
 
     /**
@@ -38,7 +44,7 @@ class QueryApiStreamTest extends TestCase
         $this->now = new DateTime();
     }
 
-    public function testQueryStream()
+    public function testQueryStream(): void
     {
         $measurement = 'h2o_query_stream' . $this->now->format('Y-m-d-H-i-s');
         $this->write(10, $measurement);
@@ -51,20 +57,20 @@ class QueryApiStreamTest extends TestCase
         $parser = $this->queryApi->queryStream($query);
 
         foreach ($parser->each() as $record) {
-            $this->assertNotNull($record);
+            self::assertNotNull($record);
 
-            $this->assertEquals($measurement, $record->getMeasurement());
-            $this->assertEquals('europe', $record->values['location']);
-            $this->assertEquals($count, $record->getValue());
-            $this->assertEquals('level', $record->getField());
+            self::assertEquals($measurement, $record->getMeasurement());
+            self::assertEquals('europe', $record->values['location']);
+            self::assertEquals($count, $record->getValue());
+            self::assertEquals('level', $record->getField());
 
             $count++;
         }
 
-        $this->assertEquals(10, $count);
+        self::assertEquals(10, $count);
     }
 
-    public function testQueryStreamBreak()
+    public function testQueryStreamBreak(): void
     {
         $measurement = 'h2o_query_stream_break' . $this->now->format('Y-m-d-H-i-s');
         $this->write(20, $measurement);
@@ -78,7 +84,7 @@ class QueryApiStreamTest extends TestCase
 
         $records = [];
 
-        $this->assertFalse($parser->closed);
+        self::assertFalse($parser->closed);
 
         foreach ($parser->each() as $record) {
             if ($count >= 5) {
@@ -90,18 +96,18 @@ class QueryApiStreamTest extends TestCase
             $count++;
         }
 
-        $this->assertEquals(5, count($records));
-        $this->assertTrue($parser->closed);
+        self::assertCount(5, $records);
+        self::assertTrue($parser->closed);
     }
 
-    public function testQueryEmptyData()
+    public function testQueryEmptyData(): void
     {
         $result = $this->queryApi->queryStream(null);
 
-        $this->assertNull($result);
+        self::assertNull($result);
     }
 
-    private function write($values, $measurement)
+    private function write(int $values, string $measurement): void
     {
         for ($ii = 0; $ii < $values; $ii++) {
             $this->writeApi->write(

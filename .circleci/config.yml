@@ -159,6 +159,28 @@ jobs:
           mkdir -p tools/php-cs-fixer
           composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
           tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
+  phpstan:
+    docker:
+      - image: *default-php-image
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restoring Composer Cache
+          keys:
+            - composer-v3-{{ checksum "composer.json" }}
+            - composer-v3-
+      - run:
+          name: Install Dependencies
+          command: composer install -n --prefer-dist
+      - save_cache:
+          name: Saving Composer Cache
+          key: composer-v3-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+          when: always
+      - run:
+          name: Run PHPStan
+          command: vendor/bin/phpstan analyse --no-progress
 
 workflows:
   version: 2
@@ -194,6 +216,7 @@ workflows:
       - tests-cURL:
           name: php-cURL-client
       - check-code-style
+      - phpstan
 
   nightly:
     when:

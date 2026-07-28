@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
 use InfluxDB2\Point;
+use Psr\Http\Message\RequestInterface;
 
 require_once('BasicTest.php');
 /**
@@ -15,12 +16,15 @@ require_once('BasicTest.php');
  */
 class WriteApiBatchingTest extends BasicTest
 {
-    protected function getWriteOptions(): ?array
+    /**
+     * {@inheritDoc}
+     */
+    protected function getWriteOptions(): array
     {
-        return array('writeType' => 2, 'batchSize' => 2);
+        return ['writeType' => 2, 'batchSize' => 2];
     }
 
-    public function testBatchSize()
+    public function testBatchSize(): void
     {
         $this->mockHandler->append(
             new Response(204),
@@ -32,18 +36,18 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=3.0 3');
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=4.0 4');
 
-        $this->assertCount(2, $this->requests);
+        self::assertCount(2, $this->requests);
 
         $result1 = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2";
         $result2 = "h2o_feet,location=coyote_creek level\\ water_level=3.0 3\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=4.0 4";
 
-        $this->assertEquals($result1, $this->requests[0]['request']->getBody());
-        $this->assertEquals($result2, $this->requests[1]['request']->getBody());
+        self::assertEquals($result1, $this->requests[0]['request']->getBody());
+        self::assertEquals($result2, $this->requests[1]['request']->getBody());
     }
 
-    public function testBatchSizeGroupBy()
+    public function testBatchSizeGroupBy(): void
     {
         $this->mockHandler->append(
             new Response(204),
@@ -93,51 +97,51 @@ class WriteApiBatchingTest extends BasicTest
             'my-org-a'
         );
 
-        $this->assertCount(5, $this->requests);
+        self::assertCount(5, $this->requests);
 
         $request = $this->requests[0]['request'];
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=1.0 1', $request->getBody());
+        self::assertEquals('h2o_feet,location=coyote_creek level\\ water_level=1.0 1', $request->getBody());
 
         $request = $this->requests[1]['request'];
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=2.0 2', $request->getBody());
+        self::assertEquals('h2o_feet,location=coyote_creek level\\ water_level=2.0 2', $request->getBody());
 
         $request = $this->requests[2]['request'];
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=3.0 3\n"
+        self::assertEquals("h2o_feet,location=coyote_creek level\\ water_level=3.0 3\n"
             . 'h2o_feet,location=coyote_creek level\\ water_level=4.0 4', $request->getBody());
 
         $request = $this->requests[3]['request'];
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket2&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=5.0 5', $request->getBody());
+        self::assertEquals('h2o_feet,location=coyote_creek level\\ water_level=5.0 5', $request->getBody());
 
         $request = $this->requests[4]['request'];
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals('h2o_feet,location=coyote_creek level\\ water_level=6.0 6', $request->getBody());
+        self::assertEquals('h2o_feet,location=coyote_creek level\\ water_level=6.0 6', $request->getBody());
     }
 
-    public function testFlushAllByCloseClient()
+    public function testFlushAllByCloseClient(): void
     {
         $this->mockHandler->append(new Response(204));
 
@@ -147,22 +151,24 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=2.0 2');
         $this->writeApi->write('h2o_feet,location=coyote_creek level\\ water_level=3.0 3');
 
-        $this->assertNull($this->mockHandler->getLastRequest());
+        self::assertNull($this->mockHandler->getLastRequest());
 
         $this->client->close();
 
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertInstanceOf(RequestInterface::class, $request);
+
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals("h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
+        self::assertEquals("h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2\n"
             . 'h2o_feet,location=coyote_creek level\\ water_level=3.0 3', $request->getBody());
     }
 
-    public function testRetryIntervalByConfig()
+    public function testRetryIntervalByConfig(): void
     {
         $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
             . 'The Retry-After header describes when to try the write again."}';
@@ -176,18 +182,18 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertCount(2, $this->requests);
+        self::assertCount(2, $this->requests);
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
+        self::assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
     }
 
-    public function testRetryIntervalByHeader()
+    public function testRetryIntervalByHeader(): void
     {
         $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
             . 'The Retry-After header describes when to try the write again."}';
@@ -202,18 +208,18 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertCount(2, $this->requests);
+        self::assertCount(2, $this->requests);
         $request = $this->mockHandler->getLastRequest();
 
-        $this->assertEquals(
+        self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        $this->assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
+        self::assertEquals("h2o_feet,location=coyote_creek water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek water_level=2.0 2", $request->getBody()->getContents());
     }
 
-    public function testRetryIntervalMaxRetries()
+    public function testRetryIntervalMaxRetries(): void
     {
         $errorBody = '{"code":"temporarily unavailable","message":"Token is temporarily over quota.'
             . 'The Retry-After header describes when to try the write again."}';
@@ -231,10 +237,10 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertCount(3, $this->requests);
+        self::assertCount(3, $this->requests);
     }
 
-    public function testRetryCount()
+    public function testRetryCount(): void
     {
         $this->mockHandler->append(
         // regular call
@@ -262,16 +268,16 @@ class WriteApiBatchingTest extends BasicTest
         try {
             $this->writeApi->write($point);
         } catch (ApiException $e) {
-            $this->assertEquals(429, $e->getCode());
+            self::assertEquals(429, $e->getCode());
         }
 
-        $this->assertCount(4, $this->requests);
+        self::assertCount(4, $this->requests);
 
         $count = $this->mockHandler->count();
-        $this->assertEquals(1, $count);
+        self::assertEquals(1, $count);
     }
 
-    public function testRetryConnectionError()
+    public function testRetryConnectionError(): void
     {
         $errorMessage = 'Failed to connect to localhost port 8086';
 
@@ -291,10 +297,10 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertCount(3, $this->requests);
+        self::assertCount(3, $this->requests);
     }
 
-    public function testJitterInterval()
+    public function testJitterInterval(): void
     {
         $this->mockHandler->append(
             new Response(204),
@@ -310,17 +316,17 @@ class WriteApiBatchingTest extends BasicTest
 
         $time = microtime(true) - $start;
 
-        $this->assertTrue($time > 0 && $time <= 2);
+        self::assertTrue($time > 0 && $time <= 2);
 
-        $this->assertCount(1, $this->requests);
+        self::assertCount(1, $this->requests);
 
         $result1 = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=2.0 2";
 
-        $this->assertEquals($result1, $this->requests[0]['request']->getBody());
+        self::assertEquals($result1, $this->requests[0]['request']->getBody());
     }
 
-    public function testRetryContainsMessage()
+    public function testRetryContainsMessage(): void
     {
         // create log file
         fopen("log_test.txt", "w");
@@ -341,9 +347,9 @@ class WriteApiBatchingTest extends BasicTest
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=1.0 1');
         $this->writeApi->write('h2o_feet,location=coyote_creek water_level=2.0 2');
 
-        $this->assertCount(2, $this->requests);
+        self::assertCount(2, $this->requests);
 
         $message = file_get_contents("log_test.txt");
-        $this->assertStringContainsString("The retryable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
+        self::assertStringContainsString("The retryable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
     }
 }

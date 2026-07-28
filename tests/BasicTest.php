@@ -5,10 +5,13 @@ namespace InfluxDB2Test;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\QueryApi;
 use InfluxDB2\WriteApi;
+use InfluxDB2\WriteType;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,7 +28,7 @@ abstract class BasicTest extends TestCase
     protected $queryApi;
     /** @var MockHandler */
     protected $mockHandler;
-    /** @var array */
+    /** @var array<int, array{request: Request, response: Response, error: mixed, options: array<mixed>}> */
     protected $requests;
 
     /**
@@ -33,7 +36,7 @@ abstract class BasicTest extends TestCase
      * @param string $url
      * @param string $logFile default log file
      */
-    public function setUp($url = "http://localhost:8086", $logFile = "php://output"): void
+    public function setUp(string $url = "http://localhost:8086", string $logFile = "php://output"): void
     {
         $this->client = new Client([
             "url" => $url,
@@ -68,6 +71,18 @@ abstract class BasicTest extends TestCase
         $this->client->close();
     }
 
+    /**
+     * @return array{
+     *     writeType?: WriteType::BATCHING|WriteType::SYNCHRONOUS,
+     *     batchSize?: int,
+     *     retryInterval?: int,
+     *     maxRetries?: int,
+     *     maxRetryDelay?: int,
+     *     maxRetryTime?: int,
+     *     exponentialBase?: int,
+     *     jitterInterval?: int,
+     * }|null
+     */
     protected function getWriteOptions(): ?array
     {
         return null;

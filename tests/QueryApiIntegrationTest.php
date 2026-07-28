@@ -6,6 +6,8 @@ use DateTime;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
+use InfluxDB2\QueryApi;
+use InfluxDB2\WriteApi;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,8 +15,11 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryApiIntegrationTest extends TestCase
 {
+    /** @var Client */
     private $client;
+    /** @var WriteApi */
     private $writeApi;
+    /** @var QueryApi */
     private $queryApi;
 
     /**
@@ -34,13 +39,13 @@ class QueryApiIntegrationTest extends TestCase
         $this->queryApi = $this->client->createQueryApi();
     }
 
-    public function testExistsApi()
+    public function testExistsApi(): void
     {
-        $this->assertNotNull($this->writeApi);
-        $this->assertNotNull($this->queryApi);
+        self::assertNotNull($this->writeApi);
+        self::assertNotNull($this->queryApi);
     }
 
-    public function testQueryRaw()
+    public function testQueryRaw(): void
     {
         $now = new DateTime();
         $measurement = 'h2o_query_' . $now->getTimestamp();
@@ -50,11 +55,11 @@ class QueryApiIntegrationTest extends TestCase
 
         $result = $this->queryApi->queryRaw($query);
 
-        $this->assertStringContainsString(',result,table,_start,_stop,_time,_value,_field,_measurement,location', $result);
-        $this->assertStringContainsString($measurement, $result);
+        self::assertStringContainsString(',result,table,_start,_stop,_time,_value,_field,_measurement,location', $result);
+        self::assertStringContainsString($measurement, $result);
     }
 
-    public function testQuery()
+    public function testQuery(): void
     {
         $now = new DateTime();
         $measurement = 'h2o_query_' . $now->getTimestamp();
@@ -63,20 +68,20 @@ class QueryApiIntegrationTest extends TestCase
 
         $result = $this->queryApi->query($query);
 
-        $this->assertNotNull($result);
-        $this->assertEquals(1, sizeof($result));
+        self::assertNotNull($result);
+        self::assertEquals(1, sizeof($result));
         $records = $result[0]->records;
-        $this->assertEquals(1, sizeof($records));
+        self::assertEquals(1, sizeof($records));
         $record = $records[0];
-        $this->assertEquals($measurement, $record->getMeasurement());
-        $this->assertEquals('europe', $record->values['location']);
-        $this->assertEquals(2, $record->getValue());
-        $this->assertEquals(0, $record->table);
-        $this->assertEquals(0, $record->values['table']);
-        $this->assertEquals('level', $record->getField());
+        self::assertEquals($measurement, $record->getMeasurement());
+        self::assertEquals('europe', $record->values['location']);
+        self::assertEquals(2, $record->getValue());
+        self::assertEquals(0, $record->table);
+        self::assertEquals(0, $record->values['table']);
+        self::assertEquals('level', $record->getField());
     }
 
-    public function testWriteQueryNewLine()
+    public function testWriteQueryNewLine(): void
     {
         $measurement = 'h2o_QueryNewLine_' . (new DateTime())->getTimestamp();
 
@@ -87,13 +92,13 @@ class QueryApiIntegrationTest extends TestCase
         $result = $this->queryApi->query('from(bucket: "my-bucket") |> range(start: 0)
             |> filter(fn: (r) => r._measurement == "' . $measurement . '")');
 
-        $this->assertNotNull($result);
-        $this->assertEquals(1, sizeof($result));
+        self::assertNotNull($result);
+        self::assertEquals(1, sizeof($result));
         $records = $result[0]->records;
-        $this->assertEquals(1, sizeof($records));
+        self::assertEquals(1, sizeof($records));
         $record = $records[0];
 
-        $this->assertEquals("some \r\n value", $record->getValue());
+        self::assertEquals("some \r\n value", $record->getValue());
     }
 
     /**

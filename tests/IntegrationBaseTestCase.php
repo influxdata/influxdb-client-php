@@ -10,7 +10,27 @@ use PHPUnit\Framework\TestCase;
 
 class IntegrationBaseTestCase extends TestCase
 {
+    /** @var Client */
     public $client;
+    /**
+     * @var array{
+     *     url: string,
+     *     token: string,
+     *     bucket?: string,
+     *     org?: string,
+     *     precision?: WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS,
+     *     allow_redirects?: bool,
+     *     debug?: bool,
+     *     logFile?: string,
+     *     httpClient?: \Psr\Http\Client\ClientInterface,
+     *     verifySSL?: bool,
+     *     timeout?: int,
+     *     proxy?: string,
+     *     udpPort?: int<1, 65535>,
+     *     ipVersion?: 4|6,
+     *     tags?: array<string, string>,
+     * } $options
+     */
     public $options;
 
     public function setUp(): void
@@ -33,14 +53,14 @@ class IntegrationBaseTestCase extends TestCase
         $orgService = $this->client->createService(OrganizationsService::class);
         $orgs = $orgService->getOrgs()->getOrgs();
         foreach ($orgs as $org) {
-            if ($org->getName() == $this->options["org"]) {
+            if ($org->getName() === $this->options["org"]) {
                 return $org;
             }
         }
         return null;
     }
 
-    public function generateBucketName()
+    public function generateBucketName(): string
     {
         return "IT-php-bucket-" . microtime();
     }
