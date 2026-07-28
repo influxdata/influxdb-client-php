@@ -21,6 +21,7 @@ parameters:
         - src
         - tests
     phpVersion: 70400
+    treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
             message: '''

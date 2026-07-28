@@ -13,13 +13,32 @@ class BatchItemKey
     public $bucket;
     /** @var string */
     public $org;
-    /** @var WritePrecision */
+    /** @var WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null */
     public $precision;
 
-    public function __construct($bucket, $org, $precision)
+    /**
+     * @param string $bucket
+     * @param string $org
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision
+     * @throws \InvalidArgumentException if $precision is not valid
+     */
+    public function __construct(string $bucket, string $org, ?string $precision)
     {
         $this->bucket    = $bucket;
         $this->org       = $org;
         $this->precision = $precision;
+
+        if (
+            $precision !== null &&
+            !in_array($precision, WritePrecision::getAllowableEnumValues(), true)
+        ) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Invalid value for $precision: %s. Allowed values are: %s',
+                    $precision,
+                    implode(', ', WritePrecision::getAllowableEnumValues())
+                )
+            );
+        }
     }
 }

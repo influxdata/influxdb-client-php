@@ -2,6 +2,8 @@
 
 namespace InfluxDB2;
 
+use InfluxDB2\Model\WritePrecision;
+
 /**
  * Write time series data into InfluxDB.
  * @package InfluxDB2
@@ -57,7 +59,7 @@ class WriteApi extends DefaultApi implements Writer
      *
      * @param string|Point|array $data DataPoints to write into InfluxDB. The data could be represent by
      * array, Point, string
-     * @param string|null $precision The precision for the unix timestamps within the body line-protocol @see \InfluxDB2\Model\WritePrecision
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision The precision for the unix timestamps within the body line-protocol @see \InfluxDB2\Model\WritePrecision
      * @param string|null $bucket specifies the destination bucket for writes
      * @param string|null $org specifies the destination organization for writes
      * @throws ApiException
@@ -167,6 +169,6 @@ class WriteApi extends DefaultApi implements Writer
 
     private function getOption(string $optionName, ?string $precision = null): string
     {
-        return isset($precision) ? $precision : $this->options["$optionName"];
+        return $precision ?? $this->options["$optionName"];
     }
 }

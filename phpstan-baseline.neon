@@ -157,24 +157,6 @@ parameters:
 			path: src/InfluxDB2/BatchItem.php
 
 		-
-			message: '#^Method InfluxDB2\\BatchItemKey\:\:__construct\(\) has parameter \$bucket with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/BatchItemKey.php
-
-		-
-			message: '#^Method InfluxDB2\\BatchItemKey\:\:__construct\(\) has parameter \$org with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/BatchItemKey.php
-
-		-
-			message: '#^Method InfluxDB2\\BatchItemKey\:\:__construct\(\) has parameter \$precision with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/BatchItemKey.php
-
-		-
 			message: '#^Call to an undefined method object\:\:getPingWithHttpInfo\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -343,12 +325,6 @@ parameters:
 			path: src/InfluxDB2/DefaultApi.php
 
 		-
-			message: '#^Ternary operator condition is always true\.$#'
-			identifier: ternary.alwaysTrue
-			count: 2
-			path: src/InfluxDB2/DefaultApi.php
-
-		-
 			message: '#^Method InfluxDB2\\FluxColumn\:\:__construct\(\) has parameter \$dataType with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
@@ -417,12 +393,6 @@ parameters:
 		-
 			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
 			identifier: function.strict
-			count: 1
-			path: src/InfluxDB2/FluxCsvParser.php
-
-		-
-			message: '#^Call to function is_null\(\) with InfluxDB2\\FluxTable will always evaluate to false\.$#'
-			identifier: function.impossibleType
 			count: 1
 			path: src/InfluxDB2/FluxCsvParser.php
 
@@ -655,12 +625,6 @@ parameters:
 			path: src/InfluxDB2/FluxCsvParser.php
 
 		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: src/InfluxDB2/FluxCsvParser.php
-
-		-
 			message: '#^Class InfluxDB2\\FluxRecord implements generic interface ArrayAccess but does not specify its types\: TKey, TValue$#'
 			identifier: missingType.generics
 			count: 1
@@ -761,300 +725,6 @@ parameters:
 			identifier: missingType.property
 			count: 1
 			path: src/InfluxDB2/InvokableScriptsApi.php
-
-		-
-			message: '#^Call to function is_double\(\) with int will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Call to function is_float\(\) with int will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Call to function is_long\(\) with mixed will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Instanceof between int and DateTimeInterface will always evaluate to false\.$#'
-			identifier: instanceof.alwaysFalse
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
-			identifier: equal.notAllowed
-			count: 2
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$fields with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$name with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$precision with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$tags with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:__construct\(\) has parameter \$time with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:addField\(\) has parameter \$key with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:addField\(\) has parameter \$value with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:addTag\(\) has parameter \$key with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:appendFields\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:appendTags\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:appendTime\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:escapeKey\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:escapeKey\(\) has parameter \$escapeEqual with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:escapeKey\(\) has parameter \$key with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:escapeValue\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:escapeValue\(\) has parameter \$value with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:fromArray\(\) has parameter \$data with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:getPrecision\(\) should return string\|null but returns InfluxDB2\\Model\\WritePrecision\.$#'
-			identifier: return.type
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:isNullOrEmptyString\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:isNullOrEmptyString\(\) has parameter \$str with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:measurement\(\) has parameter \$name with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:time\(\) has parameter \$precision with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:time\(\) has parameter \$time with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Method InfluxDB2\\Point\:\:toLineProtocol\(\) should return string but returns null\.$#'
-			identifier: return.type
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param for parameter \$value with type object\|string\|null is not subtype of native type string\|null\.$#'
-			identifier: parameter.phpDocType
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Array\] data\)\: Unexpected token "\]", expected ''\('' at offset 78 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Array\] fields the fields for the point\)\: Unexpected token "\]", expected ''\('' at offset 206 on line 5$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Array\] tags the tag set for the point\)\: Unexpected token "\]", expected ''\('' at offset 153 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Integer\] time the timestamp for the point\)\: Unexpected token "\[", expected type at offset 254 on line 6$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Object\] key the tag name\)\: Unexpected token "\[", expected type at offset 67 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Object\] key the tag name\)\: Unexpected token "\[", expected type at offset 69 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Object\] time the timestamp\)\: Unexpected token "\[", expected type at offset 62 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[Object\] value the tag value\)\: Unexpected token "\[", expected type at offset 109 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[String\] name the measurement name for the point\.\)\: Unexpected token "\[", expected type at offset 83 on line 3$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[WritePrecision\] precision the precision for the unix timestamps within the body line\-protocol\)\: Unexpected token "\[", expected type at offset 311 on line 7$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @param has invalid value \(\[WritePrecision\] precision the timestamp precision\)\: Unexpected token "\[", expected type at offset 104 on line 4$#'
-			identifier: phpDoc.parseError
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^PHPDoc tag @return with type InfluxDB2\\Model\\WritePrecision is incompatible with native type string\|null\.$#'
-			identifier: return.phpDocType
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Property InfluxDB2\\Point\:\:\$fields type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Property InfluxDB2\\Point\:\:\$tags type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Property InfluxDB2\\Point\:\:\$time \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Result of \|\| is always false\.$#'
-			identifier: booleanOr.alwaysFalse
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Switch condition type \(InfluxDB2\\Model\\WritePrecision\) does not match case condition \\InfluxDB2\\Model\\WritePrecision\:\:MS \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Switch condition type \(InfluxDB2\\Model\\WritePrecision\) does not match case condition \\InfluxDB2\\Model\\WritePrecision\:\:S \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: src/InfluxDB2/Point.php
-
-		-
-			message: '#^Switch condition type \(InfluxDB2\\Model\\WritePrecision\) does not match case condition \\InfluxDB2\\Model\\WritePrecision\:\:US \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: src/InfluxDB2/Point.php
 
 		-
 			message: '#^Method InfluxDB2\\PointSettings\:\:__construct\(\) has parameter \$defaultTags with no value type specified in iterable type array\.$#'
@@ -1363,7 +1033,19 @@ parameters:
 			path: src/InfluxDB2/WriteApi.php
 
 		-
+			message: '#^Parameter \#1 \$key of method InfluxDB2\\Point\:\:addTag\(\) expects string, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
 			message: '#^Parameter \#1 \$key of method InfluxDB2\\PointSettings\:\:addDefaultTag\(\) expects string, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/InfluxDB2/WriteApi.php
+
+		-
+			message: '#^Parameter \#2 \$precision of static method InfluxDB2\\WritePayloadSerializer\:\:generatePayload\(\) expects ''ms''\|''ns''\|''s''\|''us''\|null, string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/InfluxDB2/WriteApi.php
@@ -1687,19 +1369,25 @@ parameters:
 			path: tests/IntegrationBaseTestCase.php
 
 		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNotNull\(\) with InfluxDB2\\InvokableScriptsApi will always evaluate to true\.$#'
-			identifier: staticMethod.alreadyNarrowedType
-			count: 1
-			path: tests/InvokableScriptsApiTest.php
-
-		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNull\(\) with string will always evaluate to false\.$#'
-			identifier: staticMethod.impossibleType
+			message: '#^Parameter \#1 \$data of static method InfluxDB2\\Point\:\:fromArray\(\) expects array\{name\: string, tags\?\: array\<string, string\|Stringable\>, fields\?\: array\<string, bool\|float\|int\|string\|null\>, time\?\: DateTimeInterface\|float\|int\|null, precision\?\: ''ms''\|''ns''\|''s''\|''us''\|null\}, array\{tags\: array\{host\: ''aws'', region\: ''us''\}, fields\: array\{level\: 5, saturation\: ''99%%''\}, time\: 123\} given\.$#'
+			identifier: argument.type
 			count: 1
 			path: tests/PointTest.php
 
 		-
-			message: '#^Parameter \#2 \$value of method InfluxDB2\\Point\:\:addTag\(\) expects string\|null, int given\.$#'
+			message: '#^Parameter \#1 \$time of method InfluxDB2\\Point\:\:time\(\) expects DateTimeInterface\|float\|int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/PointTest.php
+
+		-
+			message: '#^Parameter \#2 \$tags of class InfluxDB2\\Point constructor expects array\<string, string\|Stringable\>\|null, array\<string, array\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/PointTest.php
+
+		-
+			message: '#^Parameter \#2 \$value of method InfluxDB2\\Point\:\:addTag\(\) expects string\|Stringable\|null, int given\.$#'
 			identifier: argument.type
 			count: 1
 			path: tests/PointTest.php
@@ -1727,12 +1415,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: tests/WriteApiBatchingTest.php
-
-		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNotNull\(\) with InfluxDB2\\WriteApi will always evaluate to true\.$#'
-			identifier: staticMethod.alreadyNarrowedType
-			count: 1
-			path: tests/WriteApiIntegrationTest.php
 
 		-
 			message: '#^Parameter \#1 \$glue of function implode expects array, string given\.$#'

@@ -11,29 +11,29 @@ class Point
 
     /** @var string */
     private $name;
-    /** @var array */
+    /** @var array<string, string|\Stringable|null>|null */
     private $tags;
-    /** @var array */
+    /** @var array<string, float|int|string|bool|null>|null */
     private $fields;
-    /** @var int */
+    /** @var int|float|DateTimeInterface|null */
     private $time;
-    /** @var WritePrecision */
+    /** @var WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null */
     private $precision;
 
     /** Create DataPoint instance for specified measurement name.
      *
-     * @param [String] name the measurement name for the point.
-     * @param [Array] tags the tag set for the point
-     * @param [Array] fields the fields for the point
-     * @param [Integer] time the timestamp for the point
-     * @param [WritePrecision] precision the precision for the unix timestamps within the body line-protocol
+     * @param string $name the measurement name for the point.
+     * @param array<string, string|\Stringable>|null $tags the tag set for the point
+     * @param array<string, float|int|string|bool|null>|null $fields the fields for the point
+     * @param int|float|DateTimeInterface|null $time the timestamp for the point
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision the precision for the unix timestamps within the body line-protocol
      */
     public function __construct(
-        $name,
-        $tags = null,
-        $fields =  null,
+        string $name,
+        ?array $tags = null,
+        ?array $fields = null,
         $time = null,
-        $precision = Point::DEFAULT_WRITE_PRECISION
+        ?string $precision = Point::DEFAULT_WRITE_PRECISION
     ) {
         $this->name = $name;
         $this->tags = $tags;
@@ -43,24 +43,30 @@ class Point
     }
 
     /**
-     * @return WritePrecision
+     * @return WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null
      */
     public function getPrecision(): ?string
     {
         return $this->precision;
     }
 
-    public static function measurement($name): Point
+    public static function measurement(string $name): Point
     {
         return new Point($name);
     }
 
     /** Create DataPoint instance from specified data.
      *
-     * @param [Array] data
+     * @param array{
+     *     name: string,
+     *     tags?: array<string, string|\Stringable>,
+     *     fields?: array<string, float|int|string|bool|null>,
+     *     time?: int|float|DateTimeInterface|null,
+     *     precision?: WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null,
+     * } $data
      * @return Point
      */
-    public static function fromArray($data): ?Point
+    public static function fromArray(array $data): ?Point
     {
         if (!array_key_exists('name', $data)) {
             return null;
@@ -76,11 +82,11 @@ class Point
 
     /** Adds or replaces a tag value for a point.
      *
-     * @param [Object] key the tag name
-     * @param string|object|null $value the tag value, can be "object" with "__toString" function or "object" implements Stringable interface
+     * @param string $key the tag name
+     * @param string|\Stringable|null $value the tag value, can be "object" with "__toString" function or "object" implements Stringable interface
      * @return Point
      */
-    public function addTag($key, ?string $value): Point
+    public function addTag(string $key, $value): Point
     {
         $this->tags[$key] = $value;
 
@@ -89,11 +95,11 @@ class Point
 
     /** Adds or replaces a field value for a point.
      *
-     * @param [Object] key the tag name
-     * @param [Object] value the tag value
+     * @param string $key the field name
+     * @param float|int|string|bool|null $value the field value
      * @return Point
      */
-    public function addField($key, $value): Point
+    public function addField(string $key, $value): Point
     {
         $this->fields[$key] = $value;
 
@@ -102,8 +108,8 @@ class Point
 
     /** Updates the timestamp for the point.
      *
-     * @param [Object] time the timestamp
-     * @param [WritePrecision] precision the timestamp precision
+     * @param int|float|DateTimeInterface $time the timestamp
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision the timestamp precision
      * @return Point
      */
     public function time($time, $precision = null): Point
@@ -118,7 +124,7 @@ class Point
      *
      * @return string representation of the point
      */
-    public function toLineProtocol()
+    public function toLineProtocol(): ?string
     {
         $measurement = $this->escapeKey($this->name, false);
 
@@ -149,11 +155,11 @@ class Point
         return $lineProtocol;
     }
 
-    private function appendTags()
+    private function appendTags(): ?string
     {
         $tags = '';
 
-        if ($this->tags == null) {
+        if ($this->tags === null) {
             return null;
         }
 
@@ -185,11 +191,11 @@ class Point
         return $tags;
     }
 
-    private function appendFields()
+    private function appendFields(): ?string
     {
         $fields = '';
 
-        if ($this->fields == null) {
+        if ($this->fields === null) {
             return null;
         }
 
@@ -204,7 +210,7 @@ class Point
 
             $fields .= $this->escapeKey($key) . '=';
 
-            if (is_integer($value) || is_long($value)) {
+            if (is_integer($value)) {
                 $fields .= $value . 'i';
             } elseif (is_string($value)) {
                 $fields .= '"' . $this->escapeValue($value) . '"';
@@ -220,7 +226,7 @@ class Point
         return rtrim($fields, ',');
     }
 
-    private function appendTime()
+    private function appendTime(): ?string
     {
         if (!isset($this->time)) {
             return null;
@@ -228,7 +234,7 @@ class Point
 
         $time = $this->time;
 
-        if (is_double($time) || is_float($time)) {
+        if (is_float($time)) {
             $time = round($time);
         } elseif ($time instanceof DateTimeInterface) {
             $seconds = $time->getTimestamp();
@@ -252,7 +258,7 @@ class Point
         return ' ' . $time;
     }
 
-    private function escapeKey($key, $escapeEqual = true)
+    private function escapeKey(string $key, bool $escapeEqual = true): string
     {
         $escapeKeys = array(' ' => '\\ ', ',' => '\\,', "\\" => '\\\\',
             "\n" => '\\n', "\r" => '\\r', "\t" => '\\t');
@@ -264,14 +270,17 @@ class Point
         return strtr($key, $escapeKeys);
     }
 
-    private function escapeValue($value)
+    private function escapeValue(string $value): string
     {
         $escapeValues = array('"' => '\\"', "\\" => '\\\\');
         return strtr($value, $escapeValues);
     }
 
-    private function isNullOrEmptyString($str)
+    /**
+     * @param string|\Stringable|null $str
+     */
+    private function isNullOrEmptyString($str): bool
     {
-        return (!is_string($str) || trim($str) === '');
+        return !is_string($str) || trim($str) === '';
     }
 }

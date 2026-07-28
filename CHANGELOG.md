@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 1. [#170](https://github.com/influxdata/influxdb-client-php/pull/170): Fix PHP 8.5 deprecations.
+2. [#177](https://github.com/influxdata/influxdb-client-php/pull/177): Fix invalid typehints for Point, add missing typehints for BatchItemKey
 
 ### Others
 
