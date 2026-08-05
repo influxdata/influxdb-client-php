@@ -1,4 +1,5 @@
 <?php
+
 # The MIT License
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,6 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+
 namespace InfluxDB2;
 
 /**
@@ -27,9 +29,9 @@ namespace InfluxDB2;
 class FluxTable
 {
     /** @var FluxColumn[] */
-    public $columns;
+    public array $columns;
     /** @var FluxRecord[] */
-    public $records;
+    public array $records;
 
     /**
      * FluxTable constructor.
@@ -40,9 +42,12 @@ class FluxTable
         $this->columns = [];
     }
 
-    public function getGroupKey()
+    /**
+     * @return FluxColumn[]
+     */
+    public function getGroupKey(): array
     {
-        return array_values(array_filter($this->columns, function ($column) {
+        return array_values(array_filter($this->columns, static function (FluxColumn $column): bool {
             return $column->group;
         }));
     }

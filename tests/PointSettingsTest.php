@@ -11,8 +11,7 @@ class PointSettingsTest extends TestCase
     private const ID_TAG = "132-987-655";
     private const CUSTOMER_TAG = "California Miner";
 
-    /** @var Client */
-    private $client;
+    private Client $client;
 
     public function setUp(): void
     {

@@ -141,7 +141,7 @@ jobs:
       shell: bash
     steps:
       - checkout
-      - run: choco install php --version=7.3.15 --params '"/ThreadSafe /InstallDir:c:\tools\php"'
+      - run: choco install php --version=7.4.33 --params '"/ThreadSafe /InstallDir:c:\tools\php"'
       - run: cp ~/project/.circleci/php.ini /c/tools/php/
       - run: /c/tools/php/php.exe -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
       - run: /c/tools/php/php.exe composer-setup.php
@@ -157,8 +157,8 @@ jobs:
       - checkout
       - run: |
           mkdir -p tools/php-cs-fixer
-          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
-          tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
+          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:3.95.18
+          tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=bar --using-cache=no --diff
   phpstan:
     docker:
       - image: *default-php-image
@@ -202,15 +202,20 @@ workflows:
           php-image: "cimg/php:8.2"
           xdebug-package: "xdebug"
       - tests-php:
+          name: php-8.3
+          php-image: "cimg/php:8.3"
+          xdebug-package: "xdebug"
+      - tests-php:
+          name: php-8.4
+          php-image: "cimg/php:8.4"
+          xdebug-package: "xdebug"
+      - tests-php:
           name: php-8.5
           php-image: "cimg/php:8.5"
           xdebug-package: "xdebug"
       - tests-php:
           name: php-7.4-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
-      - tests-php:
-          name: php-7.3
-          php-image: "cimg/php:7.3"
       - tests-windows:
           name: php-windows
       - tests-cURL:

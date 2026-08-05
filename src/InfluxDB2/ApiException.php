@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ApiException
  * PHP version 5
@@ -41,7 +42,6 @@ use RuntimeException;
  */
 class ApiException extends RuntimeException
 {
-
     /**
      * The HTTP body of the server response either as Json or string.
      *

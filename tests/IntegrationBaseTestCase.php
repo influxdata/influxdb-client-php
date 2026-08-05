@@ -4,14 +4,14 @@ namespace InfluxDB2Test;
 
 use InfluxDB2\Client;
 use InfluxDB2\Model\Organization;
+use InfluxDB2\Model\Organizations;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Service\OrganizationsService;
 use PHPUnit\Framework\TestCase;
 
 class IntegrationBaseTestCase extends TestCase
 {
-    /** @var Client */
-    public $client;
+    public Client $client;
     /**
      * @var array{
      *     url: string,
@@ -31,7 +31,7 @@ class IntegrationBaseTestCase extends TestCase
      *     tags?: array<string, string>,
      * } $options
      */
-    public $options;
+    public array $options;
 
     public function setUp(): void
     {
@@ -49,10 +49,11 @@ class IntegrationBaseTestCase extends TestCase
 
     public function findMyOrg(): ?Organization
     {
-        /** @var OrganizationsService $orgService */
         $orgService = $this->client->createService(OrganizationsService::class);
-        $orgs = $orgService->getOrgs()->getOrgs();
-        foreach ($orgs as $org) {
+        self::assertInstanceOf(OrganizationsService::class, $orgService);
+        $orgs = $orgService->getOrgs();
+        self::assertInstanceOf(Organizations::class, $orgs);
+        foreach ($orgs->getOrgs() as $org) {
             if ($org->getName() === $this->options["org"]) {
                 return $org;
             }

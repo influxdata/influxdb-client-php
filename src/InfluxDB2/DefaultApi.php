@@ -20,43 +20,28 @@ use Psr\Http\Message\UriFactoryInterface;
 
 class DefaultApi
 {
-    public $options;
-    /**
-     * @var ClientInterface
-     */
-    public $http;
-
-    /**
-     * @var RequestFactoryInterface
-     */
-    private $requestFactory;
-
-    /**
-     * @var StreamFactoryInterface
-     */
-    private $streamFactory;
-
-    /**
-     * @var UriFactoryInterface
-     */
-    private $uriFactory;
+    public ClientOptions $options;
+    public ClientInterface $http;
+    private RequestFactoryInterface $requestFactory;
+    private StreamFactoryInterface $streamFactory;
+    private UriFactoryInterface $uriFactory;
 
     /**
      * DefaultApi constructor.
-     * @param array $options
+     * @param ClientOptions $options
      */
-    public function __construct(array $options)
+    public function __construct(ClientOptions $options)
     {
         $this->options = $options;
 
         $guzzleHttp = "GuzzleHttp\Client";
-        if ($this->options['httpClient'] ?? false) {
-            $client = $this->options['httpClient'];
+        if ($this->options->httpClient instanceof ClientInterface) {
+            $client = $this->options->httpClient;
         } elseif (ClassDiscovery::safeClassExists($guzzleHttp)) {
             $client = new $guzzleHttp([
-                'timeout' => $this->options['timeout'] ?? 10,
-                'verify' => $this->options['verifySSL'] ?? true,
-                'proxy' => $this->options['proxy'] ?? null
+                'timeout' => $this->options->timeout ?? 10,
+                'verify' => $this->options->verifySSL ?? true,
+                'proxy' => $this->options->proxy ?? null
             ]);
         } else {
             $client = Psr18ClientDiscovery::find();
@@ -69,17 +54,23 @@ class DefaultApi
     }
 
     /**
-     * @param $payload
-     * @param $uriPath
-     * @param $queryParams
+     * @param string $payload String content with which to populate the stream.
+     * @param string $uriPath The URI associated with the request.
+     * @param array<string, string> $queryParams The query string to use with the new instance.
      * @return ResponseInterface
      */
-    public function post($payload, $uriPath, $queryParams): ResponseInterface
+    public function post(string $payload, string $uriPath, array $queryParams): ResponseInterface
     {
         return $this->request($payload, $uriPath, $queryParams, 'POST');
     }
 
-    public function get($payload, $uriPath, $queryParams): ResponseInterface
+    /**
+     * @param string $payload String content with which to populate the stream.
+     * @param string $uriPath The URI associated with the request.
+     * @param array<string, string> $queryParams The query string to use with the new instance.
+     * @return ResponseInterface
+     */
+    public function get(string $payload, string $uriPath, array $queryParams): ResponseInterface
     {
         return $this->request($payload, $uriPath, $queryParams, 'GET');
     }
@@ -95,15 +86,15 @@ class DefaultApi
         $plugins = [
             new Plugin\HeaderDefaultsPlugin([
                 'User-Agent' => 'influxdb-client-php/' . Client::VERSION,
-                'Authorization' => "Token {$this->options['token']}",
+                'Authorization' => "Token {$this->options->token}",
             ]),
         ];
 
-        $allow_redirects = $this->options['allow_redirects'] ?? true;
-        if ($allow_redirects) {
+        $allow_redirects = $this->options->allowRedirects ?? true;
+        if ($allow_redirects !== false) {
             $plugins[] = new Plugin\RedirectPlugin(is_array($allow_redirects) ? $allow_redirects : []);
         }
-        if ($this->options['debug'] ?? false) {
+        if ($this->options->debug ?? false) {
             $plugins[] = new DebugHttpPlugin($this->options);
         }
         return new PluginClient($client, $plugins);
@@ -127,7 +118,7 @@ class DefaultApi
         array  $queryParams
     ): RequestInterface {
         $uri = $this->uriFactory
-            ->createUri($this->options['url'])
+            ->createUri($this->options->url)
             ->withPath($uriPath)
             ->withQuery(http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986));
         $request = $this->requestFactory->createRequest($method, $uri);
@@ -178,8 +169,8 @@ class DefaultApi
             throw new ApiException(
                 "[{$e->getCode()}] {$e->getMessage()}",
                 $e->getCode(),
-                $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null,
+                $e->getResponse() instanceof ResponseInterface ? $e->getResponse()->getHeaders() : null,
+                $e->getResponse() instanceof ResponseInterface ? $e->getResponse()->getBody()->getContents() : null,
                 $e
             );
         } catch (ClientExceptionInterface $e) {
@@ -193,9 +184,10 @@ class DefaultApi
         }
     }
 
-    protected function check($key, $value)
+    protected function check(string $key, $value): void
     {
-        if ((!isset($value) || trim($value) === '')) {
+        $optionsArray = $this->options->toArray();
+        if (!isset($value) || trim($value) === '') {
             $options = implode(', ', array_map(
                 function ($v, $k) {
                     if (is_array($v)) {
@@ -204,14 +196,21 @@ class DefaultApi
                         return $k . '=' . $v;
                     }
                 },
-                $this->options,
-                array_keys($this->options)
+                $optionsArray,
+                array_keys($optionsArray)
             ));
             throw new InvalidArgumentException("The '{$key}' should be defined as argument or default option: {$options}");
         }
     }
 
-    private function request($payload, $uriPath, $queryParams, $method): ResponseInterface
+    /**
+     * @param string $payload String content with which to populate the stream.
+     * @param string $uriPath The URI associated with the request.
+     * @param array<string, string> $queryParams The query string to use with the new instance.
+     * @param string $method The HTTP method associated with the request.
+     * @return ResponseInterface
+     */
+    private function request(string $payload, string $uriPath, array $queryParams, string $method): ResponseInterface
     {
         $headers = [
             'Content-Type' => 'application/json'
@@ -226,12 +225,13 @@ class DefaultApi
      *
      * @param string $level LOG level
      * @param string $message Message to log
-     * @param array $options Client options with logFile.
+     * @param ClientOptions|null $options Client options with logFile.
      * @return void
      */
-    public static function log(string $level, string $message, array $options): void
+    public static function log(string $level, string $message, ?ClientOptions $options): void
     {
         $logDate = date('H:i:s d-M-Y');
-        file_put_contents($options["logFile"] ?? "php://output", "[$logDate]: [$level] - $message" . PHP_EOL, FILE_APPEND);
+        $logFileName = ($options instanceof ClientOptions) ? $options->logFile : null;
+        file_put_contents($logFileName ?? "php://output", "[$logDate]: [$level] - $message" . PHP_EOL, FILE_APPEND);
     }
 }

@@ -19,15 +19,15 @@ use Psr\Http\Message\StreamInterface;
  */
 class InvokableScriptsApi extends DefaultApi
 {
-    private $service;
+    private InvokableScriptsService $service;
 
     /**
      * InvokableScriptsApi constructor.
      *
-     * @param array $options default array options
+     * @param ClientOptions $options default array options
      * @param InvokableScriptsService $service HTTP API for Invokable Scripts
      */
-    public function __construct(array $options, InvokableScriptsService $service)
+    public function __construct(ClientOptions $options, InvokableScriptsService $service)
     {
         parent::__construct($options);
         $this->service = $service;

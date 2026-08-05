@@ -7,7 +7,7 @@
   "homepage": "https://www.github.com/influxdata/influxdb-client-php",
   "license": "MIT",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
@@ -16,14 +16,14 @@
     "psr/http-client": "^1.0.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5.27",
+    "phpunit/phpunit": "^9.6.35",
     "squizlabs/php_codesniffer": "~4.0",
-    "guzzlehttp/guzzle": "^7.0.1",
-    "guzzlehttp/psr7": "^2.0.0",
-    "phpstan/phpstan": "^1.12.33 || ^2.2.6",
-    "phpstan/phpstan-deprecation-rules": "^1.2.1 || ^2.0.4",
-    "phpstan/phpstan-phpunit": "^1.4.2 || ^2.0.18",
-    "phpstan/phpstan-strict-rules": "^1.6.2 || ^2.0.12"
+    "guzzlehttp/guzzle": "^7.0.1 || ^8.0.0",
+    "guzzlehttp/psr7": "^2.0.0 || ^3.0.0",
+    "phpstan/phpstan": "^2.2.6",
+    "phpstan/phpstan-deprecation-rules": "^2.0.4",
+    "phpstan/phpstan-phpunit": "^2.0.18",
+    "phpstan/phpstan-strict-rules": "^2.0.12"
   },
   "suggest": {
     "ext-sockets": "Required for UDP writer."
@@ -39,6 +39,8 @@
     }
   },
   "scripts": {
+    "phpstan": "vendor/bin/phpstan analyse",
+    "phpstan-baseline": "vendor/bin/phpstan analyse --generate-baseline",
     "test": "vendor/bin/phpunit tests",
     "test-coverage": "vendor/bin/phpunit tests --log-junit build/junit.xml -v --coverage-html=build/coverage-report"
   },

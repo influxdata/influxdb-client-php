@@ -3,6 +3,7 @@
 namespace InfluxDB2Test;
 
 use Exception;
+use InfluxDB2\FluxColumn;
 use InfluxDB2\FluxCsvParser;
 use InfluxDB2\FluxCsvParserException;
 use InfluxDB2\FluxQueryError;
@@ -465,6 +466,10 @@ class FluxCsvParserTest extends TestCase
         self::assertEquals(25.3, $tables[0]->records[0]->row[7]);
     }
 
+    /**
+     * @param array<int, FluxColumn> $columnHeaders
+     * @param array<int, bool> $values
+     */
     private function assertColumns(array $columnHeaders, array $values): void
     {
         $i = 0;
@@ -474,6 +479,9 @@ class FluxCsvParserTest extends TestCase
         }
     }
 
+    /**
+     * @param array<FluxTable> $tables
+     */
     private function assertMultipleRecords(array $tables): void
     {
         #Record 1

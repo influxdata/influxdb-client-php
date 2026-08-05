@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shows how to use forward compatibility APIs from InfluxDB 1.8.
  */

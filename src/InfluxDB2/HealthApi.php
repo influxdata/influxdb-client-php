@@ -9,9 +9,9 @@ class HealthApi extends DefaultApi
 {
     /**
      * HealthApi constructor.
-     * @param array $options
+     * @param ClientOptions $options
      */
-    public function __construct(array $options)
+    public function __construct(ClientOptions $options)
     {
         parent::__construct($options);
     }

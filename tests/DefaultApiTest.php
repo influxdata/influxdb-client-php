@@ -2,12 +2,12 @@
 
 namespace InfluxDB2Test;
 
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InvalidArgumentException;
+use Psr\Http\Message\RequestInterface;
 use ReflectionObject;
 
 require_once('BasicTest.php');
@@ -21,6 +21,7 @@ class DefaultApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertStringStartsWith(
             'influxdb-client-php/',
             strval($request->getHeader("User-Agent")[0])
@@ -34,6 +35,7 @@ class DefaultApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
 
         $this->tearDown();
@@ -44,6 +46,7 @@ class DefaultApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals('http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns', strval($request->getUri()));
     }
 
@@ -70,7 +73,7 @@ class DefaultApiTest extends BasicTest
     {
         $this->mockHandler->append(new Response(204));
 
-        $this->writeApi->options["org"] = '';
+        $this->writeApi->options->org = '';
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -81,6 +84,7 @@ class DefaultApiTest extends BasicTest
     {
         $guzzle = $this->property_value($this->property_value($this->writeApi->http, 'client'), 'httpClient');
 
+        self::assertInstanceOf(\GuzzleHttp\Client::class, $guzzle);
         self::assertTrue($guzzle->getConfig()['verify']);
     }
 
@@ -98,6 +102,7 @@ class DefaultApiTest extends BasicTest
 
         $guzzle = $this->property_value($this->property_value($client->createQueryApi()->http, 'client'), 'httpClient');
 
+        self::assertInstanceOf(\GuzzleHttp\Client::class, $guzzle);
         self::assertFalse($guzzle->getConfig()['verify']);
 
         $client->close();
@@ -141,10 +146,10 @@ class DefaultApiTest extends BasicTest
     }
 
     /**
-     * @param Request $request with headers
+     * @param RequestInterface $request with headers
      * @return string Authorization headers
      */
-    private function getHeader(Request $request): string
+    private function getHeader(RequestInterface $request): string
     {
         return implode(' ', $request->getHeaders()['Authorization']);
     }

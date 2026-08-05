@@ -13,13 +13,13 @@ use Psr\Http\Message\ResponseInterface;
  */
 class QueryApi extends DefaultApi
 {
-    private $DEFAULT_DIALECT;
+    private Dialect $DEFAULT_DIALECT;
 
     /**
      * QueryApi constructor.
-     * @param array $options
+     * @param ClientOptions $options
      */
-    public function __construct(array $options)
+    public function __construct(ClientOptions $options)
     {
         parent::__construct($options);
         $this->DEFAULT_DIALECT = new Dialect([
@@ -40,9 +40,9 @@ class QueryApi extends DefaultApi
      */
     public function queryRaw($query, ?string $org = null, ?Dialect $dialect = null): ?string
     {
-        $result = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
+        $result = $this->postQuery($query, $org, $dialect ?? $this->DEFAULT_DIALECT);
 
-        if ($result == null) {
+        if ($result === null) {
             return null;
         }
 
@@ -64,9 +64,9 @@ class QueryApi extends DefaultApi
             $query->setDialect($this->DEFAULT_DIALECT);
         }
 
-        $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
+        $response = $this->postQuery($query, $org, $dialect ?? $this->DEFAULT_DIALECT);
 
-        if ($response == null) {
+        if ($response === null) {
             return null;
         }
 
@@ -79,7 +79,7 @@ class QueryApi extends DefaultApi
     /**
      * Executes the Flux query against the InfluxDB 2.x and returns generator to stream the result.
      *
-     * @param string| Query $query
+     * @param string|Query $query
      * @param string|null $org
      * @param Dialect|null $dialect
      *
@@ -91,33 +91,44 @@ class QueryApi extends DefaultApi
             $query->setDialect($this->DEFAULT_DIALECT);
         }
 
-        $response = $this->postQuery($query, $org, $dialect ?: $this->DEFAULT_DIALECT);
+        $response = $this->postQuery($query, $org, $dialect ?? $this->DEFAULT_DIALECT);
 
-        if ($response == null) {
+        if ($response === null) {
             return null;
         }
 
         return new FluxCsvParser($response->getBody(), true);
     }
 
-    private function postQuery($query, $org, $dialect): ?ResponseInterface
+    /**
+     * @param string|Query $query
+     * @param string|null $org
+     * @param Dialect|null $dialect
+     * @return ResponseInterface|null
+     */
+    private function postQuery($query, ?string $org = null, ?Dialect $dialect = null): ?ResponseInterface
     {
-        $orgParam = $org ?: $this->options["org"];
+        $orgParam = $org ?? $this->options->org;
         $this->check("org", $orgParam);
 
         $payload = $this->generatePayload($query, $dialect);
         $queryParams = ["org" => $orgParam];
 
-        if ($payload == null) {
+        if ($payload === null) {
             return null;
         }
 
         return $this->post($payload->__toString(), "/api/v2/query", $queryParams);
     }
 
-    private function generatePayload($query, $dialect): ?Query
+    /**
+     * @param string|Query $query
+     * @param Dialect|null $dialect
+     * @return Query|null
+     */
+    private function generatePayload($query, ?Dialect $dialect = null): ?Query
     {
-        if ((!isset($query) || trim($query) === '')) {
+        if (!isset($query) || trim($query) === '') {
             return null;
         }
 

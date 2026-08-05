@@ -1,11 +1,9 @@
 <?php
 
-
 namespace InfluxDB2;
 
 interface Writer
 {
-
     /**
      * Write data
      *
@@ -31,5 +29,5 @@ interface Writer
      * array, Point, string
      * @throws \Throwable
      */
-    public function write($data);
+    public function write($data): void;
 }

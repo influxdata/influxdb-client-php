@@ -15,14 +15,10 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryApiStreamTest extends TestCase
 {
-    /** @var Client */
-    private $client;
-    /** @var WriteApi */
-    private $writeApi;
-    /** @var QueryApi */
-    private $queryApi;
-    /** @var DateTime */
-    private $now;
+    private Client $client;
+    private WriteApi $writeApi;
+    private QueryApi $queryApi;
+    private DateTime $now;
 
     /**
      * @before

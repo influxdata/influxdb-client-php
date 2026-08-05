@@ -15,12 +15,9 @@ use PHPUnit\Framework\TestCase;
  */
 class QueryApiIntegrationTest extends TestCase
 {
-    /** @var Client */
-    private $client;
-    /** @var WriteApi */
-    private $writeApi;
-    /** @var QueryApi */
-    private $queryApi;
+    private Client $client;
+    private WriteApi $writeApi;
+    private QueryApi $queryApi;
 
     /**
      * @before
@@ -39,12 +36,6 @@ class QueryApiIntegrationTest extends TestCase
         $this->queryApi = $this->client->createQueryApi();
     }
 
-    public function testExistsApi(): void
-    {
-        self::assertNotNull($this->writeApi);
-        self::assertNotNull($this->queryApi);
-    }
-
     public function testQueryRaw(): void
     {
         $now = new DateTime();
@@ -55,6 +46,7 @@ class QueryApiIntegrationTest extends TestCase
 
         $result = $this->queryApi->queryRaw($query);
 
+        self::assertIsString($result);
         self::assertStringContainsString(',result,table,_start,_stop,_time,_value,_field,_measurement,location', $result);
         self::assertStringContainsString($measurement, $result);
     }

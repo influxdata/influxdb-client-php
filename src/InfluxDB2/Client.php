@@ -4,6 +4,7 @@ namespace InfluxDB2;
 
 use Exception;
 use InfluxDB2\Model\HealthCheck;
+use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Service\InvokableScriptsService;
 use InfluxDB2\Service\PingService;
 use ReflectionClass;
@@ -15,11 +16,12 @@ class Client
     /**
      * Client version updated by: 'make release VERSION=1.5.0'
      */
-    const VERSION = 'dev';
+    public const VERSION = 'dev';
 
-    public $options;
-    public $closed = false;
-    private $autoCloseable = array();
+    public ClientOptions $options;
+    public bool $closed = false;
+    /** @var array<WriteApi> */
+    private array $autoCloseable = array();
 
     /**
      * Client constructor.
@@ -56,11 +58,31 @@ class Client
      * - allow_redirects: Describes the redirect behavior for requests.
      * - ipVersion: Specifies which version of IP to use, supports 4 and 6 as possible values (UDP Writer).
      *
-     * @param array $options
+     * @param array{
+     *      url: string,
+     *      token: string,
+     *      bucket?: string,
+     *      org?: string,
+     *      precision?: WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS,
+     *      allow_redirects?: bool,
+     *      debug?: bool,
+     *      logFile?: string,
+     *      httpClient?: \Psr\Http\Client\ClientInterface,
+     *      verifySSL?: bool,
+     *      timeout?: int,
+     *      proxy?: string,
+     *      udpHost?: string,
+     *      udpPort?: int<1, 65535>,
+     *      ipVersion?: 4|6,
+     *      tags?: array<string, string>,
+     *  }|ClientOptions $options Client options
      */
-    public function __construct(array $options)
+    public function __construct($options)
     {
-        $this->options = $options;
+        if (!is_array($options) && !$options instanceof ClientOptions) {
+            throw new \InvalidArgumentException('Options must be an array or ClientOptions');
+        }
+        $this->options = is_array($options) ? ClientOptions::fromArray($options) : $options;
     }
 
     /**
@@ -69,8 +91,17 @@ class Client
      *          'writeType' => methods of write (WriteType::SYNCHRONOUS - default, WriteType::BATCHING)
      *          'batchSize' => the number of data point to collect in batch
      *      ]
-     * @param array|null $writeOptions Array containing the write parameters (See above)
-     * @param array|null $pointSettings Array of default tags
+     * @param array{
+     *      writeType?: WriteType::SYNCHRONOUS|WriteType::BATCHING,
+     *      batchSize?: int,
+     *      retryInterval?: int,
+     *      maxRetries?: int,
+     *      maxRetryDelay?: int,
+     *      maxRetryTime?: int,
+     *      exponentialBase?: int,
+     *      jitterInterval?: int,
+     *  }|null $writeOptions Array containing the write parameters (See above)
+     * @param array<string, string>|null $pointSettings Array of default tags
      * @return WriteApi
      */
     public function createWriteApi(?array $writeOptions = null, ?array $pointSettings = null): WriteApi
@@ -86,6 +117,9 @@ class Client
      */
     public function createUdpWriter(): UdpWriter
     {
+        if ($this->options->udp === null) {
+            throw new Exception('UDP options are not set');
+        }
         return new UdpWriter($this->options);
     }
 
@@ -137,7 +171,7 @@ class Client
     /**
      * Close all connections into InfluxDB
      */
-    public function close()
+    public function close(): void
     {
         $this->closed = true;
 
@@ -150,10 +184,11 @@ class Client
     /**
      * Creates the instance of api service
      *
-     * @param  $serviceClass
-     * @return object service instance
+     * @template C of object
+     * @param class-string<C> $serviceClass
+     * @return C service instance
      */
-    public function createService($serviceClass)
+    public function createService(string $serviceClass): object
     {
         try {
             $class = new ReflectionClass($serviceClass);

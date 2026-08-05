@@ -1,6 +1,5 @@
 <?php
 
-
 namespace InfluxDB2;
 
 /**
@@ -26,33 +25,27 @@ namespace InfluxDB2;
  */
 class UdpWriter implements Writer
 {
-    public $options = [];
+    public ClientOptionsUdp $options;
 
     /**
-     * @var resource
+     * @var resource|null
      */
-    protected $socket;
+    protected $socket = null;
 
     /**
      * UdpWriter constructor.
-     * @param array $options
+     * @param ClientOptions $options
      * @throws \Exception
      */
-    public function __construct($options)
+    public function __construct(ClientOptions $options)
     {
-        $this->options = $options;
-        if (empty($this->options['udpPort'])) {
-            throw new \Exception('udpPort option does not specified');
-        }
-        if (empty($this->options['udpHost'])) {
-            $this->options['udpHost'] = parse_url($this->options['url'], PHP_URL_HOST);
-        }
+        $this->options = $options->udp;
     }
 
     /**
      * @inheritDoc
      */
-    public function write($data)
+    public function write($data): void
     {
         $payload = WritePayloadSerializer::generatePayload($data);
         if (empty($payload)) {
@@ -72,55 +65,41 @@ class UdpWriter implements Writer
      * @return false|int
      * @throws \Exception
      */
-    protected function writeSocket($payload)
+    protected function writeSocket(string $payload)
     {
         $bytesSent = false;
-        if ($socket = $this->getSocket()) {
-            $bytesSent = socket_sendto($socket, $payload, strlen($payload), 0, $this->options['udpHost'], $this->options['udpPort']);
+        if (is_resource($socket = $this->getSocket())) {
+            $bytesSent = socket_sendto($socket, $payload, strlen($payload), 0, $this->options->host, $this->options->port);
         }
         return $bytesSent;
     }
 
     /**
      * Create (if not exists) socket to write UDP datagrams
-     * @return false|resource
+     * @return resource
      * @throws \Exception
      */
     protected function getSocket()
     {
-        if (empty($this->socket)) {
-            $this->socket = socket_create($this->getConfiguredInetVersion(), SOCK_DGRAM, SOL_UDP);
+        if (!is_resource($this->socket)) {
+            $this->socket = socket_create($this->options->getSocketDomain(), SOCK_DGRAM, SOL_UDP);
+
+            if (!is_resource($this->socket)) {
+                throw new \Exception('Unable to create socket');
+            }
         }
         return $this->socket;
     }
 
     /**
-     * @throws \Exception
-     * @return int socket domain constant
-     */
-    private function getConfiguredInetVersion()
-    {
-        $configuredIpVersion = $this->options['ipVersion'] ?? 4;
-
-        switch ($configuredIpVersion) {
-            case 4:
-                return AF_INET;
-            case 6:
-                return AF_INET6;
-            default:
-                throw new \Exception('ipVersion option invalid!');
-        }
-    }
-
-    /**
      * Closes connection
      */
-    public function close()
+    public function close(): void
     {
-        if (isset($this->socket)) {
+        if (is_resource($this->socket)) {
             socket_close($this->socket);
-
-            $this->socket = null;
         }
+
+        $this->socket = null;
     }
 }

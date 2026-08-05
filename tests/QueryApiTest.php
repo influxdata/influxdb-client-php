@@ -5,6 +5,7 @@ namespace InfluxDB2Test;
 use DateInterval;
 use DateTime;
 use GuzzleHttp\Psr7\Response;
+use InfluxDB2\FluxTable;
 use InfluxDB2\Model\Query;
 
 require_once('BasicTest.php');

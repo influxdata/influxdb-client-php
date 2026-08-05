@@ -4,6 +4,6 @@ namespace InfluxDB2;
 
 class WriteType
 {
-    const SYNCHRONOUS = 1;
-    const BATCHING = 2;
+    public const SYNCHRONOUS = 1;
+    public const BATCHING = 2;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shows how to use parameterized queries
  */

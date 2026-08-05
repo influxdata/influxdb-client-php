@@ -60,7 +60,10 @@ class ClientTest extends IntegrationBaseTestCase
 
     public function test_debug(): void
     {
-        $logFilePath = stream_get_meta_data(tmpfile())['uri'];
+        $logFileMetadata = stream_get_meta_data(tmpfile());
+        self::assertArrayHasKey('uri', $logFileMetadata);
+        $logFilePath = $logFileMetadata['uri'];
+        self::assertIsString($logFilePath);
         $this->client->close();
         $this->client = new Client([
             "url" => "http://localhost:8086",
@@ -72,7 +75,9 @@ class ClientTest extends IntegrationBaseTestCase
         $tables = $this->client->createQueryApi()->query("buckets()", "my-org");
         self::assertCount(1, $tables);
 
-        self::assertStringContainsString('Authorization: ***', file_get_contents($logFilePath));
+        $logFileContents = file_get_contents($logFilePath);
+        self::assertIsString($logFileContents);
+        self::assertStringContainsString('Authorization: ***', $logFileContents);
         unlink($logFilePath);
     }
 }

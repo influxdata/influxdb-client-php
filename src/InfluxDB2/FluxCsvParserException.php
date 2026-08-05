@@ -1,6 +1,5 @@
 <?php
 
-
 namespace InfluxDB2;
 
 class FluxCsvParserException extends \RuntimeException

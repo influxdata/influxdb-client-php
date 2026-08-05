@@ -7,12 +7,10 @@ namespace InfluxDB2;
  */
 class BatchItem
 {
-    /** @var BatchItemKey */
-    public $key;
-    /** @var string */
-    public $data;
+    public BatchItemKey $key;
+    public string $data;
 
-    public function __construct($key, $data)
+    public function __construct(BatchItemKey $key, string $data)
     {
         $this->key  = $key;
         $this->data = $data;
