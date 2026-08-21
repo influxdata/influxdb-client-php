@@ -1,4 +1,4 @@
-## 3.9.0 [unreleased]
+## 3.9.0 [2026-08-21]
 
 ### Bug Fixes
 1. [#170](https://github.com/influxdata/influxdb-client-php/pull/170): Fix PHP 8.5 deprecations.
