@@ -1,18 +1,21 @@
 <?php
 
-
 namespace InfluxDB2;
 
 class PointSettings
 {
-    private $defaultTags;
+    /** @var array<string, string> */
+    private array $defaultTags;
 
+    /**
+     * @param array<string, string>|null $defaultTags
+     */
     public function __construct(?array $defaultTags = null)
     {
         $this->defaultTags = is_null($defaultTags) ? [] : $defaultTags;
     }
 
-    public function addDefaultTag(string $key, string $expression)
+    public function addDefaultTag(string $key, string $expression): void
     {
         $this->defaultTags[$key] = $expression;
     }
@@ -26,7 +29,10 @@ class PointSettings
         return $value;
     }
 
-    public function getDefaultTags()
+    /**
+     * @return array<string, string>
+     */
+    public function getDefaultTags(): array
     {
         return $this->defaultTags;
     }

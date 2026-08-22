@@ -1,6 +1,5 @@
 <?php
 
-
 namespace InfluxDB2;
 
 use ArrayAccess;
@@ -13,16 +12,19 @@ use RuntimeException;
  */
 class FluxRecord implements ArrayAccess
 {
-    public $table;
-    public $values;
-    public $row;
+    public int $table;
+    /** @var array<array-key, mixed>|null  */
+    public ?array $values;
+    /** @var array<array-key, mixed>|null  */
+    public ?array $row;
 
     /**
      * FluxRecord constructor.
-     * @param $table int table index
-     * @param $values array array with record values, key is the column name
+     * @param int $table table index
+     * @param array<array-key, mixed>|null $values array with record values, key is the column name
+     * @param array<array-key, mixed>|null $row array with record values, index is the column index
      */
-    public function __construct($table, $values = null, $row = null)
+    public function __construct(int $table, ?array $values = null, ?array $row = null)
     {
         $this->table = $table;
         $this->values = $values;

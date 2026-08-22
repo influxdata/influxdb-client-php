@@ -2,6 +2,7 @@
 
 namespace InfluxDB2Test;
 
+use InfluxDB2\Model\Task;
 use InfluxDB2\Model\TaskCreateRequest;
 use InfluxDB2\Service\TasksService;
 
@@ -14,8 +15,8 @@ class ITTaskServiceTest extends IntegrationBaseTestCase
 {
     public function testCreateTask(): void
     {
-        /** @var TasksService $taskService */
         $taskService = $this->client->createService(TasksService::class);
+        self::assertInstanceOf(TasksService::class, $taskService);
 
         $flux = "option task = {
   name: \"task-name\",
@@ -31,6 +32,7 @@ from(bucket: \"telegraf\") |> range(start: -1h)
 
         $task = $taskService->postTasks($taskCreateRequest);
 
+        self::assertInstanceOf(Task::class, $task);
         self::assertEquals("task-name", $task->getName());
     }
 }

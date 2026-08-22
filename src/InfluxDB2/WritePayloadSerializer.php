@@ -1,6 +1,5 @@
 <?php
 
-
 namespace InfluxDB2;
 
 use InfluxDB2\Model\WritePrecision;
@@ -19,11 +18,11 @@ class WritePayloadSerializer
      */
     public static function generatePayload($data, ?string $precision = null, ?string $bucket = null, ?string $org = null, ?int $writeType = null)
     {
-        if ($data == null || empty($data)) {
+        if (empty($data)) {
             return null;
         }
         if (is_string($data)) {
-            if (WriteType::BATCHING == $writeType) {
+            if (WriteType::BATCHING === $writeType) {
                 return new BatchItem(new BatchItemKey($bucket, $org, $precision), $data);
             } else {
                 return $data;
@@ -47,7 +46,7 @@ class WritePayloadSerializer
             }
 
             // remove last new line
-            if (isset($payload) && trim($payload) !== '') {
+            if (trim($payload) !== '') {
                 $payload = rtrim($payload, "\n");
             }
 

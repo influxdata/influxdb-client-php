@@ -10,28 +10,35 @@ use InfluxDB2\Model\WritePrecision;
  */
 class WriteApi extends DefaultApi implements Writer
 {
-    public $writeOptions;
-    public $pointSettings;
-
-    /** @var Worker */
-    private $worker;
-    public $closed = false;
+    public WriteOptions $writeOptions;
+    public PointSettings $pointSettings;
+    private Worker $worker;
+    public bool $closed = false;
 
     /**
      * WriteApi constructor.
-     * @param $options
-     * @param array|null $writeOptions
-     * @param array|null $pointSettings
+     * @param ClientOptions $options
+     * @param array{
+     *      writeType?: WriteType::SYNCHRONOUS|WriteType::BATCHING,
+     *      batchSize?: int,
+     *      retryInterval?: int,
+     *      maxRetries?: int,
+     *      maxRetryDelay?: int,
+     *      maxRetryTime?: int,
+     *      exponentialBase?: int,
+     *      jitterInterval?: int,
+     *  }|null $writeOptions
+     * @param array<string, string>|null $pointSettings
      */
-    public function __construct($options, ?array $writeOptions = null, ?array $pointSettings = null)
+    public function __construct(ClientOptions $options, ?array $writeOptions = null, ?array $pointSettings = null)
     {
         parent::__construct($options);
-        $this->writeOptions = new WriteOptions($writeOptions) ?: new WriteOptions();
-        $this->pointSettings = new PointSettings($pointSettings) ?: new PointSettings();
+        $this->writeOptions = new WriteOptions($writeOptions ?? []);
+        $this->pointSettings = new PointSettings($pointSettings ?? []);
 
-        if (array_key_exists('tags', $options)) {
-            foreach (array_keys($options['tags']) as $key) {
-                $this->pointSettings->addDefaultTag($key, $options['tags'][$key]);
+        if ($options->tags !== null) {
+            foreach (array_keys($options->tags) as $key) {
+                $this->pointSettings->addDefaultTag($key, $options->tags[$key]);
             }
         }
     }
@@ -64,7 +71,7 @@ class WriteApi extends DefaultApi implements Writer
      * @param string|null $org specifies the destination organization for writes
      * @throws ApiException
      */
-    public function write($data, ?string $precision = null, ?string $bucket = null, ?string $org = null)
+    public function write($data, ?string $precision = null, ?string $bucket = null, ?string $org = null): void
     {
         $precisionParam = $this->getOption("precision", $precision);
         $bucketParam = $this->getOption("bucket", $bucket);
@@ -78,18 +85,22 @@ class WriteApi extends DefaultApi implements Writer
 
         $payload = WritePayloadSerializer::generatePayload($data, $precisionParam, $bucketParam, $orgParam, $this->writeOptions->writeType);
 
-        if ($payload == null) {
+        if ($payload === null) {
             return;
         }
 
-        if (WriteType::BATCHING == $this->writeOptions->writeType) {
+        if ($payload instanceof BatchItem) {
             $this->worker()->push($payload);
         } else {
             $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
         }
     }
 
-    private function addDefaultTags(&$data)
+    /**
+     * @param array|Point $data
+     * @return void
+     */
+    private function addDefaultTags(&$data): void
     {
         $defaultTags = $this->pointSettings->getDefaultTags();
 
@@ -121,7 +132,7 @@ class WriteApi extends DefaultApi implements Writer
      *
      * @see \InfluxDB2\Model\WritePrecision
      */
-    public function writeRaw(string $data, ?string $precision = null, ?string $bucket = null, ?string $org = null)
+    public function writeRaw(string $data, ?string $precision = null, ?string $bucket = null, ?string $org = null): void
     {
         $precisionParam = $this->getOption("precision", $precision);
         $bucketParam = $this->getOption("bucket", $bucket);
@@ -147,7 +158,7 @@ class WriteApi extends DefaultApi implements Writer
             $this->post($data, "/api/v2/write", $queryParams);
         });
     }
-    public function close()
+    public function close(): void
     {
         $this->closed = true;
 
@@ -167,8 +178,26 @@ class WriteApi extends DefaultApi implements Writer
         return $this->worker;
     }
 
-    private function getOption(string $optionName, ?string $precision = null): string
+    /**
+     * @param 'bucket'|'precision'|'org' $optionName
+     * @param string|null $optionalValue
+     * @return string
+     */
+    private function getOption(string $optionName, ?string $optionalValue = null): string
     {
-        return $precision ?? $this->options["$optionName"];
+        switch ($optionName) {
+            case 'precision':
+                $default = $this->options->precision;
+                break;
+            case 'bucket':
+                $default = $this->options->bucket;
+                break;
+            case 'org':
+                $default = $this->options->org;
+                break;
+            default:
+                throw new \InvalidArgumentException("Invalid option name: $optionName");
+        }
+        return $optionalValue ?? $default;
     }
 }

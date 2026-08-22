@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Show to use Invokable scripts Cloud API to create custom endpoints that query data
  *

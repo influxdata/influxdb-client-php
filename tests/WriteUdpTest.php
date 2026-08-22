@@ -3,6 +3,7 @@
 namespace InfluxDB2Test;
 
 use InfluxDB2\Client;
+use InfluxDB2\ClientOptions;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use InfluxDB2\UdpWriter;
@@ -53,7 +54,9 @@ class WriteUdpTest extends TestCase
         }
         return $this->getMockBuilder(UdpWriter::class)
             ->onlyMethods(['writeSocket'])
-            ->setConstructorArgs([$this->baseConfig + ['udpPort' => 1000]])
+            ->setConstructorArgs([
+                ClientOptions::fromArray($this->baseConfig + ['udpPort' => 1000]),
+            ])
             ->getMock();
     }
 
@@ -83,7 +86,7 @@ class WriteUdpTest extends TestCase
     {
         $writer = $this->getWriterMock();
         $buffer = '';
-        $writer->method('writeSocket')->willReturnCallback(function ($data) use (&$buffer) {
+        $writer->method('writeSocket')->willReturnCallback(function ($data) use (&$buffer): void {
             $buffer = $data;
         });
         $writer->write('h2o,location=west value=33i 15');
@@ -101,7 +104,7 @@ class WriteUdpTest extends TestCase
 
         $writer = $this->getWriterMock();
         $buffer = '';
-        $writer->method('writeSocket')->willReturnCallback(function ($data) use (&$buffer) {
+        $writer->method('writeSocket')->willReturnCallback(function ($data) use (&$buffer): void {
             $buffer = $data;
         });
         $writer->write($array);

@@ -9,16 +9,15 @@ class Point
 {
     public const DEFAULT_WRITE_PRECISION = WritePrecision::NS;
 
-    /** @var string */
-    private $name;
+    private string $name;
     /** @var array<string, string|\Stringable|null>|null */
-    private $tags;
+    private ?array $tags;
     /** @var array<string, float|int|string|bool|null>|null */
-    private $fields;
+    private ?array $fields;
     /** @var int|float|DateTimeInterface|null */
     private $time;
     /** @var WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null */
-    private $precision;
+    private ?string $precision;
 
     /** Create DataPoint instance for specified measurement name.
      *

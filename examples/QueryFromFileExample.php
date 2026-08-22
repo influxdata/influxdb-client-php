@@ -53,7 +53,17 @@ $queryApi = $client->createQueryApi();
 //
 $filename = "query.flux";
 $handle = fopen($filename, "r");
-$contents = fread($handle, filesize($filename));
+if (!is_resource($handle)) {
+    throw new Exception("Unable to open file $filename");
+}
+$fileSize = filesize($filename);
+if ($fileSize === false) {
+    throw new Exception("Unable to get file size of $filename");
+}
+$contents = fread($handle, $fileSize);
+if ($contents === false) {
+    throw new Exception("Unable to read file $filename");
+}
 fclose($handle);
 
 $result = $queryApi->query($contents);
@@ -74,7 +84,7 @@ foreach ($result as $table) {
 
 function getDayName(int $weekDay): string
 {
-    switch ($weekDay) {
+    switch ((string) $weekDay) {
         case "1":
             return "Monday";
         case "2":

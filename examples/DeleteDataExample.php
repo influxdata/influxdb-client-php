@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shows how to delete data from InfluxDB by client
  */

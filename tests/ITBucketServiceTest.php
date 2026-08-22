@@ -3,7 +3,10 @@
 namespace InfluxDB2Test;
 
 use InfluxDB2\ApiException;
+use InfluxDB2\Model\Bucket;
 use InfluxDB2\Model\BucketRetentionRules;
+use InfluxDB2\Model\Buckets;
+use InfluxDB2\Model\HealthCheck;
 use InfluxDB2\Model\PostBucketRequest;
 use InfluxDB2\ObjectSerializer;
 use InfluxDB2\Service\BucketsService;
@@ -20,6 +23,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
     {
         $healthService = $this->client->createService(HealthService::class);
         $healthCheck = $healthService->getHealth();
+        self::assertInstanceOf(HealthCheck::class, $healthCheck);
         self::assertEquals("influxdb", $healthCheck->getName());
         self::assertEquals("ready for queries and writes", $healthCheck->getMessage());
     }
@@ -64,10 +68,11 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
 
     public function testBucketService(): void
     {
-        /** @var BucketsService $bucketsService */
         $bucketsService = $this->client->createService(BucketsService::class);
-        $buckets = $bucketsService->getBuckets(null, null, 100, null)->getBuckets();
-        foreach ($buckets as $bucket) {
+        self::assertInstanceOf(BucketsService::class, $bucketsService);
+        $buckets = $bucketsService->getBuckets(null, null, 100, null);
+        self::assertInstanceOf(Buckets::class, $buckets);
+        foreach ($buckets->getBuckets() as $bucket) {
             self::assertNotEmpty($bucket->getName());
             self::assertNotEmpty($bucket->getId());
         }
@@ -75,8 +80,8 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
 
     public function testBucketServiceCreateBucket(): void
     {
-        /** @var BucketsService $bucketsService */
         $bucketsService = $this->client->createService(BucketsService::class);
+        self::assertInstanceOf(BucketsService::class, $bucketsService);
 
         $rule = new BucketRetentionRules();
         $rule->setEverySeconds(3600);
@@ -90,12 +95,15 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         //create bucket
         $respBucket = $bucketsService->postBuckets($bucketRequest);
         print $respBucket;
+        self::assertInstanceOf(Bucket::class, $respBucket);
         self::assertEquals($bucketName, $respBucket->getName());
 
         //find bucket
-        $buckets = $bucketsService->getBuckets(null, null, 100, null)->getBuckets();
+        $buckets = $bucketsService->getBuckets(null, null, 100, null);
+        self::assertInstanceOf(Buckets::class, $buckets);
         $findBucket = null;
-        foreach ($buckets as $bucket) {
+        foreach ($buckets->getBuckets() as $bucket) {
+            self::assertInstanceOf(Bucket::class, $bucket);
             self::assertNotEmpty($bucket->getName());
             self::assertNotEmpty($bucket->getId());
             if ($bucket->getId() === $respBucket->getId()) {

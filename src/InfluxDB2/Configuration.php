@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration
  * PHP version 5

@@ -4,22 +4,23 @@ namespace InfluxDB2;
 
 class WriteOptions
 {
-    const DEFAULT_BATCH_SIZE = 10;
-    const DEFAULT_RETRY_INTERVAL = 5000;
-    const DEFAULT_MAX_RETRIES = 5;
-    const DEFAULT_MAX_RETRY_DELAY = 125000;
-    const DEFAULT_MAX_RETRY_TIME = 180000;
-    const DEFAULT_EXPONENTIAL_BASE = 2;
-    const DEFAULT_JITTER_INTERVAL = 0;
+    public const DEFAULT_BATCH_SIZE = 10;
+    public const DEFAULT_RETRY_INTERVAL = 5000;
+    public const DEFAULT_MAX_RETRIES = 5;
+    public const DEFAULT_MAX_RETRY_DELAY = 125000;
+    public const DEFAULT_MAX_RETRY_TIME = 180000;
+    public const DEFAULT_EXPONENTIAL_BASE = 2;
+    public const DEFAULT_JITTER_INTERVAL = 0;
 
-    public $writeType;
-    public $batchSize;
-    public $retryInterval;
-    public $maxRetries;
-    public $maxRetryDelay;
-    public $exponentialBase;
-    public $jitterInterval;
-    public $maxRetryTime;
+    /** @var WriteType::SYNCHRONOUS|WriteType::BATCHING $writeType */
+    public int $writeType;
+    public int $batchSize;
+    public int $retryInterval;
+    public int $maxRetries;
+    public int $maxRetryDelay;
+    public int $exponentialBase;
+    public int $jitterInterval;
+    public int $maxRetryTime;
 
     /**
      * WriteOptions constructor.
@@ -40,7 +41,16 @@ class WriteOptions
      *              ``[5000-10000, 10000-20000, 20000-40000, 40000-80000, 80000-125000]``
      *          'jitterInterval' => the number of milliseconds before the data is written increased by a random amount
      *      ]
-     * @param array|null $writeOptions Array containing the write parameters (See above)
+     * @param array{
+     *     writeType?: WriteType::SYNCHRONOUS|WriteType::BATCHING,
+     *     batchSize?: int,
+     *     retryInterval?: int,
+     *     maxRetries?: int,
+     *     maxRetryDelay?: int,
+     *     maxRetryTime?: int,
+     *     exponentialBase?: int,
+     *     jitterInterval?: int,
+     * }|null $writeOptions Array containing the write parameters (See above)
      */
     public function __construct(?array $writeOptions = null)
     {

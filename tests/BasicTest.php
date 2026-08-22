@@ -5,14 +5,14 @@ namespace InfluxDB2Test;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\QueryApi;
 use InfluxDB2\WriteApi;
 use InfluxDB2\WriteType;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Parent class for all units tests that uses mocked InfluxDB server
@@ -20,16 +20,12 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class BasicTest extends TestCase
 {
-    /** @var Client */
-    protected $client;
-    /** @var WriteApi */
-    protected $writeApi;
-    /** @var QueryApi */
-    protected $queryApi;
-    /** @var MockHandler */
-    protected $mockHandler;
-    /** @var array<int, array{request: Request, response: Response, error: mixed, options: array<mixed>}> */
-    protected $requests;
+    protected Client $client;
+    protected WriteApi $writeApi;
+    protected QueryApi $queryApi;
+    protected MockHandler $mockHandler;
+    /** @var array<int, array{request: RequestInterface, response: ResponseInterface|null, error: mixed, options: array<mixed>}> */
+    protected array $requests;
 
     /**
      * @before

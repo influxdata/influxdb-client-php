@@ -1,5 +1,6 @@
 <?php
-return PhpCsFixer\Config::create()
+
+return (new PhpCsFixer\Config())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->exclude('src/InfluxDB2/Model')

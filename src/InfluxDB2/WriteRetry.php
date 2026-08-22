@@ -9,17 +9,14 @@ use Http\Client\Exception\NetworkException;
  */
 class WriteRetry
 {
-    private $maxRetries;
-    private $retryInterval;
-    private $maxRetryDelay;
-    private $exponentialBase;
-    private $jitterInterval;
-    private $maxRetryTime;
-    private $retryTimout;
-    /**
-     * @var array
-     */
-    private $options;
+    private int $maxRetries;
+    private int $retryInterval;
+    private int $maxRetryDelay;
+    private int $exponentialBase;
+    private int $jitterInterval;
+    private int $maxRetryTime;
+    private int $retryTimeout;
+    private ?ClientOptions $options;
 
     /**
      * WriteRetry constructor.
@@ -38,7 +35,7 @@ class WriteRetry
      *
      * @param int $maxRetryTime maximum total time when retrying write in milliseconds
      * @param int $jitterInterval the number of milliseconds before the data is written increased by a random amount
-     * @param array $options Client options with logFile.
+     * @param ClientOptions|null $options Client options with logFile.
      */
     public function __construct(
         int $maxRetries = 5,
@@ -47,7 +44,7 @@ class WriteRetry
         int $exponentialBase = 2,
         int $maxRetryTime = 180000,
         int $jitterInterval = 0,
-        array $options = []
+        ?ClientOptions $options = null
     ) {
         $this->maxRetries = $maxRetries;
         $this->retryInterval = $retryInterval;
@@ -57,14 +54,14 @@ class WriteRetry
         $this->jitterInterval = $jitterInterval;
         $this->options = $options;
 
-        //retry timout
-        $this->retryTimout = microtime(true) * 1000 + $maxRetryTime;
+        //retry timeout
+        $this->retryTimeout = (int) microtime(true) * 1000 + $maxRetryTime;
     }
 
     /**
      * @throws ApiException
      */
-    public function retry($callable, $attempts = 0)
+    public function retry($callable, int $attempts = 0)
     {
         try {
             return call_user_func($callable);
@@ -81,13 +78,13 @@ class WriteRetry
             }
 
             // throws exception when max retry time is exceeded
-            if (microtime(true) * 1000 > $this->retryTimout) {
+            if (microtime(true) * 1000 > $this->retryTimeout) {
                 DefaultApi::log("ERROR", "Maximum retry time $this->maxRetryTime ms exceeded", $this->options);
                 throw $e;
             }
 
             $headers = $e->getResponseHeaders();
-            if ($headers != null && array_key_exists('Retry-After', $headers)) {
+            if ($headers !== null && array_key_exists('Retry-After', $headers)) {
                 //jitter add in microseconds
                 $jitterMicro = rand(0, $this->jitterInterval) * 1000;
                 $timeout = (int)$headers['Retry-After'][0] * 1000000.0 + $jitterMicro;
@@ -99,7 +96,7 @@ class WriteRetry
 
             $message = "The retryable error occurred during writing of data. Reason: '$error'. Retry in: {$timeoutInSec}s.";
             DefaultApi::log("WARNING", $message, $this->options);
-            usleep($timeout);
+            usleep((int) $timeout);
             $this->retry($callable, $attempts);
         }
     }
@@ -107,14 +104,14 @@ class WriteRetry
     public function isRetryable(ApiException $e): bool
     {
         $code = $e->getCode();
-        if (($code == null || $code < 429) &&
+        if (($code === null || $code < 429) &&
             !($e->getPrevious() instanceof NetworkException)) {
             return false;
         }
         return true;
     }
 
-    public function getBackoffTime(int $attempt)
+    public function getBackoffTime(int $attempt): float
     {
         $range_start = $this->retryInterval;
         $range_stop = $this->retryInterval * $this->exponentialBase;

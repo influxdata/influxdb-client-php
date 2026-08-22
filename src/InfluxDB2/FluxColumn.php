@@ -8,22 +8,27 @@ namespace InfluxDB2;
  */
 class FluxColumn
 {
-    public $index;
-    public $label;
-    public $dataType;
-    public $group;
-    public $defaultValue;
+    public ?int $index;
+    public ?string $label;
+    public ?string $dataType;
+    public ?bool $group;
+    public ?string $defaultValue;
 
     /**
      * FluxColumn constructor.
-     * @param $index int column number
-     * @param $label string column label
-     * @param $dataType string data type
-     * @param $group bool is group column
-     * @param $defaultValue string default empty value
+     * @param ?int $index column number
+     * @param ?string $label column label
+     * @param ?string $dataType data type
+     * @param ?bool $group is group column
+     * @param ?string $defaultValue default empty value
      */
-    public function __construct($index = null, $label = null, $dataType = null, $group = null, $defaultValue = null)
-    {
+    public function __construct(
+        ?int $index = null,
+        ?string $label = null,
+        ?string $dataType = null,
+        ?bool $group = null,
+        ?string $defaultValue = null
+    ) {
         $this->index = $index;
         $this->label = $label;
         $this->dataType = $dataType;

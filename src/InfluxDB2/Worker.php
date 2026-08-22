@@ -7,13 +7,12 @@ use SplQueue;
 
 class Worker
 {
-    /** @var WriteApi */
-    private $client;
+    private WriteApi $client;
+    /** @var SplQueue<BatchItem> */
+    private SplQueue $queue;
+    private WriteOptions $writeOptions;
 
-    private $queue;
-    private $writeOptions;
-
-    public function __construct($client)
+    public function __construct(WriteApi $client)
     {
         $this->client = $client;
         $this->writeOptions = $client->writeOptions;
@@ -21,7 +20,7 @@ class Worker
         $this->queue = new SplQueue();
     }
 
-    public function push($payload)
+    public function push(BatchItem $payload): void
     {
         $this->queue->enqueue($payload);
 
@@ -30,14 +29,14 @@ class Worker
         }
     }
 
-    public function flush()
+    public function flush(): void
     {
-        while ($this->queue->count() != 0) {
+        while ($this->queue->count() !== 0) {
             $this->checkBackgroundQueue(false);
         }
     }
 
-    private function checkBackgroundQueue(bool $size)
+    private function checkBackgroundQueue(bool $size): void
     {
         $data = array();
         $points = 0;
@@ -46,7 +45,7 @@ class Worker
             return;
         }
 
-        while (($points < $this->writeOptions->batchSize) && $this->queue->count() != 0) {
+        while (($points < $this->writeOptions->batchSize) && $this->queue->count() !== 0) {
             try {
                 $item = $this->queue->dequeue();
 
@@ -55,7 +54,7 @@ class Worker
 
                 if ($index === null) {
                     $data[] = array('key' => $key, 'data' => array());
-                    $index = array_keys($data)[count($data)-1];
+                    $index = array_keys($data)[count($data) - 1];
                 }
 
                 $data[$index]['data'][] = $item->data;
@@ -70,21 +69,32 @@ class Worker
         }
     }
 
-    private function existsKey($key, $data): ?int
+    /**
+     * @param BatchItemKey $key
+     * @param array<int, array{key: BatchItemKey, data: list<string>}> $data
+     * @return int|null
+     */
+    private function existsKey(BatchItemKey $key, array $data): ?int
     {
         foreach ($data as $item) {
             $itemKey = $item['key'];
             if ($key->precision === $itemKey->precision &&
                 $key->bucket === $itemKey->bucket &&
                 $key->org === $itemKey->org) {
-                return array_search($item, $data);
+                $found = array_search($item, $data, true);
+                if ($found !== false) {
+                    return $found;
+                }
             }
         }
 
         return null;
     }
 
-    private function write($data)
+    /**
+     * @param array<int, array{key: BatchItemKey, data: list<string>}> $data
+     */
+    private function write(array $data): void
     {
         foreach ($data as $item) {
             $key = $item['key'];

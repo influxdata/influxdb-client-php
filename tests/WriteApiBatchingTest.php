@@ -43,7 +43,9 @@ class WriteApiBatchingTest extends BasicTest
         $result2 = "h2o_feet,location=coyote_creek level\\ water_level=3.0 3\n"
             . "h2o_feet,location=coyote_creek level\\ water_level=4.0 4";
 
+        self::assertInstanceOf(RequestInterface::class, $this->requests[0]['request']);
         self::assertEquals($result1, $this->requests[0]['request']->getBody());
+        self::assertInstanceOf(RequestInterface::class, $this->requests[1]['request']);
         self::assertEquals($result2, $this->requests[1]['request']->getBody());
     }
 
@@ -101,6 +103,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->requests[0]['request'];
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -109,6 +112,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->requests[1]['request'];
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
             strval($request->getUri())
@@ -117,6 +121,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->requests[2]['request'];
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -126,6 +131,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->requests[3]['request'];
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket2&precision=ns',
             strval($request->getUri())
@@ -134,6 +140,7 @@ class WriteApiBatchingTest extends BasicTest
 
         $request = $this->requests[4]['request'];
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org-a&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -158,7 +165,6 @@ class WriteApiBatchingTest extends BasicTest
         $request = $this->mockHandler->getLastRequest();
 
         self::assertInstanceOf(RequestInterface::class, $request);
-
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -185,6 +191,7 @@ class WriteApiBatchingTest extends BasicTest
         self::assertCount(2, $this->requests);
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -211,6 +218,7 @@ class WriteApiBatchingTest extends BasicTest
         self::assertCount(2, $this->requests);
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -243,7 +251,7 @@ class WriteApiBatchingTest extends BasicTest
     public function testRetryCount(): void
     {
         $this->mockHandler->append(
-        // regular call
+            // regular call
             new Response(429),
             // retry
             new Response(429),
@@ -350,6 +358,7 @@ class WriteApiBatchingTest extends BasicTest
         self::assertCount(2, $this->requests);
 
         $message = file_get_contents("log_test.txt");
+        self::assertIsString($message);
         self::assertStringContainsString("The retryable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
     }
 }

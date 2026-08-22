@@ -2,6 +2,9 @@
 
 ## 3.9.0 [2026-08-21]
 
+### Features
+1. [#178](https://github.com/influxdata/influxdb-client-php/pull/178): Add PHP 7.4 typehints. PHP minimum version is PHP 7.4.
+
 ### Bug Fixes
 1. [#170](https://github.com/influxdata/influxdb-client-php/pull/170): Fix PHP 8.5 deprecations.
 2. [#177](https://github.com/influxdata/influxdb-client-php/pull/177): Fix invalid typehints for Point, add missing typehints for BatchItemKey

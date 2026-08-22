@@ -10,6 +10,7 @@ use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use InfluxDB2\WriteRetry;
+use Psr\Http\Message\RequestInterface;
 
 require_once('BasicTest.php');
 
@@ -36,6 +37,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -55,6 +57,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -75,6 +78,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -103,6 +107,7 @@ class WriteApiTest extends BasicTest
             . "h2o,location=europe level=2i\n"
             . "h2o,host=aws,region=us level=5i,saturation=\"99%\" 123";
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -117,11 +122,15 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
         );
-        self::assertEquals('Token my-token', implode(' ', $request->getHeaders()['Authorization']));
+        $requestHeaders = $request->getHeaders();
+        self::assertArrayHasKey('Authorization', $requestHeaders);
+        self::assertCount(1, $requestHeaders['Authorization']);
+        self::assertEquals('Token my-token', implode(' ', $requestHeaders['Authorization']));
     }
 
     public function testWithoutData(): void
@@ -168,6 +177,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -195,6 +205,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -230,6 +241,7 @@ class WriteApiTest extends BasicTest
             . "h2o,customer=California\ Miner,data_center=LA,id=132-987-655,location=europe level=2i\n"
             . "h2o,customer=California\ Miner,data_center=LA,host=aws,id=132-987-655,region=us level=5i,saturation=\"99%\" 123";
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -253,6 +265,7 @@ class WriteApiTest extends BasicTest
 
         $request = $this->mockHandler->getLastRequest();
 
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertEquals(
             'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ns',
             strval($request->getUri())
@@ -266,7 +279,7 @@ class WriteApiTest extends BasicTest
     public function testRetryCount(): void
     {
         $this->mockHandler->append(
-        // regular call
+            // regular call
             new Response(429),
             // retry
             new Response(429),
@@ -298,7 +311,7 @@ class WriteApiTest extends BasicTest
     public function testRetryMaxTime(): void
     {
         $this->mockHandler->append(
-        // regular call
+            // regular call
             new Response(429),
             // retry
             new Response(429),
@@ -377,7 +390,7 @@ class WriteApiTest extends BasicTest
         try {
             $writeApi->write($point);
         } catch (ApiException $e) {
-            self::assertEquals(ConnectException::class, get_class($e->getPrevious()));
+            self::assertInstanceOf(ConnectException::class, $e->getPrevious());
             throw $e;
         }
     }

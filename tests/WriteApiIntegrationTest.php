@@ -14,10 +14,8 @@ use PHPUnit\Framework\TestCase;
  */
 class WriteApiIntegrationTest extends TestCase
 {
-    /** @var Client */
-    private $client;
-    /** @var WriteApi */
-    private $writeApi;
+    private Client $client;
+    private WriteApi $writeApi;
 
     /**
      * @before
@@ -35,16 +33,11 @@ class WriteApiIntegrationTest extends TestCase
         $this->writeApi = $this->client->createWriteApi();
     }
 
-    public function testExistsWriteApi(): void
-    {
-        self::assertNotNull($this->writeApi);
-    }
-
     public function testWriteApiWriteRaw(): void
     {
         $payload = 'h2o_feet,location=coyote_creek water_level=2.0 2';
-        $response = $this->writeApi->writeRaw($payload);
-        self::assertNull($response);
+        $this->writeApi->writeRaw($payload);
+        self::expectNotToPerformAssertions();
     }
 
     public function testWriteArray(): void
@@ -60,14 +53,14 @@ class WriteApiIntegrationTest extends TestCase
             'time' => 123
         ];
 
-        $response = $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
-        self::assertNull($response);
+        $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
+        self::expectNotToPerformAssertions();
     }
 
     public function testBatchingWrite(): void
     {
         $writeApi = $this->client->createWriteApi(
-            ["writeType"=>WriteType::BATCHING, 'batchSize'=>3]
+            ["writeType" => WriteType::BATCHING, 'batchSize' => 3]
         );
 
         $data = ['name' => 'cpu',
@@ -91,9 +84,8 @@ class WriteApiIntegrationTest extends TestCase
         $writeApi->write($p5);
         $writeApi->write($p6);
 
-        self::assertNotNull($writeApi);
-
         $this->client->close();
+        self::expectNotToPerformAssertions();
     }
 
     public function testWriteArrayOfPoint(): void
@@ -109,8 +101,8 @@ class WriteApiIntegrationTest extends TestCase
 
         $data = array($point1, $point2);
 
-        $response = $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
-        self::assertNull($response);
+        $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
+        self::expectNotToPerformAssertions();
     }
 
     public function testWriteArrayOfArray(): void
@@ -139,7 +131,7 @@ class WriteApiIntegrationTest extends TestCase
 
         $data = array($data1, $data2);
 
-        $response = $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
-        self::assertNull($response);
+        $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
+        self::expectNotToPerformAssertions();
     }
 }

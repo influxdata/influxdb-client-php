@@ -4,6 +4,7 @@ namespace InfluxDB2\Internal;
 
 use Http\Client\Common\Plugin;
 use Http\Promise\Promise;
+use InfluxDB2\ClientOptions;
 use InfluxDB2\DefaultApi;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
@@ -11,9 +12,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class DebugHttpPlugin implements Plugin
 {
-    private $options;
+    private ClientOptions $options;
 
-    public function __construct(array $options)
+    public function __construct(ClientOptions $options)
     {
         $this->options = $options;
     }
@@ -51,7 +52,7 @@ class DebugHttpPlugin implements Plugin
     {
         foreach ($message->getHeaders() as $key => $values) {
             $value = implode(', ', $values);
-            if (strcasecmp($key, 'Authorization') == 0) {
+            if (strcasecmp($key, 'Authorization') === 0) {
                 $value = '***';
             }
             DefaultApi::log("DEBUG", $prefix . " $key: " . $value, $this->options);

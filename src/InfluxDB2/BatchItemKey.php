@@ -9,12 +9,10 @@ use InfluxDB2\Model\WritePrecision;
  */
 class BatchItemKey
 {
-    /** @var string */
-    public $bucket;
-    /** @var string */
-    public $org;
+    public string $bucket;
+    public string $org;
     /** @var WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null */
-    public $precision;
+    public ?string $precision;
 
     /**
      * @param string $bucket

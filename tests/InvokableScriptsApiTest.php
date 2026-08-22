@@ -2,6 +2,8 @@
 
 namespace InfluxDB2Test;
 
+use InfluxDB2\InvokableScriptsApi;
+
 require_once('BasicTest.php');
 
 /**
@@ -14,6 +16,6 @@ class InvokableScriptsApiTest extends BasicTest
     {
         $invokableScriptsApi = $this->client->createInvokableScriptsApi();
 
-        self::assertNotNull($invokableScriptsApi);
+        self::assertInstanceOf(InvokableScriptsApi::class, $invokableScriptsApi);
     }
 }
