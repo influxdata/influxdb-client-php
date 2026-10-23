@@ -152,7 +152,7 @@ jobs:
       - storing-test-results
   check-code-style:
     docker:
-      - image: "cimg/php:7.2"
+      - image: "cimg/php:7.4"
     steps:
       - checkout
       - run: |
