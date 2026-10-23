@@ -86,7 +86,7 @@ jobs:
     parameters:
       php-image:
         type: string
-        default: &default-php-image "cimg/php:7.4"
+        default: &default-php-image "cimg/php:8.5"
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:latest"
@@ -191,6 +191,7 @@ workflows:
     jobs:
       - tests-php:
           name: php-7.4
+          php-image: "cimg/php:7.4"
       - tests-php:
           name: php-8.0
           php-image: "cimg/php:8.0"
@@ -206,7 +207,7 @@ workflows:
           php-image: "cimg/php:8.5.12"
           xdebug-package: "xdebug"
       - tests-php:
-          name: php-7.4-nightly
+          name: php-8.5-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
       - tests-php:
           name: php-7.3
