@@ -152,12 +152,12 @@ jobs:
       - storing-test-results
   check-code-style:
     docker:
-      - image: *default-php-image
+      - image: "cimg/php:7.2"
     steps:
       - checkout
       - run: |
           mkdir -p tools/php-cs-fixer
-          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
           tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
   phpstan:
     docker:
