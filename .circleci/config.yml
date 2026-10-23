@@ -157,7 +157,7 @@ jobs:
       - checkout
       - run: |
           mkdir -p tools/php-cs-fixer
-          composer require-dev --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
+          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
           tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
   phpstan:
     docker:
@@ -192,6 +192,7 @@ workflows:
       - tests-php:
           name: php-7.4
           php-image: "cimg/php:7.4"
+          xdebug-package: "xdebug-3.1.6"
       - tests-php:
           name: php-8.0
           php-image: "cimg/php:8.0"
@@ -212,6 +213,7 @@ workflows:
       - tests-php:
           name: php-7.3
           php-image: "cimg/php:7.3"
+          xdebug-package: "xdebug-3.1.6"
       - tests-windows:
           name: php-windows
       - tests-cURL:
