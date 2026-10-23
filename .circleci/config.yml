@@ -141,7 +141,7 @@ jobs:
       shell: bash
     steps:
       - checkout
-      - run: choco install php --version=8.5.12 --params '"/ThreadSafe /InstallDir:c:\tools\php"'
+      - run: choco install php --version=8.5.12 --params '"/ThreadSafe /InstallDir:c:\tools\php"' --ignore-package-exit-codes
       - run: cp ~/project/.circleci/php.ini /c/tools/php/
       - run: /c/tools/php/php.exe -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
       - run: /c/tools/php/php.exe composer-setup.php
