@@ -92,7 +92,7 @@ jobs:
         default: &default-influxdb-image "influxdb:latest"
       xdebug-package:
         type: string
-        default: "xdebug-3.1.6"
+        default: "xdebug-3.5.3"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image << parameters.influxdb-image >>
@@ -157,7 +157,7 @@ jobs:
       - checkout
       - run: |
           mkdir -p tools/php-cs-fixer
-          composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
+          composer require-dev --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer:2.18.7
           tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=estimating --using-cache=no --diff
   phpstan:
     docker:
