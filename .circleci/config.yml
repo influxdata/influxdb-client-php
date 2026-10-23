@@ -86,13 +86,13 @@ jobs:
     parameters:
       php-image:
         type: string
-        default: &default-php-image "cimg/php:7.4"
+        default: &default-php-image "cimg/php:8.5"
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:latest"
       xdebug-package:
         type: string
-        default: "xdebug-3.1.6"
+        default: "xdebug-3.5.3"
     docker:
       - image: << parameters.php-image >>
       - image: &influx-image << parameters.influxdb-image >>
@@ -141,7 +141,7 @@ jobs:
       shell: bash
     steps:
       - checkout
-      - run: choco install php --version=7.3.15 --params '"/ThreadSafe /InstallDir:c:\tools\php"'
+      - run: choco install php --version=8.5.12 --params '"/ThreadSafe /InstallDir:c:\tools\php"' --ignore-package-exit-codes
       - run: cp ~/project/.circleci/php.ini /c/tools/php/
       - run: /c/tools/php/php.exe -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
       - run: /c/tools/php/php.exe composer-setup.php
@@ -152,7 +152,7 @@ jobs:
       - storing-test-results
   check-code-style:
     docker:
-      - image: *default-php-image
+      - image: "cimg/php:7.4"
     steps:
       - checkout
       - run: |
@@ -191,6 +191,8 @@ workflows:
     jobs:
       - tests-php:
           name: php-7.4
+          php-image: "cimg/php:7.4"
+          xdebug-package: "xdebug-3.1.6"
       - tests-php:
           name: php-8.0
           php-image: "cimg/php:8.0"
@@ -203,14 +205,15 @@ workflows:
           xdebug-package: "xdebug"
       - tests-php:
           name: php-8.5
-          php-image: "cimg/php:8.5"
+          php-image: "cimg/php:8.5.12"
           xdebug-package: "xdebug"
       - tests-php:
-          name: php-7.4-nightly
+          name: php-8.5-nightly
           influxdb-image: "quay.io/influxdb/influxdb:nightly"
       - tests-php:
           name: php-7.3
           php-image: "cimg/php:7.3"
+          xdebug-package: "xdebug-3.1.6"
       - tests-windows:
           name: php-windows
       - tests-cURL:
