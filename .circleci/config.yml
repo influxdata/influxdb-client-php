@@ -203,7 +203,7 @@ workflows:
           xdebug-package: "xdebug"
       - tests-php:
           name: php-8.5
-          php-image: "cimg/php:8.5"
+          php-image: "cimg/php:8.5.12"
           xdebug-package: "xdebug"
       - tests-php:
           name: php-7.4-nightly
