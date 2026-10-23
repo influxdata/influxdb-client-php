@@ -86,7 +86,7 @@ jobs:
     parameters:
       php-image:
         type: string
-        default: &default-php-image "cimg/php:7.4"
+        default: &default-php-image "cimg/php:8.5.11"
       influxdb-image:
         type: string
         default: &default-influxdb-image "influxdb:latest"
