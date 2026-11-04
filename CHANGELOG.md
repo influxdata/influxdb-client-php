@@ -1,5 +1,9 @@
 ## 3.10.0 [unreleased]
 
+### CI
+
+1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.
+
 ## 3.9.0 [2026-08-21]
 
 ### Bug Fixes
