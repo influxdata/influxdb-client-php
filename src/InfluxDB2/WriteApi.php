@@ -76,16 +76,22 @@ class WriteApi extends DefaultApi implements Writer
 
         $this->addDefaultTags($data);
 
-        $payload = WritePayloadSerializer::generatePayload($data, $precisionParam, $bucketParam, $orgParam, $this->writeOptions->writeType);
+        $items = WritePayloadSerializer::generateBatchItems($data, $precisionParam, $bucketParam, $orgParam);
 
-        if ($payload == null) {
+        if (WriteType::BATCHING == $this->writeOptions->writeType) {
+            foreach ($items as $item) {
+                $this->worker()->push($item);
+            }
             return;
         }
 
-        if (WriteType::BATCHING == $this->writeOptions->writeType) {
-            $this->worker()->push($payload);
-        } else {
-            $this->writeRaw($payload, $precisionParam, $bucketParam, $orgParam);
+        // records with different precision have to be sent in separate requests
+        $linesByPrecision = [];
+        foreach ($items as $item) {
+            $linesByPrecision[$item->key->precision][] = $item->data;
+        }
+        foreach ($linesByPrecision as $precision => $lines) {
+            $this->writeRaw(implode("\n", $lines), $precision, $bucketParam, $orgParam);
         }
     }
 

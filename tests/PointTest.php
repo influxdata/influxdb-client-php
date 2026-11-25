@@ -247,6 +247,56 @@ class PointTest extends TestCase
         self::assertEquals('h2o,location=europe level=2i 1444897215000000000', $point->toLineProtocol());
     }
 
+    /**
+     * @return array<string, array{WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS, string}>
+     */
+    public function providerDateTimeFraction(): array
+    {
+        return [
+            's' => [WritePrecision::S, '1444897215'],
+            'ms' => [WritePrecision::MS, '1444897215123'],
+            'us' => [WritePrecision::US, '1444897215123456'],
+            'ns' => [WritePrecision::NS, '1444897215123456000'],
+        ];
+    }
+
+    /**
+     * @dataProvider providerDateTimeFraction
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS $precision
+     */
+    public function testTimeFormattingKeepsFractionOfSecond(string $precision, string $expected): void
+    {
+        $time = new DateTimeImmutable('2015-10-15T08:20:15.123456Z');
+
+        $point = Point::measurement('h2o')
+            ->addField('level', 2)
+            ->time($time, $precision);
+
+        self::assertEquals('h2o level=2i ' . $expected, $point->toLineProtocol());
+    }
+
+    public function testTimeFormattingWithTimezone(): void
+    {
+        $time = new DateTime('2015-10-15T10:20:15.123456', new \DateTimeZone('Europe/Prague'));
+
+        $point = Point::measurement('h2o')
+            ->addField('level', 2)
+            ->time($time, WritePrecision::US);
+
+        self::assertEquals('h2o level=2i 1444897215123456', $point->toLineProtocol());
+    }
+
+    public function testTimeFormattingBeforeEpoch(): void
+    {
+        $time = new DateTimeImmutable('1969-12-31T23:59:59.250Z');
+
+        $point = Point::measurement('h2o')
+            ->addField('level', 2)
+            ->time($time, WritePrecision::MS);
+
+        self::assertEquals('h2o level=2i -750', $point->toLineProtocol());
+    }
+
     public function testTimeString(): void
     {
         $point = Point::measurement('h2o')

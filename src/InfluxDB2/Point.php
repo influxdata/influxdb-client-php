@@ -26,14 +26,14 @@ class Point
      * @param array<string, string|\Stringable>|null $tags the tag set for the point
      * @param array<string, float|int|string|bool|null>|null $fields the fields for the point
      * @param int|float|DateTimeInterface|null $time the timestamp for the point
-     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision the precision for the unix timestamps within the body line-protocol
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS|null $precision the precision for the unix timestamps within the body line-protocol, null = the precision of the write
      */
     public function __construct(
         string $name,
         ?array $tags = null,
         ?array $fields = null,
         $time = null,
-        ?string $precision = Point::DEFAULT_WRITE_PRECISION
+        ?string $precision = null
     ) {
         $this->name = $name;
         $this->tags = $tags;
@@ -48,6 +48,14 @@ class Point
     public function getPrecision(): ?string
     {
         return $this->precision;
+    }
+
+    /**
+     * @return int|float|DateTimeInterface|null
+     */
+    public function getTime()
+    {
+        return $this->time;
     }
 
     public static function measurement(string $name): Point
@@ -237,20 +245,21 @@ class Point
         if (is_float($time)) {
             $time = round($time);
         } elseif ($time instanceof DateTimeInterface) {
-            $seconds = $time->getTimestamp();
+            $seconds = (int) $time->format('U');
+            $microseconds = (int) $time->format('u');
 
             switch ($this->precision) {
-                case WritePrecision::MS:
-                    $time = strval(round($seconds) . '000');
-                    break;
                 case WritePrecision::S:
                     $time = strval($seconds);
                     break;
+                case WritePrecision::MS:
+                    $time = strval($seconds * 1000 + intdiv($microseconds, 1000));
+                    break;
                 case WritePrecision::US:
-                    $time = strval(round($seconds) . '000000');
+                    $time = strval($seconds * 1000000 + $microseconds);
                     break;
                 default:
-                    $time = strval(round($seconds) . '000000000');
+                    $time = strval(($seconds * 1000000 + $microseconds) * 1000);
                     break;
             }
         }

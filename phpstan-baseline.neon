@@ -969,7 +969,7 @@ parameters:
 		-
 			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
 			identifier: equal.notAllowed
-			count: 2
+			count: 1
 			path: src/InfluxDB2/WriteApi.php
 
 		-
@@ -1027,12 +1027,6 @@ parameters:
 			path: src/InfluxDB2/WriteApi.php
 
 		-
-			message: '#^Parameter \#1 \$data of method InfluxDB2\\WriteApi\:\:writeRaw\(\) expects string, InfluxDB2\\BatchItem\|string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/InfluxDB2/WriteApi.php
-
-		-
 			message: '#^Parameter \#1 \$key of method InfluxDB2\\Point\:\:addTag\(\) expects string, int\|string given\.$#'
 			identifier: argument.type
 			count: 1
@@ -1045,7 +1039,7 @@ parameters:
 			path: src/InfluxDB2/WriteApi.php
 
 		-
-			message: '#^Parameter \#2 \$precision of static method InfluxDB2\\WritePayloadSerializer\:\:generatePayload\(\) expects ''ms''\|''ns''\|''s''\|''us''\|null, string given\.$#'
+			message: '#^Parameter \#2 \$precision of static method InfluxDB2\\WritePayloadSerializer\:\:generateBatchItems\(\) expects ''ms''\|''ns''\|''s''\|''us'', string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/InfluxDB2/WriteApi.php

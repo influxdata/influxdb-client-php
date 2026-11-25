@@ -2,7 +2,10 @@
 
 namespace InfluxDB2Test;
 
+use DateTime;
+use DateTimeZone;
 use InfluxDB2\Client;
+use InfluxDB2\FluxRecord;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use InfluxDB2\WriteApi;
@@ -141,5 +144,97 @@ class WriteApiIntegrationTest extends TestCase
 
         $response = $this->writeApi->write($data, WritePrecision::S, "my-bucket", "my-org");
         self::assertNull($response);
+    }
+
+    public function testWritePointPrecisionOverridesWritePrecision(): void
+    {
+        $measurement = uniqid('h2o_point_precision_');
+        $time = new DateTime('2021-01-02T03:04:05.678901Z', new DateTimeZone('UTC'));
+
+        $this->writeApi->write(
+            Point::measurement($measurement)->addField('level', 1)->time($time, WritePrecision::US),
+            WritePrecision::S
+        );
+
+        $records = $this->queryRecords($measurement);
+        self::assertCount(1, $records);
+        self::assertSame('2021-01-02T03:04:05.678901Z', $records[0]->getTime());
+    }
+
+    public function testWritePointsWithDifferentPrecision(): void
+    {
+        $measurement = uniqid('h2o_mixed_precision_');
+
+        $this->writeApi->write([
+            Point::measurement($measurement)->addTag('id', 's')->addField('level', 1)->time(1600000000, WritePrecision::S),
+            Point::measurement($measurement)->addTag('id', 'ms')->addField('level', 2)->time(1600000000123, WritePrecision::MS),
+        ]);
+
+        $times = [];
+        foreach ($this->queryRecords($measurement) as $record) {
+            $times[$record['id']] = $record->getTime();
+        }
+        ksort($times);
+
+        self::assertSame(['ms' => '2020-09-13T12:26:40.123Z', 's' => '2020-09-13T12:26:40Z'], $times);
+    }
+
+    public function testWritePointWithoutPrecision(): void
+    {
+        $measurement = uniqid('h2o_write_precision_');
+
+        $this->writeApi->write([
+            Point::measurement($measurement)->addTag('id', 'datetime')->addField('level', 1)
+                ->time(new DateTime('2021-01-02T03:04:05.678Z')),
+            Point::measurement($measurement)->addTag('id', 'int')->addField('level', 2)->time(1609556645),
+            new Point($measurement, ['id' => 'constructor'], ['level' => 3], 1609556645),
+        ], WritePrecision::S);
+
+        $times = [];
+        foreach ($this->queryRecords($measurement) as $record) {
+            $times[$record['id']] = $record->getTime();
+        }
+        ksort($times);
+
+        self::assertSame([
+            'constructor' => '2021-01-02T03:04:05Z',
+            'datetime' => '2021-01-02T03:04:05Z',
+            'int' => '2021-01-02T03:04:05Z',
+        ], $times);
+    }
+
+    public function testBatchingWriteArrayOfPoints(): void
+    {
+        $measurement = uniqid('h2o_batch_array_');
+        $writeApi = $this->client->createWriteApi(['writeType' => WriteType::BATCHING, 'batchSize' => 2]);
+
+        $points = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $points[] = Point::measurement($measurement)->addField('level', $i)->time($i, WritePrecision::S);
+        }
+        $writeApi->write($points);
+        $writeApi->close();
+
+        $values = array_map(function (FluxRecord $record) {
+            return $record->getValue();
+        }, $this->queryRecords($measurement));
+        self::assertSame([1, 2, 3, 4, 5], $values);
+    }
+
+    /**
+     * @return FluxRecord[]
+     */
+    private function queryRecords(string $measurement): array
+    {
+        $tables = $this->client->createQueryApi()->query('from(bucket: "my-bucket") |> range(start: 0)'
+            . ' |> filter(fn: (r) => r._measurement == "' . $measurement . '")');
+
+        $records = [];
+        foreach ($tables as $table) {
+            foreach ($table->records as $record) {
+                $records[] = $record;
+            }
+        }
+        return $records;
     }
 }
