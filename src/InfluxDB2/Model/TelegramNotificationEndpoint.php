@@ -176,6 +176,7 @@ class TelegramNotificationEndpoint extends NotificationEndpoint
     {
         parent::__construct($data);
 
+        $this->container['type'] = isset($data['type']) ? $data['type'] : NotificationEndpointType::TELEGRAM;
         $this->container['token'] = isset($data['token']) ? $data['token'] : null;
         $this->container['channel'] = isset($data['channel']) ? $data['channel'] : null;
     }

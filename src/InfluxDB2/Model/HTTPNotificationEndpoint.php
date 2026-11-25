@@ -240,6 +240,7 @@ class HTTPNotificationEndpoint extends NotificationEndpoint
     {
         parent::__construct($data);
 
+        $this->container['type'] = isset($data['type']) ? $data['type'] : NotificationEndpointType::HTTP;
         $this->container['url'] = isset($data['url']) ? $data['url'] : null;
         $this->container['username'] = isset($data['username']) ? $data['username'] : null;
         $this->container['password'] = isset($data['password']) ? $data['password'] : null;
