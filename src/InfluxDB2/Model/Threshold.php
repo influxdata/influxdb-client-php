@@ -174,7 +174,9 @@ class Threshold extends ThresholdBase
 
         // Initialize discriminator property with the model name.
         $discriminator = array_search('type', self::$attributeMap, true);
-        $this->container[$discriminator] = static::$openAPIModelName;
+        if ($discriminator !== false) {
+            $this->container[$discriminator] = static::$openAPIModelName;
+        }
     }
 
     /**
