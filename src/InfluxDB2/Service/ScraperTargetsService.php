@@ -153,6 +153,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -162,11 +168,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('DELETE', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -278,6 +279,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -287,11 +294,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('DELETE', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -403,6 +405,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -412,11 +420,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('DELETE', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -528,6 +531,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -537,11 +546,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('DELETE', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -663,6 +667,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -672,11 +682,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -784,6 +789,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -793,11 +804,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -905,6 +911,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -914,11 +926,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1026,6 +1033,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1035,11 +1048,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1147,6 +1155,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1156,11 +1170,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1280,6 +1289,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1289,11 +1304,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('PATCH', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1396,6 +1406,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1405,11 +1421,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('POST', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1529,6 +1540,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1538,11 +1555,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('POST', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1662,6 +1674,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1671,11 +1689,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('POST', $resourcePath, $httpBody, $headers, $queryParams);
     }
@@ -1795,6 +1808,12 @@ class ScraperTargetsService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -1804,11 +1823,6 @@ class ScraperTargetsService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('POST', $resourcePath, $httpBody, $headers, $queryParams);
     }
