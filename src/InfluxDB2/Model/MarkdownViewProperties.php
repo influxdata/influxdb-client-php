@@ -207,8 +207,8 @@ class MarkdownViewProperties extends ViewProperties
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_MARKDOWN;
-        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : SHAPE_CHRONOGRAF_V2;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_MARKDOWN;
+        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : self::SHAPE_CHRONOGRAF_V2;
         $this->container['note'] = isset($data['note']) ? $data['note'] : null;
     }
 

@@ -199,7 +199,7 @@ class SMTPNotificationRuleBase extends NotificationRule
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_SMTP;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_SMTP;
         $this->container['subject_template'] = isset($data['subject_template']) ? $data['subject_template'] : null;
         $this->container['body_template'] = isset($data['body_template']) ? $data['body_template'] : null;
         $this->container['to'] = isset($data['to']) ? $data['to'] : null;

@@ -216,7 +216,7 @@ class TelegramNotificationRuleBase extends NotificationRule
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_TELEGRAM;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_TELEGRAM;
         $this->container['message_template'] = isset($data['message_template']) ? $data['message_template'] : null;
         $this->container['parse_mode'] = isset($data['parse_mode']) ? $data['parse_mode'] : null;
         $this->container['disable_web_page_preview'] = isset($data['disable_web_page_preview']) ? $data['disable_web_page_preview'] : null;

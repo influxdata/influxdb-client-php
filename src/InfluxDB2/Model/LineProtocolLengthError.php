@@ -195,7 +195,7 @@ class LineProtocolLengthError implements ModelInterface, ArrayAccess
      */
     public function __construct(?array $data = null)
     {
-        $this->container['code'] = isset($data['code']) ? $data['code'] : CODE_INVALID;
+        $this->container['code'] = isset($data['code']) ? $data['code'] : self::CODE_INVALID;
         $this->container['message'] = isset($data['message']) ? $data['message'] : null;
     }
 

@@ -378,10 +378,10 @@ class LinePlusSingleStatProperties extends ViewProperties
 
         $this->container['adaptive_zoom_hide'] = isset($data['adaptive_zoom_hide']) ? $data['adaptive_zoom_hide'] : null;
         $this->container['time_format'] = isset($data['time_format']) ? $data['time_format'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_LINE_PLUS_SINGLE_STAT;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_LINE_PLUS_SINGLE_STAT;
         $this->container['queries'] = isset($data['queries']) ? $data['queries'] : null;
         $this->container['colors'] = isset($data['colors']) ? $data['colors'] : null;
-        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : SHAPE_CHRONOGRAF_V2;
+        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : self::SHAPE_CHRONOGRAF_V2;
         $this->container['note'] = isset($data['note']) ? $data['note'] : null;
         $this->container['show_note_when_empty'] = isset($data['show_note_when_empty']) ? $data['show_note_when_empty'] : null;
         $this->container['axes'] = isset($data['axes']) ? $data['axes'] : null;
