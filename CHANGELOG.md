@@ -4,6 +4,10 @@
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.
 
+### Others
+
+1. [#182](https://github.com/influxdata/influxdb-client-php/pull/182): Fix integration tests for InfluxDB 2.10 and newer cURL.
+
 ## 3.9.0 [2026-08-21]
 
 ### Bug Fixes
