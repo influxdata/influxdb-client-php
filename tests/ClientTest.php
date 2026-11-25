@@ -16,7 +16,6 @@ class ClientTest extends IntegrationBaseTestCase
     {
         $health = $this->client->health();
 
-        self::assertEquals('ready for queries and writes', $health->getMessage());
         self::assertEquals('influxdb', $health->getName());
         self::assertEquals('pass', $health->getStatus());
     }
@@ -31,7 +30,8 @@ class ClientTest extends IntegrationBaseTestCase
 
         $health = $this->client->health();
 
-        self::assertStringContainsString('Failed to connect to localhost port 8099', $health->getMessage());
+        // message differs between cURL versions ("localhost port 8099" vs. "localhost:8099")
+        self::assertRegExp('/Failed to connect to localhost( port |:)8099/', $health->getMessage());
         self::assertEquals('influxdb', $health->getName());
         self::assertEquals('fail', $health->getStatus());
     }

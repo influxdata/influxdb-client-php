@@ -48,7 +48,7 @@ class QueryApiIntegrationTest extends TestCase
     public function testQueryRaw(): void
     {
         $now = new DateTime();
-        $measurement = 'h2o_query_' . $now->getTimestamp();
+        $measurement = uniqid('h2o_query_');
 
         $query = $this->prepareData($measurement, $now);
         print $query;
@@ -62,7 +62,7 @@ class QueryApiIntegrationTest extends TestCase
     public function testQuery(): void
     {
         $now = new DateTime();
-        $measurement = 'h2o_query_' . $now->getTimestamp();
+        $measurement = uniqid('h2o_query_');
         $query = $this->prepareData($measurement, $now);
         print $query;
 
@@ -83,7 +83,7 @@ class QueryApiIntegrationTest extends TestCase
 
     public function testWriteQueryNewLine(): void
     {
-        $measurement = 'h2o_QueryNewLine_' . (new DateTime())->getTimestamp();
+        $measurement = uniqid('h2o_QueryNewLine_');
 
         $this->writeApi->write(Point::measurement($measurement)
             ->addTag('location', 'europe')
