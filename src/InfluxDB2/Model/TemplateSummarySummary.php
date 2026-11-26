@@ -58,16 +58,16 @@ class TemplateSummarySummary implements ModelInterface, ArrayAccess
       */
     protected static $openAPITypes = [
         'buckets' => '\InfluxDB2\Model\TemplateSummarySummaryBuckets[]',
-        'checks' => 'CheckDiscriminator[]',
+        'checks' => '\InfluxDB2\Model\CheckDiscriminator[]',
         'dashboards' => '\InfluxDB2\Model\TemplateSummarySummaryDashboards[]',
         'labels' => '\InfluxDB2\Model\TemplateSummaryLabel[]',
         'label_mappings' => '\InfluxDB2\Model\TemplateSummarySummaryLabelMappings[]',
         'missing_env_refs' => 'string[]',
         'missing_secrets' => 'string[]',
-        'notification_endpoints' => 'NotificationEndpointDiscriminator[]',
+        'notification_endpoints' => '\InfluxDB2\Model\NotificationEndpointDiscriminator[]',
         'notification_rules' => '\InfluxDB2\Model\TemplateSummarySummaryNotificationRules[]',
         'tasks' => '\InfluxDB2\Model\TemplateSummarySummaryTasks[]',
-        'telegraf_configs' => 'TelegrafRequest[]',
+        'telegraf_configs' => '\InfluxDB2\Model\TelegrafRequest[]',
         'variables' => '\InfluxDB2\Model\TemplateSummarySummaryVariables[]'
     ];
 

@@ -254,11 +254,11 @@ class DashboardColor implements ModelInterface, ArrayAccess
         if ($this->container['hex'] === null) {
             $invalidProperties[] = "'hex' can't be null";
         }
-        if ((mb_strlen($this->container['hex']) > 7)) {
+        if (!is_null($this->container['hex']) && (mb_strlen($this->container['hex']) > 7)) {
             $invalidProperties[] = "invalid value for 'hex', the character length must be smaller than or equal to 7.";
         }
 
-        if ((mb_strlen($this->container['hex']) < 7)) {
+        if (!is_null($this->container['hex']) && (mb_strlen($this->container['hex']) < 7)) {
             $invalidProperties[] = "invalid value for 'hex', the character length must be bigger than or equal to 7.";
         }
 
@@ -359,10 +359,10 @@ class DashboardColor implements ModelInterface, ArrayAccess
      */
     public function setHex($hex)
     {
-        if ((mb_strlen($hex) > 7)) {
+        if (!is_null($hex) && (mb_strlen($hex) > 7)) {
             throw new \InvalidArgumentException('invalid length for $hex when calling DashboardColor., must be smaller than or equal to 7.');
         }
-        if ((mb_strlen($hex) < 7)) {
+        if (!is_null($hex) && (mb_strlen($hex) < 7)) {
             throw new \InvalidArgumentException('invalid length for $hex when calling DashboardColor., must be bigger than or equal to 7.');
         }
 
