@@ -72,7 +72,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\FluxSuggestions|object|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\FluxSuggestions
      */
     public function getQuerySuggestions($zap_trace_span = null)
     {
@@ -89,7 +89,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\FluxSuggestions|object|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\FluxSuggestions, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getQuerySuggestionsWithHttpInfo($zap_trace_span = null)
     {
@@ -177,7 +177,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\FluxSuggestion|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\FluxSuggestion
      */
     public function getQuerySuggestionsName($name, $zap_trace_span = null)
     {
@@ -195,7 +195,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\FluxSuggestion|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\FluxSuggestion, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getQuerySuggestionsNameWithHttpInfo($name, $zap_trace_span = null)
     {
@@ -302,7 +302,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return string
      */
     public function postQuery($zap_trace_span = null, $accept_encoding = 'identity', $content_type = null, $org = null, $org_id = null, $query = null)
     {
@@ -324,7 +324,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: string, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postQueryWithHttpInfo($zap_trace_span = null, $accept_encoding = 'identity', $content_type = null, $org = null, $org_id = null, $query = null)
     {
@@ -437,7 +437,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\AnalyzeQueryResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\AnalyzeQueryResponse
      */
     public function postQueryAnalyze($zap_trace_span = null, $content_type = null, $query = null)
     {
@@ -456,7 +456,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\AnalyzeQueryResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\AnalyzeQueryResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postQueryAnalyzeWithHttpInfo($zap_trace_span = null, $content_type = null, $query = null)
     {
@@ -554,7 +554,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ASTResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ASTResponse
      */
     public function postQueryAst($zap_trace_span = null, $content_type = null, $language_request = null)
     {
@@ -573,7 +573,7 @@ class QueryService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ASTResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ASTResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postQueryAstWithHttpInfo($zap_trace_span = null, $content_type = null, $language_request = null)
     {

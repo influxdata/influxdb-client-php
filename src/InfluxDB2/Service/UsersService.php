@@ -90,7 +90,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteUsersIDWithHttpInfo($user_id, $zap_trace_span = null)
     {
@@ -180,7 +180,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return map[string,object]|\InfluxDB2\Model\Error
+     * @return array<string, array<mixed>>
      */
     public function getFlags($zap_trace_span = null)
     {
@@ -197,7 +197,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of map[string,object]|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: array<string, array<mixed>>, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getFlagsWithHttpInfo($zap_trace_span = null)
     {
@@ -284,7 +284,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\User|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\User
      */
     public function getMe($zap_trace_span = null)
     {
@@ -301,7 +301,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\User|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\User, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getMeWithHttpInfo($zap_trace_span = null)
     {
@@ -393,7 +393,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Users|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Users
      */
     public function getUsers($zap_trace_span = null, $offset = null, $limit = 20, $after = null, $name = null, $id = null)
     {
@@ -415,7 +415,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Users|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Users, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getUsersWithHttpInfo($zap_trace_span = null, $offset = null, $limit = 20, $after = null, $name = null, $id = null)
     {
@@ -539,7 +539,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\User|string
+     * @return \InfluxDB2\Model\User
      */
     public function getUsersID($user_id, $zap_trace_span = null)
     {
@@ -557,7 +557,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\User|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\User, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getUsersIDWithHttpInfo($user_id, $zap_trace_span = null)
     {
@@ -661,7 +661,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\User|string
+     * @return \InfluxDB2\Model\User
      */
     public function patchUsersID($user_id, $post_user, $zap_trace_span = null)
     {
@@ -680,7 +680,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\User|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\User, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchUsersIDWithHttpInfo($user_id, $post_user, $zap_trace_span = null)
     {
@@ -793,7 +793,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\User|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\User
      */
     public function postUsers($post_user, $zap_trace_span = null)
     {
@@ -811,7 +811,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\User|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\User, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postUsersWithHttpInfo($post_user, $zap_trace_span = null)
     {
@@ -930,7 +930,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postUsersIDPasswordWithHttpInfo($user_id, $password_reset_body, $zap_trace_span = null, $authorization = null)
     {
@@ -1059,7 +1059,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function putMePasswordWithHttpInfo($password_reset_body, $zap_trace_span = null, $authorization = null)
     {

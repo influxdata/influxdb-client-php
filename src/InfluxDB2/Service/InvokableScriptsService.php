@@ -88,7 +88,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteScriptsIDWithHttpInfo($script_id)
     {
@@ -177,7 +177,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Scripts|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Scripts
      */
     public function getScripts($limit = 100, $offset = 0, $name = null, $label_names = null, $label_contains = null)
     {
@@ -198,7 +198,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Scripts|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Scripts, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScriptsWithHttpInfo($limit = 100, $offset = 0, $name = null, $label_names = null, $label_contains = null)
     {
@@ -336,7 +336,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Script, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScriptsIDWithHttpInfo($script_id)
     {
@@ -452,7 +452,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Script, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchScriptsIDWithHttpInfo($script_id, $script_update_request)
     {
@@ -560,7 +560,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Script
      */
     public function patchScriptsIDAddLabels($script_id, $label_mapping)
     {
@@ -578,7 +578,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Script, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchScriptsIDAddLabelsWithHttpInfo($script_id, $label_mapping)
     {
@@ -686,7 +686,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Script
      */
     public function patchScriptsIDRemoveLabels($script_id, $label_mapping)
     {
@@ -704,7 +704,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script|object|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Script, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchScriptsIDRemoveLabelsWithHttpInfo($script_id, $label_mapping)
     {
@@ -811,7 +811,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Script|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Script
      */
     public function postScripts($script_create_request)
     {
@@ -828,7 +828,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Script|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Script, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postScriptsWithHttpInfo($script_create_request)
     {
@@ -921,7 +921,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \SplFileObject
      */
     public function postScriptsIDInvoke($script_id, $script_invocation_params = null)
     {
@@ -939,7 +939,7 @@ class InvokableScriptsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postScriptsIDInvokeWithHttpInfo($script_id, $script_invocation_params = null)
     {

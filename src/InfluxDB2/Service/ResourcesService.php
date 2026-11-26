@@ -72,7 +72,7 @@ class ResourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string[]|\InfluxDB2\Model\Error
+     * @return string[]
      */
     public function getResources($zap_trace_span = null)
     {
@@ -89,7 +89,7 @@ class ResourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string[]|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: string[], 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getResourcesWithHttpInfo($zap_trace_span = null)
     {

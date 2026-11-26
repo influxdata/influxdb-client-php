@@ -19,12 +19,6 @@ parameters:
 			path: examples/BucketManagementExample.php
 
 		-
-			message: '#^Cannot call method getOrgs\(\) on object\|string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: examples/BucketManagementExample.php
-
-		-
 			message: '#^Function findMyOrg\(\) has parameter \$client with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
@@ -1315,52 +1309,10 @@ parameters:
 			path: tests/FluxCsvParserTest.php
 
 		-
-			message: '#^Call to an undefined method object\:\:getBuckets\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/ITBucketServiceTest.php
-
-		-
 			message: '#^Call to an undefined method object\:\:getHealth\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: tests/ITBucketServiceTest.php
-
-		-
-			message: '#^Call to an undefined method object\:\:getId\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: tests/ITBucketServiceTest.php
-
-		-
-			message: '#^Call to an undefined method object\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: tests/ITBucketServiceTest.php
-
-		-
-			message: '#^Parameter object of print cannot be converted to string\.$#'
-			identifier: print.nonString
-			count: 1
-			path: tests/ITBucketServiceTest.php
-
-		-
-			message: '#^Call to an undefined method object\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: tests/ITTaskServiceTest.php
-
-		-
-			message: '#^Cannot call method getUsers\(\) on InfluxDB2\\Model\\Error\|InfluxDB2\\Model\\Users\|string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: tests/ITUsersServiceTest.php
-
-		-
-			message: '#^Cannot call method getOrgs\(\) on object\|string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: tests/IntegrationBaseTestCase.php
 
 		-
 			message: '#^Offset ''org'' might not exist on array\{url\: string, token\: string, bucket\?\: string, org\?\: string, precision\?\: ''ms''\|''ns''\|''s''\|''us'', allow_redirects\?\: bool, debug\?\: bool, logFile\?\: string, \.\.\.\}\.$#'

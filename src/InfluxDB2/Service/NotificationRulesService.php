@@ -72,7 +72,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationRule
      */
     public function createNotificationRule($notification_rule)
     {
@@ -89,7 +89,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationRule, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function createNotificationRuleWithHttpInfo($notification_rule)
     {
@@ -199,7 +199,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteNotificationRulesIDWithHttpInfo($rule_id, $zap_trace_span = null)
     {
@@ -309,7 +309,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteNotificationRulesIDLabelsIDWithHttpInfo($rule_id, $label_id, $zap_trace_span = null)
     {
@@ -419,7 +419,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationRules|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationRules
      */
     public function getNotificationRules($org_id, $zap_trace_span = null, $offset = null, $limit = 20, $check_id = null, $tag = null)
     {
@@ -441,7 +441,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationRules|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationRules, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationRulesWithHttpInfo($org_id, $zap_trace_span = null, $offset = null, $limit = 20, $check_id = null, $tag = null)
     {
@@ -575,7 +575,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationRule
      */
     public function getNotificationRulesID($rule_id, $zap_trace_span = null)
     {
@@ -593,7 +593,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationRule, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationRulesIDWithHttpInfo($rule_id, $zap_trace_span = null)
     {
@@ -696,7 +696,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getNotificationRulesIDLabels($rule_id, $zap_trace_span = null)
     {
@@ -714,7 +714,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationRulesIDLabelsWithHttpInfo($rule_id, $zap_trace_span = null)
     {
@@ -818,7 +818,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationRule
      */
     public function patchNotificationRulesID($rule_id, $notification_rule_update, $zap_trace_span = null)
     {
@@ -837,7 +837,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationRule, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchNotificationRulesIDWithHttpInfo($rule_id, $notification_rule_update, $zap_trace_span = null)
     {
@@ -951,7 +951,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postNotificationRuleIDLabels($rule_id, $label_mapping, $zap_trace_span = null)
     {
@@ -970,7 +970,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postNotificationRuleIDLabelsWithHttpInfo($rule_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1084,7 +1084,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationRule
      */
     public function putNotificationRulesID($rule_id, $notification_rule, $zap_trace_span = null)
     {
@@ -1103,7 +1103,7 @@ class NotificationRulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationRule|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationRule, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function putNotificationRulesIDWithHttpInfo($rule_id, $notification_rule, $zap_trace_span = null)
     {

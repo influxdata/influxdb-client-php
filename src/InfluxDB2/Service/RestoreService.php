@@ -75,7 +75,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string|string
+     * @return string
      */
     public function postRestoreBucketID($bucket_id, $body, $zap_trace_span = null, $content_type = 'application/octet-stream')
     {
@@ -95,7 +95,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: string, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postRestoreBucketIDWithHttpInfo($bucket_id, $body, $zap_trace_span = null, $content_type = 'application/octet-stream')
     {
@@ -213,7 +213,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\RestoredBucketMappings|string
+     * @return \InfluxDB2\Model\RestoredBucketMappings
      */
     public function postRestoreBucketMetadata($bucket_metadata_manifest, $zap_trace_span = null)
     {
@@ -231,7 +231,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\RestoredBucketMappings|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\RestoredBucketMappings, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postRestoreBucketMetadataWithHttpInfo($bucket_metadata_manifest, $zap_trace_span = null)
     {
@@ -331,7 +331,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\PostRestoreKVResponse|string
+     * @return \InfluxDB2\Model\PostRestoreKVResponse
      */
     public function postRestoreKV($body, $zap_trace_span = null, $content_encoding = 'identity', $content_type = 'application/octet-stream')
     {
@@ -351,7 +351,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\PostRestoreKVResponse|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\PostRestoreKVResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postRestoreKVWithHttpInfo($body, $zap_trace_span = null, $content_encoding = 'identity', $content_type = 'application/octet-stream')
     {
@@ -480,7 +480,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postRestoreSQLWithHttpInfo($body, $zap_trace_span = null, $content_encoding = 'identity', $content_type = 'application/octet-stream')
     {
@@ -599,7 +599,7 @@ class RestoreService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postRestoreShardIdWithHttpInfo($shard_id, $body, $zap_trace_span = null, $content_encoding = 'identity', $content_type = 'application/octet-stream')
     {

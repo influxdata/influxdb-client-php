@@ -90,7 +90,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteVariablesIDWithHttpInfo($variable_id, $zap_trace_span = null)
     {
@@ -200,7 +200,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteVariablesIDLabelsIDWithHttpInfo($variable_id, $label_id, $zap_trace_span = null)
     {
@@ -307,7 +307,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Variables|string|string
+     * @return \InfluxDB2\Model\Variables
      */
     public function getVariables($zap_trace_span = null, $org = null, $org_id = null)
     {
@@ -326,7 +326,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Variables|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Variables, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getVariablesWithHttpInfo($zap_trace_span = null, $org = null, $org_id = null)
     {
@@ -424,7 +424,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Variable|string|string
+     * @return \InfluxDB2\Model\Variable
      */
     public function getVariablesID($variable_id, $zap_trace_span = null)
     {
@@ -442,7 +442,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Variable|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Variable, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getVariablesIDWithHttpInfo($variable_id, $zap_trace_span = null)
     {
@@ -545,7 +545,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getVariablesIDLabels($variable_id, $zap_trace_span = null)
     {
@@ -563,7 +563,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getVariablesIDLabelsWithHttpInfo($variable_id, $zap_trace_span = null)
     {
@@ -667,7 +667,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Variable|string
+     * @return \InfluxDB2\Model\Variable
      */
     public function patchVariablesID($variable_id, $variable, $zap_trace_span = null)
     {
@@ -686,7 +686,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Variable|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Variable, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchVariablesIDWithHttpInfo($variable_id, $variable, $zap_trace_span = null)
     {
@@ -799,7 +799,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Variable|string
+     * @return \InfluxDB2\Model\Variable
      */
     public function postVariables($variable, $zap_trace_span = null)
     {
@@ -817,7 +817,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Variable|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Variable, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postVariablesWithHttpInfo($variable, $zap_trace_span = null)
     {
@@ -916,7 +916,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postVariablesIDLabels($variable_id, $label_mapping, $zap_trace_span = null)
     {
@@ -935,7 +935,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postVariablesIDLabelsWithHttpInfo($variable_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1049,7 +1049,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Variable|string
+     * @return \InfluxDB2\Model\Variable
      */
     public function putVariablesID($variable_id, $variable, $zap_trace_span = null)
     {
@@ -1068,7 +1068,7 @@ class VariablesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Variable|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Variable, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function putVariablesIDWithHttpInfo($variable_id, $variable, $zap_trace_span = null)
     {

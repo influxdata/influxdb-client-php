@@ -90,7 +90,7 @@ class SigninService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postSigninWithHttpInfo($zap_trace_span = null, $authorization = null)
     {

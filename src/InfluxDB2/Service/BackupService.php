@@ -72,7 +72,7 @@ class BackupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getBackupKV($zap_trace_span = null)
     {
@@ -89,7 +89,7 @@ class BackupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBackupKVWithHttpInfo($zap_trace_span = null)
     {
@@ -177,7 +177,7 @@ class BackupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\MetadataBackup|string
+     * @return \InfluxDB2\Model\MetadataBackup
      */
     public function getBackupMetadata($zap_trace_span = null, $accept_encoding = 'identity')
     {
@@ -195,7 +195,7 @@ class BackupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\MetadataBackup|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\MetadataBackup, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBackupMetadataWithHttpInfo($zap_trace_span = null, $accept_encoding = 'identity')
     {
@@ -290,7 +290,7 @@ class BackupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|\InfluxDB2\Model\Error|string
+     * @return \SplFileObject
      */
     public function getBackupShardId($shard_id, $zap_trace_span = null, $accept_encoding = 'identity', $since = null)
     {
@@ -310,7 +310,7 @@ class BackupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBackupShardIdWithHttpInfo($shard_id, $zap_trace_span = null, $accept_encoding = 'identity', $since = null)
     {

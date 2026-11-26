@@ -72,7 +72,7 @@ class MetricsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string|string
+     * @return string
      */
     public function getMetrics($zap_trace_span = null)
     {
@@ -89,7 +89,7 @@ class MetricsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: string, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getMetricsWithHttpInfo($zap_trace_span = null)
     {

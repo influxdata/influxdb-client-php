@@ -90,7 +90,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTasksIDWithHttpInfo($task_id, $zap_trace_span = null)
     {
@@ -200,7 +200,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTasksIDLabelsIDWithHttpInfo($task_id, $label_id, $zap_trace_span = null)
     {
@@ -325,7 +325,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTasksIDMembersIDWithHttpInfo($user_id, $task_id, $zap_trace_span = null)
     {
@@ -450,7 +450,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTasksIDOwnersIDWithHttpInfo($user_id, $task_id, $zap_trace_span = null)
     {
@@ -575,7 +575,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTasksIDRunsIDWithHttpInfo($task_id, $run_id, $zap_trace_span = null)
     {
@@ -688,7 +688,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Tasks|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Tasks
      */
     public function getTasks($zap_trace_span = null, $name = null, $after = null, $user = null, $org = null, $org_id = null, $status = null, $limit = 100, $type = null)
     {
@@ -713,7 +713,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Tasks|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Tasks, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksWithHttpInfo($zap_trace_span = null, $name = null, $after = null, $user = null, $org = null, $org_id = null, $status = null, $limit = 100, $type = null)
     {
@@ -848,7 +848,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Task|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Task
      */
     public function getTasksID($task_id, $zap_trace_span = null)
     {
@@ -866,7 +866,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Task|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Task, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDWithHttpInfo($task_id, $zap_trace_span = null)
     {
@@ -969,7 +969,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getTasksIDLabels($task_id, $zap_trace_span = null)
     {
@@ -987,7 +987,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDLabelsWithHttpInfo($task_id, $zap_trace_span = null)
     {
@@ -1090,7 +1090,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Logs|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Logs
      */
     public function getTasksIDLogs($task_id, $zap_trace_span = null)
     {
@@ -1108,7 +1108,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Logs|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Logs, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDLogsWithHttpInfo($task_id, $zap_trace_span = null)
     {
@@ -1211,7 +1211,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMembers
      */
     public function getTasksIDMembers($task_id, $zap_trace_span = null)
     {
@@ -1229,7 +1229,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMembers, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDMembersWithHttpInfo($task_id, $zap_trace_span = null)
     {
@@ -1332,7 +1332,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwners|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwners
      */
     public function getTasksIDOwners($task_id, $zap_trace_span = null)
     {
@@ -1350,7 +1350,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwners|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwners, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDOwnersWithHttpInfo($task_id, $zap_trace_span = null)
     {
@@ -1457,7 +1457,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Runs|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Runs
      */
     public function getTasksIDRuns($task_id, $zap_trace_span = null, $after = null, $limit = 100, $after_time = null, $before_time = null)
     {
@@ -1479,7 +1479,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Runs|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Runs, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDRunsWithHttpInfo($task_id, $zap_trace_span = null, $after = null, $limit = 100, $after_time = null, $before_time = null)
     {
@@ -1610,7 +1610,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Run|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Run
      */
     public function getTasksIDRunsID($task_id, $run_id, $zap_trace_span = null)
     {
@@ -1629,7 +1629,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Run|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Run, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDRunsIDWithHttpInfo($task_id, $run_id, $zap_trace_span = null)
     {
@@ -1748,7 +1748,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Logs|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Logs
      */
     public function getTasksIDRunsIDLogs($task_id, $run_id, $zap_trace_span = null)
     {
@@ -1767,7 +1767,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Logs|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Logs, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTasksIDRunsIDLogsWithHttpInfo($task_id, $run_id, $zap_trace_span = null)
     {
@@ -1886,7 +1886,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Task|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Task
      */
     public function patchTasksID($task_id, $task_update_request, $zap_trace_span = null)
     {
@@ -1905,7 +1905,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Task|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Task, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchTasksIDWithHttpInfo($task_id, $task_update_request, $zap_trace_span = null)
     {
@@ -2018,7 +2018,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Task|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Task
      */
     public function postTasks($task_create_request, $zap_trace_span = null)
     {
@@ -2036,7 +2036,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Task|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Task, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTasksWithHttpInfo($task_create_request, $zap_trace_span = null)
     {
@@ -2135,7 +2135,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postTasksIDLabels($task_id, $label_mapping, $zap_trace_span = null)
     {
@@ -2154,7 +2154,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTasksIDLabelsWithHttpInfo($task_id, $label_mapping, $zap_trace_span = null)
     {
@@ -2268,7 +2268,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMember
      */
     public function postTasksIDMembers($task_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -2287,7 +2287,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMember, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTasksIDMembersWithHttpInfo($task_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -2401,7 +2401,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwner|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwner
      */
     public function postTasksIDOwners($task_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -2420,7 +2420,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwner|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwner, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTasksIDOwnersWithHttpInfo($task_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -2534,7 +2534,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Run|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Run
      */
     public function postTasksIDRuns($task_id, $zap_trace_span = null, $run_manually = null)
     {
@@ -2553,7 +2553,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Run|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Run, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTasksIDRunsWithHttpInfo($task_id, $zap_trace_span = null, $run_manually = null)
     {
@@ -2662,7 +2662,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Run|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Run
      */
     public function postTasksIDRunsIDRetry($task_id, $run_id, $zap_trace_span = null, $body = null)
     {
@@ -2682,7 +2682,7 @@ class TasksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Run|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Run, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTasksIDRunsIDRetryWithHttpInfo($task_id, $run_id, $zap_trace_span = null, $body = null)
     {

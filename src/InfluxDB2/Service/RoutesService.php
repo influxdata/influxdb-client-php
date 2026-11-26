@@ -89,7 +89,7 @@ class RoutesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Routes, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Routes, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getRoutesWithHttpInfo($zap_trace_span = null)
     {

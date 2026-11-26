@@ -90,7 +90,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteRemoteConnectionByIDWithHttpInfo($remote_id, $zap_trace_span = null)
     {
@@ -181,7 +181,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\RemoteConnection|string|string
+     * @return \InfluxDB2\Model\RemoteConnection
      */
     public function getRemoteConnectionByID($remote_id, $zap_trace_span = null)
     {
@@ -199,7 +199,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\RemoteConnection|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\RemoteConnection, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getRemoteConnectionByIDWithHttpInfo($remote_id, $zap_trace_span = null)
     {
@@ -304,7 +304,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\RemoteConnections|string|string
+     * @return \InfluxDB2\Model\RemoteConnections
      */
     public function getRemoteConnections($org_id, $zap_trace_span = null, $name = null, $remote_url = null)
     {
@@ -324,7 +324,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\RemoteConnections|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\RemoteConnections, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getRemoteConnectionsWithHttpInfo($org_id, $zap_trace_span = null, $name = null, $remote_url = null)
     {
@@ -434,7 +434,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\RemoteConnection|string|string|string
+     * @return \InfluxDB2\Model\RemoteConnection
      */
     public function patchRemoteConnectionByID($remote_id, $remote_connection_update_request, $zap_trace_span = null)
     {
@@ -453,7 +453,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\RemoteConnection|string|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\RemoteConnection, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchRemoteConnectionByIDWithHttpInfo($remote_id, $remote_connection_update_request, $zap_trace_span = null)
     {
@@ -565,7 +565,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\RemoteConnection|string|string
+     * @return \InfluxDB2\Model\RemoteConnection
      */
     public function postRemoteConnection($remote_connection_creation_request)
     {
@@ -582,7 +582,7 @@ class RemoteConnectionsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\RemoteConnection|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\RemoteConnection, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postRemoteConnectionWithHttpInfo($remote_connection_creation_request)
     {

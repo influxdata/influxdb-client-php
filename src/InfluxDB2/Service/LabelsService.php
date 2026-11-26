@@ -90,7 +90,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteLabelsIDWithHttpInfo($label_id, $zap_trace_span = null)
     {
@@ -181,7 +181,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getLabels($zap_trace_span = null, $org_id = null)
     {
@@ -199,7 +199,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getLabelsWithHttpInfo($zap_trace_span = null, $org_id = null)
     {
@@ -292,7 +292,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function getLabelsID($label_id, $zap_trace_span = null)
     {
@@ -310,7 +310,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getLabelsIDWithHttpInfo($label_id, $zap_trace_span = null)
     {
@@ -414,7 +414,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function patchLabelsID($label_id, $label_update, $zap_trace_span = null)
     {
@@ -433,7 +433,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchLabelsIDWithHttpInfo($label_id, $label_update, $zap_trace_span = null)
     {
@@ -545,7 +545,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postLabels($label_create_request)
     {
@@ -562,7 +562,7 @@ class LabelsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postLabelsWithHttpInfo($label_create_request)
     {

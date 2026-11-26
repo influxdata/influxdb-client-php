@@ -90,7 +90,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteBucketsIDWithHttpInfo($bucket_id, $zap_trace_span = null)
     {
@@ -200,7 +200,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteBucketsIDLabelsIDWithHttpInfo($bucket_id, $label_id, $zap_trace_span = null)
     {
@@ -325,7 +325,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteBucketsIDMembersIDWithHttpInfo($user_id, $bucket_id, $zap_trace_span = null)
     {
@@ -450,7 +450,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteBucketsIDOwnersIDWithHttpInfo($user_id, $bucket_id, $zap_trace_span = null)
     {
@@ -562,7 +562,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Buckets|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Buckets
      */
     public function getBuckets($zap_trace_span = null, $offset = null, $limit = 20, $after = null, $org = null, $org_id = null, $name = null, $id = null)
     {
@@ -586,7 +586,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Buckets|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Buckets, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBucketsWithHttpInfo($zap_trace_span = null, $offset = null, $limit = 20, $after = null, $org = null, $org_id = null, $name = null, $id = null)
     {
@@ -720,7 +720,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Bucket|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Bucket
      */
     public function getBucketsID($bucket_id, $zap_trace_span = null)
     {
@@ -738,7 +738,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Bucket|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Bucket, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBucketsIDWithHttpInfo($bucket_id, $zap_trace_span = null)
     {
@@ -841,7 +841,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getBucketsIDLabels($bucket_id, $zap_trace_span = null)
     {
@@ -859,7 +859,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBucketsIDLabelsWithHttpInfo($bucket_id, $zap_trace_span = null)
     {
@@ -962,7 +962,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMembers
      */
     public function getBucketsIDMembers($bucket_id, $zap_trace_span = null)
     {
@@ -980,7 +980,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMembers, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBucketsIDMembersWithHttpInfo($bucket_id, $zap_trace_span = null)
     {
@@ -1083,7 +1083,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwners
      */
     public function getBucketsIDOwners($bucket_id, $zap_trace_span = null)
     {
@@ -1101,7 +1101,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwners, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getBucketsIDOwnersWithHttpInfo($bucket_id, $zap_trace_span = null)
     {
@@ -1205,7 +1205,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Buckets|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Buckets
      */
     public function getSourcesIDBuckets($source_id, $zap_trace_span = null, $org = null)
     {
@@ -1224,7 +1224,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Buckets|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Buckets, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getSourcesIDBucketsWithHttpInfo($source_id, $zap_trace_span = null, $org = null)
     {
@@ -1333,7 +1333,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Bucket|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Bucket
      */
     public function patchBucketsID($bucket_id, $patch_bucket_request, $zap_trace_span = null)
     {
@@ -1352,7 +1352,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Bucket|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Bucket, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchBucketsIDWithHttpInfo($bucket_id, $patch_bucket_request, $zap_trace_span = null)
     {
@@ -1465,7 +1465,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Bucket|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Bucket
      */
     public function postBuckets($post_bucket_request, $zap_trace_span = null)
     {
@@ -1483,7 +1483,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Bucket|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Bucket, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postBucketsWithHttpInfo($post_bucket_request, $zap_trace_span = null)
     {
@@ -1582,7 +1582,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postBucketsIDLabels($bucket_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1601,7 +1601,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postBucketsIDLabelsWithHttpInfo($bucket_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1715,7 +1715,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMember
      */
     public function postBucketsIDMembers($bucket_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1734,7 +1734,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMember, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postBucketsIDMembersWithHttpInfo($bucket_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1848,7 +1848,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwner|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwner
      */
     public function postBucketsIDOwners($bucket_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1867,7 +1867,7 @@ class BucketsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwner|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwner, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postBucketsIDOwnersWithHttpInfo($bucket_id, $add_resource_member_request_body, $zap_trace_span = null)
     {

@@ -73,7 +73,7 @@ class RulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\FluxResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\FluxResponse
      */
     public function getNotificationRulesIDQuery($rule_id, $zap_trace_span = null)
     {
@@ -91,7 +91,7 @@ class RulesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\FluxResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\FluxResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationRulesIDQueryWithHttpInfo($rule_id, $zap_trace_span = null)
     {
