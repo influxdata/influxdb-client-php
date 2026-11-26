@@ -21,7 +21,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
         $healthService = $this->client->createService(HealthService::class);
         $healthCheck = $healthService->getHealth();
         self::assertEquals("influxdb", $healthCheck->getName());
-        self::assertEquals("ready for queries and writes", $healthCheck->getMessage());
+        self::assertEquals("pass", $healthCheck->getStatus());
     }
 
     public function testFixNanosTimeSerialization(): void
