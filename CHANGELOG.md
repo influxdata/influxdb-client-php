@@ -7,6 +7,7 @@
 ### Others
 
 1. [#182](https://github.com/influxdata/influxdb-client-php/pull/182): Fix integration tests for InfluxDB 2.10 and newer cURL.
+2. [#191](https://github.com/influxdata/influxdb-client-php/pull/191): Add generic type to `Client::createService()`, fix PHPStan errors in examples.
 
 ## 3.9.0 [2026-08-21]
 
