@@ -297,7 +297,7 @@ class Label implements ModelInterface, ArrayAccess
     /**
      * Gets properties
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getProperties()
     {
@@ -307,7 +307,7 @@ class Label implements ModelInterface, ArrayAccess
     /**
      * Sets properties
      *
-     * @param map[string,string]|null $properties Key-value pairs associated with this label. To remove a property, send an update with an empty value (`""`) for the key.
+     * @param array<string, string>|null $properties Key-value pairs associated with this label. To remove a property, send an update with an empty value (`""`) for the key.
      *
      * @return $this
      */

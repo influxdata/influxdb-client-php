@@ -267,7 +267,7 @@ class BuilderTagsType implements ModelInterface, ArrayAccess
     /**
      * Gets aggregate_function_type
      *
-     * @return \InfluxDB2\Model\BuilderAggregateFunctionType|null
+     * @return \InfluxDB2\Model\BuilderAggregateFunctionType::FILTER|\InfluxDB2\Model\BuilderAggregateFunctionType::GROUP|null
      */
     public function getAggregateFunctionType()
     {
@@ -277,7 +277,7 @@ class BuilderTagsType implements ModelInterface, ArrayAccess
     /**
      * Sets aggregate_function_type
      *
-     * @param \InfluxDB2\Model\BuilderAggregateFunctionType|null $aggregate_function_type aggregate_function_type
+     * @param \InfluxDB2\Model\BuilderAggregateFunctionType::FILTER|\InfluxDB2\Model\BuilderAggregateFunctionType::GROUP|null $aggregate_function_type aggregate_function_type
      *
      * @return $this
      */

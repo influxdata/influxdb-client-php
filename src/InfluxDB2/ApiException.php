@@ -59,7 +59,7 @@ class ApiException extends RuntimeException
     /**
      * The deserialized response object
      *
-     * @var $responseObject;
+     * @var mixed
      */
     protected $responseObject;
 

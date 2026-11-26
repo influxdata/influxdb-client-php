@@ -225,7 +225,7 @@ class StatusRule implements ModelInterface, ArrayAccess
     /**
      * Gets current_level
      *
-     * @return \InfluxDB2\Model\RuleStatusLevel|null
+     * @return string|null
      */
     public function getCurrentLevel()
     {
@@ -235,7 +235,7 @@ class StatusRule implements ModelInterface, ArrayAccess
     /**
      * Sets current_level
      *
-     * @param \InfluxDB2\Model\RuleStatusLevel|null $current_level current_level
+     * @param string|null $current_level current_level
      *
      * @return $this
      */
@@ -249,7 +249,7 @@ class StatusRule implements ModelInterface, ArrayAccess
     /**
      * Gets previous_level
      *
-     * @return \InfluxDB2\Model\RuleStatusLevel|null
+     * @return string|null
      */
     public function getPreviousLevel()
     {
@@ -259,7 +259,7 @@ class StatusRule implements ModelInterface, ArrayAccess
     /**
      * Sets previous_level
      *
-     * @param \InfluxDB2\Model\RuleStatusLevel|null $previous_level previous_level
+     * @param string|null $previous_level previous_level
      *
      * @return $this
      */

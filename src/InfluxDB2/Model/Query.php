@@ -343,7 +343,7 @@ class Query implements ModelInterface, ArrayAccess
     /**
      * Gets params
      *
-     * @return map[string,object]|null
+     * @return array<string, mixed>|null
      */
     public function getParams()
     {
@@ -353,7 +353,7 @@ class Query implements ModelInterface, ArrayAccess
     /**
      * Sets params
      *
-     * @param map[string,object]|null $params Key-value pairs passed as parameters during query execution.  To use parameters in your query, pass a _`query`_ with `params` references (in dot notation)--for example:  ```json   query: "from(bucket: params.mybucket) |> range(start: params.rangeStart) |> limit(n:1)" ```  and pass _`params`_ with the key-value pairs--for example:  ```json   params: {     "mybucket": "environment",     "rangeStart": "-30d"   } ```  During query execution, InfluxDB passes _`params`_ to your script and substitutes the values.  #### Limitations  - If you use _`params`_, you can't use _`extern`_.
+     * @param array<string, mixed>|null $params Key-value pairs passed as parameters during query execution.  To use parameters in your query, pass a _`query`_ with `params` references (in dot notation)--for example:  ```json   query: "from(bucket: params.mybucket) |> range(start: params.rangeStart) |> limit(n:1)" ```  and pass _`params`_ with the key-value pairs--for example:  ```json   params: {     "mybucket": "environment",     "rangeStart": "-30d"   } ```  During query execution, InfluxDB passes _`params`_ to your script and substitutes the values.  #### Limitations  - If you use _`params`_, you can't use _`extern`_.
      *
      * @return $this
      */

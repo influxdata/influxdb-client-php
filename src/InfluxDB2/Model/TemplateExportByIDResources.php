@@ -249,7 +249,7 @@ class TemplateExportByIDResources implements ModelInterface, ArrayAccess
     /**
      * Gets kind
      *
-     * @return \InfluxDB2\Model\TemplateKind
+     * @return string
      */
     public function getKind()
     {
@@ -259,7 +259,7 @@ class TemplateExportByIDResources implements ModelInterface, ArrayAccess
     /**
      * Sets kind
      *
-     * @param \InfluxDB2\Model\TemplateKind $kind kind
+     * @param string $kind kind
      *
      * @return $this
      */

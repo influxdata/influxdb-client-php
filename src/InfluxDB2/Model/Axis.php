@@ -392,7 +392,7 @@ class Axis implements ModelInterface, ArrayAccess
     /**
      * Gets scale
      *
-     * @return \InfluxDB2\Model\AxisScale|null
+     * @return \InfluxDB2\Model\AxisScale::LOG|\InfluxDB2\Model\AxisScale::LINEAR|null
      */
     public function getScale()
     {
@@ -402,7 +402,7 @@ class Axis implements ModelInterface, ArrayAccess
     /**
      * Sets scale
      *
-     * @param \InfluxDB2\Model\AxisScale|null $scale scale
+     * @param \InfluxDB2\Model\AxisScale::LOG|\InfluxDB2\Model\AxisScale::LINEAR|null $scale scale
      *
      * @return $this
      */

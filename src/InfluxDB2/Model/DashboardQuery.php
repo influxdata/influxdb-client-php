@@ -249,7 +249,7 @@ class DashboardQuery implements ModelInterface, ArrayAccess
     /**
      * Gets edit_mode
      *
-     * @return \InfluxDB2\Model\QueryEditMode|null
+     * @return \InfluxDB2\Model\QueryEditMode::BUILDER|\InfluxDB2\Model\QueryEditMode::ADVANCED|null
      */
     public function getEditMode()
     {
@@ -259,7 +259,7 @@ class DashboardQuery implements ModelInterface, ArrayAccess
     /**
      * Sets edit_mode
      *
-     * @param \InfluxDB2\Model\QueryEditMode|null $edit_mode edit_mode
+     * @param \InfluxDB2\Model\QueryEditMode::BUILDER|\InfluxDB2\Model\QueryEditMode::ADVANCED|null $edit_mode edit_mode
      *
      * @return $this
      */

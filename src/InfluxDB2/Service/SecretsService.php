@@ -54,7 +54,6 @@ class SecretsService
 
     /**
      * @param DefaultApi $defaultApi
-     * @param HeaderSelector  $selector
      */
     public function __construct(DefaultApi $defaultApi)
     {
@@ -315,7 +314,7 @@ class SecretsService
      * Update secrets in an organization
      *
      * @param  string $org_id The organization ID. (required)
-     * @param  map[string,string] $request_body Secret key value pairs to update/add (required)
+     * @param  array<string, string> $request_body Secret key value pairs to update/add (required)
      * @param  string $zap_trace_span OpenTracing span context (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
@@ -333,7 +332,7 @@ class SecretsService
      * Update secrets in an organization
      *
      * @param  string $org_id The organization ID. (required)
-     * @param  map[string,string] $request_body Secret key value pairs to update/add (required)
+     * @param  array<string, string> $request_body Secret key value pairs to update/add (required)
      * @param  string $zap_trace_span OpenTracing span context (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
@@ -353,7 +352,7 @@ class SecretsService
      * Create request for operation 'patchOrgsIDSecrets'
      *
      * @param  string $org_id The organization ID. (required)
-     * @param  map[string,string] $request_body Secret key value pairs to update/add (required)
+     * @param  array<string, string> $request_body Secret key value pairs to update/add (required)
      * @param  string $zap_trace_span OpenTracing span context (optional)
      *
      * @throws \InvalidArgumentException

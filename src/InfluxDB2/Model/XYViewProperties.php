@@ -617,7 +617,7 @@ class XYViewProperties extends ViewProperties
     /**
      * Gets color_mapping
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getColorMapping()
     {
@@ -627,7 +627,7 @@ class XYViewProperties extends ViewProperties
     /**
      * Sets color_mapping
      *
-     * @param map[string,string]|null $color_mapping A color mapping is an object that maps time series data to a UI color scheme to allow the UI to render graphs consistent colors across reloads.
+     * @param array<string, string>|null $color_mapping A color mapping is an object that maps time series data to a UI color scheme to allow the UI to render graphs consistent colors across reloads.
      *
      * @return $this
      */
@@ -1100,7 +1100,7 @@ class XYViewProperties extends ViewProperties
     /**
      * Gets geom
      *
-     * @return \InfluxDB2\Model\XYGeom
+     * @return string
      */
     public function getGeom()
     {
@@ -1110,7 +1110,7 @@ class XYViewProperties extends ViewProperties
     /**
      * Sets geom
      *
-     * @param \InfluxDB2\Model\XYGeom $geom geom
+     * @param string $geom geom
      *
      * @return $this
      */

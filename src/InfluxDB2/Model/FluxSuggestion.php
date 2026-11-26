@@ -237,7 +237,7 @@ class FluxSuggestion implements ModelInterface, ArrayAccess
     /**
      * Gets params
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getParams()
     {
@@ -247,7 +247,7 @@ class FluxSuggestion implements ModelInterface, ArrayAccess
     /**
      * Sets params
      *
-     * @param map[string,string]|null $params params
+     * @param array<string, string>|null $params params
      *
      * @return $this
      */

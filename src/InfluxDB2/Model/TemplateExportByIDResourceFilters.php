@@ -237,7 +237,7 @@ class TemplateExportByIDResourceFilters implements ModelInterface, ArrayAccess
     /**
      * Gets by_resource_kind
      *
-     * @return \InfluxDB2\Model\TemplateKind[]|null
+     * @return string[]|null
      */
     public function getByResourceKind()
     {
@@ -247,7 +247,7 @@ class TemplateExportByIDResourceFilters implements ModelInterface, ArrayAccess
     /**
      * Sets by_resource_kind
      *
-     * @param \InfluxDB2\Model\TemplateKind[]|null $by_resource_kind by_resource_kind
+     * @param string[]|null $by_resource_kind by_resource_kind
      *
      * @return $this
      */

@@ -327,7 +327,7 @@ class TelegrafPluginRequestPlugins implements ModelInterface, ArrayAccess
     /**
      * Gets config
      *
-     * @return map[string,object]|null
+     * @return array<string, mixed>|null
      */
     public function getConfig()
     {
@@ -337,7 +337,7 @@ class TelegrafPluginRequestPlugins implements ModelInterface, ArrayAccess
     /**
      * Sets config
      *
-     * @param map[string,object]|null $config config
+     * @param array<string, mixed>|null $config config
      *
      * @return $this
      */

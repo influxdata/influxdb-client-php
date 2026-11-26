@@ -282,7 +282,7 @@ class TaskCreateRequest implements ModelInterface, ArrayAccess
     /**
      * Gets status
      *
-     * @return \InfluxDB2\Model\TaskStatusType|null
+     * @return \InfluxDB2\Model\TaskStatusType::ACTIVE|\InfluxDB2\Model\TaskStatusType::INACTIVE|null
      */
     public function getStatus()
     {
@@ -292,7 +292,7 @@ class TaskCreateRequest implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param \InfluxDB2\Model\TaskStatusType|null $status status
+     * @param \InfluxDB2\Model\TaskStatusType::ACTIVE|\InfluxDB2\Model\TaskStatusType::INACTIVE|null $status status
      *
      * @return $this
      */
