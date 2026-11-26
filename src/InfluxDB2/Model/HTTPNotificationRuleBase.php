@@ -189,7 +189,7 @@ class HTTPNotificationRuleBase extends NotificationRule
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_HTTP;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_HTTP;
         $this->container['url'] = isset($data['url']) ? $data['url'] : null;
     }
 

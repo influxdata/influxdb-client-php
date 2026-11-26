@@ -248,8 +248,8 @@ class CheckViewProperties extends ViewProperties
         parent::__construct($data);
 
         $this->container['adaptive_zoom_hide'] = isset($data['adaptive_zoom_hide']) ? $data['adaptive_zoom_hide'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_CHECK;
-        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : SHAPE_CHRONOGRAF_V2;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_CHECK;
+        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : self::SHAPE_CHRONOGRAF_V2;
         $this->container['check_id'] = isset($data['check_id']) ? $data['check_id'] : null;
         $this->container['check'] = isset($data['check']) ? $data['check'] : null;
         $this->container['queries'] = isset($data['queries']) ? $data['queries'] : null;

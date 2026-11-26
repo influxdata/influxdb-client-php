@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#184](https://github.com/influxdata/influxdb-client-php/pull/184): Fix undefined constants used as default values of generated models (`*ViewProperties`, `*NotificationRuleBase`, `LineProtocolLengthError`).
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.

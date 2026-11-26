@@ -222,10 +222,10 @@ class SimpleTableViewProperties extends ViewProperties
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_SIMPLE_TABLE;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_SIMPLE_TABLE;
         $this->container['show_all'] = isset($data['show_all']) ? $data['show_all'] : null;
         $this->container['queries'] = isset($data['queries']) ? $data['queries'] : null;
-        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : SHAPE_CHRONOGRAF_V2;
+        $this->container['shape'] = isset($data['shape']) ? $data['shape'] : self::SHAPE_CHRONOGRAF_V2;
         $this->container['note'] = isset($data['note']) ? $data['note'] : null;
         $this->container['show_note_when_empty'] = isset($data['show_note_when_empty']) ? $data['show_note_when_empty'] : null;
     }

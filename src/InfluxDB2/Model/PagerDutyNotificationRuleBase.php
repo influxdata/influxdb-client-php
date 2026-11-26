@@ -189,7 +189,7 @@ class PagerDutyNotificationRuleBase extends NotificationRule
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_PAGERDUTY;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_PAGERDUTY;
         $this->container['message_template'] = isset($data['message_template']) ? $data['message_template'] : null;
     }
 

@@ -194,7 +194,7 @@ class SlackNotificationRuleBase extends NotificationRule
     {
         parent::__construct($data);
 
-        $this->container['type'] = isset($data['type']) ? $data['type'] : TYPE_SLACK;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : self::TYPE_SLACK;
         $this->container['channel'] = isset($data['channel']) ? $data['channel'] : null;
         $this->container['message_template'] = isset($data['message_template']) ? $data['message_template'] : null;
     }
