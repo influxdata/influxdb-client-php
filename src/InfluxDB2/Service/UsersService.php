@@ -54,7 +54,6 @@ class UsersService
 
     /**
      * @param DefaultApi $defaultApi
-     * @param HeaderSelector  $selector
      */
     public function __construct(DefaultApi $defaultApi)
     {
@@ -180,7 +179,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return map[string,object]|\InfluxDB2\Model\Error
+     * @return array<string, array<mixed>>
      */
     public function getFlags($zap_trace_span = null)
     {
@@ -197,7 +196,7 @@ class UsersService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of map[string,object]|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: array<string, array<mixed>>, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getFlagsWithHttpInfo($zap_trace_span = null)
     {

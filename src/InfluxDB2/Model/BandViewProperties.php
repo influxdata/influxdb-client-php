@@ -1065,7 +1065,7 @@ class BandViewProperties extends ViewProperties
     /**
      * Gets geom
      *
-     * @return \InfluxDB2\Model\XYGeom
+     * @return string
      */
     public function getGeom()
     {
@@ -1075,7 +1075,7 @@ class BandViewProperties extends ViewProperties
     /**
      * Sets geom
      *
-     * @param \InfluxDB2\Model\XYGeom $geom geom
+     * @param string $geom geom
      *
      * @return $this
      */

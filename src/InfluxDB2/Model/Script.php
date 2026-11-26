@@ -390,7 +390,7 @@ class Script implements ModelInterface, ArrayAccess
     /**
      * Gets language
      *
-     * @return \InfluxDB2\Model\ScriptLanguage|null
+     * @return \InfluxDB2\Model\ScriptLanguage::FLUX|null
      */
     public function getLanguage()
     {
@@ -400,7 +400,7 @@ class Script implements ModelInterface, ArrayAccess
     /**
      * Sets language
      *
-     * @param \InfluxDB2\Model\ScriptLanguage|null $language language
+     * @param \InfluxDB2\Model\ScriptLanguage::FLUX|null $language language
      *
      * @return $this
      */

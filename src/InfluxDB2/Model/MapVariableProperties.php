@@ -261,7 +261,7 @@ class MapVariableProperties extends VariableProperties
     /**
      * Gets values
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getValues()
     {
@@ -271,7 +271,7 @@ class MapVariableProperties extends VariableProperties
     /**
      * Sets values
      *
-     * @param map[string,string]|null $values values
+     * @param array<string, string>|null $values values
      *
      * @return $this
      */

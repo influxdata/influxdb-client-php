@@ -375,7 +375,7 @@ class TemplateApply implements ModelInterface, ArrayAccess
     /**
      * Gets env_refs
      *
-     * @return map[string,object]|null
+     * @return array<string, mixed>|null
      */
     public function getEnvRefs()
     {
@@ -385,7 +385,7 @@ class TemplateApply implements ModelInterface, ArrayAccess
     /**
      * Sets env_refs
      *
-     * @param map[string,object]|null $env_refs An object with key-value pairs that map to **environment references** in templates.  Environment references in templates are `envRef` objects with an `envRef.key` property. To substitute a custom environment reference value when applying templates, pass `envRefs` with the `envRef.key` and the value.  When you apply a template, InfluxDB replaces `envRef` objects in the template with the values that you provide in the `envRefs` parameter. For more examples, see how to [define environment references](https://docs.influxdata.com/influxdb/v2.3/influxdb-templates/use/#define-environment-references).  The following template fields may use environment references:    - `metadata.name`   - `spec.endpointName`   - `spec.associations.name`  For more information about including environment references in template fields, see how to [include user-definable resource names](https://docs.influxdata.com/influxdb/v2.3/influxdb-templates/create/#include-user-definable-resource-names).
+     * @param array<string, mixed>|null $env_refs An object with key-value pairs that map to **environment references** in templates.  Environment references in templates are `envRef` objects with an `envRef.key` property. To substitute a custom environment reference value when applying templates, pass `envRefs` with the `envRef.key` and the value.  When you apply a template, InfluxDB replaces `envRef` objects in the template with the values that you provide in the `envRefs` parameter. For more examples, see how to [define environment references](https://docs.influxdata.com/influxdb/v2.3/influxdb-templates/use/#define-environment-references).  The following template fields may use environment references:    - `metadata.name`   - `spec.endpointName`   - `spec.associations.name`  For more information about including environment references in template fields, see how to [include user-definable resource names](https://docs.influxdata.com/influxdb/v2.3/influxdb-templates/create/#include-user-definable-resource-names).
      *
      * @return $this
      */
@@ -399,7 +399,7 @@ class TemplateApply implements ModelInterface, ArrayAccess
     /**
      * Gets secrets
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getSecrets()
     {
@@ -409,7 +409,7 @@ class TemplateApply implements ModelInterface, ArrayAccess
     /**
      * Sets secrets
      *
-     * @param map[string,string]|null $secrets An object with key-value pairs that map to **secrets** in queries.  Queries may reference secrets stored in InfluxDB--for example, the following Flux script retrieves `POSTGRES_USERNAME` and `POSTGRES_PASSWORD` secrets and then uses them to connect to a PostgreSQL database:    ```js   import "sql"   import "influxdata/influxdb/secrets"    username = secrets.get(key: "POSTGRES_USERNAME")   password = secrets.get(key: "POSTGRES_PASSWORD")    sql.from(     driverName: "postgres",     dataSourceName: "postgresql://${username}:${password}@localhost:5432",     query: "SELECT * FROM example_table",   )   ```  To define secret values in your `/api/v2/templates/apply` request, pass the `secrets` parameter with key-value pairs--for example:    ```json   {     ...     "secrets": {       "POSTGRES_USERNAME": "pguser",       "POSTGRES_PASSWORD": "foo"     }     ...   }   ```  InfluxDB stores the key-value pairs as secrets that you can access with `secrets.get()`. Once stored, you can't view secret values in InfluxDB.  #### Related guides  - [How to pass secrets when installing a template](https://docs.influxdata.com/influxdb/v2.3/influxdb-templates/use/#pass-secrets-when-installing-a-template)
+     * @param array<string, string>|null $secrets An object with key-value pairs that map to **secrets** in queries.  Queries may reference secrets stored in InfluxDB--for example, the following Flux script retrieves `POSTGRES_USERNAME` and `POSTGRES_PASSWORD` secrets and then uses them to connect to a PostgreSQL database:    ```js   import "sql"   import "influxdata/influxdb/secrets"    username = secrets.get(key: "POSTGRES_USERNAME")   password = secrets.get(key: "POSTGRES_PASSWORD")    sql.from(     driverName: "postgres",     dataSourceName: "postgresql://${username}:${password}@localhost:5432",     query: "SELECT * FROM example_table",   )   ```  To define secret values in your `/api/v2/templates/apply` request, pass the `secrets` parameter with key-value pairs--for example:    ```json   {     ...     "secrets": {       "POSTGRES_USERNAME": "pguser",       "POSTGRES_PASSWORD": "foo"     }     ...   }   ```  InfluxDB stores the key-value pairs as secrets that you can access with `secrets.get()`. Once stored, you can't view secret values in InfluxDB.  #### Related guides  - [How to pass secrets when installing a template](https://docs.influxdata.com/influxdb/v2.3/influxdb-templates/use/#pass-secrets-when-installing-a-template)
      *
      * @return $this
      */

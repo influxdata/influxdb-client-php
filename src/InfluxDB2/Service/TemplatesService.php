@@ -54,7 +54,6 @@ class TemplatesService
 
     /**
      * @param DefaultApi $defaultApi
-     * @param HeaderSelector  $selector
      */
     public function __construct(DefaultApi $defaultApi)
     {
@@ -72,7 +71,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\TemplateSummary|\InfluxDB2\Model\TemplateSummary|TemplateSummary|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\TemplateSummary
      */
     public function applyTemplate($template_apply)
     {
@@ -89,7 +88,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\TemplateSummary|\InfluxDB2\Model\TemplateSummary|TemplateSummary|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\TemplateSummary, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function applyTemplateWithHttpInfo($template_apply)
     {

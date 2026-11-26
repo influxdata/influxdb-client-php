@@ -225,7 +225,7 @@ class TemplateSummaryErrors implements ModelInterface, ArrayAccess
     /**
      * Gets kind
      *
-     * @return \InfluxDB2\Model\TemplateKind|null
+     * @return string|null
      */
     public function getKind()
     {
@@ -235,7 +235,7 @@ class TemplateSummaryErrors implements ModelInterface, ArrayAccess
     /**
      * Sets kind
      *
-     * @param \InfluxDB2\Model\TemplateKind|null $kind kind
+     * @param string|null $kind kind
      *
      * @return $this
      */

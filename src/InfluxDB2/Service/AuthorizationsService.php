@@ -54,7 +54,6 @@ class AuthorizationsService
 
     /**
      * @param DefaultApi $defaultApi
-     * @param HeaderSelector  $selector
      */
     public function __construct(DefaultApi $defaultApi)
     {

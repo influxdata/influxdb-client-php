@@ -54,7 +54,6 @@ class WriteService
 
     /**
      * @param DefaultApi $defaultApi
-     * @param HeaderSelector  $selector
      */
     public function __construct(DefaultApi $defaultApi)
     {
@@ -77,7 +76,7 @@ class WriteService
      * @param  int $content_length The size of the entity-body, in bytes, sent to InfluxDB. If the length is greater than the &#x60;max body&#x60; configuration option, the server responds with status code &#x60;413&#x60;. (optional)
      * @param  string $accept The content type that the client can understand. Writes only return a response body if they fail--for example, due to a formatting problem or quota limit.  #### InfluxDB Cloud    - Returns only &#x60;application/json&#x60; for format and limit errors.   - Returns only &#x60;text/html&#x60; for some quota limit errors.  #### InfluxDB OSS    - Returns only &#x60;application/json&#x60; for format and limit errors.  #### Related guides   - [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/v2.3/write-data/troubleshoot/). (optional, default to 'application/json')
      * @param  string $org_id The ID of the destination organization for writes. If you pass both &#x60;orgID&#x60; and &#x60;org&#x60;, they must both be valid.  #### InfluxDB Cloud  - Doesn&#39;t require &#x60;org&#x60; or &#x60;orgID&#x60;. - Writes to the bucket in the organization associated with the authorization (API token).   #### InfluxDB OSS  - Requires either &#x60;org&#x60; or &#x60;orgID&#x60;. - InfluxDB writes all points in the batch to this organization. (optional)
-     * @param  \InfluxDB2\Model\WritePrecision $precision The precision for unix timestamps in the line protocol batch. (optional)
+     * @param  \InfluxDB2\Model\WritePrecision::MS|\InfluxDB2\Model\WritePrecision::S|\InfluxDB2\Model\WritePrecision::US|\InfluxDB2\Model\WritePrecision::NS $precision The precision for unix timestamps in the line protocol batch. (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -102,7 +101,7 @@ class WriteService
      * @param  int $content_length The size of the entity-body, in bytes, sent to InfluxDB. If the length is greater than the &#x60;max body&#x60; configuration option, the server responds with status code &#x60;413&#x60;. (optional)
      * @param  string $accept The content type that the client can understand. Writes only return a response body if they fail--for example, due to a formatting problem or quota limit.  #### InfluxDB Cloud    - Returns only &#x60;application/json&#x60; for format and limit errors.   - Returns only &#x60;text/html&#x60; for some quota limit errors.  #### InfluxDB OSS    - Returns only &#x60;application/json&#x60; for format and limit errors.  #### Related guides   - [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/v2.3/write-data/troubleshoot/). (optional, default to 'application/json')
      * @param  string $org_id The ID of the destination organization for writes. If you pass both &#x60;orgID&#x60; and &#x60;org&#x60;, they must both be valid.  #### InfluxDB Cloud  - Doesn&#39;t require &#x60;org&#x60; or &#x60;orgID&#x60;. - Writes to the bucket in the organization associated with the authorization (API token).   #### InfluxDB OSS  - Requires either &#x60;org&#x60; or &#x60;orgID&#x60;. - InfluxDB writes all points in the batch to this organization. (optional)
-     * @param  \InfluxDB2\Model\WritePrecision $precision The precision for unix timestamps in the line protocol batch. (optional)
+     * @param  \InfluxDB2\Model\WritePrecision::MS|\InfluxDB2\Model\WritePrecision::S|\InfluxDB2\Model\WritePrecision::US|\InfluxDB2\Model\WritePrecision::NS $precision The precision for unix timestamps in the line protocol batch. (optional)
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -129,7 +128,7 @@ class WriteService
      * @param  int $content_length The size of the entity-body, in bytes, sent to InfluxDB. If the length is greater than the &#x60;max body&#x60; configuration option, the server responds with status code &#x60;413&#x60;. (optional)
      * @param  string $accept The content type that the client can understand. Writes only return a response body if they fail--for example, due to a formatting problem or quota limit.  #### InfluxDB Cloud    - Returns only &#x60;application/json&#x60; for format and limit errors.   - Returns only &#x60;text/html&#x60; for some quota limit errors.  #### InfluxDB OSS    - Returns only &#x60;application/json&#x60; for format and limit errors.  #### Related guides   - [Troubleshoot issues writing data](https://docs.influxdata.com/influxdb/v2.3/write-data/troubleshoot/). (optional, default to 'application/json')
      * @param  string $org_id The ID of the destination organization for writes. If you pass both &#x60;orgID&#x60; and &#x60;org&#x60;, they must both be valid.  #### InfluxDB Cloud  - Doesn&#39;t require &#x60;org&#x60; or &#x60;orgID&#x60;. - Writes to the bucket in the organization associated with the authorization (API token).   #### InfluxDB OSS  - Requires either &#x60;org&#x60; or &#x60;orgID&#x60;. - InfluxDB writes all points in the batch to this organization. (optional)
-     * @param  \InfluxDB2\Model\WritePrecision $precision The precision for unix timestamps in the line protocol batch. (optional)
+     * @param  \InfluxDB2\Model\WritePrecision::MS|\InfluxDB2\Model\WritePrecision::S|\InfluxDB2\Model\WritePrecision::US|\InfluxDB2\Model\WritePrecision::NS $precision The precision for unix timestamps in the line protocol batch. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \Psr\Http\Message\RequestInterface

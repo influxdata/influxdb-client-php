@@ -488,7 +488,7 @@ class HTTPNotificationEndpoint extends NotificationEndpoint
     /**
      * Gets headers
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getHeaders()
     {
@@ -498,7 +498,7 @@ class HTTPNotificationEndpoint extends NotificationEndpoint
     /**
      * Sets headers
      *
-     * @param map[string,string]|null $headers Customized headers.
+     * @param array<string, string>|null $headers Customized headers.
      *
      * @return $this
      */

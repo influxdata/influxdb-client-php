@@ -237,7 +237,7 @@ class LabelUpdate implements ModelInterface, ArrayAccess
     /**
      * Gets properties
      *
-     * @return map[string,string]|null
+     * @return array<string, string>|null
      */
     public function getProperties()
     {
@@ -247,7 +247,7 @@ class LabelUpdate implements ModelInterface, ArrayAccess
     /**
      * Sets properties
      *
-     * @param map[string,string]|null $properties properties
+     * @param array<string, string>|null $properties properties
      *
      * @return $this
      */

@@ -378,7 +378,7 @@ class DeadmanCheck extends Check
     /**
      * Gets level
      *
-     * @return \InfluxDB2\Model\CheckStatusLevel|null
+     * @return string|null
      */
     public function getLevel()
     {
@@ -388,7 +388,7 @@ class DeadmanCheck extends Check
     /**
      * Sets level
      *
-     * @param \InfluxDB2\Model\CheckStatusLevel|null $level level
+     * @param string|null $level level
      *
      * @return $this
      */

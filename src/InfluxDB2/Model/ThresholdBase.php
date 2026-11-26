@@ -213,7 +213,7 @@ class ThresholdBase implements ModelInterface, ArrayAccess
     /**
      * Gets level
      *
-     * @return \InfluxDB2\Model\CheckStatusLevel|null
+     * @return string|null
      */
     public function getLevel()
     {
@@ -223,7 +223,7 @@ class ThresholdBase implements ModelInterface, ArrayAccess
     /**
      * Sets level
      *
-     * @param \InfluxDB2\Model\CheckStatusLevel|null $level level
+     * @param string|null $level level
      *
      * @return $this
      */

@@ -363,7 +363,7 @@ class PostBucketRequest implements ModelInterface, ArrayAccess
     /**
      * Gets schema_type
      *
-     * @return \InfluxDB2\Model\SchemaType|null
+     * @return \InfluxDB2\Model\SchemaType::IMPLICIT|\InfluxDB2\Model\SchemaType::EXPLICIT|null
      */
     public function getSchemaType()
     {
@@ -373,7 +373,7 @@ class PostBucketRequest implements ModelInterface, ArrayAccess
     /**
      * Sets schema_type
      *
-     * @param \InfluxDB2\Model\SchemaType|null $schema_type schema_type
+     * @param \InfluxDB2\Model\SchemaType::IMPLICIT|\InfluxDB2\Model\SchemaType::EXPLICIT|null $schema_type schema_type
      *
      * @return $this
      */

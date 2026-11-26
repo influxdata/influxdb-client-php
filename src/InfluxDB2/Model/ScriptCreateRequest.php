@@ -309,7 +309,7 @@ class ScriptCreateRequest implements ModelInterface, ArrayAccess
     /**
      * Gets language
      *
-     * @return \InfluxDB2\Model\ScriptLanguage
+     * @return \InfluxDB2\Model\ScriptLanguage::FLUX
      */
     public function getLanguage()
     {
@@ -319,7 +319,7 @@ class ScriptCreateRequest implements ModelInterface, ArrayAccess
     /**
      * Sets language
      *
-     * @param \InfluxDB2\Model\ScriptLanguage $language language
+     * @param \InfluxDB2\Model\ScriptLanguage::FLUX $language language
      *
      * @return $this
      */

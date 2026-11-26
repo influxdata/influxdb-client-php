@@ -628,7 +628,7 @@ class NotificationRuleBase implements ModelInterface, ArrayAccess
     /**
      * Gets status
      *
-     * @return \InfluxDB2\Model\TaskStatusType
+     * @return \InfluxDB2\Model\TaskStatusType::ACTIVE|\InfluxDB2\Model\TaskStatusType::INACTIVE
      */
     public function getStatus()
     {
@@ -638,7 +638,7 @@ class NotificationRuleBase implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param \InfluxDB2\Model\TaskStatusType $status status
+     * @param \InfluxDB2\Model\TaskStatusType::ACTIVE|\InfluxDB2\Model\TaskStatusType::INACTIVE $status status
      *
      * @return $this
      */

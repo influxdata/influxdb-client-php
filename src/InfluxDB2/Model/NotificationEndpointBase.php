@@ -545,7 +545,7 @@ class NotificationEndpointBase implements ModelInterface, ArrayAccess
     /**
      * Gets type
      *
-     * @return \InfluxDB2\Model\NotificationEndpointType
+     * @return \InfluxDB2\Model\NotificationEndpointType::SLACK|\InfluxDB2\Model\NotificationEndpointType::PAGERDUTY|\InfluxDB2\Model\NotificationEndpointType::HTTP|\InfluxDB2\Model\NotificationEndpointType::TELEGRAM
      */
     public function getType()
     {
@@ -555,7 +555,7 @@ class NotificationEndpointBase implements ModelInterface, ArrayAccess
     /**
      * Sets type
      *
-     * @param \InfluxDB2\Model\NotificationEndpointType $type type
+     * @param \InfluxDB2\Model\NotificationEndpointType::SLACK|\InfluxDB2\Model\NotificationEndpointType::PAGERDUTY|\InfluxDB2\Model\NotificationEndpointType::HTTP|\InfluxDB2\Model\NotificationEndpointType::TELEGRAM $type type
      *
      * @return $this
      */

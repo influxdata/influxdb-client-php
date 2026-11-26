@@ -291,7 +291,7 @@ class TemplateSummarySummaryNotificationRules implements ModelInterface, ArrayAc
     /**
      * Gets kind
      *
-     * @return \InfluxDB2\Model\TemplateKind|null
+     * @return string|null
      */
     public function getKind()
     {
@@ -301,7 +301,7 @@ class TemplateSummarySummaryNotificationRules implements ModelInterface, ArrayAc
     /**
      * Sets kind
      *
-     * @param \InfluxDB2\Model\TemplateKind|null $kind kind
+     * @param string|null $kind kind
      *
      * @return $this
      */
