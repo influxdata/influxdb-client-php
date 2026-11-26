@@ -73,7 +73,7 @@ class TelegrafPluginsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\TelegrafPlugins|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\TelegrafPlugins
      */
     public function getTelegrafPlugins($zap_trace_span = null, $type = null)
     {
@@ -91,7 +91,7 @@ class TelegrafPluginsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\TelegrafPlugins|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\TelegrafPlugins, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTelegrafPluginsWithHttpInfo($zap_trace_span = null, $type = null)
     {

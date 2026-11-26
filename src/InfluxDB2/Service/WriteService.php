@@ -106,7 +106,7 @@ class WriteService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postWriteWithHttpInfo($org, $bucket, $body, $zap_trace_span = null, $content_encoding = 'identity', $content_type = 'text/plain; charset=utf-8', $content_length = null, $accept = 'application/json', $org_id = null, $precision = null)
     {

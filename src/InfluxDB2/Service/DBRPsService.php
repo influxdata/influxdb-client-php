@@ -94,7 +94,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteDBRPIDWithHttpInfo($dbrp_id, $zap_trace_span = null, $org_id = null, $org = null)
     {
@@ -201,7 +201,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\DBRPs|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\DBRPs
      */
     public function getDBRPs($zap_trace_span = null, $org_id = null, $org = null, $id = null, $bucket_id = null, $default = null, $db = null, $rp = null)
     {
@@ -225,7 +225,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\DBRPs|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\DBRPs, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDBRPsWithHttpInfo($zap_trace_span = null, $org_id = null, $org = null, $id = null, $bucket_id = null, $default = null, $db = null, $rp = null)
     {
@@ -350,7 +350,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\DBRPGet|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\DBRPGet
      */
     public function getDBRPsID($dbrp_id, $zap_trace_span = null, $org_id = null, $org = null)
     {
@@ -370,7 +370,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\DBRPGet|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\DBRPGet, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDBRPsIDWithHttpInfo($dbrp_id, $zap_trace_span = null, $org_id = null, $org = null)
     {
@@ -486,7 +486,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\DBRPGet|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\DBRPGet
      */
     public function patchDBRPID($dbrp_id, $dbrp_update, $zap_trace_span = null, $org_id = null, $org = null)
     {
@@ -507,7 +507,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\DBRPGet|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\DBRPGet, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchDBRPIDWithHttpInfo($dbrp_id, $dbrp_update, $zap_trace_span = null, $org_id = null, $org = null)
     {
@@ -630,7 +630,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\DBRP|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\DBRP
      */
     public function postDBRP($dbrp_create, $zap_trace_span = null)
     {
@@ -648,7 +648,7 @@ class DBRPsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\DBRP|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\DBRP, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postDBRPWithHttpInfo($dbrp_create, $zap_trace_span = null)
     {

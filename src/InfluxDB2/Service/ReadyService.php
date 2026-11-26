@@ -72,7 +72,7 @@ class ReadyService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Ready|string
+     * @return \InfluxDB2\Model\Ready
      */
     public function getReady($zap_trace_span = null)
     {
@@ -89,7 +89,7 @@ class ReadyService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Ready|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Ready, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getReadyWithHttpInfo($zap_trace_span = null)
     {

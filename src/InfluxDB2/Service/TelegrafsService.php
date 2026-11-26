@@ -90,7 +90,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTelegrafsIDWithHttpInfo($telegraf_id, $zap_trace_span = null)
     {
@@ -200,7 +200,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTelegrafsIDLabelsIDWithHttpInfo($telegraf_id, $label_id, $zap_trace_span = null)
     {
@@ -325,7 +325,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTelegrafsIDMembersIDWithHttpInfo($user_id, $telegraf_id, $zap_trace_span = null)
     {
@@ -450,7 +450,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteTelegrafsIDOwnersIDWithHttpInfo($user_id, $telegraf_id, $zap_trace_span = null)
     {
@@ -556,7 +556,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Telegrafs|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Telegrafs
      */
     public function getTelegrafs($zap_trace_span = null, $org_id = null)
     {
@@ -574,7 +574,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Telegrafs|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Telegrafs, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTelegrafsWithHttpInfo($zap_trace_span = null, $org_id = null)
     {
@@ -668,7 +668,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string|\InfluxDB2\Model\Error
+     * @return string
      */
     public function getTelegrafsID($telegraf_id, $zap_trace_span = null, $accept = 'application/toml')
     {
@@ -687,7 +687,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: string, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTelegrafsIDWithHttpInfo($telegraf_id, $zap_trace_span = null, $accept = 'application/toml')
     {
@@ -795,7 +795,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getTelegrafsIDLabels($telegraf_id, $zap_trace_span = null)
     {
@@ -813,7 +813,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTelegrafsIDLabelsWithHttpInfo($telegraf_id, $zap_trace_span = null)
     {
@@ -916,7 +916,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMembers
      */
     public function getTelegrafsIDMembers($telegraf_id, $zap_trace_span = null)
     {
@@ -934,7 +934,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMembers, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTelegrafsIDMembersWithHttpInfo($telegraf_id, $zap_trace_span = null)
     {
@@ -1037,7 +1037,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwners
      */
     public function getTelegrafsIDOwners($telegraf_id, $zap_trace_span = null)
     {
@@ -1055,7 +1055,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwners, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getTelegrafsIDOwnersWithHttpInfo($telegraf_id, $zap_trace_span = null)
     {
@@ -1158,7 +1158,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Telegraf|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Telegraf
      */
     public function postTelegrafs($telegraf_plugin_request, $zap_trace_span = null)
     {
@@ -1176,7 +1176,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Telegraf|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Telegraf, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTelegrafsWithHttpInfo($telegraf_plugin_request, $zap_trace_span = null)
     {
@@ -1275,7 +1275,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postTelegrafsIDLabels($telegraf_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1294,7 +1294,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTelegrafsIDLabelsWithHttpInfo($telegraf_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1408,7 +1408,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMember
      */
     public function postTelegrafsIDMembers($telegraf_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1427,7 +1427,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMember, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTelegrafsIDMembersWithHttpInfo($telegraf_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1541,7 +1541,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwner|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwner
      */
     public function postTelegrafsIDOwners($telegraf_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1560,7 +1560,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwner|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwner, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postTelegrafsIDOwnersWithHttpInfo($telegraf_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1674,7 +1674,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Telegraf|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Telegraf
      */
     public function putTelegrafsID($telegraf_id, $telegraf_plugin_request, $zap_trace_span = null)
     {
@@ -1693,7 +1693,7 @@ class TelegrafsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Telegraf|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Telegraf, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function putTelegrafsIDWithHttpInfo($telegraf_id, $telegraf_plugin_request, $zap_trace_span = null)
     {

@@ -72,7 +72,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\TemplateSummary|\InfluxDB2\Model\TemplateSummary|TemplateSummary|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\TemplateSummary
      */
     public function applyTemplate($template_apply)
     {
@@ -89,7 +89,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\TemplateSummary|\InfluxDB2\Model\TemplateSummary|TemplateSummary|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\TemplateSummary, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function applyTemplateWithHttpInfo($template_apply)
     {
@@ -181,7 +181,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Stack|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Stack
      */
     public function createStack($post_stack_request1 = null)
     {
@@ -198,7 +198,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Stack|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Stack, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function createStackWithHttpInfo($post_stack_request1 = null)
     {
@@ -302,7 +302,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteStackWithHttpInfo($stack_id, $org_id)
     {
@@ -398,7 +398,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return object[]|\InfluxDB2\Model\Error
+     * @return array<mixed>[]
      */
     public function exportTemplate($template_export_by_id = null)
     {
@@ -415,7 +415,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of object[]|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: array<mixed>[], 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function exportTemplateWithHttpInfo($template_export_by_id = null)
     {
@@ -503,7 +503,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ListStacksResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ListStacksResponse
      */
     public function listStacks($org_id, $name = null, $stack_id = null)
     {
@@ -522,7 +522,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ListStacksResponse|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ListStacksResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function listStacksWithHttpInfo($org_id, $name = null, $stack_id = null)
     {
@@ -625,7 +625,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Stack|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Stack
      */
     public function readStack($stack_id)
     {
@@ -642,7 +642,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Stack|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Stack, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function readStackWithHttpInfo($stack_id)
     {
@@ -739,7 +739,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Stack|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Stack
      */
     public function uninstallStack($stack_id)
     {
@@ -756,7 +756,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Stack|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Stack, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function uninstallStackWithHttpInfo($stack_id)
     {
@@ -854,7 +854,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Stack|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Stack
      */
     public function updateStack($stack_id, $patch_stack_request1 = null)
     {
@@ -872,7 +872,7 @@ class TemplatesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Stack|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Stack, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function updateStackWithHttpInfo($stack_id, $patch_stack_request1 = null)
     {

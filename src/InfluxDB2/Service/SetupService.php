@@ -89,7 +89,7 @@ class SetupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\IsOnboarding, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\IsOnboarding, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getSetupWithHttpInfo($zap_trace_span = null)
     {
@@ -177,7 +177,7 @@ class SetupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\OnboardingResponse|string
+     * @return \InfluxDB2\Model\OnboardingResponse
      */
     public function postSetup($onboarding_request, $zap_trace_span = null)
     {
@@ -195,7 +195,7 @@ class SetupService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\OnboardingResponse|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\OnboardingResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postSetupWithHttpInfo($onboarding_request, $zap_trace_span = null)
     {

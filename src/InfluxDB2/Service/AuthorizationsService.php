@@ -90,7 +90,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteAuthorizationsIDWithHttpInfo($auth_id, $zap_trace_span = null)
     {
@@ -184,7 +184,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Authorizations|string|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Authorizations
      */
     public function getAuthorizations($zap_trace_span = null, $user_id = null, $user = null, $org_id = null, $org = null)
     {
@@ -205,7 +205,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Authorizations|string|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Authorizations, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getAuthorizationsWithHttpInfo($zap_trace_span = null, $user_id = null, $user = null, $org_id = null, $org = null)
     {
@@ -313,7 +313,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Authorization|string
+     * @return \InfluxDB2\Model\Authorization
      */
     public function getAuthorizationsID($auth_id, $zap_trace_span = null)
     {
@@ -331,7 +331,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Authorization|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Authorization, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getAuthorizationsIDWithHttpInfo($auth_id, $zap_trace_span = null)
     {
@@ -435,7 +435,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Authorization|string
+     * @return \InfluxDB2\Model\Authorization
      */
     public function patchAuthorizationsID($auth_id, $authorization_update_request, $zap_trace_span = null)
     {
@@ -454,7 +454,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Authorization|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Authorization, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchAuthorizationsIDWithHttpInfo($auth_id, $authorization_update_request, $zap_trace_span = null)
     {
@@ -567,7 +567,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Authorization|string|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Authorization
      */
     public function postAuthorizations($authorization_post_request, $zap_trace_span = null)
     {
@@ -585,7 +585,7 @@ class AuthorizationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Authorization|string|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Authorization, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postAuthorizationsWithHttpInfo($authorization_post_request, $zap_trace_span = null)
     {

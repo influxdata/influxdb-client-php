@@ -74,7 +74,7 @@ class ViewsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\View|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\View
      */
     public function getDashboardsIDCellsIDView($dashboard_id, $cell_id, $zap_trace_span = null)
     {
@@ -93,7 +93,7 @@ class ViewsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\View|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\View, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDashboardsIDCellsIDViewWithHttpInfo($dashboard_id, $cell_id, $zap_trace_span = null)
     {
@@ -213,7 +213,7 @@ class ViewsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\View|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\View
      */
     public function patchDashboardsIDCellsIDView($dashboard_id, $cell_id, $view, $zap_trace_span = null)
     {
@@ -233,7 +233,7 @@ class ViewsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\View|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\View, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchDashboardsIDCellsIDViewWithHttpInfo($dashboard_id, $cell_id, $view, $zap_trace_span = null)
     {

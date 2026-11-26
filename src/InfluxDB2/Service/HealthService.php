@@ -72,7 +72,7 @@ class HealthService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\HealthCheck|\InfluxDB2\Model\HealthCheck|string
+     * @return \InfluxDB2\Model\HealthCheck
      */
     public function getHealth($zap_trace_span = null)
     {
@@ -89,7 +89,7 @@ class HealthService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\HealthCheck|\InfluxDB2\Model\HealthCheck|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\HealthCheck, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getHealthWithHttpInfo($zap_trace_span = null)
     {

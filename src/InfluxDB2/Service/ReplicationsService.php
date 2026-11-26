@@ -90,7 +90,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteReplicationByIDWithHttpInfo($replication_id, $zap_trace_span = null)
     {
@@ -181,7 +181,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Replication|string|string
+     * @return \InfluxDB2\Model\Replication
      */
     public function getReplicationByID($replication_id, $zap_trace_span = null)
     {
@@ -199,7 +199,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Replication|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Replication, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getReplicationByIDWithHttpInfo($replication_id, $zap_trace_span = null)
     {
@@ -305,7 +305,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Replications|string|string
+     * @return \InfluxDB2\Model\Replications
      */
     public function getReplications($org_id, $zap_trace_span = null, $name = null, $remote_id = null, $local_bucket_id = null)
     {
@@ -326,7 +326,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Replications|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Replications, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getReplicationsWithHttpInfo($org_id, $zap_trace_span = null, $name = null, $remote_id = null, $local_bucket_id = null)
     {
@@ -442,7 +442,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Replication|string|string|string
+     * @return \InfluxDB2\Model\Replication
      */
     public function patchReplicationByID($replication_id, $replication_update_request, $zap_trace_span = null, $validate = false)
     {
@@ -462,7 +462,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Replication|string|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Replication, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchReplicationByIDWithHttpInfo($replication_id, $replication_update_request, $zap_trace_span = null, $validate = false)
     {
@@ -581,7 +581,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Replication|string|string
+     * @return \InfluxDB2\Model\Replication
      */
     public function postReplication($replication_creation_request, $zap_trace_span = null, $validate = false)
     {
@@ -600,7 +600,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Replication|string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Replication, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postReplicationWithHttpInfo($replication_creation_request, $zap_trace_span = null, $validate = false)
     {
@@ -720,7 +720,7 @@ class ReplicationsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postValidateReplicationByIDWithHttpInfo($replication_id, $zap_trace_span = null)
     {

@@ -90,7 +90,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteSourcesIDWithHttpInfo($source_id, $zap_trace_span = null)
     {
@@ -181,7 +181,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Sources|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Sources
      */
     public function getSources($zap_trace_span = null, $org = null)
     {
@@ -199,7 +199,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Sources|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Sources, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getSourcesWithHttpInfo($zap_trace_span = null, $org = null)
     {
@@ -292,7 +292,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Source|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Source
      */
     public function getSourcesID($source_id, $zap_trace_span = null)
     {
@@ -310,7 +310,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Source|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Source, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getSourcesIDWithHttpInfo($source_id, $zap_trace_span = null)
     {
@@ -414,7 +414,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Buckets|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Buckets
      */
     public function getSourcesIDBuckets($source_id, $zap_trace_span = null, $org = null)
     {
@@ -433,7 +433,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Buckets|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Buckets, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getSourcesIDBucketsWithHttpInfo($source_id, $zap_trace_span = null, $org = null)
     {
@@ -541,7 +541,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\HealthCheck|\InfluxDB2\Model\HealthCheck|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\HealthCheck
      */
     public function getSourcesIDHealth($source_id, $zap_trace_span = null)
     {
@@ -559,7 +559,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\HealthCheck|\InfluxDB2\Model\HealthCheck|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\HealthCheck, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getSourcesIDHealthWithHttpInfo($source_id, $zap_trace_span = null)
     {
@@ -663,7 +663,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Source|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Source
      */
     public function patchSourcesID($source_id, $source, $zap_trace_span = null)
     {
@@ -682,7 +682,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Source|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Source, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchSourcesIDWithHttpInfo($source_id, $source, $zap_trace_span = null)
     {
@@ -795,7 +795,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Source|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Source
      */
     public function postSources($source, $zap_trace_span = null)
     {
@@ -813,7 +813,7 @@ class SourcesService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Source|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Source, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postSourcesWithHttpInfo($source, $zap_trace_span = null)
     {

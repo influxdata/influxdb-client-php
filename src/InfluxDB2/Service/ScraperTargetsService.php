@@ -90,7 +90,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteScrapersIDWithHttpInfo($scraper_target_id, $zap_trace_span = null)
     {
@@ -200,7 +200,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteScrapersIDLabelsIDWithHttpInfo($scraper_target_id, $label_id, $zap_trace_span = null)
     {
@@ -325,7 +325,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteScrapersIDMembersIDWithHttpInfo($user_id, $scraper_target_id, $zap_trace_span = null)
     {
@@ -450,7 +450,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteScrapersIDOwnersIDWithHttpInfo($user_id, $scraper_target_id, $zap_trace_span = null)
     {
@@ -580,7 +580,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ScraperTargetResponses, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ScraperTargetResponses, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScrapersWithHttpInfo($zap_trace_span = null, $name = null, $id = null, $org_id = null, $org = null)
     {
@@ -691,7 +691,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ScraperTargetResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ScraperTargetResponse
      */
     public function getScrapersID($scraper_target_id, $zap_trace_span = null)
     {
@@ -709,7 +709,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ScraperTargetResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ScraperTargetResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScrapersIDWithHttpInfo($scraper_target_id, $zap_trace_span = null)
     {
@@ -812,7 +812,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getScrapersIDLabels($scraper_target_id, $zap_trace_span = null)
     {
@@ -830,7 +830,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScrapersIDLabelsWithHttpInfo($scraper_target_id, $zap_trace_span = null)
     {
@@ -933,7 +933,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMembers
      */
     public function getScrapersIDMembers($scraper_target_id, $zap_trace_span = null)
     {
@@ -951,7 +951,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMembers, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScrapersIDMembersWithHttpInfo($scraper_target_id, $zap_trace_span = null)
     {
@@ -1054,7 +1054,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwners
      */
     public function getScrapersIDOwners($scraper_target_id, $zap_trace_span = null)
     {
@@ -1072,7 +1072,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwners, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getScrapersIDOwnersWithHttpInfo($scraper_target_id, $zap_trace_span = null)
     {
@@ -1176,7 +1176,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ScraperTargetResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ScraperTargetResponse
      */
     public function patchScrapersID($scraper_target_id, $scraper_target_request, $zap_trace_span = null)
     {
@@ -1195,7 +1195,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ScraperTargetResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ScraperTargetResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchScrapersIDWithHttpInfo($scraper_target_id, $scraper_target_request, $zap_trace_span = null)
     {
@@ -1308,7 +1308,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ScraperTargetResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ScraperTargetResponse
      */
     public function postScrapers($scraper_target_request, $zap_trace_span = null)
     {
@@ -1326,7 +1326,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ScraperTargetResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ScraperTargetResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postScrapersWithHttpInfo($scraper_target_request, $zap_trace_span = null)
     {
@@ -1425,7 +1425,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postScrapersIDLabels($scraper_target_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1444,7 +1444,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postScrapersIDLabelsWithHttpInfo($scraper_target_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1558,7 +1558,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMember
      */
     public function postScrapersIDMembers($scraper_target_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1577,7 +1577,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMember|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMember, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postScrapersIDMembersWithHttpInfo($scraper_target_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1691,7 +1691,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwner|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwner
      */
     public function postScrapersIDOwners($scraper_target_id, $add_resource_member_request_body, $zap_trace_span = null)
     {
@@ -1710,7 +1710,7 @@ class ScraperTargetsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwner|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwner, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postScrapersIDOwnersWithHttpInfo($scraper_target_id, $add_resource_member_request_body, $zap_trace_span = null)
     {

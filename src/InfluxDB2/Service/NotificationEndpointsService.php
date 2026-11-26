@@ -72,7 +72,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationEndpoint
      */
     public function createNotificationEndpoint($notification_endpoint)
     {
@@ -89,7 +89,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationEndpoint, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function createNotificationEndpointWithHttpInfo($notification_endpoint)
     {
@@ -199,7 +199,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteNotificationEndpointsIDWithHttpInfo($endpoint_id, $zap_trace_span = null)
     {
@@ -309,7 +309,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteNotificationEndpointsIDLabelsIDWithHttpInfo($endpoint_id, $label_id, $zap_trace_span = null)
     {
@@ -417,7 +417,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationEndpoints|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationEndpoints
      */
     public function getNotificationEndpoints($org_id, $zap_trace_span = null, $offset = null, $limit = 20)
     {
@@ -437,7 +437,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationEndpoints|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationEndpoints, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationEndpointsWithHttpInfo($org_id, $zap_trace_span = null, $offset = null, $limit = 20)
     {
@@ -557,7 +557,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationEndpoint
      */
     public function getNotificationEndpointsID($endpoint_id, $zap_trace_span = null)
     {
@@ -575,7 +575,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationEndpoint, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationEndpointsIDWithHttpInfo($endpoint_id, $zap_trace_span = null)
     {
@@ -678,7 +678,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getNotificationEndpointsIDLabels($endpoint_id, $zap_trace_span = null)
     {
@@ -696,7 +696,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getNotificationEndpointsIDLabelsWithHttpInfo($endpoint_id, $zap_trace_span = null)
     {
@@ -800,7 +800,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationEndpoint
      */
     public function patchNotificationEndpointsID($endpoint_id, $notification_endpoint_update, $zap_trace_span = null)
     {
@@ -819,7 +819,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationEndpoint, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchNotificationEndpointsIDWithHttpInfo($endpoint_id, $notification_endpoint_update, $zap_trace_span = null)
     {
@@ -933,7 +933,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postNotificationEndpointIDLabels($endpoint_id, $label_mapping, $zap_trace_span = null)
     {
@@ -952,7 +952,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postNotificationEndpointIDLabelsWithHttpInfo($endpoint_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1066,7 +1066,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\NotificationEndpoint
      */
     public function putNotificationEndpointsID($endpoint_id, $notification_endpoint, $zap_trace_span = null)
     {
@@ -1085,7 +1085,7 @@ class NotificationEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\NotificationEndpoint|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\NotificationEndpoint, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function putNotificationEndpointsIDWithHttpInfo($endpoint_id, $notification_endpoint, $zap_trace_span = null)
     {

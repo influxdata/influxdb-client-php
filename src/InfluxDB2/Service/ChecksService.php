@@ -72,7 +72,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Check|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Check
      */
     public function createCheck($check)
     {
@@ -89,7 +89,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Check|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Check, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function createCheckWithHttpInfo($check)
     {
@@ -199,7 +199,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteChecksIDWithHttpInfo($check_id, $zap_trace_span = null)
     {
@@ -309,7 +309,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteChecksIDLabelsIDWithHttpInfo($check_id, $label_id, $zap_trace_span = null)
     {
@@ -417,7 +417,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Checks|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Checks
      */
     public function getChecks($org_id, $zap_trace_span = null, $offset = null, $limit = 20)
     {
@@ -437,7 +437,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Checks|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Checks, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getChecksWithHttpInfo($org_id, $zap_trace_span = null, $offset = null, $limit = 20)
     {
@@ -557,7 +557,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Check|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Check
      */
     public function getChecksID($check_id, $zap_trace_span = null)
     {
@@ -575,7 +575,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Check|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Check, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getChecksIDWithHttpInfo($check_id, $zap_trace_span = null)
     {
@@ -678,7 +678,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelsResponse
      */
     public function getChecksIDLabels($check_id, $zap_trace_span = null)
     {
@@ -696,7 +696,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelsResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelsResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getChecksIDLabelsWithHttpInfo($check_id, $zap_trace_span = null)
     {
@@ -799,7 +799,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\FluxResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\FluxResponse
      */
     public function getChecksIDQuery($check_id, $zap_trace_span = null)
     {
@@ -817,7 +817,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\FluxResponse|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\FluxResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getChecksIDQueryWithHttpInfo($check_id, $zap_trace_span = null)
     {
@@ -921,7 +921,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Check|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Check
      */
     public function patchChecksID($check_id, $check_patch, $zap_trace_span = null)
     {
@@ -940,7 +940,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Check|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Check, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function patchChecksIDWithHttpInfo($check_id, $check_patch, $zap_trace_span = null)
     {
@@ -1054,7 +1054,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\LabelResponse
      */
     public function postChecksIDLabels($check_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1073,7 +1073,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\LabelResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\LabelResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function postChecksIDLabelsWithHttpInfo($check_id, $label_mapping, $zap_trace_span = null)
     {
@@ -1187,7 +1187,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Check|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Check
      */
     public function putChecksID($check_id, $check, $zap_trace_span = null)
     {
@@ -1206,7 +1206,7 @@ class ChecksService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Check|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Check, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function putChecksIDWithHttpInfo($check_id, $check, $zap_trace_span = null)
     {

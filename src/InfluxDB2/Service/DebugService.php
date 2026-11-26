@@ -73,7 +73,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofAllProfiles($zap_trace_span = null, $cpu = null)
     {
@@ -91,7 +91,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofAllProfilesWithHttpInfo($zap_trace_span = null, $cpu = null)
     {
@@ -185,7 +185,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofAllocs($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -204,7 +204,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofAllocsWithHttpInfo($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -303,7 +303,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofBlock($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -322,7 +322,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofBlockWithHttpInfo($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -419,7 +419,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return string|string
+     * @return string
      */
     public function getDebugPprofCmdline($zap_trace_span = null)
     {
@@ -436,7 +436,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of string|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: string, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofCmdlineWithHttpInfo($zap_trace_span = null)
     {
@@ -525,7 +525,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofGoroutine($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -544,7 +544,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofGoroutineWithHttpInfo($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -644,7 +644,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofHeap($zap_trace_span = null, $debug = null, $seconds = null, $gc = null)
     {
@@ -664,7 +664,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofHeapWithHttpInfo($zap_trace_span = null, $debug = null, $seconds = null, $gc = null)
     {
@@ -768,7 +768,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofMutex($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -787,7 +787,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofMutexWithHttpInfo($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -885,7 +885,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofProfile($zap_trace_span = null, $seconds = null)
     {
@@ -903,7 +903,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofProfileWithHttpInfo($zap_trace_span = null, $seconds = null)
     {
@@ -997,7 +997,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofThreadCreate($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -1016,7 +1016,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofThreadCreateWithHttpInfo($zap_trace_span = null, $debug = null, $seconds = null)
     {
@@ -1114,7 +1114,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \SplFileObject|string
+     * @return \SplFileObject
      */
     public function getDebugPprofTrace($zap_trace_span = null, $seconds = null)
     {
@@ -1132,7 +1132,7 @@ class DebugService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \SplFileObject|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \SplFileObject, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getDebugPprofTraceWithHttpInfo($zap_trace_span = null, $seconds = null)
     {

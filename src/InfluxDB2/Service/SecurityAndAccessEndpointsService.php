@@ -92,7 +92,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteOrgsIDMembersIDWithHttpInfo($user_id, $org_id, $zap_trace_span = null)
     {
@@ -217,7 +217,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteOrgsIDOwnersIDWithHttpInfo($user_id, $org_id, $zap_trace_span = null)
     {
@@ -342,7 +342,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function deleteOrgsIDSecretsIDWithHttpInfo($org_id, $secret_id, $zap_trace_span = null)
     {
@@ -451,7 +451,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Authorizations|string|object|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Authorizations
      */
     public function getAuthorizations($zap_trace_span = null, $user_id = null, $user = null, $org_id = null, $org = null)
     {
@@ -472,7 +472,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Authorizations|string|object|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Authorizations, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getAuthorizationsWithHttpInfo($zap_trace_span = null, $user_id = null, $user = null, $org_id = null, $org = null)
     {
@@ -580,7 +580,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Authorization|string
+     * @return \InfluxDB2\Model\Authorization
      */
     public function getAuthorizationsID($auth_id, $zap_trace_span = null)
     {
@@ -598,7 +598,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Authorization|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Authorization, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getAuthorizationsIDWithHttpInfo($auth_id, $zap_trace_span = null)
     {
@@ -706,7 +706,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Organizations|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Organizations
      */
     public function getOrgs($zap_trace_span = null, $offset = null, $limit = 20, $descending = false, $org = null, $org_id = null, $user_id = null)
     {
@@ -729,7 +729,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Organizations|\InfluxDB2\Model\Error|object|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Organizations, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getOrgsWithHttpInfo($zap_trace_span = null, $offset = null, $limit = 20, $descending = false, $org = null, $org_id = null, $user_id = null)
     {
@@ -858,7 +858,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Organization|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\Organization
      */
     public function getOrgsID($org_id, $zap_trace_span = null)
     {
@@ -876,7 +876,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Organization|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Organization, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getOrgsIDWithHttpInfo($org_id, $zap_trace_span = null)
     {
@@ -979,7 +979,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceMembers
      */
     public function getOrgsIDMembers($org_id, $zap_trace_span = null)
     {
@@ -997,7 +997,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceMembers|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceMembers, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getOrgsIDMembersWithHttpInfo($org_id, $zap_trace_span = null)
     {
@@ -1100,7 +1100,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\ResourceOwners
      */
     public function getOrgsIDOwners($org_id, $zap_trace_span = null)
     {
@@ -1118,7 +1118,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\ResourceOwners|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\ResourceOwners, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getOrgsIDOwnersWithHttpInfo($org_id, $zap_trace_span = null)
     {
@@ -1221,7 +1221,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\SecretKeysResponse|\InfluxDB2\Model\Error
+     * @return \InfluxDB2\Model\SecretKeysResponse
      */
     public function getOrgsIDSecrets($org_id, $zap_trace_span = null)
     {
@@ -1239,7 +1239,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\SecretKeysResponse|\InfluxDB2\Model\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\SecretKeysResponse, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getOrgsIDSecretsWithHttpInfo($org_id, $zap_trace_span = null)
     {
@@ -1346,7 +1346,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\Users|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string
+     * @return \InfluxDB2\Model\Users
      */
     public function getUsers($zap_trace_span = null, $offset = null, $limit = 20, $after = null, $name = null, $id = null)
     {
@@ -1368,7 +1368,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\Users|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|\InfluxDB2\Model\Error|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\Users, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getUsersWithHttpInfo($zap_trace_span = null, $offset = null, $limit = 20, $after = null, $name = null, $id = null)
     {
@@ -1492,7 +1492,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \InfluxDB2\Model\User|string
+     * @return \InfluxDB2\Model\User
      */
     public function getUsersID($user_id, $zap_trace_span = null)
     {
@@ -1510,7 +1510,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \InfluxDB2\Model\User|string, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: \InfluxDB2\Model\User, 1: int, 2: array<string, string[]>} response, HTTP status code, HTTP response headers
      */
     public function getUsersIDWithHttpInfo($user_id, $zap_trace_span = null)
     {
@@ -1632,7 +1632,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postOrgsIDSecretsWithHttpInfo($org_id, $secret_keys, $zap_trace_span = null)
     {
@@ -1754,7 +1754,7 @@ class SecurityAndAccessEndpointsService
      *
      * @throws \InfluxDB2\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array{0: null, 1: int, 2: array<string, string[]>} null, HTTP status code, HTTP response headers
      */
     public function postUsersIDPasswordWithHttpInfo($user_id, $password_reset_body, $zap_trace_span = null, $authorization = null)
     {
