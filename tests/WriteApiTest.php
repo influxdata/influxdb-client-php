@@ -110,6 +110,82 @@ class WriteApiTest extends BasicTest
         self::assertEquals($expected, strval($request->getBody()));
     }
 
+    public function testWritePointPrecisionOverridesWritePrecision(): void
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $point = Point::measurement('h2o')
+            ->addField('level', 2)
+            ->time(123, WritePrecision::S);
+
+        $this->writeApi->write($point, WritePrecision::MS);
+
+        self::assertCount(1, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals('h2o level=2i 123', $this->requests[0]['request']->getBody());
+    }
+
+    public function testWritePointWithoutTimeUsesWritePrecision(): void
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->write([
+            Point::measurement('h2o')->addField('level', 1),
+            Point::measurement('h2o')->addField('level', 2)->time(2),
+            'h2o level=3i 3',
+        ], WritePrecision::S);
+
+        self::assertCount(1, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals("h2o level=1i\nh2o level=2i 2\nh2o level=3i 3", $this->requests[0]['request']->getBody());
+    }
+
+    public function testWritePointsWithDifferentPrecision(): void
+    {
+        $this->mockHandler->append(new Response(204), new Response(204));
+
+        $this->writeApi->write([
+            Point::measurement('h2o')->addField('level', 1)->time(1, WritePrecision::S),
+            Point::measurement('h2o')->addField('level', 2)->time(2000, WritePrecision::MS),
+            Point::measurement('h2o')->addField('level', 3)->time(3, WritePrecision::S),
+        ]);
+
+        self::assertCount(2, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals("h2o level=1i 1\nh2o level=3i 3", $this->requests[0]['request']->getBody());
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ms',
+            strval($this->requests[1]['request']->getUri())
+        );
+        self::assertEquals('h2o level=2i 2000', $this->requests[1]['request']->getBody());
+    }
+
+    public function testWriteArrayWithPrecision(): void
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->write(
+            ['name' => 'h2o', 'fields' => ['level' => 2], 'time' => 123, 'precision' => WritePrecision::MS],
+            WritePrecision::S
+        );
+
+        self::assertCount(1, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ms',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals('h2o level=2i 123', $this->requests[0]['request']->getBody());
+    }
+
     public function testAuthorizationHeader(): void
     {
         $this->mockHandler->append(new Response(204));

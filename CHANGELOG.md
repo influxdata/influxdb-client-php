@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#183](https://github.com/influxdata/influxdb-client-php/pull/183): Fix writing of `Point` data: precision of `Point` is used also by synchronous write, time of `Point` without precision is serialized in the precision of the write, batching write of an array no longer fails, fraction of a second of `DateTimeInterface` time is kept.
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.

@@ -56,4 +56,58 @@ class WritePayloadSerializer
 
         return null;
     }
+
+    /**
+     * Converts provided data into the list of line protocol records with the key of their destination.
+     *
+     * The precision of a Point with a timestamp takes precedence over the $precision argument,
+     * the timestamp of a Point without precision is serialized in the $precision.
+     *
+     * @param string|Point|array<mixed>|null $data the data to convert
+     * @param WritePrecision::S|WritePrecision::MS|WritePrecision::US|WritePrecision::NS $precision the default precision
+     * @param string $bucket the destination bucket
+     * @param string $org the destination organization
+     * @return BatchItem[] the records in the original order
+     */
+    public static function generateBatchItems($data, string $precision, string $bucket, string $org): array
+    {
+        if ($data === null || $data === '' || $data === []) {
+            return [];
+        }
+        if (is_string($data)) {
+            return [new BatchItem(new BatchItemKey($bucket, $org, $precision), $data)];
+        }
+        if ($data instanceof Point) {
+            $pointPrecision = $precision;
+            if ($data->getTime() !== null) {
+                if ($data->getPrecision() === null) {
+                    // the time of the point is serialized in the precision of the write
+                    $data = (clone $data)->time($data->getTime(), $precision);
+                } else {
+                    $pointPrecision = $data->getPrecision();
+                }
+            }
+            $lineProtocol = $data->toLineProtocol();
+            if ($lineProtocol === null) {
+                return [];
+            }
+            return [new BatchItem(new BatchItemKey($bucket, $org, $pointPrecision), $lineProtocol)];
+        }
+        if (is_array($data)) {
+            if (array_key_exists('name', $data)) {
+                $point = Point::fromArray($data);
+                return $point === null ? [] : self::generateBatchItems($point, $precision, $bucket, $org);
+            }
+
+            $items = [];
+            foreach ($data as $item) {
+                foreach (self::generateBatchItems($item, $precision, $bucket, $org) as $batchItem) {
+                    $items[] = $batchItem;
+                }
+            }
+            return $items;
+        }
+
+        return [];
+    }
 }

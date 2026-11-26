@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InfluxDB2\ApiException;
+use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use Psr\Http\Message\RequestInterface;
 
@@ -351,5 +352,65 @@ class WriteApiBatchingTest extends BasicTest
 
         $message = file_get_contents("log_test.txt");
         self::assertStringContainsString("The retryable error occurred during writing of data. Reason: 'org 04014de4ed590000 has exceeded limited_write plan limit'. Retry in: 3s.", $message);
+    }
+
+    public function testBatchArrayOfPoints(): void
+    {
+        $this->mockHandler->append(new Response(204), new Response(204));
+
+        $this->writeApi->write([
+            Point::measurement('h2o')->addField('level', 1)->time(1, WritePrecision::S),
+            Point::measurement('h2o')->addField('level', 2)->time(2, WritePrecision::S),
+            Point::measurement('h2o')->addField('level', 3)->time(3, WritePrecision::S),
+        ]);
+        $this->writeApi->close();
+
+        // batchSize is 2 => the third point is sent on close
+        self::assertCount(2, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals("h2o level=1i 1\nh2o level=2i 2", $this->requests[0]['request']->getBody());
+        self::assertEquals('h2o level=3i 3', $this->requests[1]['request']->getBody());
+    }
+
+    public function testBatchPointsWithDifferentPrecision(): void
+    {
+        $this->mockHandler->append(new Response(204), new Response(204));
+
+        $this->writeApi->write([
+            Point::measurement('h2o')->addField('level', 1)->time(1, WritePrecision::S),
+            Point::measurement('h2o')->addField('level', 2)->time(2000, WritePrecision::MS),
+        ]);
+
+        self::assertCount(2, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals('h2o level=1i 1', $this->requests[0]['request']->getBody());
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=ms',
+            strval($this->requests[1]['request']->getUri())
+        );
+        self::assertEquals('h2o level=2i 2000', $this->requests[1]['request']->getBody());
+    }
+
+    public function testBatchArrayOfArrays(): void
+    {
+        $this->mockHandler->append(new Response(204));
+
+        $this->writeApi->write([
+            ['name' => 'h2o', 'fields' => ['level' => 1], 'time' => 1],
+            ['name' => 'h2o', 'fields' => ['level' => 2], 'time' => 2],
+        ], WritePrecision::S);
+
+        self::assertCount(1, $this->requests);
+        self::assertEquals(
+            'http://localhost:8086/api/v2/write?org=my-org&bucket=my-bucket&precision=s',
+            strval($this->requests[0]['request']->getUri())
+        );
+        self::assertEquals("h2o level=1i 1\nh2o level=2i 2", $this->requests[0]['request']->getBody());
     }
 }
