@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#188](https://github.com/influxdata/influxdb-client-php/pull/188): Header parameters `Accept` and `Content-Type` of generated services are no longer overridden by the default headers.
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.

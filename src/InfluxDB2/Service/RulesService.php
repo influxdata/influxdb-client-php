@@ -166,6 +166,12 @@ class RulesService
             );
         }
 
+        // explicit header parameters take precedence over the default headers
+        $headers = array_merge(
+            $headers,
+            $headerParams
+        );
+
         // for model (json/xml)
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
@@ -175,11 +181,6 @@ class RulesService
                 $httpBody = $_tempBody;
             }
         }
-
-        $headers = array_merge(
-            $headerParams,
-            $headers
-        );
 
         return $this->defaultApi->createRequest('GET', $resourcePath, $httpBody, $headers, $queryParams);
     }
