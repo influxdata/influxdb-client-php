@@ -39,6 +39,7 @@ use \InfluxDB2\ObjectSerializer;
  * @package  InfluxDB2
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
+ * @implements ArrayAccess<string, mixed>
  */
 class Routes implements ModelInterface, ArrayAccess
 {
@@ -740,7 +741,7 @@ class Routes implements ModelInterface, ArrayAccess
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -752,7 +753,7 @@ class Routes implements ModelInterface, ArrayAccess
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -765,7 +766,7 @@ class Routes implements ModelInterface, ArrayAccess
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -782,7 +783,7 @@ class Routes implements ModelInterface, ArrayAccess
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */

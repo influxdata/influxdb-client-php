@@ -353,7 +353,7 @@ class SMTPNotificationRuleBase extends NotificationRule
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -365,7 +365,7 @@ class SMTPNotificationRuleBase extends NotificationRule
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -378,7 +378,7 @@ class SMTPNotificationRuleBase extends NotificationRule
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -395,7 +395,7 @@ class SMTPNotificationRuleBase extends NotificationRule
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */
