@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#194](https://github.com/influxdata/influxdb-client-php/pull/194): Document `ArrayAccess` of generated models by names of properties.
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.
