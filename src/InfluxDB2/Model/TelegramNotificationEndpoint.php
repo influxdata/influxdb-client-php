@@ -260,7 +260,7 @@ class TelegramNotificationEndpoint extends NotificationEndpoint
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -272,7 +272,7 @@ class TelegramNotificationEndpoint extends NotificationEndpoint
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -285,7 +285,7 @@ class TelegramNotificationEndpoint extends NotificationEndpoint
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -302,7 +302,7 @@ class TelegramNotificationEndpoint extends NotificationEndpoint
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */

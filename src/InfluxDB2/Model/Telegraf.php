@@ -284,7 +284,7 @@ class Telegraf extends TelegrafRequest
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -296,7 +296,7 @@ class Telegraf extends TelegrafRequest
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -309,7 +309,7 @@ class Telegraf extends TelegrafRequest
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -326,7 +326,7 @@ class Telegraf extends TelegrafRequest
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */

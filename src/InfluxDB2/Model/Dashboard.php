@@ -344,7 +344,7 @@ class Dashboard extends CreateDashboardRequest
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -356,7 +356,7 @@ class Dashboard extends CreateDashboardRequest
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -369,7 +369,7 @@ class Dashboard extends CreateDashboardRequest
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -386,7 +386,7 @@ class Dashboard extends CreateDashboardRequest
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */

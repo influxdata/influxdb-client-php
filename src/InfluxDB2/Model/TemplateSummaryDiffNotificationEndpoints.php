@@ -39,6 +39,7 @@ use \InfluxDB2\ObjectSerializer;
  * @package  InfluxDB2
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
+ * @implements ArrayAccess<string, mixed>
  */
 class TemplateSummaryDiffNotificationEndpoints implements ModelInterface, ArrayAccess
 {
@@ -380,7 +381,7 @@ class TemplateSummaryDiffNotificationEndpoints implements ModelInterface, ArrayA
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -392,7 +393,7 @@ class TemplateSummaryDiffNotificationEndpoints implements ModelInterface, ArrayA
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -405,7 +406,7 @@ class TemplateSummaryDiffNotificationEndpoints implements ModelInterface, ArrayA
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -422,7 +423,7 @@ class TemplateSummaryDiffNotificationEndpoints implements ModelInterface, ArrayA
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */

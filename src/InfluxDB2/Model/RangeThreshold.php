@@ -356,7 +356,7 @@ class RangeThreshold extends Threshold
     /**
      * Returns true if offset exists. False otherwise.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return boolean
      */
@@ -368,7 +368,7 @@ class RangeThreshold extends Threshold
     /**
      * Gets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return mixed
      */
@@ -381,7 +381,7 @@ class RangeThreshold extends Threshold
     /**
      * Sets value based on offset.
      *
-     * @param integer $offset Offset
+     * @param string|null $offset Name of the property, e.g. org_id
      * @param mixed   $value  Value to be set
      *
      * @return void
@@ -398,7 +398,7 @@ class RangeThreshold extends Threshold
     /**
      * Unsets offset.
      *
-     * @param integer $offset Offset
+     * @param string $offset Name of the property, e.g. org_id
      *
      * @return void
      */
