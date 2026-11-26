@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#193](https://github.com/influxdata/influxdb-client-php/pull/193): Fix PHPDoc types of generated models and services: enum values, `map` types and unknown parameters.
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.
