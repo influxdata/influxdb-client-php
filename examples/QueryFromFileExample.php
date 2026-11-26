@@ -51,10 +51,11 @@ $queryApi = $client->createQueryApi();
 //
 // Executes Flux query defined in a separate file
 //
-$filename = "query.flux";
-$handle = fopen($filename, "r");
-$contents = fread($handle, filesize($filename));
-fclose($handle);
+$filename = __DIR__ . "/query.flux";
+$contents = file_get_contents($filename);
+if ($contents === false) {
+    throw new RuntimeException("Unable to read $filename");
+}
 
 $result = $queryApi->query($contents);
 
@@ -75,19 +76,19 @@ foreach ($result as $table) {
 function getDayName(int $weekDay): string
 {
     switch ($weekDay) {
-        case "1":
+        case 1:
             return "Monday";
-        case "2":
+        case 2:
             return "Tuesday";
-        case "3":
+        case 3:
             return "Wednesday";
-        case "4":
+        case 4:
             return "Thursday";
-        case "5":
+        case 5:
             return "Friday";
-        case "6":
+        case 6:
             return "Saturday";
-        case "0":
+        case 0:
             return "Sunday";
     }
     return "";

@@ -150,8 +150,9 @@ class Client
     /**
      * Creates the instance of api service
      *
-     * @param  $serviceClass
-     * @return object service instance
+     * @template T of object
+     * @param class-string<T> $serviceClass the class of the service, e.g. BucketsService::class
+     * @return T service instance
      */
     public function createService($serviceClass)
     {
