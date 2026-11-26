@@ -176,6 +176,7 @@ class PagerDutyNotificationEndpoint extends NotificationEndpoint
     {
         parent::__construct($data);
 
+        $this->container['type'] = isset($data['type']) ? $data['type'] : NotificationEndpointType::PAGERDUTY;
         $this->container['client_url'] = isset($data['client_url']) ? $data['client_url'] : null;
         $this->container['routing_key'] = isset($data['routing_key']) ? $data['routing_key'] : null;
     }

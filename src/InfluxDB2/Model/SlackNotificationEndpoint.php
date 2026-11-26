@@ -176,6 +176,7 @@ class SlackNotificationEndpoint extends NotificationEndpoint
     {
         parent::__construct($data);
 
+        $this->container['type'] = isset($data['type']) ? $data['type'] : NotificationEndpointType::SLACK;
         $this->container['url'] = isset($data['url']) ? $data['url'] : null;
         $this->container['token'] = isset($data['token']) ? $data['token'] : null;
     }
