@@ -1,148 +1,10 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Call to an undefined method object\:\:deleteBucketsID\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: examples/BucketManagementExample.php
-
-		-
 			message: '#^Call to an undefined method object\:\:getBuckets\(\)\.$#'
 			identifier: method.notFound
 			count: 2
 			path: examples/BucketManagementExample.php
-
-		-
-			message: '#^Call to an undefined method object\:\:postBuckets\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: examples/BucketManagementExample.php
-
-		-
-			message: '#^Cannot call method getOrgs\(\) on object\|string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: examples/BucketManagementExample.php
-
-		-
-			message: '#^Function findMyOrg\(\) has parameter \$client with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: examples/BucketManagementExample.php
-
-		-
-			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
-			identifier: equal.notAllowed
-			count: 1
-			path: examples/BucketManagementExample.php
-
-		-
-			message: '#^Parameter \#1 \$start of method InfluxDB2\\Model\\DeletePredicateRequest\:\:setStart\(\) expects DateTime, DateTime\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/DeleteDataExample.php
-
-		-
-			message: '#^Parameter \#2 \$params of method InfluxDB2\\InvokableScriptsApi\:\:invokeScript\(\) expects array\<string, object\>\|null, array\<string, string\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/InvokableScripts.php
-
-		-
-			message: '#^Parameter \#2 \$params of method InfluxDB2\\InvokableScriptsApi\:\:invokeScriptStream\(\) expects array\<string, object\>\|null, array\<string, string\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/InvokableScripts.php
-
-		-
-			message: '#^Call to an undefined method object\:\:postDelete\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: examples/QueryExample.php
-
-		-
-			message: '#^Parameter \#1 \$start of method InfluxDB2\\Model\\DeletePredicateRequest\:\:setStart\(\) expects DateTime, DateTime\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/QueryExample.php
-
-		-
-			message: '#^Parameter \#1 \$fp of function fclose expects resource, resource\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Parameter \#1 \$fp of function fread expects resource, resource\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Parameter \#1 \$query of method InfluxDB2\\QueryApi\:\:query\(\) expects InfluxDB2\\Model\\Query\|string, string\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Parameter \#2 \$length of function fread expects int\<1, max\>, int\<0, max\>\|false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "0" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "1" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "2" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "3" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "4" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "5" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Switch condition type \(int\) does not match case condition "6" \(string\)\.$#'
-			identifier: switch.type
-			count: 1
-			path: examples/QueryFromFileExample.php
-
-		-
-			message: '#^Function checkResult\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: examples/WriteExample.php
-
-		-
-			message: '#^Dead catch \- Exception is never thrown in the try block\.$#'
-			identifier: catch.neverThrown
-			count: 1
-			path: examples/WriteUDPExample.php
 
 		-
 			message: '#^Method InfluxDB2\\BatchItem\:\:__construct\(\) has parameter \$data with no type specified\.$#'
@@ -157,12 +19,6 @@ parameters:
 			path: src/InfluxDB2/BatchItem.php
 
 		-
-			message: '#^Call to an undefined method object\:\:getPingWithHttpInfo\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/InfluxDB2/Client.php
-
-		-
 			message: '#^Method InfluxDB2\\Client\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -171,12 +27,6 @@ parameters:
 		-
 			message: '#^Method InfluxDB2\\Client\:\:close\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: src/InfluxDB2/Client.php
-
-		-
-			message: '#^Method InfluxDB2\\Client\:\:createService\(\) has parameter \$serviceClass with no type specified\.$#'
-			identifier: missingType.parameter
 			count: 1
 			path: src/InfluxDB2/Client.php
 
@@ -710,12 +560,6 @@ parameters:
 
 		-
 			message: '#^Method InfluxDB2\\InvokableScriptsApi\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/InfluxDB2/InvokableScriptsApi.php
-
-		-
-			message: '#^Method InfluxDB2\\InvokableScriptsApi\:\:invokeScriptRaw\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/InfluxDB2/InvokableScriptsApi.php
@@ -1318,12 +1162,6 @@ parameters:
 			message: '#^Call to an undefined method object\:\:getBuckets\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: tests/ITBucketServiceTest.php
-
-		-
-			message: '#^Call to an undefined method object\:\:getHealth\(\)\.$#'
-			identifier: method.notFound
-			count: 1
 			path: tests/ITBucketServiceTest.php
 
 		-

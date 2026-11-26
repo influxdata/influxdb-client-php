@@ -6,8 +6,10 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use InfluxDB2\Client;
+use InfluxDB2\Model\Bucket;
 use InfluxDB2\Model\BucketRetentionRules;
 use InfluxDB2\Model\Organization;
+use InfluxDB2\Model\Organizations;
 use InfluxDB2\Model\PostBucketRequest;
 use InfluxDB2\Service\BucketsService;
 use InfluxDB2\Service\OrganizationsService;
@@ -30,13 +32,15 @@ $client = new Client([
 //
 // Function for getting organization ID
 //
-function findMyOrg($client): ?Organization
+function findMyOrg(Client $client): ?Organization
 {
-    /** @var OrganizationsService $orgService */
     $orgService = $client->createService(OrganizationsService::class);
-    $orgs = $orgService->getOrgs()->getOrgs();
-    foreach ($orgs as $org) {
-        if ($org->getName() == $client->options["org"]) {
+    $orgs = $orgService->getOrgs();
+    if (!$orgs instanceof Organizations) {
+        return null;
+    }
+    foreach ($orgs->getOrgs() ?? [] as $org) {
+        if ($org->getName() === $client->options["org"]) {
             return $org;
         }
     }
@@ -62,9 +66,12 @@ $bucketRequest->setName($bucketName)
     ->setOrgId(findMyOrg($client)->getId());
 
 $respBucket = $bucketsService->postBuckets($bucketRequest);
+if (!$respBucket instanceof Bucket) {
+    throw new RuntimeException('Unexpected response of postBuckets');
+}
 
 $bucketName = $respBucket->getName();
-$bucketId = $respBucket->getID();
+$bucketId = $respBucket->getId();
 $createdAt = $respBucket->getCreatedAt()->format('Y-m-d H:i:s');
 
 print  "ID: $bucketId       Created: $createdAt     Name: $bucketName was created\n";
@@ -77,7 +84,7 @@ $bucketList = $bucketsService->getBuckets();
 
 foreach ($bucketList->getBuckets() as $item) {
     $bucketName = $item->getName();
-    $bucketId = $item->getID();
+    $bucketId = $item->getId();
     $createdAt = $item->getCreatedAt()->format('Y-m-d H:i:s');
 
     print  "ID: $bucketId       Created: $createdAt     Name: $bucketName \n";
@@ -93,7 +100,7 @@ foreach ($bucketList->getBuckets() as $item) {
     if (strpos($bucketName, 'example-bucket') !== false) {
         $createdAt = $item->getCreatedAt()->format('Y-m-d H:i:s');
 
-        $bucketsService->deleteBucketsID($item->getID());
+        $bucketsService->deleteBucketsID($item->getId());
 
         print  "Name: $bucketName     Created: $createdAt     was deleted \n";
     }

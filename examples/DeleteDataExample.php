@@ -43,7 +43,7 @@ $writeApi->close();
 $service = $client->createService(DeleteService::class);
 
 $predicate = new DeletePredicateRequest();
-$predicate->setStart(DateTime::createFromFormat('Y', '2020'));
+$predicate->setStart(new DateTime('2020-01-01T00:00:00Z'));
 $predicate->setStop(new DateTime());
 $predicate->setPredicate("_measurement=\"mem\" AND host=\"host1\"");
 $service->postDelete($predicate, null, $org, $bucket);

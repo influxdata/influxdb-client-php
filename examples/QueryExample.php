@@ -32,7 +32,7 @@ $client = new Client([
 $service = $client->createService(DeleteService::class);
 
 $predicate = new DeletePredicateRequest();
-$predicate->setStart(DateTime::createFromFormat('Y', '1900'));
+$predicate->setStart(new DateTime('1900-01-01T00:00:00Z'));
 $predicate->setStop(new DateTime());
 $predicate->setPredicate("_measurement=\"weather\"");
 $service->postDelete($predicate, null, $org, $bucket);

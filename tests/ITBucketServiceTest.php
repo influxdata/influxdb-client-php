@@ -4,6 +4,7 @@ namespace InfluxDB2Test;
 
 use InfluxDB2\ApiException;
 use InfluxDB2\Model\BucketRetentionRules;
+use InfluxDB2\Model\HealthCheck;
 use InfluxDB2\Model\PostBucketRequest;
 use InfluxDB2\ObjectSerializer;
 use InfluxDB2\Service\BucketsService;
@@ -20,6 +21,7 @@ class ITBucketServiceTest extends IntegrationBaseTestCase
     {
         $healthService = $this->client->createService(HealthService::class);
         $healthCheck = $healthService->getHealth();
+        self::assertInstanceOf(HealthCheck::class, $healthCheck);
         self::assertEquals("influxdb", $healthCheck->getName());
         self::assertEquals("pass", $healthCheck->getStatus());
     }

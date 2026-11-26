@@ -23,7 +23,7 @@ $client = new Client([
 //
 // Function for checking results
 //
-function checkResult(string  $filterName, Client  $client, string $comment)
+function checkResult(string  $filterName, Client  $client, string $comment): void
 {
     $query = "from(bucket: \"my-bucket\")
     |> range(start: 0)

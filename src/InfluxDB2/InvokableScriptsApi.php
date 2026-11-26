@@ -84,7 +84,7 @@ class InvokableScriptsApi extends DefaultApi
      * Invoke synchronously a script and return result as a FluxTable[].
      *
      * @param string $scriptId The ID of the script to invoke. (required)
-     * @param array<string,object>|null $params Represent key/value pairs parameters to be injected into script
+     * @param array<string,mixed>|null $params Represent key/value pairs parameters to be injected into script
      * @return FluxTable[]
      */
     public function invokeScript(string $scriptId, ?array $params = null): ?array
@@ -101,7 +101,7 @@ class InvokableScriptsApi extends DefaultApi
      * Invoke synchronously a script and return result as a stream of FluxRecord.
      *
      * @param string $scriptId The ID of the script to invoke. (required)
-     * @param array<string,object>|null $params Represent key/value pairs parameters to be injected into script
+     * @param array<string,mixed>|null $params Represent key/value pairs parameters to be injected into script
      * @return FluxCsvParser generator of FluxRecords
      */
     public function invokeScriptStream(string $scriptId, ?array $params = null): FluxCsvParser
@@ -118,7 +118,7 @@ class InvokableScriptsApi extends DefaultApi
      * Invoke synchronously a script and return result as a String.
      *
      * @param string $scriptId The ID of the script to invoke. (required)
-     * @param array|null $params Represent key/value pairs parameters to be injected into script
+     * @param array<string,mixed>|null $params Represent key/value pairs parameters to be injected into script
      * @return string
      */
     public function invokeScriptRaw(string $scriptId, ?array $params = null): ?string
