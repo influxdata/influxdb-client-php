@@ -126,7 +126,7 @@ class ObjectSerializer
      * If it's a string, pass through unchanged. It will be url-encoded
      * later.
      *
-     * @param string[]|string|\DateTime $object an object to be serialized to a string
+     * @param string[]|string|bool|\DateTime $object an object to be serialized to a string
      *
      * @return string the serialized object
      */
@@ -134,6 +134,8 @@ class ObjectSerializer
     {
         if (is_array($object)) {
             return implode(',', $object);
+        } elseif (is_bool($object)) {
+            return $object ? 'true' : 'false';
         } else {
             return self::toString($object);
         }
