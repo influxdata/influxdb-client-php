@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#186](https://github.com/influxdata/influxdb-client-php/pull/186): Fix deserialization of `TemplateSummarySummary` and empty enum values, fix validation issues in generated models.
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.
