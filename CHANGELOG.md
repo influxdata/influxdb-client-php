@@ -1,5 +1,8 @@
 ## 3.10.0 [unreleased]
 
+### Bug Fixes
+1. [#185](https://github.com/influxdata/influxdb-client-php/pull/185): Fix `postSignin`, `postUsersIDPassword` and `putMePassword` failing on undefined property `$config`.
+
 ### CI
 
 1. [180](https://github.com/influxdata/influxdb-client-php/pull/180): Use PHP 8.5 as reference build.
